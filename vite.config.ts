@@ -10,5 +10,14 @@ export default defineConfig({
             fileName: 'talk-control',
         },
         outDir: resolve(__dirname, 'dist'),
+        rollupOptions: {
+            output: {
+                assetFileNames: (assetInfo) => {
+                    if (assetInfo.name == 'style.css')
+                        return 'talk-control-theme.css';
+                    return assetInfo.name ?? 'vendor.css';
+                },
+            },
+        },
     },
 });
