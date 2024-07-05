@@ -1,15 +1,16 @@
-import { resolve } from 'node:path';
+import { PROJECT_ROOT } from './scripts/utils/dir.utils';
 import { defineConfig } from 'vite';
+import path from 'node:path';
 
 export default defineConfig({
     build: {
         sourcemap: true,
         lib: {
-            entry: resolve(__dirname, 'src/index.ts'),
-            name: 'talk-control',
-            fileName: 'talk-control',
+            entry: path.resolve(PROJECT_ROOT, 'src', 'index.ts'),
+            name: 'talk-control-extensions',
+            fileName: 'talk-control-extensions',
         },
-        outDir: resolve(__dirname, 'dist'),
+        outDir: path.resolve(PROJECT_ROOT, 'dist'),
         rollupOptions: {
             output: {
                 assetFileNames: (assetInfo) => {
