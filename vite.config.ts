@@ -7,15 +7,15 @@ export default defineConfig({
         sourcemap: true,
         lib: {
             entry: path.resolve(PROJECT_ROOT, 'src', 'index.ts'),
-            name: 'talk-control-extensions',
-            fileName: 'talk-control-extensions',
+            name: 'talk-control-revealjs-extensions',
+            fileName: 'talk-control-revealjs-extensions',
         },
         outDir: path.resolve(PROJECT_ROOT, 'dist'),
         rollupOptions: {
             output: {
                 assetFileNames: (assetInfo) => {
                     if (assetInfo.name == 'style.css')
-                        return 'talk-control-theme.css';
+                        return 'talk-control-revealjs-theme.css';
                     return assetInfo.name ?? 'vendor.css';
                 },
             },
