@@ -1,4 +1,3 @@
-
 import { html, render } from 'lit-html';
 
 import Reveal from 'reveal.js';
@@ -13,10 +12,13 @@ export const ThemeInitializer = {
     /**
      * @param {() => Array.<string>} slidesFactory
      */
-    async init(slidesFactory: () => SlidePath[], slidesRenderer = defaultSlideRenderer) {
-        const importSlideElement: HTMLElement | null = document.querySelector('.slides');
+    async init(
+        slidesFactory: () => SlidePath[],
+        slidesRenderer = defaultSlideRenderer,
+    ) {
+        const importSlideElement: HTMLElement | null =
+            document.querySelector('.slides');
         if (importSlideElement == null) return;
-
 
         // Retrieve the slide path list
         const slides = slidesFactory();
@@ -38,7 +40,7 @@ export const ThemeInitializer = {
             height: 1080,
             slideNumber: 'c/t',
             showSlideNumber: 'speaker',
-            showNotes: (enableShowNotes as boolean), // Hack to pass compiler due to wrong typing
+            showNotes: enableShowNotes as boolean, // Hack to pass compiler due to wrong typing
             pdfMaxPagesPerSlide: pdfMaxPagesPerSlide,
             pdfSeparateFragments: pdfSeparateFragments,
             plugins: [
@@ -50,7 +52,13 @@ export const ThemeInitializer = {
             ],
         }).then(() => {
             Reveal.configure({
-                transition: (Reveal.getQueryHash().transition as 'none' | 'slide' | 'concave' | 'zoom' | 'fade') || 'none', // default/cube/page/concave/zoom/linear/fade/none   
+                transition:
+                    (Reveal.getQueryHash().transition as
+                        | 'none'
+                        | 'slide'
+                        | 'concave'
+                        | 'zoom'
+                        | 'fade') || 'none', // default/cube/page/concave/zoom/linear/fade/none
             });
         });
     },
@@ -65,16 +73,16 @@ async function defaultSlideRenderer(element: HTMLElement, slides: SlidePath[]) {
     return render(
         html`
             ${slidesToRender.map(
-            (slide) => html`
+                (slide) => html`
                     <section
                         data-markdown="./markdown/${slide.path}"
                         data-separator="##==##"
                         data-separator-vertical="##--##"
                         data-separator-notes="^Notes:"></section>
-                `
-        )}
+                `,
+            )}
         `,
-        element
+        element,
     );
 }
 
