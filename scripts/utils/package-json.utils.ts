@@ -15,7 +15,7 @@ export function buildPackageJson(packageJson: PackageJson, dist: string) {
             {
                 ...cleanedPackageJson,
                 type: 'module',
-                main: './talk-control-extensions.js',
+                main: './talk-control-revealjs-extensions.js',
             },
             undefined,
             2,
