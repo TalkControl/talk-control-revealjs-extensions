@@ -27,7 +27,7 @@ export const ThemeInitializer = {
         await slidesRenderer(importSlideElement, slides);
 
         // Notes aren't shown by default
-        const { enableShowNotes, pdfMaxPagesPerSlide, pdfSeparateFragments } =
+        const { showNotes, pdfMaxPagesPerSlide, pdfSeparateFragments } =
             checkPdfConfiguration(importSlideElement);
 
         // Init the Reveal Engine
@@ -40,9 +40,9 @@ export const ThemeInitializer = {
             height: 1080,
             slideNumber: 'c/t',
             showSlideNumber: 'speaker',
-            showNotes: enableShowNotes as boolean, // Hack to pass compiler due to wrong typing
-            pdfMaxPagesPerSlide: pdfMaxPagesPerSlide,
-            pdfSeparateFragments: pdfSeparateFragments,
+            showNotes,
+            pdfMaxPagesPerSlide,
+            pdfSeparateFragments,
             plugins: [
                 RevealMarkdown,
                 RevealTalkControlThemePlugin,
@@ -53,12 +53,8 @@ export const ThemeInitializer = {
         }).then(() => {
             Reveal.configure({
                 transition:
-                    (Reveal.getQueryHash().transition as
-                        | 'none'
-                        | 'slide'
-                        | 'concave'
-                        | 'zoom'
-                        | 'fade') || 'none', // default/cube/page/concave/zoom/linear/fade/none
+                    (Reveal.getQueryHash()
+                        .transition as Reveal.Options['transition']) ?? 'none', // default/cube/page/concave/zoom/linear/fade/none
             });
         });
     },
@@ -86,28 +82,37 @@ async function defaultSlideRenderer(element: HTMLElement, slides: SlidePath[]) {
     );
 }
 
+type CheckPdfConfigurationResult = Pick<
+    Reveal.Options,
+    'showNotes' | 'pdfMaxPagesPerSlide' | 'pdfSeparateFragments'
+>;
+
 /**
  * Check the pdf configuration to apply it
  * @param {HTMLElement} importSlideElement
  * @returns the configuration variables to apply
  */
-function checkPdfConfiguration(importSlideElement: HTMLElement) {
+function checkPdfConfiguration(
+    importSlideElement: HTMLElement,
+): CheckPdfConfigurationResult {
     const urlParams = new URLSearchParams(window.location.search);
 
     // Notes aren't shown by default
     // eg. <div class="slides"/>
     // or  <div class="slides" data-show-notes="any other value" />
-    let enableShowNotes: boolean | string | undefined = false;
+    let showNotes: CheckPdfConfigurationResult['showNotes'] = false;
     if (urlParams.has('show-notes')) {
         const urlValue = urlParams.get('show-notes');
         importSlideElement.dataset.showNotes = urlValue ?? 'true';
     }
     if (importSlideElement.dataset.showNotes == 'separate-page') {
         // eg. <div class="slides" data-show-notes="separate-page"/>
-        enableShowNotes = 'separate-page';
+        // TODO: remove this cast when this cast when this PR will be merged
+        // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/70587
+        showNotes = 'separate-page' as unknown as boolean;
     } else if (importSlideElement.dataset.showNotes == '') {
         // eg. <div class="slides" data-show-notes/>
-        enableShowNotes = true;
+        showNotes = true;
     }
 
     // No max pages per slide by default
@@ -133,5 +138,5 @@ function checkPdfConfiguration(importSlideElement: HTMLElement) {
         pdfSeparateFragments = false;
     }
 
-    return { enableShowNotes, pdfMaxPagesPerSlide, pdfSeparateFragments };
+    return { showNotes, pdfMaxPagesPerSlide, pdfSeparateFragments };
 }

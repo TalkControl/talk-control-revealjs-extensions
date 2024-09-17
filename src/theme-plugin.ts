@@ -16,19 +16,16 @@ export class TalkControlTheme {
     }
 
     postprocess() {
-        this.path = this._extractPath();
+        this.path = this.extractPath();
     }
-    _extractPath() {
+
+    private extractPath() {
         const links = document.getElementsByTagName('link');
 
         for (let idx = 0; idx < links.length; idx++) {
             const link = links.item(idx);
 
-            if (
-                link &&
-                link.href &&
-                link.href.match(/talk-control-reavealjs-theme\.css$/)
-            ) {
+            if (link?.href?.match(/talk-control-reavealjs-theme\.css$/)) {
                 const path = link.href;
                 return path.substring(
                     0,
@@ -43,7 +40,7 @@ export class TalkControlTheme {
 const RevealTalkControlThemePlugin: PluginFunction = () => {
     return {
         id: 'talk-control-theme',
-        init: () => {
+        init() {
             const talkControlTheme = new TalkControlTheme();
             talkControlTheme.postprocess();
         },
