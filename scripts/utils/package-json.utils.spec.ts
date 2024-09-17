@@ -26,7 +26,9 @@ describe(buildPackageJson.name, () => {
         );
         expect(distPackageJson.version).toEqual('1.2.3');
         expect(distPackageJson.type).toEqual('module');
-        expect(distPackageJson.main).toEqual('./talk-control-revealjs-extensions.js');
+        expect(distPackageJson.main).toEqual(
+            './talk-control-revealjs-extensions.js',
+        );
         expect(distPackageJson.license).toEqual('MIT');
         expect(distPackageJson.private).not.toBeDefined();
         expect(distPackageJson.dependencies).not.toBeDefined();

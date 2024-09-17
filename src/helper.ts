@@ -13,7 +13,7 @@ export function _handle_parameter(
     queryParam: string,
     slidesElement: HTMLElement,
     htmlParam: string,
-    defaultValue: string
+    defaultValue: string,
 ): string {
     if (urlParams.has(queryParam)) {
         const urlValue = urlParams.get(queryParam);

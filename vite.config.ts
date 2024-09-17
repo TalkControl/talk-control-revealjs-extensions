@@ -1,7 +1,7 @@
-import path from 'node:path';
-import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts'
 import { PROJECT_ROOT } from './scripts/utils/dir.utils';
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
+import path from 'node:path';
 
 export default defineConfig({
     build: {
@@ -22,5 +22,5 @@ export default defineConfig({
             },
         },
     },
-    plugins: [dts({ rollupTypes: true })]
+    plugins: [dts({ rollupTypes: true })],
 });
