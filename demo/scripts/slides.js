@@ -1,4 +1,10 @@
-import { ThemeInitializer } from '../web_modules/talk-control-revealjs-extensions/talk-control-revealjs-extensions.js';
+import {
+    Reveal,
+    ThemeInitializer,
+} from '../web_modules/talk-control-revealjs-extensions/talk-control-revealjs-extensions.js';
+
+console.log('Reveal version', Reveal.VERSION);
+console.log('Reveal instance', Reveal);
 
 // One method per module
 function schoolSlides() {
