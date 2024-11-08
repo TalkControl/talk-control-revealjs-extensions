@@ -1,0 +1,82 @@
+/**
+* Globals overrides to change the layout of slides
+*/
+.reveal {
+    ol,
+    dl,
+    ul {
+        padding: 0 0 0 1em;
+        line-height: 1.5em;
+        text-align: left;
+        margin: 0;
+    }
+
+    ul {
+        list-style-type: disc;
+    }
+
+    li::marker {
+        color: $mainColor; /* Change the color */
+    }
+
+    .slides section {
+        img {
+            margin: initial;
+            background: initial;
+            border: initial;
+            box-shadow: initial;
+        }
+
+        &.stack {
+            height: 100%;
+        }
+        li p {
+            font-size: 100%;
+        }
+        p {
+            font-size: 1em;
+            &.credits {
+                justify-content: flex-end;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                font-size: 0.7em;
+            }
+        }
+        p + p {
+            margin-top: 40px;
+        }
+    }
+
+    blockquote::before {
+        content: '\“';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50px;
+        height: 50px;
+    }
+
+    blockquote::after {
+        content: '\”';
+        position: absolute;
+        bottom: -0.5em;
+        right: -0.5em;
+        width: 50px;
+        height: 50px;
+    }
+
+    blockquote {
+        display: block;
+        position: relative;
+        width: 70%;
+        margin: 20px auto;
+        padding: 1em;
+        text-align: left;
+        font-style: italic;
+        background: transparent;
+        color: $mainColor;
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+    }
+}
