@@ -1,0 +1,62 @@
+/**
+* Define Variables used in the theme
+*/
+
+$title-color: $mainColor;
+$table-header-bg: $mainColor;
+$table-header-color: white;
+
+.reveal .slides section:not(.stack) {
+    width: 100%;
+    height: calc(100% - 40px);
+    height: -webkit-calc(100% - 40px);
+    text-align: left;
+    font-size: 1em;
+
+    h1,
+    h2 {
+        text-transform: initial;
+        text-align: left;
+        color: $title-color;
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+
+    h1,
+    h2,
+    h3 {
+        text-transform: initial;
+        margin-bottom: 130px;
+    }
+
+    h1 ~ h2,
+    h2 ~ h3,
+    h1 ~ h3 {
+        text-transform: initial;
+        margin-bottom: 40px;
+        color: $title-color;
+        font-size: 1em;
+    }
+
+    h1 + h2,
+    h2 + h3,
+    h1 + h3 {
+        margin-top: -90px;
+        font-size: 1.15em;
+    }
+
+    table:not(.hljs-ln) {
+        width: 100%;
+        background-color: #efefef;
+    }
+    table:not(.hljs-ln),
+    th,
+    tdtable:not(.hljs-ln-line) {
+        border: thin solid white;
+    }
+
+    thead {
+        background-color: $table-header-bg;
+        color: $table-header-color;
+    }
+}

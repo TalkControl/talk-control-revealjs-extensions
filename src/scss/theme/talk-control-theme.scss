@@ -7,6 +7,9 @@
 @import '/node_modules/reveal.js/css/theme/template/settings';
 // ---------------------------------------------
 
+// Overrides ------------------------------------
+@import './talk-control-override';
+
 // Theme template ------------------------------
 @import '/node_modules/reveal.js/css/theme/template/theme';
 // ---------------------------------------------

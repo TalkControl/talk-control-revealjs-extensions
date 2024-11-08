@@ -1,0 +1,29 @@
+/**
+* Hack for print
+*/
+html.print-pdf {
+    .reveal .slides .pdf-page div.slide-background.quote-slide::before {
+        content: '';
+        position: absolute;
+        background-size: contain;
+        filter: brightness(0.25);
+        top: 5px;
+        left: 5px;
+        width: 400px;
+        height: 400px;
+        color: $dark-grey;
+    }
+
+    .reveal .slides .pdf-page {
+        div.slide-background .slide-background-content:after {
+            content: '';
+            position: absolute;
+            bottom: 40px;
+            right: 140px;
+            width: 150px;
+            height: 40px;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    }
+}
