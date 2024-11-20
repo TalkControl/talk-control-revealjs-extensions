@@ -11,14 +11,14 @@ $table-header-color: white;
     height: calc(100% - 40px);
     height: -webkit-calc(100% - 40px);
     text-align: left;
-    font-size: 1em;
+    font-size: 1.2em;
 
     h1,
     h2 {
         text-transform: initial;
         text-align: left;
         color: $title-color;
-        font-size: 1.5em;
+        font-size: 1.8em;
         font-weight: 600;
     }
 
@@ -35,7 +35,7 @@ $table-header-color: white;
         text-transform: initial;
         margin-bottom: 40px;
         color: $title-color;
-        font-size: 1em;
+        font-size: 1.5em;
     }
 
     h1 + h2,
@@ -60,3 +60,4 @@ $table-header-color: white;
         color: $table-header-color;
     }
 }
+@import './transitions';

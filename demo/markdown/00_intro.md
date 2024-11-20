@@ -1,4 +1,4 @@
-<!-- .slide: class="transition left sfeir-bg-1" -->
+<!-- .slide: class="transition left" -->
 
 # Talk Control Theme
 

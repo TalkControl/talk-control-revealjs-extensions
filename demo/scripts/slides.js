@@ -8,7 +8,11 @@ console.log('Reveal instance', Reveal);
 
 // One method per module
 function schoolSlides() {
-    return ['00_intro.md', '03-classics/10_chapter1.md'];
+    return [
+        '00_intro.md',
+        '03-classics/10_chapter1.md',
+        '03-classics/20_transitions.md',
+    ];
 }
 
 function formation() {
