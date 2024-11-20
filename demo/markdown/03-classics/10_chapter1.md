@@ -26,58 +26,6 @@ Some Content
 
 ##==##
 
-<!-- .slide: class="blue" -->
-
-## A new slide with blue
-
-Some Content
-
-##--##
-
-<!-- .slide: class="with-code" -->
-
-# Code to produce / Markdown
-
-```markdown
-## ==##
-
-<!-- .slide: class="blue" -->
-
-## A new slide
-
-Some Content
-```
-
-<!-- .element: class="big-code" -->
-
-##==##
-
-<!-- .slide: class="green" -->
-
-## A new slide with green
-
-Some Content
-
-##--##
-
-<!-- .slide: class="with-code" -->
-
-# Code to produce / Markdown
-
-```markdown
-## ==##
-
-<!-- .slide: class="green" -->
-
-## A new slide
-
-Some Content
-```
-
-<!-- .element: class="big-code" -->
-
-##==##
-
 ## Summary
 
 -   Item 1
@@ -338,27 +286,6 @@ To see the notes of this slide Press : 'S'
 
 ^Notes:
 A super notes for speaker
-```
-
-<!-- .element: class="big-code" -->
-
-##==##
-
-<!-- .slide: data-background="./assets/images/dark_background.jpeg" class="transition" -->
-
-# A Custom Transition Slide
-
-##--##
-
-<!-- .slide: class="with-code" -->
-
-# Code to produce / Markdown
-
-```markdown
-<!-- .slide: data-background="./assets/images/dark_background.jpeg"
-    class="transition" -->
-
-# A Custom Transition Slide
 ```
 
 <!-- .element: class="big-code" -->

@@ -1,0 +1,159 @@
+$padding-h1: 30px;
+$transition-line-color: $mainColor;
+$mask-bgcolor: rgba(61, 67, 73, 0.7);
+.reveal .slides section:not(.stack)[class*='transition'] {
+    background: rgba(0, 0, 0, 0);
+
+    h1 {
+        color: $title-color;
+        text-align: center;
+        font-size: 3em;
+        font-weight: 800;
+        margin-top: 250px;
+        margin-bottom: 40px;
+        padding: $padding-h1;
+        width: fit-content;
+        text-transform: initial;
+        margin: 250px auto 40px auto;
+        background: initial;
+        position: relative;
+        transform: initial;
+
+        &:before {
+            content: '';
+            z-index: -1;
+            position: absolute;
+            background: $transition-line-color;
+            width: 100px;
+            height: 10px;
+            left: $padding-h1;
+            bottom: -20px;
+            transform: rotate(0deg);
+        }
+    }
+
+    h2 {
+        font-size: 2.4em;
+        text-align: center;
+        padding-left: $padding-h1;
+        margin-top: initial; // reset
+    }
+
+    &.left h1,
+    &.left h2 {
+        margin-left: initial;
+        text-align: left;
+    }
+
+    &.left h1,
+    &.right h1 {
+        margin-top: 450px;
+    }
+
+    &.right h1,
+    &.right h2 {
+        margin-left: auto;
+        margin-right: initial;
+        text-align: right;
+    }
+
+    &.top h1 {
+        margin-top: 30px;
+    }
+
+    &.bottom h1 {
+        margin-top: 650px;
+    }
+
+    &.mask {
+        h1,
+        h2 {
+            color: white;
+        }
+
+        h1:before {
+            background: white;
+        }
+    }
+}
+
+/**
+* Manage transitions slides with background
+*/
+
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash].mask::after {
+    background-color: $mask-bgcolor;
+}
+
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='png']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='PNG']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='Png']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='jpg']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='JPG']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='Jpg']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='jpeg']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='JPEG']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='Jpeg']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='gif']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='GIF']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='Gif']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='svg']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='SVG']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='Svg']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='bmp']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='BMP']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='Bmp']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='webp']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='WEBP']::after,
+.reveal
+    .backgrounds
+    div.slide-background.transition[data-background-hash*='Webp']::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vw;
+}
