@@ -152,3 +152,69 @@
 ````
 
 <!-- .element: class="big-code" -->
+
+##==##
+
+<!-- .slide: class="transition txt-white" data-background-color="black" -->
+
+# Talk Control Theme
+
+## With txt white
+
+##--##
+
+<!-- .slide: class="whith-code" -->
+
+# Code to produce / Markdown
+
+```markdown
+<!-- .slide: class="transition txt-white" data-background-color="black" -->
+
+# Talk Control Theme
+
+## With txt white
+```
+
+##==##
+
+<!-- .slide: class="transition" style="--tc-transition-color: cornflowerblue;" -->
+
+# Talk Control Theme
+
+## With txt colored
+
+##--##
+
+<!-- .slide: class="whith-code" -->
+
+# Code to produce / Markdown
+
+```markdown
+<!-- .slide: class="transition txt-white" style="--tc-transition-color: cornflowerblue;" -->
+
+# Talk Control Theme
+
+## With txt white
+```
+
+##==##
+
+<!-- .slide: class="transition" style="--tc-transition-color: cornflowerblue; --tc-transition-line-color: darkorange;" -->
+
+# Talk Control Theme
+
+## With txt colored and line colored
+
+##--##
+
+<!-- .slide: class="whith-code" -->
+
+# Code to produce / Markdown
+
+```markdown
+<!-- .slide: class="transition txt-white" style="--tc-transition-color: cornflowerblue; --tc-transition-line-color: darkorange;" -->
+
+# Talk Control Theme
+
+## With txt white and line colored
+```

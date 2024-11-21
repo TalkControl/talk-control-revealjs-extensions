@@ -1,4 +1,4 @@
-<!-- .slide: class="transition left" -->
+<!-- .slide: class="transition" -->
 
 # Talk Control Theme
 
