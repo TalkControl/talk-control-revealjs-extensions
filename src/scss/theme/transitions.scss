@@ -1,11 +1,11 @@
 $padding-h1: 30px;
-$transition-line-color: $mainColor;
 $mask-bgcolor: rgba(61, 67, 73, 0.7);
-.reveal .slides section:not(.stack)[class*='transition'] {
+.reveal .slides section:not(.stack)[class*='transition'],
+.reveal .slides section:not(.stack).first-slide {
     background: rgba(0, 0, 0, 0);
 
     h1 {
-        color: $title-color;
+        color: var(--tc-transition-color, $title-color);
         text-align: center;
         font-size: 3em;
         font-weight: 800;
@@ -23,7 +23,10 @@ $mask-bgcolor: rgba(61, 67, 73, 0.7);
             content: '';
             z-index: -1;
             position: absolute;
-            background: $transition-line-color;
+            background: var(
+                --tc-transition-line-color,
+                var(--tc-transition-color, $title-color)
+            );
             width: 100px;
             height: 10px;
             left: $padding-h1;
@@ -33,6 +36,7 @@ $mask-bgcolor: rgba(61, 67, 73, 0.7);
     }
 
     h2 {
+        color: var(--tc-transition-color, $title-color);
         font-size: 2.4em;
         text-align: center;
         padding-left: $padding-h1;
@@ -65,15 +69,9 @@ $mask-bgcolor: rgba(61, 67, 73, 0.7);
         margin-top: 650px;
     }
 
-    &.mask {
-        h1,
-        h2 {
-            color: white;
-        }
-
-        h1:before {
-            background: white;
-        }
+    &.mask,
+    &.txt-white {
+        --tc-transition-color: white;
     }
 }
 
