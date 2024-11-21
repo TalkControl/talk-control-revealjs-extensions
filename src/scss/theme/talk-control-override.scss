@@ -45,4 +45,6 @@ $overlayElementFgColor: 0, 0, 0;
 
 @import './resets.scss';
 @import './print';
-@import './layout';
+@import './classics/layout';
+@import './classics/transitions';
+@import './classics/code-slides';

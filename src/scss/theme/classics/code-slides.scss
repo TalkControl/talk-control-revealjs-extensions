@@ -1,0 +1,98 @@
+$code-bg: #3f3f3f;
+
+:root {
+    --tc-big-code-font-size: 1.5em;
+    --tc-big-code-line-height: 2.1em;
+    --tc-normal-code-font-size: 0.9em;
+    --tc-normal-code-line-height: 1.7em;
+    --tc-code-max-height: 800px;
+    --tc-code-font-size: var(--tc-normal-code-font-size);
+    --tc-code-line-height: var(--tc-normal-code-line-height);
+}
+
+.with-code,
+.with-code-bg-dark {
+    @import '../../../../node_modules/highlight.js/scss/a11y-light.scss';
+}
+
+.reveal .slides section:is(.with-code, .with-code-dark, .with-code-bg-dark) {
+    pre {
+        display: block;
+        position: relative;
+        width: 100%;
+        margin: 20px auto;
+        text-align: left;
+        //font-family: monospace;
+        word-wrap: break-word;
+
+        code {
+            //display: block;
+            padding: 10px;
+            overflow: auto;
+            max-height: var(--tc-code-max-height);
+            word-wrap: normal;
+            font-size: var(--tc-code-font-size);
+            line-height: var(--tc-code-line-height);
+            //font-family: monospace;
+            //margin-bottom: 20px;
+
+            span {
+                line-height: 1.8em;
+            }
+        }
+    }
+
+    &.normal-code pre:not(.literal),
+    pre.normal-code:not(.literal) {
+        --tc-code-font-size: var(--tc-normal-code-font-size);
+        --tc-code-line-height: var(--tc-normal-code-line-height);
+    }
+    &.big-code pre:not(.literal),
+    pre.big-code:not(.literal) {
+        --tc-code-font-size: var(--tc-big-code-font-size);
+        --tc-code-line-height: var(--tc-big-code-line-height);
+    }
+
+    &:is(.normal-code, .big-code) pre:not(.literal),
+    pre:is(.normal-code, .big-code):not(.literal) {
+        position: relative;
+        top: 0;
+
+        &.alone {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    &.max-height pre code {
+        --tc-code-max-height: 900px;
+        //max-height: 900px;
+    }
+}
+
+/**
+* Deal with dark code
+*/
+
+.with-code-dark,
+.with-code-bg-dark {
+    @import '../../../../node_modules/highlight.js/scss/a11y-dark.scss';
+}
+
+.reveal .backgrounds div.slide-background.with-code-dark {
+    background-color: $code-bg;
+}
+
+.reveal .slides section.with-code-dark:not(.stack):not([class*='transition']) {
+    h1,
+    h2 {
+        color: white;
+    }
+}
+
+.reveal .slides section.with-code-bg-dark {
+    pre {
+        background-color: $code-bg;
+    }
+}
