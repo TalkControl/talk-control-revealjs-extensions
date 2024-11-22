@@ -5,7 +5,7 @@ $code-bg: #3f3f3f;
     --tc-big-code-line-height: 2.1em;
     --tc-normal-code-font-size: 0.9em;
     --tc-normal-code-line-height: 1.7em;
-    --tc-code-max-height: 800px;
+    --tc-code-max-lines: 20;
     --tc-code-font-size: var(--tc-normal-code-font-size);
     --tc-code-line-height: var(--tc-normal-code-line-height);
 }
@@ -22,53 +22,46 @@ $code-bg: #3f3f3f;
         width: 100%;
         margin: 20px auto;
         text-align: left;
-        //font-family: monospace;
         word-wrap: break-word;
 
         code {
-            //display: block;
             padding: 10px;
             overflow: auto;
-            max-height: var(--tc-code-max-height);
+            max-height: calc(
+                var(--tc-code-line-height) * var(--tc-code-max-lines) - 10px
+            );
             word-wrap: normal;
             font-size: var(--tc-code-font-size);
             line-height: var(--tc-code-line-height);
-            //font-family: monospace;
-            //margin-bottom: 20px;
-
-            span {
-                line-height: 1.8em;
-            }
         }
     }
 
-    &.normal-code pre:not(.literal),
-    pre.normal-code:not(.literal) {
+    &.normal-code pre,
+    pre.normal-code {
         --tc-code-font-size: var(--tc-normal-code-font-size);
         --tc-code-line-height: var(--tc-normal-code-line-height);
     }
-    &.big-code pre:not(.literal),
-    pre.big-code:not(.literal) {
+    &.big-code pre,
+    pre.big-code {
         --tc-code-font-size: var(--tc-big-code-font-size);
         --tc-code-line-height: var(--tc-big-code-line-height);
     }
 
-    &:is(.normal-code, .big-code) pre:not(.literal),
-    pre:is(.normal-code, .big-code):not(.literal) {
-        position: relative;
-        top: 0;
-
-        &.alone {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+    pre.alone {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     &.max-height pre code {
-        --tc-code-max-height: 900px;
-        //max-height: 900px;
+        --tc-code-max-lines: 30;
     }
+}
+
+// Add some padding and a box-shadow to code blocks that are not highlighted
+.reveal code:not(.hljs) {
+    padding: 5px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
 }
 
 /**
