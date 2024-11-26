@@ -1,0 +1,322 @@
+:root {
+    --tc-speaker-margin-left: 200px;
+    --tc-speaker-margin-right: 300px;
+    --tc-speaker-top-position: 350px;
+    --tc-speaker-width-img: 240px;
+    --tc-speaker-max-size-badge: 250px;
+    --tc-speaker-max-width-company: 400px;
+    --tc-speaker-max-height-company: 200px;
+}
+
+.reveal .slides section:not(.stack) div.speaker-slide {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-areas:
+        'title title title title title'
+        'img  rules rules badge-1 badge-4'
+        'img  rules rules badge-2 badge-5'
+        'info-1 info-2 company badge-3 badge-6';
+
+    grid-template-columns:
+        var(--tc-speaker-width-img) 1fr 1fr var(--tc-speaker-max-size-badge)
+        var(--tc-speaker-max-size-badge);
+    grid-template-rows:
+        200px var(--tc-speaker-max-size-badge) var(--tc-speaker-max-size-badge)
+        var(--tc-speaker-max-height-company);
+
+    // Speaker title
+    h1 {
+        grid-area: title;
+        align-self: center;
+        line-height: 200px;
+        margin-bottom: 0;
+    }
+    // Speaker Rule or job title
+    h2 {
+        grid-area: rules;
+        margin-top: inherit;
+        margin-bottom: inherit;
+        text-transform: inherit;
+        text-align: center;
+        color: $mainColor;
+        line-height: 1.5em;
+        display: table;
+        font-size: 1.2em;
+        align-self: center;
+    }
+    // Speaker additional informations
+    h3 {
+        grid-area: info-1;
+        align-self: center;
+        margin: 0;
+        text-transform: inherit;
+        text-align: left;
+        font-size: 0.6em;
+        color: $mainColor;
+    }
+
+    /**
+    * Deal with case having more informations (up to 6)
+    **/
+    :nth-child(2 of h3) {
+        grid-area: info-2;
+    }
+    :nth-child(3 of h3) {
+        grid-area: info-1;
+        margin-top: calc(0.6em * 6);
+    }
+    :nth-child(4 of h3) {
+        grid-area: info-2;
+        margin-top: calc(0.6em * 6);
+    }
+    :nth-child(5 of h3) {
+        grid-area: info-1;
+        margin-top: calc(0.6em * 12);
+    }
+    :nth-child(6 of h3) {
+        grid-area: info-2;
+        margin-top: calc(0.6em * 12);
+    }
+
+    // Speaker image
+    p:has(.speaker) {
+        margin-top: inherit;
+        grid-area: img;
+        width: var(--tc-speaker-width-img);
+        height: var(--tc-speaker-width-img);
+        align-self: center;
+        .speaker {
+            width: var(--tc-speaker-width-img);
+            height: var(--tc-speaker-width-img);
+            border-radius: var(--tc-speaker-width-img);
+            background-size: cover;
+            box-shadow: lightgrey 0px 6px 6px 1px;
+        }
+    }
+
+    // Speaker company logo
+    p:has(.company) {
+        margin-top: inherit;
+        grid-area: company;
+        height: fit-content;
+        align-self: center;
+        text-align: center;
+        .company {
+            max-width: var(--tc-speaker-max-width-company);
+            max-height: var(--tc-speaker-max-height-company);
+        }
+    }
+
+    // Speaker badges
+    p:has(.badge) {
+        margin-top: inherit;
+        text-align: center;
+        height: fit-content;
+        align-self: center;
+        grid-area: badge-1;
+        .badge {
+            max-width: var(--tc-speaker-max-size-badge);
+            max-height: var(--tc-speaker-max-size-badge);
+        }
+    }
+    /**
+    * Deal with case having 6 badges
+    **/
+
+    :nth-child(2 of p:has(.badge)) {
+        grid-area: badge-2;
+    }
+    :nth-child(3 of p:has(.badge)) {
+        grid-area: badge-3;
+    }
+    :nth-child(4 of p:has(.badge)) {
+        grid-area: badge-4;
+    }
+    :nth-child(5 of p:has(.badge)) {
+        grid-area: badge-5;
+    }
+    :nth-child(6 of p:has(.badge)) {
+        grid-area: badge-6;
+    }
+
+    /**
+    * Special case for 2 speakers
+    */
+    &.two-speakers {
+        --tc-speaker-max-size-badge: 170px;
+        --tc-speaker-max-width-company: 300px;
+        --tc-speaker-max-height-company: 150px;
+        grid-template-areas:
+            'title title title sep title-2 title-2 title-2'
+            'img  rules rules sep img-2 rules-2 rules-2'
+            'info-1 info-2 company sep info-3 info-4 company-2'
+            'badge-1 badge-2 badge-3 sep badge-2-1 badge-2-2 badge-2-3';
+        grid-template-columns:
+            var(--tc-speaker-width-img) 1fr 1fr 150px var(
+                --tc-speaker-width-img
+            )
+            1fr 1fr;
+        grid-template-rows:
+            200px 400px var(--tc-speaker-max-height-company)
+            var(--tc-speaker-max-size-badge);
+
+        /**
+        * Second speaker
+        */
+        :nth-child(2 of h1) {
+            grid-area: title-2;
+        }
+        :nth-child(2 of h2) {
+            grid-area: rules-2;
+        }
+        :nth-child(2 of p:has(.speaker)) {
+            grid-area: img-2;
+        }
+        :nth-child(2 of p:has(.company)) {
+            grid-area: company-2;
+        }
+        h3 ~ h3 {
+            grid-area: info-2;
+        }
+        :nth-child(2 of h1) ~ h3 {
+            grid-area: info-3;
+            margin: 0;
+        }
+        :nth-child(2 of h1) ~ h3 ~ h3 {
+            grid-area: info-4;
+            margin: 0;
+        }
+        :nth-child(2 of h1) ~ p:has(.badge) {
+            grid-area: badge-2-1;
+        }
+        :nth-child(2 of h1) ~ p:has(.badge) ~ p:has(.badge) {
+            grid-area: badge-2-2;
+        }
+        :nth-child(2 of h1) ~ p:has(.badge) ~ p:has(.badge) ~ p:has(.badge) {
+            grid-area: badge-2-3;
+        }
+    }
+}
+
+/*.reveal .slides section:not(.stack).speaker-slide {
+    height: 800px; // force a big height to avoid strange operations
+    text-transform: inherit;
+
+    h1 {
+        margin-top: 100px;
+        margin-left: calc(
+            var(--tc-speaker-margin-left) +
+                (-1 * (var(--tc-speaker-width-img) / 2))
+        );
+    }
+
+    h2 {
+        position: absolute;
+        left: calc(
+            var(--tc-speaker-margin-left) + 50px + var(--tc-speaker-width-img)
+        );
+        top: calc(
+            (var(--tc-speaker-width-img) / 2) + var(--tc-speaker-top-position)
+        );
+        text-transform: inherit;
+        text-align: center;
+        color: $mainColor;
+        line-height: 1.5em;
+        display: table;
+        width: 700px;
+        font-size: 1.2em;
+    }
+
+    h3 {
+        position: absolute;
+        text-transform: inherit;
+        text-align: center;
+        left: calc(
+            var(--tc-speaker-margin-left) - (var(--tc-speaker-width-img) / 2)
+        );
+        font-size: 0.6em;
+        color: $mainColor;
+        margin-bottom: 20px;
+    }
+
+    h3.icon-rule {
+        background: linear-gradient(to right, green, red);
+        margin: 0 20px;
+        //width: calc($width-bg-white - 40px);
+        padding: 10px 0;
+        color: white;
+    }
+
+    h3.icon-first {
+        top: calc(
+            var(--tc-speaker-width-img) + var(--tc-speaker-top-position) + 20px +
+                (3 * 1.5em)
+        );
+    }
+    h3.icon-second {
+        top: calc(
+            var(--tc-speaker-width-img) + var(--tc-speaker-top-position) + 20px +
+                20px + (4 * 1.5em)
+        );
+    }
+    h3.icon-third {
+        top: calc(
+            var(--tc-speaker-width-img) + var(--tc-speaker-top-position) + 20px +
+                20px + (5 * 1.5em)
+        );
+    }
+
+    p:first-of-type:before {
+        content: '';
+        positon: absolute;
+        top: calc(
+            var(--tc-speaker-top-position) +
+                (-1 * (var(--tc-speaker-width-img) / 2))
+        );
+        left: calc(
+            var(--tc-speaker-margin-right) +
+                (-1 * (var(--tc-speaker-width-img) / 2))
+        );
+        border-radius: 20px;
+        background-color: white;
+    }
+
+    .speaker {
+        position: absolute;
+        left: var(--tc-speaker-margin-left);
+        top: var(--tc-speaker-top-position);
+        width: var(--tc-speaker-width-img);
+        height: var(--tc-speaker-width-img);
+        border-radius: var(--tc-speaker-width-img);
+        background-size: cover;
+        box-shadow: lightgrey 0px 6px 6px 1px;
+    }
+
+    .company {
+        position: absolute;
+        top: 250px;
+        right: 350px;
+        max-width: 400px;
+        max-height: 200px;
+    }
+
+    .badge {
+        position: absolute;
+        top: 550px;
+        right: 400px;
+        max-width: 250px;
+        max-height: 250px;
+    }
+
+    img[alt*='first-badge'] {
+        right: 700px;
+    }
+    img[alt*='second-badge'] {
+        right: 400px;
+    }
+    img[alt*='third-badge'] {
+        right: 100px;
+    }
+}
+*/

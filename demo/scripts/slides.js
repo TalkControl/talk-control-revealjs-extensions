@@ -17,10 +17,16 @@ function schoolSlides() {
     ];
 }
 
+function speakerSlides() {
+    const dir = '02-speaker';
+    return [`${dir}/01_speaker.md`];
+}
+
 function formation() {
     return [
         //
         ...schoolSlides(),
+        ...speakerSlides(),
     ].map((slidePath) => {
         return { path: slidePath };
     });
