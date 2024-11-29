@@ -3,11 +3,11 @@ $code-bg: #3f3f3f;
 :root {
     --tc-big-code-font-size: 1.5em;
     --tc-big-code-line-height: 2.1em;
-    --tc-normal-code-font-size: 0.9em;
-    --tc-normal-code-line-height: 1.7em;
+    --tc-medium-code-font-size: 0.9em;
+    --tc-medium-code-line-height: 1.7em;
     --tc-code-max-lines: 20;
-    --tc-code-font-size: var(--tc-normal-code-font-size);
-    --tc-code-line-height: var(--tc-normal-code-line-height);
+    --tc-code-font-size: var(--tc-medium-code-font-size);
+    --tc-code-line-height: var(--tc-medium-code-line-height);
 }
 
 .with-code,
@@ -36,10 +36,10 @@ $code-bg: #3f3f3f;
         }
     }
 
-    &.normal-code pre,
-    pre.normal-code {
-        --tc-code-font-size: var(--tc-normal-code-font-size);
-        --tc-code-line-height: var(--tc-normal-code-line-height);
+    &.medium-code pre,
+    pre.medium-code {
+        --tc-code-font-size: var(--tc-medium-code-font-size);
+        --tc-code-line-height: var(--tc-medium-code-line-height);
     }
     &.big-code pre,
     pre.big-code {

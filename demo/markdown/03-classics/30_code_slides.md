@@ -364,7 +364,7 @@
 
 ## BIG Code centered
 
-### Works also with normal code
+### Works also with medium code
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>

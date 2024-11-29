@@ -79,79 +79,36 @@ $mask-bgcolor: rgba(61, 67, 73, 0.7);
 * Manage transitions slides with background
 */
 
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash].mask::after {
-    background-color: $mask-bgcolor;
-}
-
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='png']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='PNG']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='Png']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='jpg']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='JPG']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='Jpg']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='jpeg']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='JPEG']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='Jpeg']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='gif']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='GIF']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='Gif']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='svg']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='SVG']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='Svg']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='bmp']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='BMP']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='Bmp']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='webp']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='WEBP']::after,
-.reveal
-    .backgrounds
-    div.slide-background.transition[data-background-hash*='Webp']::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vw;
+.reveal .backgrounds div.slide-background.transition {
+    &[data-background-hash].mask::after {
+        background-color: $mask-bgcolor;
+    }
+    &[data-background-hash*='png']::after,
+    &[data-background-hash*='PNG']::after,
+    &[data-background-hash*='Png']::after,
+    &[data-background-hash*='jpg']::after,
+    &[data-background-hash*='JPG']::after,
+    &[data-background-hash*='Jpg']::after,
+    &[data-background-hash*='jpeg']::after,
+    &[data-background-hash*='JPEG']::after,
+    &[data-background-hash*='Jpeg']::after,
+    &[data-background-hash*='gif']::after,
+    &[data-background-hash*='GIF']::after,
+    &[data-background-hash*='Gif']::after,
+    &[data-background-hash*='svg']::after,
+    &[data-background-hash*='SVG']::after,
+    &[data-background-hash*='Svg']::after,
+    &[data-background-hash*='bmp']::after,
+    &[data-background-hash*='BMP']::after,
+    &[data-background-hash*='Bmp']::after,
+    &[data-background-hash*='webp']::after,
+    &[data-background-hash*='WEBP']::after,
+    &[data-background-hash*='Webp']::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vw;
+    }
 }
