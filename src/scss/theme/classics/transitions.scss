@@ -1,17 +1,15 @@
-$padding-h1: 30px;
-$mask-bgcolor: rgba(61, 67, 73, 0.7);
 .reveal .slides section:not(.stack)[class*='transition'],
 .reveal .slides section:not(.stack).first-slide {
     background: rgba(0, 0, 0, 0);
 
     h1 {
-        color: var(--tc-transition-color, $title-color);
+        color: var(--tc-transition-color, var(--tc-heading-color));
         text-align: center;
         font-size: 3em;
         font-weight: 800;
         margin-top: 250px;
         margin-bottom: 40px;
-        padding: $padding-h1;
+        padding: var(--tc-transition-padding-h1);
         width: fit-content;
         text-transform: initial;
         margin: 250px auto 40px auto;
@@ -25,21 +23,21 @@ $mask-bgcolor: rgba(61, 67, 73, 0.7);
             position: absolute;
             background: var(
                 --tc-transition-line-color,
-                var(--tc-transition-color, $title-color)
+                var(--tc-transition-color, var(--tc-heading-color))
             );
             width: 100px;
             height: 10px;
-            left: $padding-h1;
+            left: var(--tc-transition-padding-h1);
             bottom: -20px;
             transform: rotate(0deg);
         }
     }
 
     h2 {
-        color: var(--tc-transition-color, $title-color);
+        color: var(--tc-transition-color, var(--tc-heading-color));
         font-size: 2.4em;
         text-align: center;
-        padding-left: $padding-h1;
+        padding-left: var(--tc-transition-padding-h1);
         margin-top: initial; // reset
     }
 
@@ -81,7 +79,7 @@ $mask-bgcolor: rgba(61, 67, 73, 0.7);
 
 .reveal .backgrounds div.slide-background.transition {
     &[data-background-hash].mask::after {
-        background-color: $mask-bgcolor;
+        background-color: rgba(61, 67, 73, 0.7);
     }
     &[data-background-hash*='png']::after,
     &[data-background-hash*='PNG']::after,
