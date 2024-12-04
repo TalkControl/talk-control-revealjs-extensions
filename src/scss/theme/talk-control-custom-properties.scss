@@ -1,0 +1,74 @@
+/* 
+* all custom properties used in talk control theme
+* to overide your own style, simply override the custom properties in body selector or theme
+*/
+@use 'sass:color';
+
+:root {
+    //////////////////////////
+    // Properties for globals layouts
+    //////////////////////////
+    --tc-font-size: 1.2em;
+    // heading
+    --tc-heading-color: #{$mainColor};
+    --tc-heading-title-font-size: 1.8em;
+    --tc-heading-sub-title-font-size: 1.3em;
+    --tc-heading-margin-bottom: 130px;
+    --tc-heading-sub-title-margin-bottom: 40px;
+    --tc-heading-sub-title-margin-top: -90px;
+    --tc-heading-other-headings-font-size: 1.25em;
+    // tables
+    --tc-table-header-bg: #{$mainColor};
+    --tc-table-header-color: white;
+    --tc-table-bg: #efefef;
+
+    //////////////////////////
+    // Properties for transitions slides
+    //////////////////////////
+    --tc-transition-padding-h1: 30px;
+
+    //////////////////////////
+    // Properties for speakers slides
+    //////////////////////////
+    --tc-speaker-width-img: 240px;
+    --tc-speaker-max-size-badge: 250px;
+    --tc-speaker-max-width-company: 400px;
+    --tc-speaker-max-height-company: 200px;
+    // Grid area
+    --tc-speaker-grid-template-areas: 'title title title title title'
+        'img  rules rules badge-1 badge-4' 'img  rules rules badge-2 badge-5'
+        'info-1 info-2 company badge-3 badge-6';
+    --tc-speaker-grid-template-columns: var(--tc-speaker-width-img) 1fr 1fr
+        var(--tc-speaker-max-size-badge) var(--tc-speaker-max-size-badge);
+    --tc-speaker-grid-template-rows: 200px var(--tc-speaker-max-size-badge)
+        var(--tc-speaker-max-size-badge) var(--tc-speaker-max-height-company);
+    // special case for slide with two speakers
+    --tc-speaker-two-speakers-max-size-badge: 170px;
+    --tc-speaker-two-speakers-max-width-company: 300px;
+    --tc-speaker-two-speakers-max-height-company: 150px;
+    --tc-speaker-two-speakers-grid-template-areas: 'title title title . title-2 title-2 title-2'
+        'img  rules rules . img-2 rules-2 rules-2'
+        'info-1 info-2 company . info-3 info-4 company-2'
+        'badge-1 badge-2 badge-3 . badge-2-1 badge-2-2 badge-2-3';
+    --tc-speaker-two-speakers-grid-template-columns: var(
+            --tc-speaker-two-speakers-width-img
+        )
+        1fr 1fr 150px var(--tc-speaker-two-speakers-width-img) 1fr 1fr;
+    --tc-speaker-two-speakers-grid-template-rows: 200px 400px
+        var(--tc-speaker-two-speakers-max-height-company)
+        var(--tc-speaker-two-speakers-max-size-badge);
+
+    //////////////////////////
+    // Properties for code slides
+    //////////////////////////
+    // big code
+    --tc-big-code-font-size: 1.5em;
+    --tc-big-code-line-height: 2.1em;
+    // medium code
+    --tc-medium-code-font-size: 0.9em;
+    --tc-medium-code-line-height: 1.7em;
+    --tc-code-max-lines: 20;
+    --tc-code-font-size: var(--tc-medium-code-font-size);
+    --tc-code-line-height: var(--tc-medium-code-line-height);
+    --tc-code-dark-background: #3f3f3f;
+}
