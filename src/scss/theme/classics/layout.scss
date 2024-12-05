@@ -2,52 +2,51 @@
 * Define Variables used in the theme
 */
 
-$title-color: $mainColor;
-$table-header-bg: $mainColor;
-$table-header-color: white;
-
 .reveal .slides section:not(.stack) {
     width: 100%;
-    height: calc(100% - 40px);
-    height: -webkit-calc(100% - 40px);
+    height: calc(100% - var(--tc-heading-sub-title-margin-bottom));
+    height: -webkit-calc(100% - var(--tc-heading-sub-title-margin-bottom));
     text-align: left;
-    font-size: 1.2em;
+    font-size: var(--tc-font-size);
 
+    /**
+    * Main titles
+    */
     h1,
     h2 {
         text-transform: initial;
         text-align: left;
-        color: $title-color;
-        font-size: 1.8em;
+        color: var(--tc-heading-color);
+        font-size: var(--tc-heading-title-font-size);
         font-weight: 600;
+        margin-bottom: var(--tc-heading-margin-bottom);
     }
 
-    h1,
-    h2,
-    h3 {
-        text-transform: initial;
-        margin-bottom: 130px;
-    }
-
-    h1 ~ h2,
-    h2 ~ h3,
-    h1 ~ h3 {
-        text-transform: initial;
-        margin-bottom: 40px;
-        color: $title-color;
-        font-size: 1.5em;
-    }
-
+    /**
+    * Sub titles
+    */
     h1 + h2,
     h2 + h3,
     h1 + h3 {
-        margin-top: -90px;
-        font-size: 1.15em;
+        text-transform: initial; // reset mandatory for reveal
+        margin-top: var(--tc-heading-sub-title-margin-top);
+        font-size: var(--tc-heading-sub-title-font-size);
+    }
+
+    /**
+    * Other headings
+    */
+    h1 ~ h2,
+    h2 ~ h3,
+    h1 ~ h3 {
+        text-transform: initial; // reset mandatory for reveal
+        font-size: var(--tc-heading-other-headings-font-size);
+        margin-bottom: var(--tc-heading-sub-title-margin-bottom);
     }
 
     table:not(.hljs-ln) {
         width: 100%;
-        background-color: #efefef;
+        background-color: var(--tc-table-bg);
     }
     table:not(.hljs-ln),
     th,
@@ -56,7 +55,7 @@ $table-header-color: white;
     }
 
     thead {
-        background-color: $table-header-bg;
-        color: $table-header-color;
+        background-color: var(--tc-table-header-bg);
+        color: var(--tc-table-header-color);
     }
 }

@@ -1,15 +1,3 @@
-$code-bg: #3f3f3f;
-
-:root {
-    --tc-big-code-font-size: 1.5em;
-    --tc-big-code-line-height: 2.1em;
-    --tc-medium-code-font-size: 0.9em;
-    --tc-medium-code-line-height: 1.7em;
-    --tc-code-max-lines: 20;
-    --tc-code-font-size: var(--tc-medium-code-font-size);
-    --tc-code-line-height: var(--tc-medium-code-line-height);
-}
-
 .with-code,
 .with-code-bg-dark {
     @import '../../../../node_modules/highlight.js/scss/a11y-light.scss';
@@ -74,7 +62,7 @@ $code-bg: #3f3f3f;
 }
 
 .reveal .backgrounds div.slide-background.with-code-dark {
-    background-color: $code-bg;
+    background-color: var(--tc-code-dark-background);
 }
 
 .reveal .slides section.with-code-dark:not(.stack):not([class*='transition']) {
@@ -86,6 +74,6 @@ $code-bg: #3f3f3f;
 
 .reveal .slides section.with-code-bg-dark {
     pre {
-        background-color: $code-bg;
+        background-color: var(--tc-code-dark-background);
     }
 }

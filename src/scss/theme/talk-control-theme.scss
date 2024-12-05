@@ -10,6 +10,9 @@
 // Overrides ------------------------------------
 @import './talk-control-override';
 
+// Custom properties (talk control only)
+@import './talk-control-custom-properties';
+
 // Theme template ------------------------------
 @import '/node_modules/reveal.js/css/theme/template/theme';
 // ---------------------------------------------
