@@ -394,8 +394,6 @@
 
 # Text with inline code
 
-<br><br>
-
 -   attribut `draggable=true` sur l'élément html.
     <br><br>
 -   `ondragstart` event sur l'élément draggable.
@@ -413,7 +411,6 @@
 ```Markdown
 <!-- .slide: class="with-code" -->
 
-<br><br>
 - attribut `draggable=true` sur l'élément html.
 <br><br>
 - `ondragstart` event sur l'élément draggable.
