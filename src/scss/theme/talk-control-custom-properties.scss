@@ -26,6 +26,15 @@
     // Properties for transitions slides
     //////////////////////////
     --tc-transition-padding-h1: 30px;
+    --tc-transition-color: var(--tc-heading-color);
+    --tc-transition-title-font-size: 3em;
+    --tc-transition-sub-title-font-size: 2.4em;
+    --tc-transition-display-line: block;
+    --tc-transition-margin-top: 250px;
+    --tc-transition-left-right-mg-top: 450px;
+    --tc-transition-top-mg-top: 30px;
+    --tc-transition-bottom-mg-top: 650px;
+    --tc-transition-line-color: initial;
 
     //////////////////////////
     // Properties for speakers slides
@@ -34,6 +43,9 @@
     --tc-speaker-max-size-badge: 250px;
     --tc-speaker-max-width-company: 400px;
     --tc-speaker-max-height-company: 200px;
+    --tc-speaker-h1-line-height: 200px;
+    --tc-speaker-h2-font-size: 1.2em;
+    --tc-speaker-info-font-size: 0.6em;
     // Grid area
     --tc-speaker-grid-template-areas: 'title title title title title'
         'img  rules rules badge-1 badge-4' 'img  rules rules badge-2 badge-5'
@@ -50,10 +62,8 @@
         'img  rules rules . img-2 rules-2 rules-2'
         'info-1 info-2 company . info-3 info-4 company-2'
         'badge-1 badge-2 badge-3 . badge-2-1 badge-2-2 badge-2-3';
-    --tc-speaker-two-speakers-grid-template-columns: var(
-            --tc-speaker-two-speakers-width-img
-        )
-        1fr 1fr 150px var(--tc-speaker-two-speakers-width-img) 1fr 1fr;
+    --tc-speaker-two-speakers-grid-template-columns: var(--tc-speaker-width-img)
+        1fr 1fr 150px var(--tc-speaker-width-img) 1fr 1fr;
     --tc-speaker-two-speakers-grid-template-rows: 200px 400px
         var(--tc-speaker-two-speakers-max-height-company)
         var(--tc-speaker-two-speakers-max-size-badge);
