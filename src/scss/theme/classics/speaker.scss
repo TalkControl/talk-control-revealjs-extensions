@@ -10,7 +10,7 @@
     h1 {
         grid-area: title;
         align-self: center;
-        line-height: 200px;
+        line-height: var(--tc-speaker-h1-line-height);
         margin-bottom: 0;
     }
     // Speaker Rule or job title
@@ -20,9 +20,9 @@
         margin-bottom: inherit;
         text-transform: inherit;
         text-align: center;
-        line-height: 1.5em;
+        line-height: calc(var(--tc-speaker-h2-font-size) * 1.25);
         display: table;
-        font-size: 1.2em;
+        font-size: var(--tc-speaker-h2-font-size);
         align-self: center;
     }
     // Speaker additional informations
@@ -32,7 +32,7 @@
         margin: 0;
         text-transform: inherit;
         text-align: left;
-        font-size: 0.6em;
+        font-size: var(--tc-speaker-info-font-size);
     }
 
     /**
@@ -43,19 +43,19 @@
     }
     :nth-child(3 of h3) {
         grid-area: info-1;
-        margin-top: calc(0.6em * 6);
+        margin-top: calc(var(--tc-speaker-info-font-size) * 6);
     }
     :nth-child(4 of h3) {
         grid-area: info-2;
-        margin-top: calc(0.6em * 6);
+        margin-top: calc(var(--tc-speaker-info-font-size) * 6);
     }
     :nth-child(5 of h3) {
         grid-area: info-1;
-        margin-top: calc(0.6em * 12);
+        margin-top: calc(var(--tc-speaker-info-font-size) * 12);
     }
     :nth-child(6 of h3) {
         grid-area: info-2;
-        margin-top: calc(0.6em * 12);
+        margin-top: calc(var(--tc-speaker-info-font-size) * 12);
     }
 
     // Speaker image

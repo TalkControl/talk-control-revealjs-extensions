@@ -3,21 +3,20 @@
     background: rgba(0, 0, 0, 0);
 
     h1 {
-        color: var(--tc-transition-color, var(--tc-heading-color));
+        color: var(--tc-transition-color);
         text-align: center;
-        font-size: 3em;
+        font-size: var(--tc-transition-title-font-size);
         font-weight: 800;
-        margin-top: 250px;
-        margin-bottom: 40px;
         padding: var(--tc-transition-padding-h1);
         width: fit-content;
         text-transform: initial;
-        margin: 250px auto 40px auto;
+        margin: var(--tc-transition-margin-top) auto 40px auto;
         background: initial;
         position: relative;
         transform: initial;
 
         &:before {
+            display: var(--tc-transition-display-line);
             content: '';
             z-index: -1;
             position: absolute;
@@ -34,8 +33,8 @@
     }
 
     h2 {
-        color: var(--tc-transition-color, var(--tc-heading-color));
-        font-size: 2.4em;
+        color: var(--tc-transition-color);
+        font-size: var(--tc-transition-sub-title-font-size);
         text-align: center;
         padding-left: var(--tc-transition-padding-h1);
         margin-top: initial; // reset
@@ -49,7 +48,7 @@
 
     &.left h1,
     &.right h1 {
-        margin-top: 450px;
+        margin-top: var(--tc-transition-left-right-mg-top);
     }
 
     &.right h1,
@@ -60,11 +59,11 @@
     }
 
     &.top h1 {
-        margin-top: 30px;
+        margin-top: var(--tc-transition-top-mg-top);
     }
 
     &.bottom h1 {
-        margin-top: 650px;
+        margin-top: var(--tc-transition-bottom-mg-top);
     }
 
     &.mask,
