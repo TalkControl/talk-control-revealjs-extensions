@@ -1,18 +1,20 @@
 import { PluginFunction } from 'reveal.js';
 import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
 import { RevealMarkdownPlugin } from './models';
-import { markedDjotDiv } from './marked/marked-speaker';
+import { markedStyledImage } from '@anthonypena/marked-styled-image';
 
 // A wrapper around RevealMarkdown to add custom marked extensions
 const RevealTalkControlMarkdownPlugin: PluginFunction = () => {
     const revealMarkdownPlugin: RevealMarkdownPlugin = RevealMarkdown() as unknown as RevealMarkdownPlugin;
-    revealMarkdownPlugin.marked.use(markedDjotDiv());
 
     return {
         id: 'talk-control-markdown',
         init(reveal) {
-            if (revealMarkdownPlugin && (revealMarkdownPlugin as RevealMarkdownPlugin).init) {
-                return (revealMarkdownPlugin as RevealMarkdownPlugin).init(reveal);
+            if (revealMarkdownPlugin && revealMarkdownPlugin.init) {
+                const promiseInit = revealMarkdownPlugin.init(reveal);
+                // We set all extensions after call of init due to the fact that the init function reset the renderer
+                revealMarkdownPlugin.marked.use(markedStyledImage({ knownStyles: ['test', 'image'] }));
+                return promiseInit;
             }
         },
         // Re-expose the same api as RevealMarkdown
