@@ -41,10 +41,11 @@
     },
     "dependencies": {
         "@anthonypena/marked-styled-image": "^0.0.1",
+        "@fortawesome/fontawesome-free": "^6.7.2",
         "feather-icons": "^4.29.2",
         "highlight.js": "^11.10.0",
         "lit": "^3.1.4",
-        "marked": "^4.3.0",
+        "marked": "^5.0.0",
         "reveal.js": "^5.1.0"
     },
     "devDependencies": {
@@ -69,6 +70,9 @@
         "vite": "^5.3.1",
         "vite-plugin-dts": "^4.2.1",
         "vitest": "^1.6.0"
+    },
+    "peerDependencies": {
+        "marked": "^5.0.0"
     },
     "overrides": {
         "eslint": "$@eslint/js"

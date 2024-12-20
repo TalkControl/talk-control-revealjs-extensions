@@ -1,9 +1,9 @@
+import { RevealTalkControlMarkdownPlugin, TalkControlMarkedOptions } from './tc-marked-plugin';
 import { html, render } from 'lit-html';
 
 import Reveal from 'reveal.js';
 import RevealHighlight from 'reveal.js/plugin/highlight/highlight.esm';
 import RevealNotes from 'reveal.js/plugin/notes/notes.esm';
-import RevealTalkControlMarkdownPlugin from './tc-marked-plugin';
 import RevealTalkControlThemePlugin from './theme-plugin';
 import RevealZoom from 'reveal.js/plugin/zoom/zoom.esm';
 import { SlidePath } from './models';
@@ -14,6 +14,7 @@ export const ThemeInitializer = {
      */
     async init(
         slidesFactory: () => SlidePath[],
+        tcMarkedOptions: TalkControlMarkedOptions,
         slidesRenderer = defaultSlideRenderer,
     ) {
         const importSlideElement: HTMLElement | null =
@@ -30,6 +31,8 @@ export const ThemeInitializer = {
         const { showNotes, pdfMaxPagesPerSlide, pdfSeparateFragments } =
             checkPdfConfiguration(importSlideElement);
 
+        const talkControlMarkedPlugin = new RevealTalkControlMarkdownPlugin(tcMarkedOptions);
+
         // Init the Reveal Engine
         Reveal.initialize({
             controls: true,
@@ -44,7 +47,7 @@ export const ThemeInitializer = {
             pdfMaxPagesPerSlide,
             pdfSeparateFragments,
             plugins: [
-                RevealTalkControlMarkdownPlugin, // We don't use RevealMarkdown because we have to add custom marked extensions
+                talkControlMarkedPlugin.getPlugin(), // We don't use RevealMarkdown because we have to add custom marked extensions
                 RevealTalkControlThemePlugin,
                 RevealZoom,
                 RevealNotes,
