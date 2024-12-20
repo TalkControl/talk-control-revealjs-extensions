@@ -12,9 +12,9 @@ function schoolSlides() {
     const dir = '03-classics';
     return [
         '00_intro.md',
-        `${dir}/10_chapter1.md`,
-        `${dir}/20_transitions.md`,
-        `${dir}/30_code_slides.md`,
+        //`${dir}/10_chapter1.md`,
+        //`${dir}/20_transitions.md`,
+        //`${dir}/30_code_slides.md`,
     ];
 }
 
@@ -24,10 +24,11 @@ function speakerSlides() {
 }
 
 function formation() {
+    console.log(fontAwesomeIconPack());
     return [
         //
         ...schoolSlides(),
-        ...speakerSlides(),
+        //...speakerSlides(),
     ].map((slidePath) => {
         return { path: slidePath };
     });

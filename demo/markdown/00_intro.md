@@ -4,32 +4,23 @@
 
 ## Presentation of Talk Control Theme
 
-##==##
-
-# How to use ?
-
-Each slide show a feature of Talk Control theme
-
-<br>
-
-The code use to produced this presentation is accessible with vertical navigation(Press ⬇️)
-
-# ⬇️
-
 <!-- .element: class="center" -->
 
-##--##
+##==##
 
-# Vertical navigation
+slide 2
 
-Now you can navigate vertically with the arrows
+![](./assets/images/jf.jpg)<!-- .element: class="speaker" -->
+![](./assets/images/jf.jpg)<!-- .element: class="speaker" -->
+
+![](./assets/images/jf.jpg 'test image')
+
+![](./assets/images/jf.jpg 'test image')<!-- .element: class="speaker" -->
+![](./assets/images/jf.jpg 'test image')
+bla bla bla ![un alt](./assets/images/jf.jpg 'test image') bla bla
 
 ##==##
 
-# Djot Div
+Slide 3
 
-:::
-
-test
-
-:::
+![](fa-user 'fa-solid fa tc-icons')
