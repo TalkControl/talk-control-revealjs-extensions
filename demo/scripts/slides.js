@@ -1,6 +1,7 @@
 import {
     Reveal,
     ThemeInitializer,
+    fontAwesomeIconPack,
 } from '../web_modules/talk-control-revealjs-extensions/talk-control-revealjs-extensions.js';
 
 console.log('Reveal version', Reveal.VERSION);
@@ -32,4 +33,7 @@ function formation() {
     });
 }
 
-await ThemeInitializer.init(formation);
+await ThemeInitializer.init(formation, {
+    fontIcons: [fontAwesomeIconPack()],
+    knowStyles: ['test', 'image'],
+});

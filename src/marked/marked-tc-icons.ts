@@ -1,5 +1,4 @@
 // Code from taken from https://github.com/kuroidoruido/js-libs/blob/main/libs/marked-djot-div
-import { html } from 'lit';
 import { marked } from 'marked';
 
 const REGEX = /!\[\]\(([\w-_\s]+)\s+["']([\w-_\s]*)["']\)/;
@@ -97,5 +96,5 @@ export function markedTcIcons({ keyword, includesKeyword, htmlAttribute, iconInT
 export function isTcIconToken(
     token: TcIconsToken | { type: unknown }, keyword: string,
 ): token is TcIconsToken {
-    return token.type === TYPE_ICONS_TC && token.keyword === keyword;
+    return token.type === TYPE_ICONS_TC && (token as TcIconsToken).keyword === keyword;
 }

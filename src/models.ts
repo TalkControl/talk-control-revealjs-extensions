@@ -6,6 +6,7 @@ export interface SlidePath {
 }
 
 export interface RevealMarkdownPlugin {
+    id: string;
     marked: { use: (ext: marked.MarkedExtension) => void };
     init(reveal: Reveal.Api): void | Promise<unknown>;
     processSlides(): void;
