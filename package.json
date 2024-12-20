@@ -40,6 +40,7 @@
         "_serve": "live-server --port=4242 --open=\"./demo/index.html\" --mount=\"/assets:./demo/assets\" --mount=\"/web_modules:./demo/web_modules\" --watch=\"./demo/web_modules/talk-control-revealjs-extensions,./demo/markdown/\""
     },
     "dependencies": {
+        "@anthonypena/marked-styled-image": "^0.0.1",
         "feather-icons": "^4.29.2",
         "highlight.js": "^11.10.0",
         "lit": "^3.1.4",
@@ -49,10 +50,10 @@
     "devDependencies": {
         "@eslint/js": "^9.6.0",
         "@types/feather-icons": "^4.29.4",
+        "@types/marked": "^4.3.0",
         "@types/node": "^20.14.9",
         "@types/reveal.js": "^5.0.3",
         "@types/shelljs": "^0.8.15",
-        "@types/marked": "^4.3.0",
         "chokidar-cli": "^3.0.0",
         "eslint": "^9.6.0",
         "globals": "^15.8.0",
