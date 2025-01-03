@@ -1,4 +1,4 @@
-import { markedTcIcons, MarkedTcIconsOptions } from './marked/marked-tc-icons';
+import { MarkedTcIconsOptions, markedTcIcons } from './marked/marked-tc-icons';
 import { PluginFunction } from 'reveal.js';
 import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
 import { RevealMarkdownPlugin } from './models';
@@ -30,10 +30,21 @@ export class RevealTalkControlMarkdownPlugin {
                         const promiseInit = revealMarkdownPlugin.init(reveal);
                         // We set all extensions after call of init due to the fact that the init function reset the renderer
                         revealMarkdownPlugin.marked.use(markedStyledImage({ knownStyles: self.options.knowStyles ?? [] }));
+                        const initFunctionArray: Array<() => void> = [];
                         if (self.options.fontIcons && self.options.fontIcons.length > 0) {
                             for (const fontIconsToUse of self.options.fontIcons) {
                                 revealMarkdownPlugin.marked.use(markedTcIcons(fontIconsToUse));
+                                if (fontIconsToUse.initFunction) {
+                                    initFunctionArray.push(fontIconsToUse.initFunction);
+                                }
                             }
+                        }
+                        if (initFunctionArray.length > 0) {
+                            reveal.on('ready', () => {
+                                for (const initFunction of initFunctionArray) {
+                                    initFunction();
+                                }
+                            });
                         }
                         return promiseInit;
                     }

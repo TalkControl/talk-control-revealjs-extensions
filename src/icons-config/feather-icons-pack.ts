@@ -1,9 +1,14 @@
-import 'feather-icons';
-
 import { MarkedTcIconsOptions } from "../marked/marked-tc-icons";
+import feather from 'feather-icons';
 
-export const featherIcons: MarkedTcIconsOptions = {
-    keyword: 'feather',
-    includesKeyword: false,
-    htmlAttribute: 'data-feather'
-};
+
+export function featherIconPack(): MarkedTcIconsOptions {
+    return {
+        keyword: 'feather',
+        includesKeyword: false,
+        htmlAttribute: 'data-feather',
+        initFunction: () => {
+            feather.replace();
+        }
+    }
+}
