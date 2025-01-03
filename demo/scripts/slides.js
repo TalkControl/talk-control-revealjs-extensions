@@ -1,7 +1,9 @@
 import {
     Reveal,
     ThemeInitializer,
+    featherIconPack,
     fontAwesomeIconPack,
+    materialSymbolsIconPack,
 } from '../web_modules/talk-control-revealjs-extensions/talk-control-revealjs-extensions.js';
 
 console.log('Reveal version', Reveal.VERSION);
@@ -9,12 +11,12 @@ console.log('Reveal instance', Reveal);
 
 // One method per module
 function schoolSlides() {
-    const dir = '03-classics';
+    const dir = '01-classics';
     return [
         '00_intro.md',
-        //`${dir}/10_chapter1.md`,
-        //`${dir}/20_transitions.md`,
-        //`${dir}/30_code_slides.md`,
+        `${dir}/10_chapter1.md`,
+        `${dir}/20_transitions.md`,
+        `${dir}/30_code_slides.md`,
     ];
 }
 
@@ -23,18 +25,31 @@ function speakerSlides() {
     return [`${dir}/01_speaker.md`];
 }
 
+function helpersSlides() {
+    const dir = '10-helpers';
+    return [
+        `${dir}/10_chapter.md`,
+        `${dir}/11_images.md`,
+        `${dir}/20_icons.md`,
+    ];
+}
+
 function formation() {
-    console.log(fontAwesomeIconPack());
     return [
         //
         ...schoolSlides(),
-        //...speakerSlides(),
+        ...speakerSlides(),
+        ...helpersSlides(),
     ].map((slidePath) => {
         return { path: slidePath };
     });
 }
 
 await ThemeInitializer.init(formation, {
-    fontIcons: [fontAwesomeIconPack()],
+    fontIcons: [
+        fontAwesomeIconPack(),
+        featherIconPack(),
+        materialSymbolsIconPack(),
+    ],
     knowStyles: ['test', 'image'],
 });
