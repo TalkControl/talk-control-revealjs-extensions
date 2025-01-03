@@ -1,7 +1,8 @@
 // Code from taken from https://github.com/kuroidoruido/js-libs/blob/main/libs/marked-djot-div
 import { marked } from 'marked';
 
-const REGEX = /!\[\]\(([\w-_\s]+)\s+["']([\w-_\s]*)["']\)/;
+const iconRegex = new RegExp(`!\\[\\]\\(([\\w-_\\s]+)\\s+["']([\\w-_\\s]*)["']\\)`);
+const tokenizerRule = new RegExp(`^${iconRegex.source}`);
 const TYPE_ICONS_TC = 'iconsTc';
 
 function isDefined<T>(x: T | null | undefined): x is T {
@@ -18,6 +19,7 @@ export interface MarkedTcIconsOptions {
     includesKeyword: boolean;
     htmlAttribute: string;
     iconInTag?: boolean;
+    initFunction?: () => void;
 }
 
 interface TcIconsToken extends marked.Tokens.Generic {
@@ -41,10 +43,13 @@ export function markedTcIcons({ keyword, includesKeyword, htmlAttribute, iconInT
             {
                 name: TYPE_ICONS_TC,
                 level: 'inline',
+                start(src: string): number | undefined {
+                    return src.match(iconRegex)?.index;
+                },
                 tokenizer(src): TcIconsToken | undefined {
                     // We parse in two times the regex because, it would be too slow to do it in one time
                     // First we validate the pattern like an image
-                    const match = REGEX.exec(src);
+                    const match = tokenizerRule.exec(src);
                     if (!isDefined(match)) {
                         return undefined;
                     }

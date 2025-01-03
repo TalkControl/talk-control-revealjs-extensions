@@ -118,4 +118,41 @@ describe(markedTcIcons.name, () => {
 
     });
 
+    it('should keep inline informations before', () => {
+        marked.use(markedIconsFontAwesome);
+        const md = `some text ![](fa-code 'tc-icons fa-icons')\n`;
+        const html = `<p>some text <i class="fa-code tc-icons"></i></p>\n`;
+        expect(marked.parse(md)).toBe(html);
+
+    });
+
+    it('should keep inline informations after', () => {
+        marked.use(markedIconsFontAwesome);
+        const md = `![](fa-code 'tc-icons fa-icons') some text\n`;
+        const html = `<p><i class="fa-code tc-icons"></i> some text</p>\n`;
+        expect(marked.parse(md)).toBe(html);
+
+    });
+
+    it('should keep inline informations before and after', () => {
+        marked.use(markedIconsFontAwesome);
+        const md = `some text ![](fa-code 'tc-icons fa-icons') some text\n`;
+        const html = `<p>some text <i class="fa-code tc-icons"></i> some text</p>\n`;
+        expect(marked.parse(md)).toBe(html);
+
+    });
+
+    it('should convert multiples icons', () => {
+        marked.use(markedIconsFontAwesome);
+        marked.use(markedTcIcons({
+            keyword: 'lni',
+            includesKeyword: true,
+            htmlAttribute: 'class'
+        }));
+        const md = `some text ![](fa-code 'tc-icons fa-icons') some text ![](lni-telephone-3 'lni tc-icons') some text\n`;
+        const html = `<p>some text <i class="fa-code tc-icons"></i> some text <i class="lni lni-telephone-3 tc-icons"></i> some text</p>\n`;
+        expect(marked.parse(md)).toBe(html);
+
+    });
+
 });
