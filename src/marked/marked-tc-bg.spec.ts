@@ -15,28 +15,28 @@ describe(markedTcBg.name, () => {
     it('should parse bg image path', () => {
         marked.use(markedBgInstance);
         const md = `![](../assets/images/jf.jpg 'tc-bg')\n`;
-        const html = `<!-- .slide: data-background="../assets/images/jf.jpg" -->\n`;
+        const html = `<!-- .slide: data-background="../assets/images/jf.jpg" -->`;
         expect(marked.parse(md)).toBe(html);
     });
 
     it('should parse bg color name', () => {
         marked.use(markedBgInstance);
         const md = `![](red 'tc-bg')\n`;
-        const html = `<!-- .slide: data-background="red" -->\n`;
+        const html = `<!-- .slide: data-background="red" -->`;
         expect(marked.parse(md)).toBe(html);
     });
 
     it('should parse bg color rgb', () => {
         marked.use(markedBgInstance);
         const md = `![](rgb(255, 0, 0) 'tc-bg')\n`;
-        const html = `<!-- .slide: data-background="rgb(255, 0, 0)" -->\n`;
+        const html = `<!-- .slide: data-background="rgb(255, 0, 0)" -->`;
         expect(marked.parse(md)).toBe(html);
     });
 
     it('should parse bg color hash', () => {
         marked.use(markedBgInstance);
         const md = `![](#ff0000 'tc-bg')\n`;
-        const html = `<!-- .slide: data-background="#ff0000" -->\n`;
+        const html = `<!-- .slide: data-background="#ff0000" -->`;
         expect(marked.parse(md)).toBe(html);
     });
 
