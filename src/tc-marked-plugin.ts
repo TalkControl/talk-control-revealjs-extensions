@@ -4,6 +4,7 @@ import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
 import { RevealMarkdownPlugin } from './models';
 import { markedStyledImage } from '@anthonypena/marked-styled-image';
 import { markedTcBg } from './marked/marked-tc-bg';
+import { markedTcCols } from './marked/marked-tc-cols';
 
 export interface TalkControlMarkedOptions {
     fontIcons?: MarkedTcIconsOptions[];
@@ -32,6 +33,7 @@ export class RevealTalkControlMarkdownPlugin {
                         // We set all extensions after call of init due to the fact that the init function reset the renderer
                         revealMarkdownPlugin.marked.use(markedStyledImage({ knownStyles: self.options.knowStyles ?? [] }));
                         revealMarkdownPlugin.marked.use(markedTcBg());
+                        revealMarkdownPlugin.marked.use(markedTcCols());
                         const initFunctionArray: Array<() => void> = [];
                         if (self.options.fontIcons && self.options.fontIcons.length > 0) {
                             for (const fontIconsToUse of self.options.fontIcons) {

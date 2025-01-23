@@ -1,4 +1,5 @@
-import { PluginFunction } from 'reveal.js';
+import Reveal, { PluginFunction } from 'reveal.js';
+import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 
 export class TalkControlTheme {
     path: string = '';
@@ -17,6 +18,10 @@ export class TalkControlTheme {
 
     postprocess() {
         this.path = this.extractPath();
+
+        Reveal.addEventListener('ready', () => {
+            manageMultiplesColumns();
+        });
     }
 
     private extractPath() {
