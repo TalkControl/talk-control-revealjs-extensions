@@ -25,6 +25,11 @@ function speakerSlides() {
     return [`${dir}/01_speaker.md`];
 }
 
+function layoutsSlides() {
+    const dir = '03-layouts';
+    return [`${dir}/10_chapter.md`, `${dir}/20_multiple-columns.md`];
+}
+
 function helpersSlides() {
     const dir = '10-helpers';
     return [
@@ -39,6 +44,7 @@ function formation() {
         //
         ...schoolSlides(),
         ...speakerSlides(),
+        ...layoutsSlides(),
         ...helpersSlides(),
     ].map((slidePath) => {
         return { path: slidePath };
