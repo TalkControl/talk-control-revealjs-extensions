@@ -1,0 +1,41 @@
+.reveal .slides > section .tc-icons {
+    &.tc-small {
+        --tc-icon-size: 0.5em;
+    }
+
+    &.tc-big {
+        --tc-icon-size: 2em;
+    }
+}
+
+/**
+* Specifics override for icons
+*/
+
+// Material symbols
+.reveal
+    .slides
+    > section
+    .tc-icons:is(
+        .material-symbols-rounded,
+        .material-symbols-sharp,
+        .material-symbols-outlined
+    ) {
+    color: var(--tc-icon-color);
+    font-size: var(--tc-icon-size, 1em);
+}
+.reveal .slides > section svg.tc-icons {
+    // Feather icons
+    &.feather {
+        stroke: var(--tc-icon-color);
+        width: var(--tc-icon-size, 1em); // Default size
+        height: var(--tc-icon-size, 1em); // Default size
+    }
+
+    // Font Awesome icons
+    &.svg-inline--fa {
+        color: var(--tc-icon-color);
+        width: var(--tc-icon-size, 1em); // Default size
+        height: var(--tc-icon-size, 1em); // Default size
+    }
+}
