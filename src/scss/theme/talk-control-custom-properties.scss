@@ -88,4 +88,10 @@
         --tc-medium-code-line-height
     ); // Line height applied to code
     --tc-code-dark-background: #3f3f3f; // Background color for code in dark mode
+
+    //////////////////////////
+    // Properties for icons
+    //////////////////////////
+    --tc-icon-color: #{$mainColor};
+    --tc-icon-size: 1em;
 }
