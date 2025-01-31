@@ -88,6 +88,17 @@ describe(markedTcIcons.name, () => {
 
     });
 
+    it('should use the correct html attribute and preserve options', () => {
+        marked.use(markedTcIcons({
+            keyword: 'feather',
+            htmlAttribute: 'data-feather'
+        }));
+        const md = `![](circle 'feather tc-big tc-icons tc-small')\n`;
+        const html = `<p><i data-feather="circle" class="tc-icons tc-big tc-small"></i></p>\n`;
+        expect(marked.parse(md)).toBe(html);
+
+    });
+
     it('should place href in tag if asked', () => {
         marked.use(markedTcIcons({
             keyword: 'material-icons',
