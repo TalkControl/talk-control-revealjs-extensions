@@ -15,10 +15,26 @@ function extractOptions(options: string, keyword: string): string {
 }
 
 export interface MarkedTcIconsOptions {
+    /**
+     * Keyword to identify the icon to use
+     */
     keyword: string;
-    includesKeyword: boolean;
+    /**
+     * true if we have to se the keyword in final tag (default false)
+     */
+    includesKeyword?: boolean;
+    /**
+     * set the html attribute to use for the main tag
+     */
     htmlAttribute: string;
+    /**
+     * true if the value of icon (draw to use) should be in the innerHTML of the tag (default false)
+     */
     iconInTag?: boolean;
+    /**
+     * function that could be called to init the icons after the parsing
+     * @returns 
+     */
     initFunction?: () => void;
 }
 
@@ -80,7 +96,8 @@ export function markedTcIcons({ keyword, includesKeyword, htmlAttribute, iconInT
                     if (htmlAttribute === 'class') {
                         token.options = `tc-icons ${token.options}`.trim();
                     } else {
-                        classAttr = ` class="tc-icons"`;
+                        classAttr = ` class="tc-icons${token.options?.trim() ? ' ' + token.options : ''}"`;
+                        token.options = '';
                     }
                     if (iconInTag) {
                         const strData = `${includesKeyword ? keyword + ' ' : ''} ${token.options}`.trim().replace(/\s+/g, " ");
