@@ -1,8 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+import { isTcColToken, markedTcCols } from './marked-tc-cols';
 import { marked } from 'marked';
 
-import { markedTcCols } from './marked-tc-cols';
 
+const TYPE_COL_TC = 'colTc';
 // Default options for test
 const markedColsInstance = markedTcCols();
 
@@ -38,6 +39,39 @@ describe(markedTcCols.name, () => {
         const md = `##++## class="test" style="color:red;"\nsome text\n##++##\n`;
         const html = `<div class="tc-column"><section style="color:red;" class="tc-column test">\n<p>some text</p>\n\n</section></div>`;
         expect(marked.parse(md)).toBe(html);
+    });
+});
+
+describe(isTcColToken.name, () => {
+
+    it('returns true for valid TcColToken', () => {
+        const validToken = {
+            type: TYPE_COL_TC,
+            raw: '::tc-col',
+            tokens: []
+        };
+
+        expect(isTcColToken(validToken)).toBe(true);
+    });
+
+    it('returns false for token with different type', () => {
+        const invalidToken = {
+            type: 'wrongType',
+            raw: '::other-directive',
+            tokens: []
+        };
+
+        expect(isTcColToken(invalidToken)).toBe(false);
+    });
+
+    it('returns false for objects without type property', () => {
+        const noTypeToken = {
+            type: undefined,
+            raw: '::tc-col',
+            tokens: []
+        };
+
+        expect(isTcColToken(noTypeToken)).toBe(false);
     });
 
 
