@@ -10,7 +10,7 @@ function isDefined<T>(x: T | null | undefined): x is T {
 }
 
 
-interface TcColToken extends marked.Tokens.Generic {
+export interface TcColToken extends marked.Tokens.Generic {
     type: 'colTc';
     raw: string;
     attributes?: string;
