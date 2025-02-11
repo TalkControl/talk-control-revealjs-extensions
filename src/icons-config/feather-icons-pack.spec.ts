@@ -42,9 +42,8 @@ describe(featherIconPack.name, () => {
         const replaceSpy = vi.spyOn(feather, 'replace');
 
         replaceSpy.mockImplementation(() => { });
-        const getApplesSpy = vi.spyOn(feather, 'replace');
         markedIconsOptions.initFunction!();
-        expect(getApplesSpy.mock.calls.length).toBe(1);
+        expect(replaceSpy.mock.calls.length).toBe(1);
     });
 
 
