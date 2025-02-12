@@ -8,6 +8,7 @@ import { RevealTalkControlMarkdownPlugin } from './tc-marked-plugin';
 const mockInit = vi.fn();
 const mockUse = vi.fn();
 
+// Mock the import of module of RevealMarkdown plugin
 vi.mock('reveal.js/plugin/markdown/markdown.esm', () => {
     return {
         default: vi.fn().mockImplementation(() => ({
@@ -22,13 +23,13 @@ vi.mock('reveal.js/plugin/markdown/markdown.esm', () => {
     }
 });
 
-// 4. Si tu as besoin d'accéder au mock dans tes tests
+// Get a representation of this mock class
 const RevealMarkdownMock = vi.mocked(
     (await import('reveal.js/plugin/markdown/markdown.esm')).default
 );
 
 
-// 2. On mock aussi les extensions marked personnalisées
+// Mock extensions used in tc plugin
 vi.mock('./marked-extensions', () => ({
     markedStyledImage: vi.fn().mockReturnValue({}),
     markedTcBg: vi.fn().mockReturnValue({}),
@@ -36,6 +37,7 @@ vi.mock('./marked-extensions', () => ({
     markedTcIcons: vi.fn().mockReturnValue({})
 }));
 
+// Used for compilation of test
 interface IPluginRevealMarkdown extends Reveal.Plugin {
     processSlides: () => void,
     convertSlides: () => void,
@@ -54,7 +56,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
     beforeEach(async () => {
         vi.clearAllMocks();
 
-        // 4. Initialisation de l'instance avec des options
+        // Default instance of plugin to test
         instance = new RevealTalkControlMarkdownPlugin({
             knowStyles: ['style1', 'style2'],
             fontIcons: [{
@@ -64,44 +66,43 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
             }]
         });
 
-        // 5. Récupération du plugin
+        // Get the plugin like reveal will do
         plugin = instance.getPlugin();
+        // Mock reveal instance
         revealMock = {
             on: vi.fn()
         };
     });
 
-    it('devrait créer un plugin avec le bon ID', () => {
+    it('should create the plugin with correct ID', () => {
         const pluginInstance = plugin();
         expect(pluginInstance.id).toBe('talk-control-markdown');
     });
 
-    it('devrait initialiser correctement le plugin avec les extensions', async () => {
+    it('should initialize the plugin with extensions', async () => {
         const pluginInstance = plugin();
 
         const revealMarkdownPlugin = RevealMarkdownMock();
 
         await pluginInstance.init!(revealMock as Reveal.Api);
 
-        // Utilisation de expect.anything() pour être moins strict
         expect(revealMarkdownPlugin.init).toHaveBeenCalledWith(revealMock);
 
     });
 
-    it('devrait exécuter les fonctions d\'initialisation des icônes au ready', async () => {
+    it('should call init methods when reveal is ready', async () => {
         const pluginInstance = plugin();
         const initFn = instance!.options!.fontIcons![0].initFunction;
 
         pluginInstance.init!(revealMock as Reveal.Api);
 
-        // 7. Simulation de l'événement ready
         const readyCallback = ((revealMock as Reveal.Api).on as any).mock.calls[0][1];
         readyCallback();
 
         expect(initFn).toHaveBeenCalled();
     });
 
-    it('devrait exposer les méthodes de RevealMarkdown', () => {
+    it('should re-expose revealMardown method', () => {
         const pluginInstance = plugin();
 
         expect((pluginInstance as IPluginRevealMarkdown).processSlides).toBeTypeOf('function');
