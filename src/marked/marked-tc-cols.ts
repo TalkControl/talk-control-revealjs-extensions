@@ -66,7 +66,7 @@ export function markedTcCols(): marked.MarkedExtension {
                     if (token.attributes) {
                         const splitAttributes = token.attributes.split(' ');
                         let attributesWithoutClasses = '';
-                        for (let attr of splitAttributes) {
+                        for (const attr of splitAttributes) {
                             if (attr && attr.startsWith('class')) {
                                 classes = " " + attr.substring(attr.indexOf('=') + 2, attr.length - 1);
                             } else if (attr && attr.length > 0) {
