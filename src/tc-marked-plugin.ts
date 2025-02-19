@@ -11,7 +11,6 @@ export interface TalkControlMarkedOptions {
     knowStyles?: string[];
 }
 export class RevealTalkControlMarkdownPlugin {
-
     private options: TalkControlMarkedOptions;
 
     constructor(options: TalkControlMarkedOptions) {
@@ -23,8 +22,8 @@ export class RevealTalkControlMarkdownPlugin {
         const self = this;
         // A wrapper around RevealMarkdown to add custom marked extensions
         return () => {
-            const revealMarkdownPlugin: RevealMarkdownPlugin = RevealMarkdown() as unknown as RevealMarkdownPlugin;
-
+            const revealMarkdownPlugin: RevealMarkdownPlugin =
+                RevealMarkdown() as unknown as RevealMarkdownPlugin;
 
             return {
                 id: 'talk-control-markdown',
@@ -32,15 +31,27 @@ export class RevealTalkControlMarkdownPlugin {
                     if (revealMarkdownPlugin && revealMarkdownPlugin.init) {
                         const promiseInit = revealMarkdownPlugin.init(reveal);
                         // We set all extensions after call of init due to the fact that the init function reset the renderer
-                        revealMarkdownPlugin.marked.use(markedStyledImage({ knownStyles: self.options.knowStyles ?? [] }));
+                        revealMarkdownPlugin.marked.use(
+                            markedStyledImage({
+                                knownStyles: self.options.knowStyles ?? [],
+                            }),
+                        );
                         revealMarkdownPlugin.marked.use(markedTcBg());
                         revealMarkdownPlugin.marked.use(markedTcCols());
                         const initFunctionArray: Array<() => void> = [];
-                        if (self.options.fontIcons && self.options.fontIcons.length > 0) {
-                            for (const fontIconsToUse of self.options.fontIcons) {
-                                revealMarkdownPlugin.marked.use(markedTcIcons(fontIconsToUse));
+                        if (
+                            self.options.fontIcons &&
+                            self.options.fontIcons.length > 0
+                        ) {
+                            for (const fontIconsToUse of self.options
+                                .fontIcons) {
+                                revealMarkdownPlugin.marked.use(
+                                    markedTcIcons(fontIconsToUse),
+                                );
                                 if (fontIconsToUse.initFunction) {
-                                    initFunctionArray.push(fontIconsToUse.initFunction);
+                                    initFunctionArray.push(
+                                        fontIconsToUse.initFunction,
+                                    );
                                 }
                             }
                         }
@@ -58,7 +69,7 @@ export class RevealTalkControlMarkdownPlugin {
                 processSlides: revealMarkdownPlugin.processSlides,
                 convertSlides: revealMarkdownPlugin.convertSlides,
                 slidify: revealMarkdownPlugin.slidify,
-                marked: revealMarkdownPlugin.marked
+                marked: revealMarkdownPlugin.marked,
             };
         };
     }

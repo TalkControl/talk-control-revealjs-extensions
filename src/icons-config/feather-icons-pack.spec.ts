@@ -2,11 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import feather from 'feather-icons';
 import { featherIconPack } from './feather-icons-pack';
 
-
-
 describe(featherIconPack.name, () => {
-
-
     it('should create an icon pack', () => {
         const markedIconsOptions = featherIconPack();
         expect(markedIconsOptions).toBeDefined();
@@ -14,7 +10,7 @@ describe(featherIconPack.name, () => {
 
     it('should have keyword as feather', () => {
         const markedIconsOptions = featherIconPack();
-        expect(markedIconsOptions.keyword).toBe("feather");
+        expect(markedIconsOptions.keyword).toBe('feather');
     });
 
     it('should not include keyword', () => {
@@ -41,11 +37,8 @@ describe(featherIconPack.name, () => {
         const markedIconsOptions = featherIconPack();
         const replaceSpy = vi.spyOn(feather, 'replace');
 
-        replaceSpy.mockImplementation(() => { });
+        replaceSpy.mockImplementation(() => {});
         markedIconsOptions.initFunction!();
         expect(replaceSpy.mock.calls.length).toBe(1);
     });
-
-
-
 });

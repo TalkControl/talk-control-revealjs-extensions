@@ -1,6 +1,6 @@
 import 'material-symbols';
 
-import { MarkedTcIconsOptions } from "../marked/marked-tc-icons";
+import { MarkedTcIconsOptions } from '../marked/marked-tc-icons';
 
 export function materialSymbolsIconPack(): MarkedTcIconsOptions {
     return {

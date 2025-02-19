@@ -1,11 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { materialSymbolsIconPack } from './material-symbols-pack';
 
-
-
 describe(materialSymbolsIconPack.name, () => {
-
-
     it('should create an icon pack', () => {
         const markedIconsOptions = materialSymbolsIconPack();
         expect(markedIconsOptions).toBeDefined();
@@ -13,7 +9,7 @@ describe(materialSymbolsIconPack.name, () => {
 
     it('should have keyword as material-symbols', () => {
         const markedIconsOptions = materialSymbolsIconPack();
-        expect(markedIconsOptions.keyword).toBe("material-symbols");
+        expect(markedIconsOptions.keyword).toBe('material-symbols');
     });
 
     it('should not include keyword', () => {
@@ -35,8 +31,4 @@ describe(materialSymbolsIconPack.name, () => {
         const markedIconsOptions = materialSymbolsIconPack();
         expect(markedIconsOptions.initFunction).not.toBeDefined();
     });
-
-
-
-
 });
