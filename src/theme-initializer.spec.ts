@@ -17,7 +17,7 @@ vi.mock('reveal.js', () => ({
 
 
 vi.mock('lit-html', () => ({
-    html: (strings: TemplateStringsArray, ...values: any[]) => ({ strings, values }),
+    html: (strings: TemplateStringsArray, ...values: unknown[]) => ({ strings, values }),
     render: vi.fn()
 }));
 

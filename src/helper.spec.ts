@@ -1,8 +1,8 @@
 /**
  * @vitest-environment jsdom
  */
-import { _handle_parameter } from './helper';
 import { beforeEach, describe, expect, it } from 'vitest';
+import { _handle_parameter } from './helper';
 
 describe(_handle_parameter.name, () => {
 

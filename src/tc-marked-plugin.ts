@@ -19,6 +19,7 @@ export class RevealTalkControlMarkdownPlugin {
     }
 
     getPlugin(): PluginFunction {
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         // A wrapper around RevealMarkdown to add custom marked extensions
         return () => {

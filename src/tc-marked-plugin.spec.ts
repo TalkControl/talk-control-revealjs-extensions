@@ -105,6 +105,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
 
         pluginInstance.init!(revealMock as Reveal.Api);
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const readyCallback = ((revealMock as Reveal.Api).on as any).mock.calls[0][1];
         readyCallback();
 
