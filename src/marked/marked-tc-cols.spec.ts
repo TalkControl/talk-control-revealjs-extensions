@@ -2,13 +2,11 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { isTcColToken, markedTcCols } from './marked-tc-cols';
 import { marked } from 'marked';
 
-
 const TYPE_COL_TC = 'colTc';
 // Default options for test
 const markedColsInstance = markedTcCols();
 
 describe(markedTcCols.name, () => {
-
     beforeEach(async () => {
         marked.setOptions(marked.getDefaults());
     });
@@ -43,12 +41,11 @@ describe(markedTcCols.name, () => {
 });
 
 describe(isTcColToken.name, () => {
-
     it('returns true for valid TcColToken', () => {
         const validToken = {
             type: TYPE_COL_TC,
             raw: '::tc-col',
-            tokens: []
+            tokens: [],
         };
 
         expect(isTcColToken(validToken)).toBe(true);
@@ -58,7 +55,7 @@ describe(isTcColToken.name, () => {
         const invalidToken = {
             type: 'wrongType',
             raw: '::other-directive',
-            tokens: []
+            tokens: [],
         };
 
         expect(isTcColToken(invalidToken)).toBe(false);
@@ -68,11 +65,9 @@ describe(isTcColToken.name, () => {
         const noTypeToken = {
             type: undefined,
             raw: '::tc-col',
-            tokens: []
+            tokens: [],
         };
 
         expect(isTcColToken(noTypeToken)).toBe(false);
     });
-
-
 });

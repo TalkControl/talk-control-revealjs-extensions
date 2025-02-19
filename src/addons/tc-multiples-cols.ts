@@ -2,7 +2,11 @@
  * Manage multiple columns by removing the stack class and adding the aria-hidden and hidden attributes (for accessibility purposes)
  */
 export function manageMultiplesColumns() {
-    const allSlides = [...document.querySelectorAll('.reveal .slides > section.tc-multiple-columns')];
+    const allSlides = [
+        ...document.querySelectorAll(
+            '.reveal .slides > section.tc-multiple-columns',
+        ),
+    ];
     for (let i = 0; i < allSlides.length; i++) {
         const slide = allSlides[i];
         slide.classList.remove('stack');

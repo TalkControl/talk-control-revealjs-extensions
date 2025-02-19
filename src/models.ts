@@ -1,5 +1,5 @@
-import Reveal from "reveal.js";
-import { marked } from "marked";
+import Reveal from 'reveal.js';
+import { marked } from 'marked';
 
 export interface SlidePath {
     path: string;

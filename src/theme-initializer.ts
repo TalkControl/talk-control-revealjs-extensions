@@ -1,4 +1,7 @@
-import { RevealTalkControlMarkdownPlugin, TalkControlMarkedOptions } from './tc-marked-plugin';
+import {
+    RevealTalkControlMarkdownPlugin,
+    TalkControlMarkedOptions,
+} from './tc-marked-plugin';
 import { html, render } from 'lit-html';
 
 import Reveal from 'reveal.js';
@@ -31,7 +34,9 @@ export const ThemeInitializer = {
         const { showNotes, pdfMaxPagesPerSlide, pdfSeparateFragments } =
             checkPdfConfiguration(importSlideElement);
 
-        const talkControlMarkedPlugin = new RevealTalkControlMarkdownPlugin(tcMarkedOptions);
+        const talkControlMarkedPlugin = new RevealTalkControlMarkdownPlugin(
+            tcMarkedOptions,
+        );
 
         // Init the Reveal Engine
         Reveal.initialize({
@@ -72,14 +77,14 @@ async function defaultSlideRenderer(element: HTMLElement, slides: SlidePath[]) {
     return render(
         html`
             ${slidesToRender.map(
-            (slide) => html`
+                (slide) => html`
                     <section
                         data-markdown="./markdown/${slide.path}"
                         data-separator="##==##"
                         data-separator-vertical="##--##"
                         data-separator-notes="^Notes:"></section>
                 `,
-        )}
+            )}
         `,
         element,
     );

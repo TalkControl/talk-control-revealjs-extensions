@@ -1,11 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { fontAwesomeIconPack } from './font-awesome-pack';
 
-
-
 describe(fontAwesomeIconPack.name, () => {
-
-
     it('should create an icon pack', () => {
         const markedIconsOptions = fontAwesomeIconPack();
         expect(markedIconsOptions).toBeDefined();
@@ -13,7 +9,7 @@ describe(fontAwesomeIconPack.name, () => {
 
     it('should have keyword as fa', () => {
         const markedIconsOptions = fontAwesomeIconPack();
-        expect(markedIconsOptions.keyword).toBe("fa");
+        expect(markedIconsOptions.keyword).toBe('fa');
     });
 
     it('should include keyword', () => {
@@ -35,8 +31,4 @@ describe(fontAwesomeIconPack.name, () => {
         const markedIconsOptions = fontAwesomeIconPack();
         expect(markedIconsOptions.initFunction).not.toBeDefined();
     });
-
-
-
-
 });

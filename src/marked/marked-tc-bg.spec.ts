@@ -7,7 +7,6 @@ import { markedTcBg } from './marked-tc-bg';
 const markedBgInstance = markedTcBg();
 
 describe(markedTcBg.name, () => {
-
     beforeEach(async () => {
         marked.setOptions(marked.getDefaults());
     });
@@ -39,5 +38,4 @@ describe(markedTcBg.name, () => {
         const html = `<!-- .slide: data-background="#ff0000" -->`;
         expect(marked.parse(md)).toBe(html);
     });
-
 });

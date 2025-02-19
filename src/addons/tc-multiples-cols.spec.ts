@@ -36,7 +36,6 @@ const HTML = `
 `;
 
 describe(manageMultiplesColumns.name, () => {
-
     beforeEach(async () => {
         document.body.innerHTML = HTML;
     });
@@ -74,7 +73,9 @@ describe(manageMultiplesColumns.name, () => {
     });
 
     it('should remove stack class from sections in columns', () => {
-        const sectionMultipleColumn = document.querySelector('section.tc-multiple-columns');
+        const sectionMultipleColumn = document.querySelector(
+            'section.tc-multiple-columns',
+        );
         expect(sectionMultipleColumn?.classList.contains('stack')).toBeTruthy();
         manageMultiplesColumns();
         expect(sectionMultipleColumn?.classList.contains('stack')).toBeFalsy();
@@ -85,6 +86,4 @@ describe(manageMultiplesColumns.name, () => {
         manageMultiplesColumns();
         expect(document.querySelectorAll('section.stack')).length(1);
     });
-
-
 });

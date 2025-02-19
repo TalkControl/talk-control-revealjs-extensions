@@ -1,7 +1,9 @@
 // Code from taken from https://github.com/kuroidoruido/js-libs/blob/main/libs/marked-djot-div
 import { marked } from 'marked';
 
-const iconRegex = new RegExp(`!\\[\\]\\(([\\w-_\\s]+)\\s+["']([\\w-_\\s]*)["']\\)`);
+const iconRegex = new RegExp(
+    `!\\[\\]\\(([\\w-_\\s]+)\\s+["']([\\w-_\\s]*)["']\\)`,
+);
 const tokenizerRule = new RegExp(`^${iconRegex.source}`);
 const TYPE_ICONS_TC = 'iconsTc';
 
@@ -11,7 +13,10 @@ function isDefined<T>(x: T | null | undefined): x is T {
 
 function extractOptions(options: string, keyword: string): string {
     const optionsParts = options.split(' ').map((s) => s.trim());
-    return optionsParts.filter((s) => s !== 'tc-icons' && s !== keyword && s.length > 0).join(' ').trim();
+    return optionsParts
+        .filter((s) => s !== 'tc-icons' && s !== keyword && s.length > 0)
+        .join(' ')
+        .trim();
 }
 
 export interface MarkedTcIconsOptions {
@@ -33,7 +38,7 @@ export interface MarkedTcIconsOptions {
     iconInTag?: boolean;
     /**
      * function that could be called to init the icons after the parsing
-     * @returns 
+     * @returns
      */
     initFunction?: () => void;
 }
@@ -46,10 +51,15 @@ interface TcIconsToken extends marked.Tokens.Generic {
     options: string;
 }
 
-export function markedTcIcons({ keyword, includesKeyword, htmlAttribute, iconInTag = false }: MarkedTcIconsOptions): marked.MarkedExtension {
+export function markedTcIcons({
+    keyword,
+    includesKeyword,
+    htmlAttribute,
+    iconInTag = false,
+}: MarkedTcIconsOptions): marked.MarkedExtension {
     // create a regex that match ![](url 'options tc-icons ${keyword} options')
 
-    const regexp = new RegExp(`(?=.*tc-icons)(?=.*${keyword})`, "g");
+    const regexp = new RegExp(`(?=.*tc-icons)(?=.*${keyword})`, 'g');
     /*
     (?=.*tc-icons)(?=.*${keyword}) : lookahead positive to check existence of two required words
     Else, it capture words that are not "tc-icons" ni "${keyword}" 
@@ -83,10 +93,8 @@ export function markedTcIcons({ keyword, includesKeyword, htmlAttribute, iconInT
                         keyword,
                         options,
                         iconHref,
-                    }
+                    };
                     return token;
-
-
                 },
                 renderer(token) {
                     if (!isTcIconToken(token, keyword)) {
@@ -100,11 +108,16 @@ export function markedTcIcons({ keyword, includesKeyword, htmlAttribute, iconInT
                         token.options = '';
                     }
                     if (iconInTag) {
-                        const strData = `${includesKeyword ? keyword + ' ' : ''} ${token.options}`.trim().replace(/\s+/g, " ");
+                        const strData =
+                            `${includesKeyword ? keyword + ' ' : ''} ${token.options}`
+                                .trim()
+                                .replace(/\s+/g, ' ');
                         return `<i ${htmlAttribute}="${strData}"${classAttr}>${token.iconHref}</i>`;
-                    }
-                    else {
-                        const strData = `${includesKeyword ? keyword + ' ' : ''}${token.iconHref} ${token.options}`.trim().replace(/\s+/g, " ");
+                    } else {
+                        const strData =
+                            `${includesKeyword ? keyword + ' ' : ''}${token.iconHref} ${token.options}`
+                                .trim()
+                                .replace(/\s+/g, ' ');
                         return `<i ${htmlAttribute}="${strData}"${classAttr}></i>`;
                     }
                 },
@@ -113,10 +126,12 @@ export function markedTcIcons({ keyword, includesKeyword, htmlAttribute, iconInT
     };
 }
 
-
-
 export function isTcIconToken(
-    token: TcIconsToken | { type: unknown }, keyword: string,
+    token: TcIconsToken | { type: unknown },
+    keyword: string,
 ): token is TcIconsToken {
-    return token.type === TYPE_ICONS_TC && (token as TcIconsToken).keyword === keyword;
+    return (
+        token.type === TYPE_ICONS_TC &&
+        (token as TcIconsToken).keyword === keyword
+    );
 }

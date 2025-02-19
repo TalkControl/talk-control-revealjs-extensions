@@ -9,7 +9,6 @@ function isDefined<T>(x: T | null | undefined): x is T {
     return x != undefined;
 }
 
-
 interface TcBgToken extends marked.Tokens.Generic {
     type: 'bgTc';
     raw: string;
@@ -36,10 +35,8 @@ export function markedTcBg(): marked.MarkedExtension {
                         type: TYPE_BG_TC,
                         raw: match?.[0],
                         iconHref,
-                    }
+                    };
                     return token;
-
-
                 },
                 renderer(token) {
                     if (!isTcBgToken(token)) {
@@ -52,9 +49,8 @@ export function markedTcBg(): marked.MarkedExtension {
     };
 }
 
-
-
 export function isTcBgToken(
-    token: TcBgToken | { type: unknown }): token is TcBgToken {
+    token: TcBgToken | { type: unknown },
+): token is TcBgToken {
     return token.type === TYPE_BG_TC;
 }

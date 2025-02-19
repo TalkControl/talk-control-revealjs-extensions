@@ -9,7 +9,6 @@ function isDefined<T>(x: T | null | undefined): x is T {
     return x != undefined;
 }
 
-
 export interface TcColToken extends marked.Tokens.Generic {
     type: 'colTc';
     raw: string;
@@ -42,7 +41,9 @@ export function markedTcCols(): marked.MarkedExtension {
                             ? ''
                             : '\n' + nextRows[closingTokenIndex];
                     const sliceEnd =
-                        closingTokenIndex === -1 ? undefined : closingTokenIndex;
+                        closingTokenIndex === -1
+                            ? undefined
+                            : closingTokenIndex;
                     const divContent = nextRows.slice(0, sliceEnd);
                     const rawContent = divContent.join('\n');
 
@@ -51,11 +52,9 @@ export function markedTcCols(): marked.MarkedExtension {
                         raw: `${rows[0]}\n${rawContent}${closingToken}`,
                         attributes,
                         tokens: [],
-                    }
+                    };
                     this.lexer.blockTokens(rawContent, token.tokens);
                     return token;
-
-
                 },
                 renderer(token) {
                     if (!isTcColToken(token)) {
@@ -68,7 +67,12 @@ export function markedTcCols(): marked.MarkedExtension {
                         let attributesWithoutClasses = '';
                         for (const attr of splitAttributes) {
                             if (attr && attr.startsWith('class')) {
-                                classes = " " + attr.substring(attr.indexOf('=') + 2, attr.length - 1);
+                                classes =
+                                    ' ' +
+                                    attr.substring(
+                                        attr.indexOf('=') + 2,
+                                        attr.length - 1,
+                                    );
                             } else if (attr && attr.length > 0) {
                                 attributesWithoutClasses += attr;
                             }
@@ -83,9 +87,8 @@ export function markedTcCols(): marked.MarkedExtension {
     };
 }
 
-
-
 export function isTcColToken(
-    token: TcColToken | { type: unknown }): token is TcColToken {
+    token: TcColToken | { type: unknown },
+): token is TcColToken {
     return token.type === TYPE_COL_TC;
 }
