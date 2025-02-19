@@ -91,8 +91,17 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
     });
 
     it('should call init methods when reveal is ready', async () => {
+        const initFn = vi.fn();
+        instance = new RevealTalkControlMarkdownPlugin({
+            knowStyles: ['style1', 'style2'],
+            fontIcons: [{
+                keyword: 'fa',
+                htmlAttribute: 'fa',
+                initFunction: initFn
+            }]
+        });
+        plugin = instance.getPlugin();
         const pluginInstance = plugin();
-        const initFn = instance!.options!.fontIcons![0].initFunction;
 
         pluginInstance.init!(revealMock as Reveal.Api);
 
