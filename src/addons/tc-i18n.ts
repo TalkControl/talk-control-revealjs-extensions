@@ -1,14 +1,19 @@
-import { SlidePath } from "../models";
-import { _handle_parameter } from "../helper";
+import { SlidePath } from '../models';
+import { _handle_parameter } from '../helper';
 
 /**
  * Function that gives the path with translate extension if needed
  * @param {string[]} slides : array of paths of slides
  * @returns a Promise that returns a string[] with the correct suffix for internationalization
  */
-export async function i18n(slides: SlidePath[], baseMarkdownPath: string, defaultLang: string = 'EN'): Promise<SlidePath[]> {
+export async function i18n(
+    slides: SlidePath[],
+    baseMarkdownPath: string,
+    defaultLang: string = 'EN'
+): Promise<SlidePath[]> {
     const urlParams = new URLSearchParams(window.location.search);
-    const slideElement: HTMLElement = document.querySelector('.reveal .slides')!;
+    const slideElement: HTMLElement =
+        document.querySelector('.reveal .slides')!;
     const language = _handle_parameter(
         urlParams,
         'data-lang',
@@ -19,7 +24,6 @@ export async function i18n(slides: SlidePath[], baseMarkdownPath: string, defaul
 
     // If the language is French, we don't need to translate (because default language)
     if (language === defaultLang) return Promise.resolve(slides);
-
 
     const slidesPathToUse = [];
     for (const slidePath of slides) {
@@ -41,10 +45,15 @@ export async function i18n(slides: SlidePath[], baseMarkdownPath: string, defaul
  * @param  {...string} slidePaths : files to check (order is important !)
  * @returns the path that return a 200 status null else
  */
-async function firstExisting(baseMarkdownPath: string, ...slidePaths: SlidePath[]): Promise<SlidePath | null> {
+async function firstExisting(
+    baseMarkdownPath: string,
+    ...slidePaths: SlidePath[]
+): Promise<SlidePath | null> {
     for (const slidePath of slidePaths) {
         try {
-            const response = await fetch(baseMarkdownPath + slidePath.path, { method: 'HEAD' });
+            const response = await fetch(baseMarkdownPath + slidePath.path, {
+                method: 'HEAD',
+            });
             if (response.status === 200) {
                 return slidePath;
             }
@@ -56,6 +65,9 @@ async function firstExisting(baseMarkdownPath: string, ...slidePaths: SlidePath[
 }
 
 // Ajout de l'export conditionnel
-export const _internals = process.env.NODE_ENV === 'test' ? {
-    firstExisting
-} : undefined;
+export const _internals =
+    process.env.NODE_ENV === 'test'
+        ? {
+              firstExisting,
+          }
+        : undefined;
