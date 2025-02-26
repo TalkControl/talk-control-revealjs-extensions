@@ -72,7 +72,7 @@ describe('ThemeInitializer', () => {
                     showNotes: false,
                     pdfMaxPagesPerSlide: 1,
                     pdfSeparateFragments: true,
-                }),
+                })
             );
         });
 
@@ -82,7 +82,7 @@ describe('ThemeInitializer', () => {
             expect(mockSlidesFactory).toHaveBeenCalled();
             expect(render).toHaveBeenCalledWith(
                 expect.anything(),
-                slidesElement,
+                slidesElement
             );
         });
     });
@@ -115,7 +115,7 @@ describe('ThemeInitializer', () => {
             expect(Reveal.initialize).toHaveBeenCalledWith(
                 expect.objectContaining({
                     pdfMaxPagesPerSlide: 3,
-                }),
+                })
             );
         });
 
@@ -127,7 +127,7 @@ describe('ThemeInitializer', () => {
             expect(Reveal.initialize).toHaveBeenCalledWith(
                 expect.objectContaining({
                     pdfSeparateFragments: false,
-                }),
+                })
             );
         });
     });

@@ -34,7 +34,7 @@ export function markedTcCols(): marked.MarkedExtension {
                     const rows = src.split('\n');
                     const nextRows = rows.slice(1);
                     const closingTokenIndex = nextRows.findIndex((row) =>
-                        row.match(symbolRegex),
+                        row.match(symbolRegex)
                     );
                     const closingToken =
                         closingTokenIndex === -1
@@ -71,7 +71,7 @@ export function markedTcCols(): marked.MarkedExtension {
                                     ' ' +
                                     attr.substring(
                                         attr.indexOf('=') + 2,
-                                        attr.length - 1,
+                                        attr.length - 1
                                     );
                             } else if (attr && attr.length > 0) {
                                 attributesWithoutClasses += attr;
@@ -88,7 +88,7 @@ export function markedTcCols(): marked.MarkedExtension {
 }
 
 export function isTcColToken(
-    token: TcColToken | { type: unknown },
+    token: TcColToken | { type: unknown }
 ): token is TcColToken {
     return token.type === TYPE_COL_TC;
 }

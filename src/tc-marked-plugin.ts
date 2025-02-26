@@ -34,7 +34,7 @@ export class RevealTalkControlMarkdownPlugin {
                         revealMarkdownPlugin.marked.use(
                             markedStyledImage({
                                 knownStyles: self.options.knowStyles ?? [],
-                            }),
+                            })
                         );
                         revealMarkdownPlugin.marked.use(markedTcBg());
                         revealMarkdownPlugin.marked.use(markedTcCols());
@@ -46,11 +46,11 @@ export class RevealTalkControlMarkdownPlugin {
                             for (const fontIconsToUse of self.options
                                 .fontIcons) {
                                 revealMarkdownPlugin.marked.use(
-                                    markedTcIcons(fontIconsToUse),
+                                    markedTcIcons(fontIconsToUse)
                                 );
                                 if (fontIconsToUse.initFunction) {
                                     initFunctionArray.push(
-                                        fontIconsToUse.initFunction,
+                                        fontIconsToUse.initFunction
                                     );
                                 }
                             }

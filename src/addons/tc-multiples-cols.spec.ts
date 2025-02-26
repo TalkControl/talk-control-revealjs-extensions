@@ -74,7 +74,7 @@ describe(manageMultiplesColumns.name, () => {
 
     it('should remove stack class from sections in columns', () => {
         const sectionMultipleColumn = document.querySelector(
-            'section.tc-multiple-columns',
+            'section.tc-multiple-columns'
         );
         expect(sectionMultipleColumn?.classList.contains('stack')).toBeTruthy();
         manageMultiplesColumns();

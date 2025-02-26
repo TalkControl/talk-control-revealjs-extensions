@@ -18,7 +18,7 @@ export function buildPackageJson(packageJson: PackageJson, dist: string) {
                 main: './talk-control-revealjs-extensions.js',
             },
             undefined,
-            2,
-        ),
+            2
+        )
     );
 }

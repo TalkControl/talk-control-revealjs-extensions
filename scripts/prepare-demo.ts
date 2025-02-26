@@ -5,5 +5,5 @@ shelljs.mkdir('-p', './demo/web_modules/talk-control-revealjs-extensions');
 shelljs.cp(
     '-rf',
     './dist/*',
-    './demo/web_modules/talk-control-revealjs-extensions',
+    './demo/web_modules/talk-control-revealjs-extensions'
 );

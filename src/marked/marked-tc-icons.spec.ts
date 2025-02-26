@@ -66,7 +66,7 @@ describe(markedTcIcons.name, () => {
                 keyword: 'lni',
                 includesKeyword: true,
                 htmlAttribute: 'class',
-            }),
+            })
         );
         const md = `![](lni-telephone-3 'lni tc-icons')\n`;
         const html = `<p><i class="lni lni-telephone-3 tc-icons"></i></p>\n`;
@@ -79,7 +79,7 @@ describe(markedTcIcons.name, () => {
                 keyword: 'feather',
                 includesKeyword: false,
                 htmlAttribute: 'data-feather',
-            }),
+            })
         );
         const md = `![](circle 'feather tc-icons')\n`;
         const html = `<p><i data-feather="circle" class="tc-icons"></i></p>\n`;
@@ -91,7 +91,7 @@ describe(markedTcIcons.name, () => {
             markedTcIcons({
                 keyword: 'feather',
                 htmlAttribute: 'data-feather',
-            }),
+            })
         );
         const md = `![](circle 'feather tc-big tc-icons tc-small')\n`;
         const html = `<p><i data-feather="circle" class="tc-icons tc-big tc-small"></i></p>\n`;
@@ -105,7 +105,7 @@ describe(markedTcIcons.name, () => {
                 includesKeyword: true,
                 htmlAttribute: 'class',
                 iconInTag: true,
-            }),
+            })
         );
         const md = `![](face 'material-icons tc-icons')\n`;
         const html = `<p><i class="material-icons tc-icons">face</i></p>\n`;
@@ -119,7 +119,7 @@ describe(markedTcIcons.name, () => {
                 keyword: 'lni',
                 includesKeyword: true,
                 htmlAttribute: 'class',
-            }),
+            })
         );
         let md = `![](lni-telephone-3 'lni tc-icons')\n`;
         let html = `<p><i class="lni lni-telephone-3 tc-icons"></i></p>\n`;
@@ -158,7 +158,7 @@ describe(markedTcIcons.name, () => {
                 keyword: 'lni',
                 includesKeyword: true,
                 htmlAttribute: 'class',
-            }),
+            })
         );
         const md = `some text ![](fa-code 'tc-icons fa-icons') some text ![](lni-telephone-3 'lni tc-icons') some text\n`;
         const html = `<p>some text <i class="fa-code tc-icons"></i> some text <i class="lni lni-telephone-3 tc-icons"></i> some text</p>\n`;

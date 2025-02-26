@@ -2,7 +2,7 @@
 import { marked } from 'marked';
 
 const iconRegex = new RegExp(
-    `!\\[\\]\\(([\\w-_\\s]+)\\s+["']([\\w-_\\s]*)["']\\)`,
+    `!\\[\\]\\(([\\w-_\\s]+)\\s+["']([\\w-_\\s]*)["']\\)`
 );
 const tokenizerRule = new RegExp(`^${iconRegex.source}`);
 const TYPE_ICONS_TC = 'iconsTc';
@@ -128,7 +128,7 @@ export function markedTcIcons({
 
 export function isTcIconToken(
     token: TcIconsToken | { type: unknown },
-    keyword: string,
+    keyword: string
 ): token is TcIconsToken {
     return (
         token.type === TYPE_ICONS_TC &&
