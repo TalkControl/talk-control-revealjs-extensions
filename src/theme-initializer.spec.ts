@@ -29,13 +29,26 @@ vi.mock('./tc-marked-plugin', () => ({
     })),
 }));
 
+vi.mock('./addons/tc-i18n', () => ({
+    i18n: vi.fn().mockImplementation(() => []),
+}));
+
 describe('ThemeInitializer', () => {
     let slidesElement: HTMLElement;
     const mockSlides = [{ path: 'slide1.md' }, { path: 'slide2.md' }];
-    const mockSlidesFactory = vi.fn().mockReturnValue(mockSlides);
+    const mockSlidesFactory = vi.fn();
+    mockSlidesFactory.mockReturnValue(mockSlides);
     const mockTcMarkedOptions = {
         knowStyles: ['style1'],
         fontIcons: [],
+    };
+    const mockTcI18nOptions = {
+        baseMarkdownPath: '/markdwon',
+    };
+    const mockOptions = {
+        slidesFactory: mockSlidesFactory,
+        tcMarkedOptions: mockTcMarkedOptions,
+        tcI18nOptions: mockTcI18nOptions,
     };
 
     beforeEach(() => {
@@ -50,14 +63,14 @@ describe('ThemeInitializer', () => {
         it('should return early if no .slides elements', async () => {
             document.body.innerHTML = '';
 
-            await ThemeInitializer.init(mockSlidesFactory, mockTcMarkedOptions);
+            await ThemeInitializer.init(mockOptions);
 
             expect(Reveal.initialize).not.toHaveBeenCalled();
             expect(render).not.toHaveBeenCalled();
         });
 
         it('should init Reveal.js with correct default options', async () => {
-            await ThemeInitializer.init(mockSlidesFactory, mockTcMarkedOptions);
+            await ThemeInitializer.init(mockOptions);
 
             expect(Reveal.initialize).toHaveBeenCalledWith(
                 expect.objectContaining({
@@ -77,7 +90,7 @@ describe('ThemeInitializer', () => {
         });
 
         it('should call slidesFactory and renderer', async () => {
-            await ThemeInitializer.init(mockSlidesFactory, mockTcMarkedOptions);
+            await ThemeInitializer.init(mockOptions);
 
             expect(mockSlidesFactory).toHaveBeenCalled();
             expect(render).toHaveBeenCalledWith(
@@ -91,26 +104,26 @@ describe('ThemeInitializer', () => {
         it('should configure shownotes from URL', async () => {
             // Simuler un paramètre URL
             const searchParams = new URLSearchParams(
-                '?show-notes=separate-page',
+                '?show-notes=separate-page'
             );
             vi.spyOn(window, 'location', 'get').mockReturnValue({
                 ...window.location,
                 search: searchParams.toString(),
             });
 
-            await ThemeInitializer.init(mockSlidesFactory, mockTcMarkedOptions);
+            await ThemeInitializer.init(mockOptions);
 
             expect(Reveal.initialize).toHaveBeenCalledWith(
                 expect.objectContaining({
                     showNotes: 'separate-page',
-                }),
+                })
             );
         });
 
         it('should configure pdfMaxPagesPerSlides from data attributes', async () => {
             slidesElement.dataset.pdfMaxPagesPerSlide = '3';
 
-            await ThemeInitializer.init(mockSlidesFactory, mockTcMarkedOptions);
+            await ThemeInitializer.init(mockOptions);
 
             expect(Reveal.initialize).toHaveBeenCalledWith(
                 expect.objectContaining({
@@ -122,7 +135,7 @@ describe('ThemeInitializer', () => {
         it('should configure pdfSeperateFragments from data attributes', async () => {
             slidesElement.dataset.pdfDontSeparateFragments = '';
 
-            await ThemeInitializer.init(mockSlidesFactory, mockTcMarkedOptions);
+            await ThemeInitializer.init(mockOptions);
 
             expect(Reveal.initialize).toHaveBeenCalledWith(
                 expect.objectContaining({

@@ -114,7 +114,7 @@ describe('i18n', () => {
         // Ask lang
         mockHandleParameter.mockReturnValue('EN');
 
-        const result = await i18n(slides, baseMarkdownPath); //Use default language (EN)
+        const result = await i18n({ slides, baseMarkdownPath }); //Use default language (EN)
 
         expect(result).toEqual(slides);
         expect(mockHandleParameter).toHaveBeenCalledWith(
@@ -139,7 +139,11 @@ describe('i18n', () => {
             Promise.resolve(new Response(null, { status: 200 }))
         );
 
-        const result = await i18n(slides, baseMarkdownPath, 'EN');
+        const result = await i18n({
+            slides,
+            baseMarkdownPath,
+            defaultLang: 'EN',
+        });
 
         expect(result).toEqual([
             { path: 'slide1.FR.md' },
@@ -167,7 +171,11 @@ describe('i18n', () => {
                 Promise.resolve(new Response(null, { status: 200 }))
             );
 
-        const result = await i18n(slides, baseMarkdownPath, 'EN');
+        const result = await i18n({
+            slides,
+            baseMarkdownPath,
+            defaultLang: 'EN',
+        });
 
         expect(result).toEqual([
             { path: 'slide1.FR.md' },
@@ -195,7 +203,11 @@ describe('i18n', () => {
                 Promise.resolve(new Response(null, { status: 400 }))
             );
 
-        const result = await i18n(slides, baseMarkdownPath, 'EN');
+        const result = await i18n({
+            slides,
+            baseMarkdownPath,
+            defaultLang: 'EN',
+        });
 
         expect(result).toEqual([{ path: 'slide1.FR.md' }]);
     });
@@ -204,7 +216,11 @@ describe('i18n', () => {
         const slides: SlidePath[] = [];
         mockHandleParameter.mockReturnValue('EN');
 
-        const result = await i18n(slides, baseMarkdownPath, 'EN');
+        const result = await i18n({
+            slides,
+            baseMarkdownPath,
+            defaultLang: 'EN',
+        });
 
         expect(result).toEqual([]);
     });
@@ -217,7 +233,11 @@ describe('i18n', () => {
         ];
         mockHandleParameter.mockReturnValue('EN');
 
-        const result = await i18n(slides, baseMarkdownPath, 'EN');
+        const result = await i18n({
+            slides,
+            baseMarkdownPath,
+            defaultLang: 'EN',
+        });
 
         expect(result).toEqual([
             { path: 'slide1.md' },

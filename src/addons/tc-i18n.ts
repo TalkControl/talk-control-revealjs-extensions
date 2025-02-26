@@ -1,16 +1,25 @@
 import { SlidePath } from '../models';
 import { _handle_parameter } from '../helper';
 
+export interface TcI18nConfig {
+    baseMarkdownPath: string;
+    defaultLang?: string;
+}
+
+export interface TcI18nOptions extends TcI18nConfig {
+    slides: SlidePath[];
+}
+
 /**
  * Function that gives the path with translate extension if needed
  * @param {string[]} slides : array of paths of slides
  * @returns a Promise that returns a string[] with the correct suffix for internationalization
  */
-export async function i18n(
-    slides: SlidePath[],
-    baseMarkdownPath: string,
-    defaultLang: string = 'EN'
-): Promise<SlidePath[]> {
+export async function i18n({
+    slides,
+    baseMarkdownPath,
+    defaultLang = 'EN',
+}: TcI18nOptions): Promise<SlidePath[]> {
     const urlParams = new URLSearchParams(window.location.search);
     const slideElement: HTMLElement =
         document.querySelector('.reveal .slides')!;
@@ -66,7 +75,7 @@ async function firstExisting(
 
 // Ajout de l'export conditionnel
 export const _internals =
-    process.env.NODE_ENV === 'test'
+    typeof process !== 'undefined' && process?.env?.NODE_ENV === 'test'
         ? {
               firstExisting,
           }
