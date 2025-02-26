@@ -51,11 +51,17 @@ function formation() {
     });
 }
 
-await ThemeInitializer.init(formation, {
-    fontIcons: [
-        fontAwesomeIconPack(),
-        featherIconPack(),
-        materialSymbolsIconPack(),
-    ],
-    knowStyles: ['test', 'image'],
+await ThemeInitializer.init({
+    slidesFactory: formation,
+    tcMarkedOptions: {
+        fontIcons: [
+            fontAwesomeIconPack(),
+            featherIconPack(),
+            materialSymbolsIconPack(),
+        ],
+        knowStyles: ['test', 'image'],
+    },
+    tcI18nOptions: {
+        baseMarkdownPath: '/markdown',
+    },
 });

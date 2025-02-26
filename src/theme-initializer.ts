@@ -2,30 +2,46 @@ import {
     RevealTalkControlMarkdownPlugin,
     TalkControlMarkedOptions,
 } from './tc-marked-plugin';
-import { html, render } from 'lit-html';
+import { RootPart, html, render } from 'lit-html';
+import { TcI18nConfig, i18n } from './addons/tc-i18n';
 
 import Reveal from 'reveal.js';
 import RevealHighlight from 'reveal.js/plugin/highlight/highlight.esm';
 import RevealNotes from 'reveal.js/plugin/notes/notes.esm';
 import RevealTalkControlThemePlugin from './theme-plugin';
 import RevealZoom from 'reveal.js/plugin/zoom/zoom.esm';
+
 import { SlidePath } from './models';
+
+/**
+ *
+ */
+export interface ThemeInitializerOptions {
+    slidesFactory: () => SlidePath[];
+    tcMarkedOptions: TalkControlMarkedOptions;
+    tcI18nOptions: TcI18nConfig;
+    slidesRenderer?: (element: HTMLElement, slides: SlidePath[]) => RootPart;
+}
 
 export const ThemeInitializer = {
     /**
      * @param {() => Array.<string>} slidesFactory
      */
-    async init(
-        slidesFactory: () => SlidePath[],
-        tcMarkedOptions: TalkControlMarkedOptions,
+    async init({
+        slidesFactory,
+        tcMarkedOptions,
+        tcI18nOptions,
         slidesRenderer = defaultSlideRenderer,
-    ) {
+    }: ThemeInitializerOptions) {
         const importSlideElement: HTMLElement | null =
             document.querySelector('.slides');
         if (importSlideElement == null) return;
 
         // Retrieve the slide path list
         const slides = slidesFactory();
+
+        const { baseMarkdownPath, defaultLang } = tcI18nOptions;
+        i18n({ slides, baseMarkdownPath, defaultLang });
 
         // Generate all the DOM code corresponding to slides
         await slidesRenderer(importSlideElement, slides);
@@ -71,7 +87,10 @@ export const ThemeInitializer = {
 /**
  * Render the html
  */
-async function defaultSlideRenderer(element: HTMLElement, slides: SlidePath[]) {
+function defaultSlideRenderer(
+    element: HTMLElement,
+    slides: SlidePath[]
+): RootPart {
     const slidesToRender = slides;
 
     return render(
