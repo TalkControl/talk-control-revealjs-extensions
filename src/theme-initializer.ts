@@ -35,7 +35,7 @@ export const ThemeInitializer = {
             checkPdfConfiguration(importSlideElement);
 
         const talkControlMarkedPlugin = new RevealTalkControlMarkdownPlugin(
-            tcMarkedOptions,
+            tcMarkedOptions
         );
 
         // Init the Reveal Engine
@@ -83,10 +83,10 @@ async function defaultSlideRenderer(element: HTMLElement, slides: SlidePath[]) {
                         data-separator="##==##"
                         data-separator-vertical="##--##"
                         data-separator-notes="^Notes:"></section>
-                `,
+                `
             )}
         `,
-        element,
+        element
     );
 }
 
@@ -101,7 +101,7 @@ type CheckPdfConfigurationResult = Pick<
  * @returns the configuration variables to apply
  */
 function checkPdfConfiguration(
-    importSlideElement: HTMLElement,
+    importSlideElement: HTMLElement
 ): CheckPdfConfigurationResult {
     const urlParams = new URLSearchParams(window.location.search);
 

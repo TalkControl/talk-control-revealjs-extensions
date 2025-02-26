@@ -50,7 +50,7 @@ export function markedTcBg(): marked.MarkedExtension {
 }
 
 export function isTcBgToken(
-    token: TcBgToken | { type: unknown },
+    token: TcBgToken | { type: unknown }
 ): token is TcBgToken {
     return token.type === TYPE_BG_TC;
 }

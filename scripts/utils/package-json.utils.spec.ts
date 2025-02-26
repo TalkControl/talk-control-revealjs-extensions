@@ -19,15 +19,15 @@ describe(buildPackageJson.name, () => {
     it('should create a package.json file with correct infos', () => {
         buildPackageJson(testContext.packageJson, testContext.dist);
         const distPackageJson = JSON.parse(
-            testContext.readDistFile('package.json'),
+            testContext.readDistFile('package.json')
         );
         expect(distPackageJson.name).toEqual(
-            'talk-control-revealjs-extensions',
+            'talk-control-revealjs-extensions'
         );
         expect(distPackageJson.version).toEqual('1.2.3');
         expect(distPackageJson.type).toEqual('module');
         expect(distPackageJson.main).toEqual(
-            './talk-control-revealjs-extensions.js',
+            './talk-control-revealjs-extensions.js'
         );
         expect(distPackageJson.license).toEqual('MIT');
         expect(distPackageJson.private).not.toBeDefined();

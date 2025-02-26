@@ -25,7 +25,7 @@ vi.mock('reveal.js/plugin/markdown/markdown.esm', () => {
 
 // Get a representation of this mock class
 const RevealMarkdownMock = vi.mocked(
-    (await import('reveal.js/plugin/markdown/markdown.esm')).default,
+    (await import('reveal.js/plugin/markdown/markdown.esm')).default
 );
 
 // Mock extensions used in tc plugin
@@ -118,13 +118,13 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
         const pluginInstance = plugin();
 
         expect(
-            (pluginInstance as IPluginRevealMarkdown).processSlides,
+            (pluginInstance as IPluginRevealMarkdown).processSlides
         ).toBeTypeOf('function');
         expect(
-            (pluginInstance as IPluginRevealMarkdown).convertSlides,
+            (pluginInstance as IPluginRevealMarkdown).convertSlides
         ).toBeTypeOf('function');
         expect((pluginInstance as IPluginRevealMarkdown).slidify).toBeTypeOf(
-            'function',
+            'function'
         );
         expect((pluginInstance as IPluginRevealMarkdown).marked).toEqual({
             use: mockUse,

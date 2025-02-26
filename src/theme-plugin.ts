@@ -34,7 +34,7 @@ export class TalkControlTheme {
                 const path = link.href;
                 return path.substring(
                     0,
-                    path.indexOf('css/talk-control-reavealjs-theme.css'),
+                    path.indexOf('css/talk-control-reavealjs-theme.css')
                 );
             }
         }

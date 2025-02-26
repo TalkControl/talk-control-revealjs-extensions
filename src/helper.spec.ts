@@ -21,7 +21,7 @@ describe(_handle_parameter.name, () => {
             'theme',
             slidesElement,
             'data-theme',
-            'default',
+            'default'
         );
 
         expect(themeValue).toBe('data');
@@ -35,7 +35,7 @@ describe(_handle_parameter.name, () => {
             'theme',
             slidesElement,
             'data-theme',
-            'default',
+            'default'
         );
 
         expect(themeValue).toBe('default');
@@ -49,7 +49,7 @@ describe(_handle_parameter.name, () => {
             'theme',
             slidesElement,
             'data-theme',
-            'default',
+            'default'
         );
 
         expect(themeValue).toBe('default');
@@ -64,7 +64,7 @@ describe(_handle_parameter.name, () => {
             'theme',
             slidesElement,
             'data-theme',
-            'default',
+            'default'
         );
 
         expect(themeValue).toBe('data');
@@ -79,7 +79,7 @@ describe(_handle_parameter.name, () => {
             'theme',
             slidesElement,
             'data-theme',
-            'default',
+            'default'
         );
 
         expect(themeValue).toBe('override');
@@ -93,7 +93,7 @@ describe(_handle_parameter.name, () => {
             'theme',
             slidesElement,
             'data-theme',
-            'default',
+            'default'
         );
 
         expect(slidesElement.getAttribute('data-theme')).toBe('data');
@@ -107,7 +107,7 @@ describe(_handle_parameter.name, () => {
             'theme',
             slidesElement,
             'data-theme',
-            'default',
+            'default'
         );
 
         expect(slidesElement.getAttribute('data-theme')).toBe('default');

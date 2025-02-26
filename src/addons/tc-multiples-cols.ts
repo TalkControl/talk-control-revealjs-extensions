@@ -4,7 +4,7 @@
 export function manageMultiplesColumns() {
     const allSlides = [
         ...document.querySelectorAll(
-            '.reveal .slides > section.tc-multiple-columns',
+            '.reveal .slides > section.tc-multiple-columns'
         ),
     ];
     for (let i = 0; i < allSlides.length; i++) {
