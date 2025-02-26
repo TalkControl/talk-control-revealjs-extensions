@@ -41,10 +41,10 @@ export const ThemeInitializer = {
         const slides = slidesFactory();
 
         const { baseMarkdownPath, defaultLang } = tcI18nOptions;
-        i18n({ slides, baseMarkdownPath, defaultLang });
+        const slideI18n = await i18n({ slides, baseMarkdownPath, defaultLang });
 
         // Generate all the DOM code corresponding to slides
-        await slidesRenderer(importSlideElement, slides);
+        await slidesRenderer(importSlideElement, slideI18n);
 
         // Notes aren't shown by default
         const { showNotes, pdfMaxPagesPerSlide, pdfSeparateFragments } =

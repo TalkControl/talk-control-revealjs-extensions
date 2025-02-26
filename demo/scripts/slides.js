@@ -39,6 +39,11 @@ function helpersSlides() {
     ];
 }
 
+function toolsSlides() {
+    const dir = '20-tools';
+    return [`${dir}/01_i18n.md`];
+}
+
 function formation() {
     return [
         //
@@ -46,6 +51,7 @@ function formation() {
         ...speakerSlides(),
         ...layoutsSlides(),
         ...helpersSlides(),
+        ...toolsSlides(),
     ].map((slidePath) => {
         return { path: slidePath };
     });
@@ -62,6 +68,6 @@ await ThemeInitializer.init({
         knowStyles: ['test', 'image'],
     },
     tcI18nOptions: {
-        baseMarkdownPath: '/markdown',
+        baseMarkdownPath: 'markdown/',
     },
 });
