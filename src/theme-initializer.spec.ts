@@ -33,6 +33,9 @@ vi.mock('./addons/tc-i18n', () => ({
     i18n: vi.fn().mockImplementation(() => []),
 }));
 
+// Get a representation of this mock class
+const I18nMocked = vi.mocked(await import('./addons/tc-i18n'));
+
 describe('ThemeInitializer', () => {
     let slidesElement: HTMLElement;
     const mockSlides = [{ path: 'slide1.md' }, { path: 'slide2.md' }];
@@ -43,7 +46,8 @@ describe('ThemeInitializer', () => {
         fontIcons: [],
     };
     const mockTcI18nOptions = {
-        baseMarkdownPath: '/markdwon',
+        defaultLang: 'EN',
+        baseMarkdownPath: '/markdown',
     };
     const mockOptions = {
         slidesFactory: mockSlidesFactory,
@@ -89,14 +93,27 @@ describe('ThemeInitializer', () => {
             );
         });
 
-        it('should call slidesFactory and renderer', async () => {
+        it('should call slidesFactory', async () => {
             await ThemeInitializer.init(mockOptions);
 
             expect(mockSlidesFactory).toHaveBeenCalled();
+        });
+        it('should call renderer', async () => {
+            await ThemeInitializer.init(mockOptions);
+
             expect(render).toHaveBeenCalledWith(
                 expect.anything(),
                 slidesElement
             );
+        });
+        it('should call i18n', async () => {
+            await ThemeInitializer.init(mockOptions);
+
+            expect(I18nMocked.i18n).toHaveBeenCalledWith({
+                defaultLang: mockTcI18nOptions.defaultLang,
+                slides: mockSlides,
+                baseMarkdownPath: mockTcI18nOptions.baseMarkdownPath,
+            });
         });
     });
 
