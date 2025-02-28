@@ -36,6 +36,7 @@ function helpersSlides() {
         `${dir}/10_chapter.md`,
         `${dir}/11_images.md`,
         `${dir}/20_icons.md`,
+        `${dir}/30_admonitions.md`,
     ];
 }
 

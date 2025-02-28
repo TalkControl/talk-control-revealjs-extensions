@@ -3,6 +3,7 @@ import { PluginFunction } from 'reveal.js';
 import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
 import { RevealMarkdownPlugin } from './models';
 import { markedStyledImage } from '@anthonypena/marked-styled-image';
+import { markedTcAdmonition } from './marked/marked-tc-admonition';
 import { markedTcBg } from './marked/marked-tc-bg';
 import { markedTcCols } from './marked/marked-tc-cols';
 
@@ -38,6 +39,7 @@ export class RevealTalkControlMarkdownPlugin {
                         );
                         revealMarkdownPlugin.marked.use(markedTcBg());
                         revealMarkdownPlugin.marked.use(markedTcCols());
+                        revealMarkdownPlugin.marked.use(markedTcAdmonition());
                         const initFunctionArray: Array<() => void> = [];
                         if (
                             self.options.fontIcons &&
