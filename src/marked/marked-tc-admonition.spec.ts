@@ -52,8 +52,8 @@ describe(markedTcAdmonition.name, () => {
 
     it('should not parse identify admonition with unkown type', () => {
         marked.use(markedColsInstance);
-        const md = `!!! info\nsome text\n!!!`;
-        const html = `<p>!!! info\nsome text\n!!!</p>\n`;
+        const md = `!!! fire\nsome text\n!!!`;
+        const html = `<p>!!! fire\nsome text\n!!!</p>\n`;
         expect(marked.parse(md)).toBe(html);
     });
 
