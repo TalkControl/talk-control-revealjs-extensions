@@ -1,5 +1,6 @@
 import Reveal, { PluginFunction } from 'reveal.js';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
+import { transformListFragment } from './addons/tc-list-fragment';
 
 export class TalkControlTheme {
     path: string = '';
@@ -21,6 +22,7 @@ export class TalkControlTheme {
 
         Reveal.addEventListener('ready', () => {
             manageMultiplesColumns();
+            transformListFragment();
         });
     }
 
