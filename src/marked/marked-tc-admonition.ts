@@ -19,7 +19,7 @@ const typesIcons = [
 
 const symbolRegex = new RegExp(`^!!!`);
 const admonitionRegex = new RegExp(
-    `${symbolRegex.source}( (${typesIcons.join('|')}))( tc-admonition-type="([^"]*)")?( tc-admonition-color="([^"]*)")?`,
+    `${symbolRegex.source}( (${typesIcons.join('|')}))( tc-admonition-type="([^"]*)")?( tc-admonition-color="([^"]*)")?`
 );
 const TYPE_ADMONITION_TC = 'admonitionTc';
 
@@ -56,7 +56,7 @@ export function markedTcAdmonition(): marked.MarkedExtension {
                     const rows = src.split('\n');
                     const nextRows = rows.slice(1);
                     const closingTokenIndex = nextRows.findIndex((row) =>
-                        row.match(symbolRegex),
+                        row.match(symbolRegex)
                     );
                     const closingToken =
                         closingTokenIndex === -1
@@ -89,7 +89,7 @@ export function markedTcAdmonition(): marked.MarkedExtension {
                     const parser = new DOMParser();
                     const htmlDoc = parser.parseFromString(
                         content,
-                        'text/html',
+                        'text/html'
                     );
                     const paragraph = htmlDoc.querySelector('p');
                     paragraph?.classList.add('admonition');
@@ -97,13 +97,13 @@ export function markedTcAdmonition(): marked.MarkedExtension {
                     if (token.customType) {
                         paragraph?.setAttribute(
                             'data-admonition-icon',
-                            token.customType,
+                            token.customType
                         );
                     }
                     if (token.customColor) {
                         paragraph?.setAttribute(
                             'style',
-                            `--tc-admonition-bg-color:${token.customColor};`,
+                            `--tc-admonition-bg-color:${token.customColor};`
                         );
                     }
 
@@ -115,7 +115,7 @@ export function markedTcAdmonition(): marked.MarkedExtension {
 }
 
 export function isTcAdmonitionToken(
-    token: TcAdmonitionToken | { type: unknown },
+    token: TcAdmonitionToken | { type: unknown }
 ): token is TcAdmonitionToken {
     return token.type === TYPE_ADMONITION_TC;
 }
