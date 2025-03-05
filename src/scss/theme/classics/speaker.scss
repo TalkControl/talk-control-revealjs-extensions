@@ -69,7 +69,8 @@
             width: var(--tc-speaker-width-img);
             height: var(--tc-speaker-width-img);
             border-radius: var(--tc-speaker-width-img);
-            background-size: cover;
+            object-fit: cover;
+            object-position: var(--tc-speaker-img-pos, top);
             box-shadow: lightgrey 0px 6px 6px 1px;
         }
     }
