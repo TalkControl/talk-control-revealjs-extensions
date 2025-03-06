@@ -35,7 +35,8 @@
         }
         p {
             //font-size: 1em;
-            &.credits {
+            &.credits.credits {
+                // Little hack to augment the weight of selector (use double class trick)
                 justify-content: flex-end;
                 position: absolute;
                 bottom: 0;

@@ -35,6 +35,7 @@ function helpersSlides() {
     return [
         `${dir}/10_chapter.md`,
         `${dir}/11_images.md`,
+        `${dir}/12_backgrounds.md`,
         `${dir}/20_icons.md`,
         `${dir}/30_admonitions.md`,
     ];
@@ -66,7 +67,7 @@ await ThemeInitializer.init({
             featherIconPack(),
             materialSymbolsIconPack(),
         ],
-        knowStyles: ['test', 'image'],
+        knowStyles: ['custom-img-style'],
     },
     tcI18nOptions: {
         baseMarkdownPath: 'markdown/',
