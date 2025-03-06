@@ -7,6 +7,25 @@ import { markedTcAdmonition } from './marked/marked-tc-admonition';
 import { markedTcBg } from './marked/marked-tc-bg';
 import { markedTcCols } from './marked/marked-tc-cols';
 
+const stylesCssImg = [
+    'center',
+    'full-center',
+    'float-left',
+    'float-right',
+    'full-width',
+    'full-height',
+];
+for (let i = 1; i <= 100; i++) {
+    if (i <= 20) {
+        stylesCssImg.push(`h-${i * 50}`);
+        stylesCssImg.push(`w-${i * 50}`);
+        stylesCssImg.push(`hm-${i * 50}`);
+        stylesCssImg.push(`wm-${i * 50}`);
+    }
+    stylesCssImg.push(`mt-${i * 10}`);
+    stylesCssImg.push(`mb-${i * 10}`);
+}
+
 export interface TalkControlMarkedOptions {
     fontIcons?: MarkedTcIconsOptions[];
     knowStyles?: string[];
@@ -32,9 +51,11 @@ export class RevealTalkControlMarkdownPlugin {
                     if (revealMarkdownPlugin && revealMarkdownPlugin.init) {
                         const promiseInit = revealMarkdownPlugin.init(reveal);
                         // We set all extensions after call of init due to the fact that the init function reset the renderer
+                        const knownStyles = self.options.knowStyles ?? [];
+                        knownStyles.push(...stylesCssImg);
                         revealMarkdownPlugin.marked.use(
                             markedStyledImage({
-                                knownStyles: self.options.knowStyles ?? [],
+                                knownStyles,
                             })
                         );
                         revealMarkdownPlugin.marked.use(markedTcBg());

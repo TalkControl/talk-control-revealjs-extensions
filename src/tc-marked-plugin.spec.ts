@@ -4,6 +4,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Reveal from 'reveal.js';
 import { RevealTalkControlMarkdownPlugin } from './tc-marked-plugin';
+import { markedStyledImage } from '@anthonypena/marked-styled-image';
+
+// Mock du module marked-styled-image
+vi.mock('@anthonypena/marked-styled-image', () => ({
+    markedStyledImage: vi.fn(),
+}));
 
 const mockInit = vi.fn();
 const mockUse = vi.fn();
@@ -35,6 +41,26 @@ vi.mock('./marked-extensions', () => ({
     markedTcCols: vi.fn().mockReturnValue({}),
     markedTcIcons: vi.fn().mockReturnValue({}),
 }));
+
+// Mock reproduction of classStyles
+const stylesCssImg = [
+    'center',
+    'full-center',
+    'float-left',
+    'float-right',
+    'full-width',
+    'full-height',
+];
+for (let i = 1; i <= 100; i++) {
+    if (i <= 20) {
+        stylesCssImg.push(`h-${i * 50}`);
+        stylesCssImg.push(`w-${i * 50}`);
+        stylesCssImg.push(`hm-${i * 50}`);
+        stylesCssImg.push(`wm-${i * 50}`);
+    }
+    stylesCssImg.push(`mt-${i * 10}`);
+    stylesCssImg.push(`mb-${i * 10}`);
+}
 
 // Used for compilation of test
 interface IPluginRevealMarkdown extends Reveal.Plugin {
@@ -87,6 +113,35 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
         await pluginInstance.init!(revealMock as Reveal.Api);
 
         expect(revealMarkdownPlugin.init).toHaveBeenCalledWith(revealMock);
+    });
+
+    it('should initialize the plugin with correct class list for img', async () => {
+        const pluginInstance = plugin();
+        const customStyles = ['style1', 'style2'];
+
+        await pluginInstance.init!(revealMock as Reveal.Api);
+
+        // Assert
+        // check params
+        expect(markedStyledImage).toHaveBeenCalledWith(
+            expect.objectContaining({
+                knownStyles: expect.arrayContaining([
+                    ...customStyles,
+                    ...stylesCssImg,
+                ]),
+            })
+        );
+    });
+
+    it('should initialize the plugin with correct number of class list for img', async () => {
+        const pluginInstance = plugin();
+
+        await pluginInstance.init!(revealMock as Reveal.Api);
+
+        // Check correct number of params
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const callArg = (markedStyledImage as any).mock.calls[0][0];
+        expect(callArg.knownStyles.length).toBe(stylesCssImg.length + 2); // 286 styles de base + 2 customs
     });
 
     it('should call init methods when reveal is ready', async () => {
