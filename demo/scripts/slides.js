@@ -39,6 +39,7 @@ function helpersSlides() {
         `${dir}/12_backgrounds.md`,
         `${dir}/20_icons.md`,
         `${dir}/30_admonitions.md`,
+        `${dir}/40_quotes.md`,
     ];
 }
 
