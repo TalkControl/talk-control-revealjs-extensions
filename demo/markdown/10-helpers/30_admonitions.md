@@ -1,3 +1,9 @@
+<!-- .slide: class="transition" -->
+
+# Admonition Blocks
+
+##==##
+
 # Admonition Blocks - using html
 
 <p class="admonition info">
