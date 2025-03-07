@@ -1,0 +1,29 @@
+.reveal {
+    section.quote-slide {
+        height: 100%;
+
+        blockquote {
+            margin-top: 300px;
+            color: var(--tc-quote-color);
+            box-shadow: initial;
+        }
+
+        .credits::before {
+            content: '@';
+            color: var(--tc-quote-color);
+        }
+    }
+
+    .backgrounds div.slide-background.quote-slide::before {
+        content: '';
+        position: absolute;
+        background: url('./images/quotes.webp');
+        background-size: contain;
+        filter: brightness(0.25);
+        top: 5px;
+        left: 5px;
+        width: 400px;
+        height: 400px;
+        color: var(--tc-quote-bg-color);
+    }
+}
