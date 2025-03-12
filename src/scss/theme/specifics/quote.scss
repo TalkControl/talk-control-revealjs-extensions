@@ -1,10 +1,19 @@
 .reveal {
-    section.quote-slide {
-        height: 100%;
+    .slides section.quote-slide {
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        blockquote,
+        code,
+        pre,
+        a {
+            color: var(--tc-quote-color);
+        }
 
         blockquote {
             margin-top: 300px;
-            color: var(--tc-quote-color);
             box-shadow: initial;
         }
 
@@ -20,10 +29,10 @@
         background: url('./images/quotes.webp');
         background-size: contain;
         filter: brightness(0.25);
-        top: 5px;
+        top: 150px;
         left: 5px;
-        width: 400px;
-        height: 400px;
+        width: 200px;
+        height: 200px;
         color: var(--tc-quote-bg-color);
     }
 }

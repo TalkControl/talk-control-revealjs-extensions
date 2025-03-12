@@ -4,14 +4,14 @@
 
 ##==##
 
-<!-- .slide: class="quote-slide" -->
+## A Quote
 
-## A dedicate Quote slide
+A Quote without any style (basic html)
 
 <blockquote>
-<cite>
-  A quote wihtout citation
-</cite>
+<p>
+  To Quote or not to quote...
+</p>
 </blockquote>
 
 ##--##
@@ -20,13 +20,32 @@
 
 # Code to produce / Markdown
 
-<!-- prettier-ignore -->
 ```markdown
-<!-- .slide: class="quote-slide" -->
-## A dedicate Quote slide
+<blockquote>
+  To Quote or not to quote...
+</blockquote>
+```
+
+<!-- .element: class="big-code" -->
+
+##==##
+
+## A Quote
+
+A Quote without any style (basic markdown)
+
+> To Quote or not to quote...
+
+##--##
+
+<!-- .slide: class="with-code" -->
+
+# Code to produce / Markdown
+
+```markdown
 <blockquote>
 <cite>
-  A quote wihtout citation
+  To Quote or not to quote...
 </cite>
 </blockquote>
 ```
@@ -39,11 +58,30 @@
 
 ## A dedicate Quote slide
 
-<blockquote>
-<cite>
-  A quote wihtout citation
-</cite>
-</blockquote>
+> A quote wihtout citation
+
+##--##
+
+<!-- .slide: class="with-code" -->
+
+# Code to produce / Markdown
+
+<!-- prettier-ignore -->
+```markdown
+<!-- .slide: class="quote-slide" -->
+## A dedicate Quote slide
+>  A quote wihtout citation
+```
+
+<!-- .element: class="big-code" -->
+
+##==##
+
+<!-- .slide: class="quote-slide" -->
+
+## A dedicate Quote slide
+
+> A quote wihtout citation
 
 [Credit of citation](http://www.sfeir.com)
 
@@ -59,11 +97,8 @@
 ```markdown
 <!-- .slide: class="quote-slide" -->
 ## A dedicate Quote slide
-<blockquote>
-<cite>
-  To Quote or not to quote...
-</cite>
-</blockquote>
+>  To Quote or not to quote...
+
 [Credit of citation](http://www.sfeir.com)
 <!-- .element: class="credits" -->
 ```

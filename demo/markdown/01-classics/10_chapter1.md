@@ -214,32 +214,6 @@ More wonderful content
 
 ##==##
 
-## A Quote
-
-<blockquote>
-<cite>
-  To Quote or not to quote...
-</cite>
-</blockquote>
-
-##--##
-
-<!-- .slide: class="with-code" -->
-
-# Code to produce / Markdown
-
-```markdown
-<blockquote>
-<cite>
-  To Quote or not to quote...
-</cite>
-</blockquote>
-```
-
-<!-- .element: class="big-code" -->
-
-##==##
-
 ## Links
 
 http://developer.android.com/index.html

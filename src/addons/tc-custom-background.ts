@@ -1,8 +1,10 @@
+export interface TcCustomBackgroundMap {
+    [key: string]: string;
+}
+
 export interface TcCustomBackgroundOptions {
     basePath: string; // Base path to find files
-    mapBackgrounds: (theme?: string) => {
-        [key: string]: string;
-    };
+    mapBackgrounds: (theme?: string) => TcCustomBackgroundMap;
 }
 
 /**
