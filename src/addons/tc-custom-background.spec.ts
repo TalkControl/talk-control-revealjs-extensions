@@ -153,7 +153,7 @@ describe('Custom Backgrounds', () => {
             const options = {
                 basePath: '/images',
                 theme: 'test',
-                mapBackgrounds: (theme) => {
+                mapBackgrounds: (theme: string | undefined) => {
                     if (theme === 'test') {
                         return {
                             'slide-1': 'background1.jpg',
