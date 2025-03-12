@@ -73,7 +73,7 @@ async function firstExisting(
     return null;
 }
 
-// Ajout de l'export conditionnel
+// Add conditionnal export
 export const _internals =
     typeof process !== 'undefined' && process?.env?.NODE_ENV === 'test'
         ? {

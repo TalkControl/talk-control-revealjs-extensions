@@ -1,13 +1,22 @@
 import Reveal, { PluginFunction } from 'reveal.js';
+import {
+    TcCustomBackgroundOptions,
+    customBackgrounds,
+} from './addons/tc-custom-background';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { transformListFragment } from './addons/tc-list-fragment';
 
+export interface TalkControlPluginOptions {
+    tcCustomBackgroundOptions: TcCustomBackgroundOptions;
+}
 export class TalkControlTheme {
     path: string = '';
     urlParams: URLSearchParams;
     slidesElement: HTMLElement | null;
+    options: TalkControlPluginOptions;
 
-    constructor() {
+    constructor(options: TalkControlPluginOptions) {
+        this.options = options;
         this.path = '';
 
         const queryString = window.location.search;
@@ -23,6 +32,7 @@ export class TalkControlTheme {
         Reveal.addEventListener('ready', () => {
             manageMultiplesColumns();
             transformListFragment();
+            customBackgrounds(this.options.tcCustomBackgroundOptions);
         });
     }
 
@@ -44,14 +54,18 @@ export class TalkControlTheme {
     }
 }
 
-const RevealTalkControlThemePlugin: PluginFunction = () => {
-    return {
-        id: 'talk-control-theme',
-        init() {
-            const talkControlTheme = new TalkControlTheme();
-            talkControlTheme.postprocess();
-        },
+const RevealTalkControlThemePlugin: (
+    options: TalkControlPluginOptions
+) => PluginFunction = (options: TalkControlPluginOptions) => {
+    const savedOptions = options;
+    return () => {
+        return {
+            id: 'talk-control-theme',
+            init() {
+                const talkControlTheme = new TalkControlTheme(savedOptions);
+                talkControlTheme.postprocess();
+            },
+        };
     };
 };
-
 export default RevealTalkControlThemePlugin;
