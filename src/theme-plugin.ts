@@ -7,6 +7,14 @@ import {
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { transformListFragment } from './addons/tc-list-fragment';
 
+/**
+ * Default mapping to use for background
+ * Key is a class style of section
+ * Value is the applied background
+ */
+const backgroundMapping = {
+    'quote-slide': 'var(--tc-quote-slide-bg-color)',
+};
 export interface TalkControlPluginOptions {
     tcCustomBackgroundOptions: TcCustomBackgroundOptions;
 }
@@ -60,7 +68,12 @@ export class TalkControlTheme {
         return '';
     }
 }
-
+/**
+ * Override function that prioritize the mapping offered in parameters
+ * and apply default background includes in theme (quote, ...)
+ * @param backgroundOptions
+ * @returns
+ */
 function _processBackgroundThemeOptions(
     backgroundOptions: TcCustomBackgroundOptions
 ): TcCustomBackgroundOptions {
@@ -74,7 +87,7 @@ function _processBackgroundThemeOptions(
             const givenBackgroundOptions =
                 backgroundOptions.mapBackgrounds(themeToUse);
             const applyBackgroundOptions: TcCustomBackgroundMap = {
-                'quote-slide': 'var(--tc-quote-slide-bg-color)',
+                ...backgroundMapping,
             };
             for (const [key, value] of Object.entries(givenBackgroundOptions)) {
                 applyBackgroundOptions[key] = value;
@@ -104,3 +117,11 @@ const RevealTalkControlThemePlugin: (
     };
 };
 export default RevealTalkControlThemePlugin;
+
+// Add conditionnal export for test
+export const _internals =
+    typeof process !== 'undefined' && process?.env?.NODE_ENV === 'test'
+        ? {
+              _processBackgroundThemeOptions,
+          }
+        : undefined;
