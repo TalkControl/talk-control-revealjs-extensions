@@ -12,6 +12,7 @@ import RevealTalkControlThemePlugin from './theme-plugin';
 import RevealZoom from 'reveal.js/plugin/zoom/zoom.esm';
 
 import { SlidePath } from './models';
+import { TcCustomBackgroundOptions } from './addons/tc-custom-background';
 
 /**
  *
@@ -20,6 +21,7 @@ export interface ThemeInitializerOptions {
     slidesFactory: () => SlidePath[];
     tcMarkedOptions: TalkControlMarkedOptions;
     tcI18nOptions: TcI18nConfig;
+    tcCustomBackgroundOptions: TcCustomBackgroundOptions;
     slidesRenderer?: (element: HTMLElement, slides: SlidePath[]) => RootPart;
 }
 
@@ -31,6 +33,7 @@ export const ThemeInitializer = {
         slidesFactory,
         tcMarkedOptions,
         tcI18nOptions,
+        tcCustomBackgroundOptions,
         slidesRenderer = defaultSlideRenderer,
     }: ThemeInitializerOptions) {
         const importSlideElement: HTMLElement | null =
@@ -69,7 +72,7 @@ export const ThemeInitializer = {
             pdfSeparateFragments,
             plugins: [
                 talkControlMarkedPlugin.getPlugin(), // We don't use RevealMarkdown because we have to add custom marked extensions
-                RevealTalkControlThemePlugin,
+                RevealTalkControlThemePlugin({ tcCustomBackgroundOptions }),
                 RevealZoom,
                 RevealNotes,
                 RevealHighlight,

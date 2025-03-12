@@ -49,10 +49,19 @@ describe('ThemeInitializer', () => {
         defaultLang: 'EN',
         baseMarkdownPath: '/markdown',
     };
+    const mockCustomBackgroundOptions = {
+        basePath: './',
+        mapBackgrounds: () => {
+            return {
+                'slide-1': 'image.jpg',
+            };
+        },
+    };
     const mockOptions = {
         slidesFactory: mockSlidesFactory,
         tcMarkedOptions: mockTcMarkedOptions,
         tcI18nOptions: mockTcI18nOptions,
+        tcCustomBackgroundOptions: mockCustomBackgroundOptions,
     };
 
     beforeEach(() => {

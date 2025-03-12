@@ -17,6 +17,7 @@ function schoolSlides() {
         `${dir}/10_chapter1.md`,
         `${dir}/20_transitions.md`,
         `${dir}/30_code_slides.md`,
+        `${dir}/40_custom_bg_slides.md`,
     ];
 }
 
@@ -71,5 +72,15 @@ await ThemeInitializer.init({
     },
     tcI18nOptions: {
         baseMarkdownPath: 'markdown/',
+    },
+    tcCustomBackgroundOptions: {
+        basePath: '/assets/images/',
+        mapBackgrounds: () => {
+            return {
+                'yellow-slide': 'yellow',
+                'orange-slide': '#f9cb9c',
+                'transition-wall': 'wall.jpg',
+            };
+        },
     },
 });
