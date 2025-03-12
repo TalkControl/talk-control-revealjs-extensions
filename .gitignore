@@ -131,3 +131,5 @@ dist
 
 # MAC OS
 .DS_Store
+
+*.qodo
