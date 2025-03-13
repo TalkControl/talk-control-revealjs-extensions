@@ -21,6 +21,9 @@
     --tc-table-header-bg: #{$mainColor}; // background color of thead if there is a table
     --tc-table-header-color: white; // color of columns in thead if there is a table
     --tc-table-bg: #efefef; // background color of the rest of table
+    // credits
+    --tc-credits-bg: rgba(239, 239, 239, 0.8);
+    --tc-credits-color: #{$mainColor};
 
     //////////////////////////
     // Properties for transitions slides

@@ -66,6 +66,10 @@ We use a Hash notation as parameter passed in initializer
 
 ## Here we set an image
 
+source: [unsplash](https://unsplash.com/fr/photos/mur-de-briques-blanches-4Zaq5xY5M_c) by [Joe Woods](https://unsplash.com/fr/@woods)
+
+<!-- .element: class="credits" -->
+
 ##--##
 
 <!-- .slide: class="with-code" -->

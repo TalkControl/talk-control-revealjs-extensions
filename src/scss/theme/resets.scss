@@ -37,12 +37,25 @@
             //font-size: 1em;
             &.credits.credits {
                 // Little hack to augment the weight of selector (use double class trick)
+                all: unset;
                 justify-content: flex-end;
                 position: absolute;
                 bottom: 0;
-                width: 100%;
+                width: auto;
+                left: 50%;
+                transform: translateX(-50%);
                 text-align: center;
                 font-size: 0.7em;
+                background-color: var(--tc-credits-bg);
+                color: var(--tc-credits-color);
+                margin: 0;
+                padding: 0 10px;
+            }
+
+            &.credits::before {
+                content: '©';
+                margin-right: 3px;
+                color: var(--tc-credits-color);
             }
         }
         p + p {

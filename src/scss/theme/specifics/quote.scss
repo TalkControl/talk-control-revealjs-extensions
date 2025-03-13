@@ -17,9 +17,9 @@
             box-shadow: initial;
         }
 
-        .credits::before {
-            content: '@';
-            color: var(--tc-quote-color);
+        .credits {
+            --tc-credits-bg: var(--tc-quote-slide-bg-color);
+            --tc-credits-color: var(--tc-quote-color);
         }
     }
 

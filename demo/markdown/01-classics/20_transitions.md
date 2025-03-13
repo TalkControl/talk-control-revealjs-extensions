@@ -118,16 +118,25 @@
 
 # A Custom Transition Slide
 
+source: [unsplash](https://unsplash.com/photos/yellow-ceramic-mug-beside-gray-aluminum-imac-bKjHgo_Lbpo) by [Georgie Cobbs](https://unsplash.com/@georgie_cobbs)
+
+<!-- .element: class="credits" -->
+
 ##--##
 
 <!-- .slide: class="with-code" -->
 
 # Code to produce / Markdown
 
-````markdown
+```markdown
 <!-- .slide: data-background="./assets/images/light_background.jpg" class="transition" -->
 
 # A Custom Transition Slide
+
+source: [unsplash](https://unsplash.com/photos/yellow-ceramic-mug-beside-gray-aluminum-imac-bKjHgo_Lbpo) by [Georgie Cobbs](https://unsplash.com/@georgie_cobbs)
+
+<!-- .element: class="credits" -->
+```
 
 ##==##
 
@@ -136,6 +145,10 @@
 # A Custom Transition Slide
 
 ## With mask
+
+source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-appliques-murales-eclairees-dbj0O83MM5Y) by [Jorge Rokas](https://unsplash.com/fr/@jorgerojas)
+
+<!-- .element: class="credits" -->
 
 ##--##
 
@@ -148,8 +161,11 @@
     class="transition mask" -->
 
 # A Custom Transition Slide
+
+source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-appliques-murales-eclairees-dbj0O83MM5Y) by [Jorge Rokas](https://unsplash.com/fr/@jorgerojas)
+
+<!-- .element: class="credits" -->
 ```
-````
 
 <!-- .element: class="big-code" -->
 
@@ -217,4 +233,8 @@
 # Talk Control Theme
 
 ## With txt white and line colored
+```
+
+```
+
 ```
