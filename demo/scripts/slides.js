@@ -45,7 +45,7 @@ function helpersSlides() {
 
 function toolsSlides() {
     const dir = '20-tools';
-    return [`${dir}/01_i18n.md`];
+    return [`${dir}/01_i18n.md`, `${dir}/02_data-type.md`];
 }
 
 function formation() {

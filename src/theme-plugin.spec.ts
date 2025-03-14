@@ -13,6 +13,7 @@ import {
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Reveal from 'reveal.js';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
+import { manageShowTypeContent } from './addons/tc-data-type';
 import { transformListFragment } from './addons/tc-list-fragment';
 
 // Mocks dependances
@@ -22,6 +23,10 @@ vi.mock('./addons/tc-custom-background', () => ({
 
 vi.mock('./addons/tc-multiples-cols', () => ({
     manageMultiplesColumns: vi.fn(),
+}));
+
+vi.mock('./addons/tc-data-type', () => ({
+    manageShowTypeContent: vi.fn(),
 }));
 
 vi.mock('./addons/tc-list-fragment', () => ({
@@ -84,6 +89,7 @@ describe('TalkControlTheme', () => {
             readyCallback();
 
             expect(manageMultiplesColumns).toHaveBeenCalled();
+            expect(manageShowTypeContent).toHaveBeenCalled();
             expect(transformListFragment).toHaveBeenCalled();
             expect(customBackgrounds).toHaveBeenCalled();
         });
