@@ -5,6 +5,7 @@ import {
     customBackgrounds,
 } from './addons/tc-custom-background';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
+import { manageShowTypeContent } from './addons/tc-data-type';
 import { transformListFragment } from './addons/tc-list-fragment';
 
 /**
@@ -17,6 +18,7 @@ const backgroundMapping = {
 };
 export interface TalkControlPluginOptions {
     tcCustomBackgroundOptions: TcCustomBackgroundOptions;
+    defaultSlidesType?: string;
 }
 export class TalkControlTheme {
     path: string = '';
@@ -48,6 +50,7 @@ export class TalkControlTheme {
             manageMultiplesColumns();
             transformListFragment();
             customBackgrounds(this.optionsCustomBackground);
+            manageShowTypeContent(this.options.defaultSlidesType);
         });
     }
 
