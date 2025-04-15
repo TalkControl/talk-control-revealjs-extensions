@@ -1,6 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
+import { Mock, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
     TalkControlPluginOptions,
     TalkControlTheme,
@@ -10,15 +11,19 @@ import {
     TcCustomBackgroundMap,
     customBackgrounds,
 } from './addons/tc-custom-background';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import Reveal from 'reveal.js';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { manageShowTypeContent } from './addons/tc-data-type';
+import { manageTheme } from './addons/tc-theme';
 import { transformListFragment } from './addons/tc-list-fragment';
 
 // Mocks dependances
 vi.mock('./addons/tc-custom-background', () => ({
     customBackgrounds: vi.fn(),
+}));
+
+vi.mock('./addons/tc-theme', () => ({
+    manageTheme: vi.fn(),
 }));
 
 vi.mock('./addons/tc-multiples-cols', () => ({
@@ -45,6 +50,9 @@ describe('TalkControlTheme', () => {
                 mapBackgrounds: () => ({
                     'custom-bg': 'custom-value',
                 }),
+            },
+            tcThemeOptions: {
+                defaultTheme: 'tc',
             },
         };
 
@@ -92,6 +100,7 @@ describe('TalkControlTheme', () => {
             expect(manageShowTypeContent).toHaveBeenCalled();
             expect(transformListFragment).toHaveBeenCalled();
             expect(customBackgrounds).toHaveBeenCalled();
+            expect(manageTheme).toHaveBeenCalled();
         });
     });
 
@@ -152,28 +161,43 @@ describe('TalkControlTheme', () => {
             );
         });
 
-        it('should cache theme mappings', () => {
-            const mockMapBackgrounds: (
-                theme: string | undefined
-            ) => TcCustomBackgroundMap = vi.fn().mockReturnValue({
-                'custom-key': 'custom-value',
-            });
-
+        it('should override use theme passed as custom background mappings', () => {
             const customOptions = {
                 basePath: './',
-                mapBackgrounds: mockMapBackgrounds,
+                mapBackgrounds: () => ({
+                    'quote-slide': 'custom-value',
+                }),
             };
 
             const result =
                 _internals!._processBackgroundThemeOptions(customOptions);
+            const mappings = result.mapBackgrounds();
 
-            // First call
-            result.mapBackgrounds('theme1');
-            // Second theme with same theme
-            result.mapBackgrounds('theme1');
+            expect(mappings).toEqual(
+                expect.objectContaining({
+                    'quote-slide': 'custom-value',
+                })
+            );
+        });
 
-            // Check that mapping is only called once
-            expect(mockMapBackgrounds).toHaveBeenCalledTimes(1);
+        it('should cache theme called is passed', () => {
+            (manageTheme as Mock).mockReturnValue('tc');
+            const theme = new TalkControlTheme(mockOptions);
+            const mockAddEventListener = vi.spyOn(Reveal, 'addEventListener');
+
+            theme.postprocess();
+
+            // Simulate ready event
+            const readyCallback = mockAddEventListener.mock
+                .calls[0][1] as () => void;
+            readyCallback();
+
+            expect(customBackgrounds).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    basePath: mockOptions.tcCustomBackgroundOptions.basePath,
+                    theme: 'tc',
+                })
+            );
         });
 
         it('should return correct mapping if theme is passed', () => {
