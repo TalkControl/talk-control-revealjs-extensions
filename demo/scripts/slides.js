@@ -84,4 +84,5 @@ await ThemeInitializer.init({
             };
         },
     },
+    tcThemeOptions: {},
 });

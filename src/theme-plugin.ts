@@ -4,6 +4,7 @@ import {
     TcCustomBackgroundOptions,
     customBackgrounds,
 } from './addons/tc-custom-background';
+import { TcThemeOptions, manageTheme } from './addons/tc-theme';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { manageShowTypeContent } from './addons/tc-data-type';
 import { transformListFragment } from './addons/tc-list-fragment';
@@ -18,6 +19,7 @@ const backgroundMapping = {
 };
 export interface TalkControlPluginOptions {
     tcCustomBackgroundOptions: TcCustomBackgroundOptions;
+    tcThemeOptions: TcThemeOptions;
     defaultSlidesType?: string;
 }
 export class TalkControlTheme {
@@ -28,12 +30,16 @@ export class TalkControlTheme {
 
     private optionsCustomBackground: TcCustomBackgroundOptions;
 
+    private themeToUse: string;
+
     constructor(options: TalkControlPluginOptions) {
         this.options = options;
         this.path = '';
 
         const queryString = window.location.search;
         this.urlParams = new URLSearchParams(queryString);
+
+        this.themeToUse = manageTheme(options.tcThemeOptions);
 
         this.optionsCustomBackground = _processBackgroundThemeOptions(
             options.tcCustomBackgroundOptions
@@ -49,7 +55,10 @@ export class TalkControlTheme {
         Reveal.addEventListener('ready', () => {
             manageMultiplesColumns();
             transformListFragment();
-            customBackgrounds(this.optionsCustomBackground);
+            customBackgrounds({
+                ...this.optionsCustomBackground,
+                theme: this.themeToUse,
+            });
             manageShowTypeContent(this.options.defaultSlidesType);
         });
     }

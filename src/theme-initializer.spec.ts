@@ -29,12 +29,27 @@ vi.mock('./tc-marked-plugin', () => ({
     })),
 }));
 
+vi.mock('./theme-plugin', () => {
+    return {
+        default: vi.fn(() => {
+            return () => ({
+                id: 'talk-control-theme',
+                init: vi.fn(),
+            });
+        }),
+        TalkControlTheme: vi.fn().mockImplementation(() => ({
+            postprocess: vi.fn(),
+        })),
+    };
+});
+
 vi.mock('./addons/tc-i18n', () => ({
     i18n: vi.fn().mockImplementation(() => []),
 }));
 
 // Get a representation of this mock class
 const I18nMocked = vi.mocked(await import('./addons/tc-i18n'));
+const ThemeMocked = vi.mocked(await import('./theme-plugin'));
 
 describe('ThemeInitializer', () => {
     let slidesElement: HTMLElement;
@@ -57,10 +72,14 @@ describe('ThemeInitializer', () => {
             };
         },
     };
+    const mockTcThemeOptions = {
+        defaultTheme: '',
+    };
     const mockOptions = {
         slidesFactory: mockSlidesFactory,
         tcMarkedOptions: mockTcMarkedOptions,
         tcI18nOptions: mockTcI18nOptions,
+        tcThemeOptions: mockTcThemeOptions,
         tcCustomBackgroundOptions: mockCustomBackgroundOptions,
     };
 
@@ -122,6 +141,14 @@ describe('ThemeInitializer', () => {
                 defaultLang: mockTcI18nOptions.defaultLang,
                 slides: mockSlides,
                 baseMarkdownPath: mockTcI18nOptions.baseMarkdownPath,
+            });
+        });
+        it('should call Plugin with correct params', async () => {
+            await ThemeInitializer.init(mockOptions);
+
+            expect(ThemeMocked.default).toHaveBeenCalledWith({
+                tcCustomBackgroundOptions: mockCustomBackgroundOptions,
+                tcThemeOptions: mockTcThemeOptions,
             });
         });
     });
