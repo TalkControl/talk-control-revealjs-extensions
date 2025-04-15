@@ -45,7 +45,11 @@ function helpersSlides() {
 
 function toolsSlides() {
     const dir = '20-tools';
-    return [`${dir}/01_i18n.md`, `${dir}/02_data-type.md`];
+    return [
+        `${dir}/01_i18n.md`,
+        `${dir}/02_data-type.md`,
+        `${dir}/03_theme.md`,
+    ];
 }
 
 function formation() {
@@ -76,11 +80,11 @@ await ThemeInitializer.init({
     },
     tcCustomBackgroundOptions: {
         basePath: '/assets/images/',
-        mapBackgrounds: () => {
+        mapBackgrounds: (theme) => {
             return {
                 'yellow-slide': 'yellow',
                 'orange-slide': '#f9cb9c',
-                'transition-wall': 'wall.jpg',
+                'transition-wall': theme === 'dark' ? 'party.jpg' : 'wall.jpg',
             };
         },
     },
