@@ -22,5 +22,6 @@ export function manageTheme({ defaultTheme = '' }: TcThemeOptions): string {
     );
 
     slideElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
     return theme;
 }
