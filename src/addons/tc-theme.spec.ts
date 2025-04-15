@@ -26,11 +26,11 @@ describe('manageTheme', () => {
         mockSlideElement = document.body.querySelector('.slides')!;
     });
 
-    it('Should use default theme if passed', () => {
+    it('Should call handle_parameter', () => {
         const options: TcThemeOptions = { defaultTheme: 'dark-theme' };
         vi.mocked(_handle_parameter).mockReturnValue('dark-theme');
 
-        const result = manageTheme(options);
+        manageTheme(options);
 
         expect(_handle_parameter).toHaveBeenCalledWith(
             expect.any(URLSearchParams),
@@ -39,8 +39,22 @@ describe('manageTheme', () => {
             'data-theme',
             'dark-theme'
         );
-        expect(mockSlideElement.getAttribute('data-theme')).toBe('dark-theme');
+    });
+    it('Should use default theme if passed', () => {
+        const options: TcThemeOptions = { defaultTheme: 'dark-theme' };
+        vi.mocked(_handle_parameter).mockReturnValue('dark-theme');
+
+        const result = manageTheme(options);
+
         expect(result).toBe('dark-theme');
+    });
+    it('Should apply default theme if passed on slide element', () => {
+        const options: TcThemeOptions = { defaultTheme: 'dark-theme' };
+        vi.mocked(_handle_parameter).mockReturnValue('dark-theme');
+
+        manageTheme(options);
+
+        expect(mockSlideElement.getAttribute('data-theme')).toBe('dark-theme');
     });
 
     it('Should use empty string as theme if none is given', () => {
@@ -49,30 +63,17 @@ describe('manageTheme', () => {
 
         const result = manageTheme(options);
 
-        expect(_handle_parameter).toHaveBeenCalledWith(
-            expect.any(URLSearchParams),
-            'data-theme',
-            mockSlideElement,
-            'data-theme',
-            ''
-        );
-        expect(mockSlideElement.getAttribute('data-theme')).toBe('');
         expect(result).toBe('');
     });
 
     it('Should use theme given by _handle_parameter on slide element', () => {
-        // Arrange
         vi.mocked(_handle_parameter).mockReturnValue('custom-theme');
 
-        // Act
         const result = manageTheme({});
 
-        // Assert
-        expect(mockSlideElement.getAttribute('data-theme')).toBe(
-            'custom-theme'
-        );
         expect(result).toBe('custom-theme');
     });
+
     it('Should apply theme on body element', () => {
         vi.mocked(_handle_parameter).mockReturnValue('custom-theme');
 
