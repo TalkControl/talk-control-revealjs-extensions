@@ -1,0 +1,122 @@
+/**
+* Theme demo
+**/
+
+body[data-theme='sample'] {
+    --mainColorForTheme: rgb(127, 2, 2);
+
+    /**
+    * Reveal JS theme variables
+    */
+    --r-background-color: rgb(198, 238, 255);
+    --r-main-font: Tahoma, sans-serif;
+    --r-main-color: var(--mainColorForTheme);
+    --r-heading-font: Georgia, Impact, sans-serif;
+    --r-heading-color: var(--mainColorForTheme);
+    --r-link-color: #a64d79;
+    --r-link-color-dark: #723553;
+    --r-link-color-hover: #cb8eac;
+    --r-selection-background-color: #6a1e55;
+    --r-selection-color: #fff;
+
+    /**
+    * TalkControl theme variables
+    */
+    /*////////////////////////
+    // Properties for globals layouts
+    ////////////////////////*/
+    /* heading */
+    --tc-heading-color: var(
+        --mainColorForTheme
+    ); /* color of titles in slides */
+    --tc-heading-title-font-size: 1.8em; /* font size for main title of slide */
+    --tc-heading-sub-title-font-size: 1.3em; /* font size for sub title in slides */
+    --tc-heading-margin-bottom: 130px; /* margin bottom bellow title */
+    --tc-heading-sub-title-margin-bottom: 40px; /* margin bottom bellow sub title */
+    --tc-heading-sub-title-margin-top: -90px; /* margin top of subtitle (used to be negative to reduce space between title and subtitle) */
+    --tc-heading-other-headings-font-size: 1.25em; /* font size for h1, h2, h3, h4 used in slide outside of title */
+    /* tables */
+    --tc-table-header-bg: var(
+        --mainColorForTheme
+    ); /* background color of thead if there is a table */
+    --tc-table-header-color: white; /* color of columns in thead if there is a table */
+    --tc-table-bg: #bde1f5; /* background color of the rest of table */
+    /* credits */
+    --tc-credits-bg: rgba(239, 239, 239, 0.8);
+    --tc-credits-color: var(--mainColorForTheme);
+
+    /*////////////////////////
+    // Properties for transitions slides
+    ////////////////////////*/
+    --tc-transition-padding-h1: 30px; /* Area around title */
+    --tc-transition-color: var(--tc-heading-color); /* Color of title */
+    --tc-transition-title-font-size: 2.5em; /* Font size of title */
+    --tc-transition-sub-title-font-size: 2.2em; /* Font size of sub title */
+    --tc-transition-display-line: block; /* style display (block, none) for the underline under title */
+    --tc-transition-margin-top: 250px; /* margin top of title (used to position the title in screen) */
+    --tc-transition-left-right-mg-top: 450px; /* margin top of title if using 'left' or 'right' class on slide */
+    --tc-transition-top-mg-top: 30px; /* margin top of title if using 'top' class on slide */
+    --tc-transition-bottom-mg-top: 650px; /* margin top of title if using 'bottom' class on slide */
+    --tc-transition-line-color: initial; /* Color of line under the title */
+
+    /*////////////////////////
+    // Properties for speakers slides
+    ////////////////////////*/
+    --tc-speaker-width-img: 240px; /* Width of speaker image */
+    --tc-speaker-img-pos: top; /* Position for property object-position -> center/top/bottom/left/right/... */
+    --tc-speaker-max-size-badge: 250px; /* Maximu width or height of badge */
+    --tc-speaker-max-width-company: 400px; /* Maximum width of company logo */
+    --tc-speaker-max-height-company: 200px; /* Maximum height of company logo */
+    --tc-speaker-h1-line-height: 200px; /* Line height of title */
+    --tc-speaker-h2-font-size: 1.2em; /* Font size for rule or job title */
+    --tc-speaker-info-font-size: 0.6em; /* Font size for additionnal informations */
+    /* Grid area */
+    --tc-speaker-grid-template-areas: 'title title title title title'
+        'img  rules rules badge-1 badge-4' 'img  rules rules badge-2 badge-5'
+        'info-1 info-2 company badge-3 badge-6'; /* Grid template areas */
+    --tc-speaker-grid-template-columns: var(--tc-speaker-width-img) 1fr 1fr
+        var(--tc-speaker-max-size-badge) var(--tc-speaker-max-size-badge); /* Grid template columns */
+    --tc-speaker-grid-template-rows: var(--tc-speaker-h1-line-height)
+        var(--tc-speaker-max-size-badge) var(--tc-speaker-max-size-badge)
+        var(--tc-speaker-max-height-company); /* Grid template rows */
+    /* special case for slide with two speakers */
+    --tc-speaker-two-speakers-max-size-badge: 170px; /* Maximum width or height of badge for 2 speakers */
+    --tc-speaker-two-speakers-max-width-company: 300px; /* Maximum width of company logo for 2 speakers */
+    --tc-speaker-two-speakers-max-height-company: 150px; /* Maximum height of company logo for 2 speakers */
+    --tc-speaker-two-speakers-grid-template-areas: 'title title title . title-2 title-2 title-2'
+        'img  rules rules . img-2 rules-2 rules-2'
+        'info-1 info-2 company . info-3 info-4 company-2'
+        'badge-1 badge-2 badge-3 . badge-2-1 badge-2-2 badge-2-3'; /* Grid template areas for 2 speakers */
+    --tc-speaker-two-speakers-grid-template-columns: var(--tc-speaker-width-img)
+        1fr 1fr 150px var(--tc-speaker-width-img) 1fr 1fr; /* Grid template columns for 2 speakers */
+    --tc-speaker-two-speakers-grid-template-rows: var(
+            --tc-speaker-h1-line-height
+        )
+        400px var(--tc-speaker-two-speakers-max-height-company)
+        var(--tc-speaker-two-speakers-max-size-badge); /* Grid template rows for 2 speakers */
+
+    /*////////////////////////
+    // Properties for code slides
+    ////////////////////////*/
+    --tc-code-max-lines: 20; /* Maximum number of lines for code */
+    --tc-code-font-size: var(
+        --tc-big-code-font-size
+    ); /* Font size applied to code */
+    --tc-code-line-height: var(
+        --tc-big-code-line-height
+    ); /* Line height applied to code */
+    --tc-code-dark-background: #92004c; /* Background color for code in dark mode */
+
+    /*////////////////////////
+    // Properties for icons
+    ////////////////////////*/
+    --tc-icon-color: var(--mainColorForTheme);
+    --tc-icon-size: 1em;
+
+    /*////////////////////////
+    // Properties for quote slides
+    ////////////////////////*/
+    --tc-quote-slide-bg-color: #92004c; /* Background color of the slide */
+    --tc-quote-bg-color: #660035; /* Background color of the blockquote area */
+    --tc-quote-color: white; /* Color of the text for the entire slide */
+}

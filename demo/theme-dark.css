@@ -1,0 +1,74 @@
+/**
+* Theme demo
+**/
+
+body[data-theme='dark'] {
+    --mainColorForTheme: white;
+
+    /**
+    * Reveal JS theme variables
+    */
+    --r-background-color: rgb(46, 46, 46);
+    --r-main-color: var(--mainColorForTheme);
+    --r-heading-color: var(--mainColorForTheme);
+    --r-link-color: #ffa3d1;
+    --r-link-color-dark: #723553;
+    --r-link-color-hover: #da99ba;
+    --r-selection-background-color: #6a1e55;
+    --r-selection-color: #fff;
+
+    /**
+    * TalkControl theme variables
+    */
+    /*////////////////////////
+    // Properties for globals layouts
+    ////////////////////////*/
+    /* heading */
+    --tc-heading-color: var(
+        --mainColorForTheme
+    ); /* color of titles in slides */
+    /* tables */
+    --tc-table-header-bg: var(
+        --mainColorForTheme
+    ); /* background color of thead if there is a table */
+    --tc-table-header-color: rgb(
+        56,
+        56,
+        56
+    ); /* color of columns in thead if there is a table */
+    --tc-table-bg: #344650; /* background color of the rest of table */
+    /* credits */
+    --tc-credits-bg: rgba(239, 239, 239, 0.8);
+    --tc-credits-color: var(--mainColorForTheme);
+
+    /*////////////////////////
+    // Properties for transitions slides
+    ////////////////////////*/
+    --tc-transition-color: var(--mainColorForTheme); /* Color of title */
+
+    /*////////////////////////
+    // Properties for code slides
+    ////////////////////////*/
+    --tc-code-font-size: var(
+        --tc-medium-code-font-size
+    ); /* Font size applied to code */
+    --tc-code-line-height: var(
+        --tc-medium-code-line-height
+    ); /* Line height applied to code */
+    --tc-code-dark-background: #363636; /* Background color for code in dark mode */
+
+    /*////////////////////////
+    // Properties for quote slides
+    ////////////////////////*/
+    --tc-quote-slide-bg-color: #ffd2d2; /* Background color of the slide */
+    --tc-quote-bg-color: rgb(
+        255,
+        209,
+        233
+    ); /* Background color of the blockquote area */
+    --tc-quote-color: rgb(
+        41,
+        41,
+        41
+    ); /* Color of the text for the entire slide */
+}
