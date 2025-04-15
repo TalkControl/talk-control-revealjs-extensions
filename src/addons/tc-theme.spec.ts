@@ -73,4 +73,11 @@ describe('manageTheme', () => {
         );
         expect(result).toBe('custom-theme');
     });
+    it('Should apply theme on body element', () => {
+        vi.mocked(_handle_parameter).mockReturnValue('custom-theme');
+
+        manageTheme({});
+
+        expect(document.body.getAttribute('data-theme')).toBe('custom-theme');
+    });
 });
