@@ -76,6 +76,7 @@ describe('ThemeInitializer', () => {
         defaultTheme: '',
     };
     const mockOptions = {
+        activeCopyClipboard: true,
         slidesFactory: mockSlidesFactory,
         tcMarkedOptions: mockTcMarkedOptions,
         tcI18nOptions: mockTcI18nOptions,
@@ -147,6 +148,7 @@ describe('ThemeInitializer', () => {
             await ThemeInitializer.init(mockOptions);
 
             expect(ThemeMocked.default).toHaveBeenCalledWith({
+                activeCopyClipboard: mockOptions.activeCopyClipboard,
                 tcCustomBackgroundOptions: mockCustomBackgroundOptions,
                 tcThemeOptions: mockTcThemeOptions,
                 tcMarkedOptions: mockTcMarkedOptions,
