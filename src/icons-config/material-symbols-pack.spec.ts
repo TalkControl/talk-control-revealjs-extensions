@@ -16,6 +16,10 @@ describe(materialSymbolsIconPack.name, () => {
         const markedIconsOptions = materialSymbolsIconPack();
         expect(markedIconsOptions.includesKeyword).not.toBeDefined;
     });
+    it('should include correct copy keyword', () => {
+        const markedIconsOptions = materialSymbolsIconPack();
+        expect(markedIconsOptions.copyKeyword).toBe('content_copy');
+    });
 
     it('should have html attribute as class', () => {
         const markedIconsOptions = materialSymbolsIconPack();

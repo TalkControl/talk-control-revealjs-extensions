@@ -86,6 +86,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
             fontIcons: [
                 {
                     keyword: 'fa',
+                    copyKeyword: 'fa-copy',
                     htmlAttribute: 'fa',
                     initFunction: vi.fn(),
                 },
@@ -151,6 +152,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
             fontIcons: [
                 {
                     keyword: 'fa',
+                    copyKeyword: 'fa-copy',
                     htmlAttribute: 'fa',
                     initFunction: initFn,
                 },

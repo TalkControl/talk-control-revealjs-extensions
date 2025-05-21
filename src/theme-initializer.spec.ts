@@ -149,6 +149,7 @@ describe('ThemeInitializer', () => {
             expect(ThemeMocked.default).toHaveBeenCalledWith({
                 tcCustomBackgroundOptions: mockCustomBackgroundOptions,
                 tcThemeOptions: mockTcThemeOptions,
+                tcMarkedOptions: mockTcMarkedOptions,
             });
         });
     });

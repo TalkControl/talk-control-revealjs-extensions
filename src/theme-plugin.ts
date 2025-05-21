@@ -5,6 +5,9 @@ import {
     customBackgrounds,
 } from './addons/tc-custom-background';
 import { TcThemeOptions, manageTheme } from './addons/tc-theme';
+import { MarkedTcIconsOptions } from './marked/marked-tc-icons';
+import { TalkControlMarkedOptions } from './tc-marked-plugin';
+import { manageCopyClipboard } from './addons/tc-copy-clipboard';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { manageShowTypeContent } from './addons/tc-data-type';
 import { transformListFragment } from './addons/tc-list-fragment';
@@ -19,6 +22,8 @@ const backgroundMapping = {
 };
 export interface TalkControlPluginOptions {
     tcCustomBackgroundOptions: TcCustomBackgroundOptions;
+    tcMarkedOptions: TalkControlMarkedOptions;
+    activeCopyClipboard?: boolean;
     tcThemeOptions: TcThemeOptions;
     defaultSlidesType?: string;
 }
@@ -60,6 +65,17 @@ export class TalkControlTheme {
                 theme: this.themeToUse,
             });
             manageShowTypeContent(this.options.defaultSlidesType);
+            const tcMarkedFontIcons: MarkedTcIconsOptions | undefined =
+                this.options.tcMarkedOptions.fontIcons &&
+                this.options.tcMarkedOptions.fontIcons.length > 0
+                    ? this.options.tcMarkedOptions.fontIcons[0]
+                    : undefined;
+            if (tcMarkedFontIcons) {
+                manageCopyClipboard({
+                    active: this.options.activeCopyClipboard,
+                    tcIconOption: tcMarkedFontIcons,
+                });
+            }
         });
     }
 

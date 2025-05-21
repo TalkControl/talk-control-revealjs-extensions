@@ -12,6 +12,7 @@ import {
     customBackgrounds,
 } from './addons/tc-custom-background';
 import Reveal from 'reveal.js';
+import { manageCopyClipboard } from './addons/tc-copy-clipboard';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { manageShowTypeContent } from './addons/tc-data-type';
 import { manageTheme } from './addons/tc-theme';
@@ -24,6 +25,10 @@ vi.mock('./addons/tc-custom-background', () => ({
 
 vi.mock('./addons/tc-theme', () => ({
     manageTheme: vi.fn(),
+}));
+
+vi.mock('./addons/tc-copy-clipboard', () => ({
+    manageCopyClipboard: vi.fn(),
 }));
 
 vi.mock('./addons/tc-multiples-cols', () => ({
@@ -51,9 +56,14 @@ describe('TalkControlTheme', () => {
                     'custom-bg': 'custom-value',
                 }),
             },
+            tcMarkedOptions: {
+                fontIcons: [],
+                knowStyles: ['style1', 'style2'],
+            },
             tcThemeOptions: {
                 defaultTheme: 'tc',
             },
+            activeCopyClipboard: true,
         };
 
         // Setup virtual DOM
@@ -96,11 +106,48 @@ describe('TalkControlTheme', () => {
                 .calls[0][1] as () => void;
             readyCallback();
 
+            expect(manageCopyClipboard).not.toHaveBeenCalled();
             expect(manageMultiplesColumns).toHaveBeenCalled();
             expect(manageShowTypeContent).toHaveBeenCalled();
             expect(transformListFragment).toHaveBeenCalled();
             expect(customBackgrounds).toHaveBeenCalled();
             expect(manageTheme).toHaveBeenCalled();
+        });
+
+        it('should setup call manageCopyClipboard if fontIcons passed', () => {
+            const fontIcons = [
+                {
+                    keyword: 'icon',
+                    copyKeyword: 'copy',
+                    htmlAttribute: 'class',
+                },
+            ];
+
+            const theme = new TalkControlTheme({
+                ...mockOptions,
+                tcMarkedOptions: {
+                    ...mockOptions.tcMarkedOptions,
+                    fontIcons,
+                },
+            });
+            const mockAddEventListener = vi.spyOn(Reveal, 'addEventListener');
+
+            theme.postprocess();
+
+            expect(mockAddEventListener).toHaveBeenCalledWith(
+                'ready',
+                expect.any(Function)
+            );
+
+            // Simulate ready event
+            const readyCallback = mockAddEventListener.mock
+                .calls[0][1] as () => void;
+            readyCallback();
+
+            expect(manageCopyClipboard).toHaveBeenCalledWith({
+                active: mockOptions.activeCopyClipboard,
+                tcIconOption: fontIcons[0],
+            });
         });
     });
 

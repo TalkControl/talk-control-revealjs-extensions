@@ -13,6 +13,11 @@ describe(featherIconPack.name, () => {
         expect(markedIconsOptions.keyword).toBe('feather');
     });
 
+    it('should have correct copy keyword', () => {
+        const markedIconsOptions = featherIconPack();
+        expect(markedIconsOptions.copyKeyword).toBe('copy');
+    });
+
     it('should not include keyword', () => {
         const markedIconsOptions = featherIconPack();
         expect(markedIconsOptions.includesKeyword).not.toBeDefined();
