@@ -20,6 +20,7 @@ import { TcThemeOptions } from './addons/tc-theme';
  */
 export interface ThemeInitializerOptions {
     slidesFactory: () => SlidePath[];
+    activeCopyClipboard?: boolean; // Default is true
     tcMarkedOptions: TalkControlMarkedOptions;
     tcI18nOptions: TcI18nConfig;
     tcCustomBackgroundOptions: TcCustomBackgroundOptions;
@@ -32,6 +33,7 @@ export const ThemeInitializer = {
      * @param {() => Array.<string>} slidesFactory
      */
     async init({
+        activeCopyClipboard = true,
         slidesFactory,
         tcMarkedOptions,
         tcI18nOptions,
@@ -76,6 +78,7 @@ export const ThemeInitializer = {
             plugins: [
                 talkControlMarkedPlugin.getPlugin(), // We don't use RevealMarkdown because we have to add custom marked extensions
                 RevealTalkControlThemePlugin({
+                    activeCopyClipboard,
                     tcCustomBackgroundOptions,
                     tcMarkedOptions,
                     tcThemeOptions,
