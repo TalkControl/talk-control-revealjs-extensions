@@ -6,6 +6,7 @@ import { MarkedTcIconsOptions } from '../marked/marked-tc-icons';
 export function fontAwesomeIconPack(): MarkedTcIconsOptions {
     return {
         keyword: 'fa',
+        copyKeyword: 'fa-copy',
         includesKeyword: true,
         htmlAttribute: 'class',
     };

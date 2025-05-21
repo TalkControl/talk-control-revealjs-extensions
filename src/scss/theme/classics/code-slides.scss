@@ -22,6 +22,37 @@
             font-size: var(--tc-code-font-size);
             line-height: var(--tc-code-line-height);
         }
+
+        span.tc-copy-to-clipboard {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            --tc-icon-color: black;
+            --tc-icon-size: 1.5em;
+            transition: opacity 0.1s;
+            opacity: 1;
+
+            &.copied {
+                opacity: 0.5;
+            }
+        }
+        div.tc-copy-popup {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background-color: white;
+            color: black;
+            padding: 5px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            opacity: 1;
+            transition: opacity 0.5s;
+
+            &.hide {
+                opacity: 0;
+            }
+        }
     }
 
     &.medium-code pre,
@@ -43,6 +74,12 @@
 
     &.max-height pre code {
         --tc-code-max-lines: 30;
+    }
+}
+// Special case for the dark theme
+.reveal .slides section:is(.with-code-dark, .with-code-bg-dark) {
+    pre span.tc-copy-to-clipboard {
+        --tc-icon-color: white;
     }
 }
 

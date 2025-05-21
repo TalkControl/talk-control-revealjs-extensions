@@ -21,6 +21,10 @@ function extractOptions(options: string, keyword: string): string {
 
 export interface MarkedTcIconsOptions {
     /**
+     * Copy icon Keyword to identify the copy icon
+     */
+    copyKeyword: string;
+    /**
      * Keyword to identify the icon to use
      */
     keyword: string;

@@ -17,6 +17,11 @@ describe(fontAwesomeIconPack.name, () => {
         expect(markedIconsOptions.includesKeyword).toBe(true);
     });
 
+    it('should include correct copy icon keyword', () => {
+        const markedIconsOptions = fontAwesomeIconPack();
+        expect(markedIconsOptions.copyKeyword).toBe('fa-copy');
+    });
+
     it('should have html attribute as class', () => {
         const markedIconsOptions = fontAwesomeIconPack();
         expect(markedIconsOptions.htmlAttribute).toBe('class');

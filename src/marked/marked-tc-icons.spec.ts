@@ -6,6 +6,7 @@ import { markedTcIcons } from './marked-tc-icons';
 // Default options for test
 const markedIconsFontAwesome = markedTcIcons({
     keyword: 'fa-icons',
+    copyKeyword: 'fa-copy',
     includesKeyword: false,
     htmlAttribute: 'class',
 });
@@ -64,6 +65,7 @@ describe(markedTcIcons.name, () => {
         marked.use(
             markedTcIcons({
                 keyword: 'lni',
+                copyKeyword: 'copy',
                 includesKeyword: true,
                 htmlAttribute: 'class',
             })
@@ -77,6 +79,7 @@ describe(markedTcIcons.name, () => {
         marked.use(
             markedTcIcons({
                 keyword: 'feather',
+                copyKeyword: 'copy',
                 includesKeyword: false,
                 htmlAttribute: 'data-feather',
             })
@@ -90,6 +93,7 @@ describe(markedTcIcons.name, () => {
         marked.use(
             markedTcIcons({
                 keyword: 'feather',
+                copyKeyword: 'copy',
                 htmlAttribute: 'data-feather',
             })
         );
@@ -102,6 +106,7 @@ describe(markedTcIcons.name, () => {
         marked.use(
             markedTcIcons({
                 keyword: 'material-icons',
+                copyKeyword: 'copy',
                 includesKeyword: true,
                 htmlAttribute: 'class',
                 iconInTag: true,
@@ -117,6 +122,7 @@ describe(markedTcIcons.name, () => {
         marked.use(
             markedTcIcons({
                 keyword: 'lni',
+                copyKeyword: 'copy',
                 includesKeyword: true,
                 htmlAttribute: 'class',
             })
@@ -156,6 +162,7 @@ describe(markedTcIcons.name, () => {
         marked.use(
             markedTcIcons({
                 keyword: 'lni',
+                copyKeyword: 'copy',
                 includesKeyword: true,
                 htmlAttribute: 'class',
             })

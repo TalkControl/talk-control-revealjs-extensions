@@ -77,6 +77,7 @@ export const ThemeInitializer = {
                 talkControlMarkedPlugin.getPlugin(), // We don't use RevealMarkdown because we have to add custom marked extensions
                 RevealTalkControlThemePlugin({
                     tcCustomBackgroundOptions,
+                    tcMarkedOptions,
                     tcThemeOptions,
                 }),
                 RevealZoom,
