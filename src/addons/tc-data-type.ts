@@ -1,4 +1,4 @@
-import { _handle_parameter } from '../helper';
+import { _handle_parameter } from '../utils/helper';
 
 export function manageShowTypeContent(defaultType: string = 'on-stage'): void {
     const urlParams = new URLSearchParams(window.location.search);

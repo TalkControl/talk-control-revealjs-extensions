@@ -1,6 +1,7 @@
 import './index.scss';
 
-export * from './my-element';
+export * from './ui/tc-configurator-element';
+export * from './ui/tc-tree-slides-element';
 
 export * from './theme-initializer';
 
