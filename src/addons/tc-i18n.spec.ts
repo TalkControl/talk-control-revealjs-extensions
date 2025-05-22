@@ -1,7 +1,7 @@
 /**
  * @vitest-environment jsdom
  */
-import * as helper from '../helper';
+import * as helper from '../utils/helper';
 import { _internals, i18n } from './tc-i18n';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { SlidePath } from '../models';

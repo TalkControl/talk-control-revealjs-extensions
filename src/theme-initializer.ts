@@ -1,7 +1,7 @@
 import {
     RevealTalkControlMarkdownPlugin,
     TalkControlMarkedOptions,
-} from './tc-marked-plugin';
+} from './marked/tc-marked-plugin';
 import { RootPart, html, render } from 'lit-html';
 import { TcI18nConfig, i18n } from './addons/tc-i18n';
 
@@ -14,6 +14,8 @@ import RevealZoom from 'reveal.js/plugin/zoom/zoom.esm';
 import { SlidePath } from './models';
 import { TcCustomBackgroundOptions } from './addons/tc-custom-background';
 import { TcThemeOptions } from './addons/tc-theme';
+import { TcUiConfig } from './addons/tc-ui-config';
+import { getSlidesToUse } from './utils/storage-service';
 
 /**
  *
@@ -50,8 +52,15 @@ export const ThemeInitializer = {
         // Retrieve the slide path list
         const slides = slidesFactory();
 
+        // Check if we use a subset store in the session storage
+        const slidesToUse = getSlidesToUse(slides);
+
         const { baseMarkdownPath, defaultLang } = tcI18nOptions;
-        const slideI18n = await i18n({ slides, baseMarkdownPath, defaultLang });
+        const slideI18n = await i18n({
+            slides: slidesToUse,
+            baseMarkdownPath,
+            defaultLang,
+        });
 
         // Generate all the DOM code corresponding to slides
         await slidesRenderer(importSlideElement, slideI18n);
@@ -97,6 +106,9 @@ export const ThemeInitializer = {
                         .transition as Reveal.Options['transition']) ?? 'none', // default/cube/page/concave/zoom/linear/fade/none
             });
         });
+
+        // Init the uiConfig
+        new TcUiConfig(slideI18n);
     },
 };
 
