@@ -21,11 +21,11 @@ const backgroundMapping = {
     'quote-slide': 'var(--tc-quote-slide-bg-color)',
 };
 export interface TalkControlPluginOptions {
-    tcCustomBackgroundOptions: TcCustomBackgroundOptions;
-    tcMarkedOptions: TalkControlMarkedOptions;
-    activeCopyClipboard?: boolean;
-    tcThemeOptions: TcThemeOptions;
-    defaultSlidesType?: string;
+    tcCustomBackgroundOptions: TcCustomBackgroundOptions; // Deal with the custom background options
+    tcMarkedOptions: TalkControlMarkedOptions; // Deal with the font icons
+    activeCopyClipboard?: boolean; // Default applied is true
+    tcThemeOptions: TcThemeOptions; // Deal with the theme options
+    defaultSlidesType?: string; // Default applied is "on-stage"
 }
 export class TalkControlTheme {
     path: string = '';
@@ -65,6 +65,8 @@ export class TalkControlTheme {
                 theme: this.themeToUse,
             });
             manageShowTypeContent(this.options.defaultSlidesType);
+
+            // Deal with font icons to select the first one as "copy clipboard"
             const tcMarkedFontIcons: MarkedTcIconsOptions | undefined =
                 this.options.tcMarkedOptions.fontIcons &&
                 this.options.tcMarkedOptions.fontIcons.length > 0

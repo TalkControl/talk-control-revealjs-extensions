@@ -19,13 +19,14 @@ import { TcThemeOptions } from './addons/tc-theme';
  *
  */
 export interface ThemeInitializerOptions {
-    slidesFactory: () => SlidePath[];
-    activeCopyClipboard?: boolean; // Default is true
-    tcMarkedOptions: TalkControlMarkedOptions;
-    tcI18nOptions: TcI18nConfig;
-    tcCustomBackgroundOptions: TcCustomBackgroundOptions;
-    tcThemeOptions: TcThemeOptions;
-    slidesRenderer?: (element: HTMLElement, slides: SlidePath[]) => RootPart;
+    slidesFactory: () => SlidePath[]; // Function to retrieve the slides informations
+    activeCopyClipboard?: boolean; // Default applied is true
+    tcMarkedOptions: TalkControlMarkedOptions; // Deal with the font icons
+    tcI18nOptions: TcI18nConfig; // Deal with the i18n options
+    tcCustomBackgroundOptions: TcCustomBackgroundOptions; // Deal with the custom background options
+    tcThemeOptions: TcThemeOptions; // Deal with the theme options
+    slidesRenderer?: (element: HTMLElement, slides: SlidePath[]) => RootPart; // Function to render the slides defautl use litHTML
+    defaultSlidesType?: string; // Default applied is "on-stage"
 }
 
 export const ThemeInitializer = {
@@ -39,6 +40,7 @@ export const ThemeInitializer = {
         tcI18nOptions,
         tcCustomBackgroundOptions,
         tcThemeOptions,
+        defaultSlidesType,
         slidesRenderer = defaultSlideRenderer,
     }: ThemeInitializerOptions) {
         const importSlideElement: HTMLElement | null =
@@ -82,6 +84,7 @@ export const ThemeInitializer = {
                     tcCustomBackgroundOptions,
                     tcMarkedOptions,
                     tcThemeOptions,
+                    defaultSlidesType,
                 }),
                 RevealZoom,
                 RevealNotes,
