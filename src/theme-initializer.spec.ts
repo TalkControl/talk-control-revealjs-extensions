@@ -82,6 +82,7 @@ describe('ThemeInitializer', () => {
         tcI18nOptions: mockTcI18nOptions,
         tcThemeOptions: mockTcThemeOptions,
         tcCustomBackgroundOptions: mockCustomBackgroundOptions,
+        defaultSlidesType: 'on-stage',
     };
 
     beforeEach(() => {
@@ -152,6 +153,26 @@ describe('ThemeInitializer', () => {
                 tcCustomBackgroundOptions: mockCustomBackgroundOptions,
                 tcThemeOptions: mockTcThemeOptions,
                 tcMarkedOptions: mockTcMarkedOptions,
+                defaultSlidesType: mockOptions.defaultSlidesType,
+            });
+        });
+
+        it('should call Plugin with correct params and empty values', async () => {
+            const mockOptionsWithEmptyValues = {
+                slidesFactory: mockSlidesFactory,
+                tcMarkedOptions: mockTcMarkedOptions,
+                tcI18nOptions: mockTcI18nOptions,
+                tcThemeOptions: mockTcThemeOptions,
+                tcCustomBackgroundOptions: mockCustomBackgroundOptions,
+            };
+            await ThemeInitializer.init(mockOptionsWithEmptyValues);
+
+            expect(ThemeMocked.default).toHaveBeenCalledWith({
+                activeCopyClipboard: true,
+                tcCustomBackgroundOptions: mockCustomBackgroundOptions,
+                tcThemeOptions: mockTcThemeOptions,
+                tcMarkedOptions: mockTcMarkedOptions,
+                defaultSlidesType: undefined,
             });
         });
     });
