@@ -1,11 +1,12 @@
+import { SlidePath, SlideTreeEntry } from '../models';
 import { html, render } from 'lit-html';
-import { SlidePath } from '../models';
 import { _handle_parameter } from '../utils/helper';
+import { getSlidesSelected } from '../utils/storage-service';
 
 export class TcUiConfig {
     private state: {
         show: boolean;
-        slides: SlidePath[];
+        slidesEntries: SlideTreeEntry[];
         theme: string;
         type: string;
         language: string;
@@ -14,7 +15,7 @@ export class TcUiConfig {
     constructor(slides: SlidePath[]) {
         this.state = {
             show: false,
-            slides,
+            slidesEntries: this.slidesToTree(slides),
             theme: '',
             type: '',
             language: '',
@@ -60,6 +61,35 @@ export class TcUiConfig {
             'data-lang',
             ''
         );
+    }
+
+    /**
+     *
+     * @param slides : the slides array to transform
+     * @returns
+     */
+    slidesToTree(slides: SlidePath[]): SlideTreeEntry[] {
+        const slideArrayFromSession = getSlidesSelected();
+        const mapSlidesInSession = new Map();
+        for (const slideInSession of slideArrayFromSession) {
+            mapSlidesInSession.set(slideInSession.index, slideInSession);
+        }
+        const slidesArray: SlideTreeEntry[] = [];
+        const regex = /^(?:(.+?)\/)?(.+?)(?=\.md$)/;
+        for (const slide of slides) {
+            const [, prefix, path] = slide.path.match(regex)!;
+            const slideTmp = {
+                prefix,
+                path: path + '.md',
+                index: slidesArray.length,
+                check: true,
+            };
+            if (mapSlidesInSession.has(slideTmp.index)) {
+                slideTmp.check = mapSlidesInSession.get(slideTmp.index).check;
+            }
+            slidesArray.push(slideTmp);
+        }
+        return slidesArray;
     }
 
     /**
@@ -125,7 +155,7 @@ export class TcUiConfig {
         return render(
             html`
                 <tc-configurator-element
-                    .slides="${this.state.slides}"
+                    .slides="${this.state.slidesEntries}"
                     .theme="${this.state.theme}"
                     .type="${this.state.type}"
                     .i18n="${this.state.language}"

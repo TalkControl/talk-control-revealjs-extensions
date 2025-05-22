@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
-import { SlidePath, SlideTreeEntry } from '../models';
 import { customElement, property } from 'lit/decorators.js';
+import { SlideTreeEntry } from '../models';
 import { saveSlidesSelected } from '../utils/storage-service';
 
 /**
@@ -10,10 +10,10 @@ import { saveSlidesSelected } from '../utils/storage-service';
  */
 @customElement('tc-tree-slides-element')
 export class TcTreeSlidesElement extends LitElement {
-    @property()
-    slides: SlidePath[] = [];
+    //slides: SlidePath[] = [];
 
-    private slidesEntries: SlideTreeEntry[] = [];
+    @property()
+    slides: SlideTreeEntry[] = [];
 
     private treeArray: (SlideTreeEntry[] | [string, SlideTreeEntry[]])[] = [];
 
@@ -48,7 +48,7 @@ export class TcTreeSlidesElement extends LitElement {
                     this.checkPrefix(
                         e,
                         key as string
-                    )}" type="checkbox" ?checked=${
+                    )}" type="checkbox" .checked=${
                     value.reduce((acc, elt) => acc + (elt.check ? 1 : 0), 0) ===
                     value.length
                 }></input><span>${key}</span>
@@ -73,7 +73,7 @@ export class TcTreeSlidesElement extends LitElement {
                         this.checkSlide(
                             e,
                             slide.index
-                        )}" type="checkbox" ?checked=${slide.check}>
+                        )}" type="checkbox" .checked=${slide.check}>
                         </input>${slide.path}
                 </li>`;
     }
@@ -85,12 +85,17 @@ export class TcTreeSlidesElement extends LitElement {
      * @param {*} prefix : the prefix of the slides (to update the state of children slides)
      */
     checkPrefix(event: InputEvent, prefix: string) {
-        this.slidesEntries.forEach((elt) => {
+        this.slides.forEach((elt) => {
+            console.log('click prefix', prefix, elt.prefix === prefix);
             if (elt.prefix === prefix) {
+                console.log(
+                    'Change element to ',
+                    (event?.target as HTMLInputElement).checked
+                );
                 elt.check = (event?.target as HTMLInputElement).checked;
             }
         });
-        saveSlidesSelected(this.slidesEntries);
+        saveSlidesSelected(this.slides);
         this.fireSlidesSelected();
     }
 
@@ -101,10 +106,8 @@ export class TcTreeSlidesElement extends LitElement {
      * @param {*} index : the index of the slide in the state
      */
     checkSlide(event: InputEvent, index: number) {
-        this.slidesEntries[index].check = (
-            event?.target as HTMLInputElement
-        ).checked;
-        saveSlidesSelected(this.slidesEntries);
+        this.slides[index].check = (event?.target as HTMLInputElement).checked;
+        saveSlidesSelected(this.slides);
         this.fireSlidesSelected();
     }
 
@@ -115,39 +118,20 @@ export class TcTreeSlidesElement extends LitElement {
 
     fireSlidesSelected() {
         const eventSlides = new CustomEvent('slides-selected', {
-            detail: this.slidesEntries,
+            detail: this.slides,
             bubbles: true,
             composed: true,
         });
         this.dispatchEvent(eventSlides);
+        this.requestUpdate();
     }
 
     /**
      * Method to recalculate the slides
      */
     recalculateSlides() {
-        this.slidesEntries = this.slidesToTree(this.slides);
-        this.treeArray = this.createTreeFromSlides(this.slidesEntries);
-    }
-
-    /**
-     *
-     * @param slides : the slides array to transform
-     * @returns
-     */
-    slidesToTree(slides: SlidePath[]): SlideTreeEntry[] {
-        const slidesArray: SlideTreeEntry[] = [];
-        const regex = /^(?:(.+?)\/)?(.+?)(?=\.md$)/;
-        for (const slide of slides) {
-            const [, prefix, path] = slide.path.match(regex)!;
-            slidesArray.push({
-                prefix,
-                path,
-                index: slidesArray.length,
-                check: true,
-            });
-        }
-        return slidesArray;
+        //this.slidesEntries = this.slidesToTree(this.slides);
+        this.treeArray = this.createTreeFromSlides(this.slides);
     }
 
     /**
