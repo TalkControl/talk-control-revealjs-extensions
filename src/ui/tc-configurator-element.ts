@@ -1,6 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { SlidePath } from '../models';
+import { SlideTreeEntry } from '../models';
 
 /**
  * An example element.
@@ -11,7 +11,7 @@ import { SlidePath } from '../models';
 @customElement('tc-configurator-element')
 export class TcConfiguratorElement extends LitElement {
     @property()
-    slides: SlidePath[] = [];
+    slides: SlideTreeEntry[] = [];
 
     @property()
     theme: string = '';
@@ -73,6 +73,8 @@ export class TcConfiguratorElement extends LitElement {
 
     private onSlideSelected(e: CustomEvent) {
         this.slides = e.detail;
+        //this.slides = e.detail;
+        this.requestUpdate();
     }
 
     private closeUI() {

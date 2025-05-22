@@ -52,6 +52,9 @@ export const ThemeInitializer = {
         // Retrieve the slide path list
         const slides = slidesFactory();
 
+        // Init the uiConfig
+        new TcUiConfig(slides);
+
         // Check if we use a subset store in the session storage
         const slidesToUse = getSlidesToUse(slides);
 
@@ -106,9 +109,6 @@ export const ThemeInitializer = {
                         .transition as Reveal.Options['transition']) ?? 'none', // default/cube/page/concave/zoom/linear/fade/none
             });
         });
-
-        // Init the uiConfig
-        new TcUiConfig(slideI18n);
     },
 };
 
