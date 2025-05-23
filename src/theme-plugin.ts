@@ -6,7 +6,7 @@ import {
 } from './addons/tc-custom-background';
 import { TcThemeOptions, manageTheme } from './addons/tc-theme';
 import { MarkedTcIconsOptions } from './marked/marked-tc-icons';
-import { TalkControlMarkedOptions } from './tc-marked-plugin';
+import { TalkControlMarkedOptions } from './marked/tc-marked-plugin';
 import { manageCopyClipboard } from './addons/tc-copy-clipboard';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { manageShowTypeContent } from './addons/tc-data-type';

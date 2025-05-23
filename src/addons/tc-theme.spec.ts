@@ -3,7 +3,7 @@
  */
 import { TcThemeOptions, manageTheme } from './tc-theme';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { _handle_parameter } from '../helper';
+import { _handle_parameter } from '../utils/helper';
 
 const HTML = `
 <div class="reveal">

@@ -47,6 +47,17 @@ vi.mock('./addons/tc-i18n', () => ({
     i18n: vi.fn().mockImplementation(() => []),
 }));
 
+vi.mock('./utils/storage-service', () => ({
+    getSlidesToUse: vi
+        .fn()
+        .mockImplementation(() => [
+            { path: 'slide1.md' },
+            { path: 'slide2.md' },
+        ]),
+}));
+
+vi.mock('./addons/tc-ui-config');
+
 // Get a representation of this mock class
 const I18nMocked = vi.mocked(await import('./addons/tc-i18n'));
 const ThemeMocked = vi.mocked(await import('./theme-plugin'));

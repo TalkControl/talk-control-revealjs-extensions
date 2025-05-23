@@ -13,3 +13,10 @@ export interface RevealMarkdownPlugin {
     convertSlides(): void;
     slidify(): void;
 }
+
+export interface SlideTreeEntry {
+    prefix: string;
+    path: string;
+    index: number;
+    check: boolean;
+}

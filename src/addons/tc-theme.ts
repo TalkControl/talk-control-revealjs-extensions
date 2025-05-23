@@ -1,4 +1,4 @@
-import { _handle_parameter } from '../helper';
+import { _handle_parameter } from '../utils/helper';
 
 export interface TcThemeOptions {
     defaultTheme?: string;

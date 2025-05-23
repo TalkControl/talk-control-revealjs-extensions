@@ -1,11 +1,11 @@
-import { MarkedTcIconsOptions, markedTcIcons } from './marked/marked-tc-icons';
+import { MarkedTcIconsOptions, markedTcIcons } from './marked-tc-icons';
 import { PluginFunction } from 'reveal.js';
 import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
-import { RevealMarkdownPlugin } from './models';
+import { RevealMarkdownPlugin } from '../models';
 import { markedStyledImage } from '@anthonypena/marked-styled-image';
-import { markedTcAdmonition } from './marked/marked-tc-admonition';
-import { markedTcBg } from './marked/marked-tc-bg';
-import { markedTcCols } from './marked/marked-tc-cols';
+import { markedTcAdmonition } from './marked-tc-admonition';
+import { markedTcBg } from './marked-tc-bg';
+import { markedTcCols } from './marked-tc-cols';
 
 const stylesCssImg = [
     'center',
