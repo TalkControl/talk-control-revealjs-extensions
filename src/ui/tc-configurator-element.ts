@@ -1,13 +1,7 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { SlideTreeEntry } from '../models';
+import { SlideTreeEntry } from '../models.js';
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement('tc-configurator-element')
 export class TcConfiguratorElement extends LitElement {
     @property()
@@ -22,6 +16,20 @@ export class TcConfiguratorElement extends LitElement {
     @property()
     i18n: string = '';
 
+    @property()
+    revealOptions: object = {};
+
+    private selectedTab: string = 'talk-control';
+
+    constructor() {
+        super();
+        this.slides = [];
+        this.theme = '';
+        this.i18n = '';
+        this.type = '';
+        this.revealOptions = {};
+    }
+
     render() {
         return html`
             <div class="ui-slide-selector-container">
@@ -30,39 +38,38 @@ export class TcConfiguratorElement extends LitElement {
                     @click="${() => this.closeUI()}">
                     ✖️
                 </div>
-                <h1>Slide selector</h1>
-                <div class="slide-selector">
-                    <tc-tree-slides-element
-                        .slides="${this.slides}"
-                        @slides-selected="${(e: CustomEvent) =>
-                            this.onSlideSelected(e)}">
-                    </tc-tree-slides-element>
+                <h1>Talk Control - Configurator</h1>
+                <div class="tabs">
+                    <button
+                        @click="${() => this.selectTab('talk-control')}"
+                        class="tab-button ${this.selectedTab === 'talk-control'
+                            ? 'active'
+                            : ''}">
+                        Talk Control
+                    </button>
+                    <button
+                        @click="${() => this.selectTab('revealjs')}"
+                        class="tab-button ${this.selectedTab === 'revealjs'
+                            ? 'active'
+                            : ''}">
+                        RevealJS
+                    </button>
                 </div>
-                <h1>Modes (type / theme / language)</h1>
-                <div class="modes">
-                    <label for="mode-theme">Theme</label>
-                    <input
-                        type="text"
-                        id="mode-theme"
-                        placeholder="(empty default 'school')"
-                        .value="${this.theme}" />
-                    <label for="mode-language">Language</label>
-                    <input
-                        type="text"
-                        id="mode-language"
-                        placeholder="(empty default 'FR')"
-                        .value="${this.i18n}" />
-                    <label for="mode-slides">Type</label>
-                    <input
-                        type="text"
-                        id="mode-type"
-                        placeholder="(empty default 'prez')"
-                        .value="${this.type}" />
+                <div class="tab-content">
+                    ${this.selectedTab === 'talk-control'
+                        ? html`<tc-talk-control-element
+                              .slides="${this.slides}"
+                              .theme="${this.theme}"
+                              .i18n="${this.i18n}"
+                              .type="${this.type}">
+                          </tc-talk-control-element>`
+                        : html`<tc-revealjs-element
+                              .revealOptions="${this.revealOptions}">
+                          </tc-revealjs-element>`}
                 </div>
-                <button @click="${() => this.applyConfiguration()}">
-                    Validate selection
+                <button id="applyChange" @click="${() => this.applyChanges()}">
+                    Apply Changes
                 </button>
-                <div>TODO Print configuration</div>
                 <span
                     >Close this window by pressing 'Escape', clicking on cross
                     or validating the selection</span
@@ -71,40 +78,26 @@ export class TcConfiguratorElement extends LitElement {
         `;
     }
 
-    private onSlideSelected(e: CustomEvent) {
-        this.slides = e.detail;
-        //this.slides = e.detail;
+    selectTab(tab: string) {
+        this.selectedTab = tab;
         this.requestUpdate();
     }
 
-    private closeUI() {
-        this.dispatchEvent(new CustomEvent('close-ui', { bubbles: true }));
+    applyChanges() {
+        // Logique pour appliquer les changements
+        console.log(
+            'Applying changes:',
+            this.slides,
+            this.theme,
+            this.i18n,
+            this.type,
+            this.revealOptions
+        );
     }
 
-    /**
-     * Handler method that deals with the apply button. it will refresh the page
-     */
-    applyConfiguration() {
-        // Construct the url
-        let newUrl = '';
-        const addUrl = (url: string, key: string, value: string) =>
-            value && url
-                ? `${url}&${key}=${value}`
-                : value
-                  ? `${url}?${key}=${value}`
-                  : url;
-
-        newUrl = addUrl(newUrl, 'theme', this.theme);
-        newUrl = addUrl(newUrl, 'data-lang', this.i18n);
-        newUrl = addUrl(newUrl, 'type', this.type);
-
-        // Apply the new url
-        history.pushState(
-            { theme: this.theme, language: this.i18n, type: this.type },
-            '',
-            newUrl
-        );
-        history.go(0);
+    closeUI() {
+        // Logique pour fermer l'interface utilisateur
+        console.log('Closing UI');
     }
 
     static styles = css`
@@ -120,7 +113,7 @@ export class TcConfiguratorElement extends LitElement {
 
             font-family: monospace;
             display: grid;
-            grid-template-rows: 50px 1fr 50px 150px 100px 20px;
+            grid-template-rows: 50px auto 1fr 70px 50px;
             grid-template-columns: 1fr;
 
             #ui-slide-selector-close {
@@ -134,14 +127,18 @@ export class TcConfiguratorElement extends LitElement {
             h1 {
                 text-align: center;
                 justify-self: center;
+                margin-bottom: 20px;
             }
 
             .slide-selector {
                 overflow-y: auto;
+                max-height: 300px;
             }
+
             ul {
                 list-style-type: none;
             }
+
             li {
                 margin: 10px;
             }
@@ -149,16 +146,101 @@ export class TcConfiguratorElement extends LitElement {
             div.modes {
                 align-self: center;
                 text-align: center;
-                padding: 50px;
+                padding: 20px;
             }
 
             button {
-                width: 150px;
-                justify-self: center;
-                margin: 20px;
+                padding: 8px 15px;
+                cursor: pointer;
+                border: 1px solid #ddd;
+                background-color: #f8f8f8;
+                border-radius: 4px;
+                font-size: 14px;
+                transition: all 0.2s ease;
             }
+
+            button:hover {
+                background-color: #e8e8e8;
+                border-color: #ccc;
+            }
+
+            button:active {
+                background-color: #ddd;
+                transform: translateY(1px);
+            }
+
+            #applyChange {
+                width: 180px;
+                justify-self: center;
+                margin: 20px auto;
+                padding: 10px 20px;
+            }
+
             span {
                 text-align: center;
+            }
+
+            .tabs {
+                display: flex;
+                border-bottom: 2px solid #ddd;
+                justify-content: center;
+            }
+
+            .tab-button {
+                padding: 10px 25px;
+                cursor: pointer;
+                border: 1px solid #ddd;
+                border-bottom: none;
+                border-radius: 6px 6px 0 0;
+                background-color: #f5f5f5;
+                margin: 0 5px;
+                margin-bottom: -2px;
+                font-weight: bold;
+                transition:
+                    background-color 0.3s,
+                    color 0.3s;
+                position: relative;
+                top: 2px;
+            }
+
+            .tab-button.active,
+            .tab-button:hover {
+                background-color: #fff;
+                border-bottom: 2px solid #fff;
+            }
+
+            .tab-button.active {
+                border-top: 3px solid #4285f4;
+                padding-top: 8px;
+            }
+
+            .tab-content {
+                display: flex;
+                flex-direction: column;
+                overflow: auto;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-top: none;
+                border-radius: 0 0 4px 4px;
+                max-height: 60vh;
+            }
+
+            /* Style pour le bouton principal "Apply Changes" */
+            .ui-slide-selector-container > button {
+                width: 180px;
+                justify-self: center;
+                margin: 20px auto;
+                padding: 10px 20px;
+                background-color: #4285f4;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                font-weight: bold;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+
+            .ui-slide-selector-container > button:hover {
+                background-color: #3367d6;
             }
         }
     `;
