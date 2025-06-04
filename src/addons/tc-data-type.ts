@@ -1,6 +1,9 @@
+import { DEFAULT_TYPE } from '../utils/const';
 import { _handle_parameter } from '../utils/helper';
 
-export function manageShowTypeContent(defaultType: string = 'on-stage'): void {
+export function manageShowTypeContent(
+    defaultType: string = DEFAULT_TYPE
+): void {
     const urlParams = new URLSearchParams(window.location.search);
     const slidesElement: HTMLElement =
         document.querySelector('.reveal .slides')!;

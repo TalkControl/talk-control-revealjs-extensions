@@ -1,3 +1,4 @@
+import { DEFAULT_LANGUAGE, DEFAULT_THEME, DEFAULT_TYPE } from './utils/const';
 import {
     RevealTalkControlMarkdownPlugin,
     TalkControlMarkedOptions,
@@ -53,7 +54,12 @@ export const ThemeInitializer = {
         const slides = slidesFactory();
 
         // Init the uiConfig
-        new TcUiConfig(slides);
+        new TcUiConfig(
+            slides,
+            tcI18nOptions.defaultLang ?? DEFAULT_LANGUAGE,
+            tcThemeOptions.defaultTheme ?? DEFAULT_THEME,
+            defaultSlidesType ?? DEFAULT_TYPE
+        );
 
         // Check if we use a subset store in the session storage
         const slidesToUse = getSlidesToUse(slides);
