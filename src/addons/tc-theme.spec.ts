@@ -13,7 +13,7 @@ const HTML = `
 `;
 
 // Mock helper
-vi.mock('../helper', () => ({
+vi.mock('../utils/helper', () => ({
     _handle_parameter: vi.fn(),
 }));
 

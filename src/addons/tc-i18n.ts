@@ -1,3 +1,4 @@
+import { DEFAULT_LANGUAGE } from '../utils/const';
 import { SlidePath } from '../models';
 import { _handle_parameter } from '../utils/helper';
 
@@ -18,7 +19,7 @@ export interface TcI18nOptions extends TcI18nConfig {
 export async function i18n({
     slides,
     baseMarkdownPath,
-    defaultLang = 'EN',
+    defaultLang = DEFAULT_LANGUAGE,
 }: TcI18nOptions): Promise<SlidePath[]> {
     const urlParams = new URLSearchParams(window.location.search);
     const slideElement: HTMLElement =

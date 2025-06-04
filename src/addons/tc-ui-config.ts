@@ -8,17 +8,28 @@ export class TcUiConfig {
         show: boolean;
         slidesEntries: SlideTreeEntry[];
         theme: string;
+        defaultTheme: string;
         type: string;
+        defaultType: string;
         language: string;
+        defaultLanguage: string;
     };
 
-    constructor(slides: SlidePath[]) {
+    constructor(
+        slides: SlidePath[],
+        defaultLanguage: string,
+        defaultTheme: string,
+        defaultType: string
+    ) {
         this.state = {
             show: false,
             slidesEntries: this.slidesToTree(slides),
             theme: '',
+            defaultTheme,
             type: '',
+            defaultType,
             language: '',
+            defaultLanguage,
         };
         this.init();
     }
@@ -42,16 +53,16 @@ export class TcUiConfig {
 
         this.state.theme = _handle_parameter(
             urlParams,
-            'theme',
+            'data-theme',
             slidesElement,
-            'data-theme-slides',
+            'data-theme',
             ''
         );
         this.state.type = _handle_parameter(
             urlParams,
-            'type',
+            'data-type',
             slidesElement,
-            'data-type-show',
+            'data-type',
             ''
         );
         this.state.language = _handle_parameter(
@@ -152,13 +163,18 @@ export class TcUiConfig {
      */
     initUI(element: HTMLElement) {
         // We convert our files path to a tree structure
+        // Warning, it is mandatory to ad contenteditable to the element in order let revealjs know that it is editable and not activate the keyboard shortcuts
         return render(
             html`
                 <tc-configurator-element
+                    contenteditable
                     .slides="${this.state.slidesEntries}"
                     .theme="${this.state.theme}"
+                    .defaultTheme="${this.state.defaultTheme}"
                     .type="${this.state.type}"
+                    .defaultType="${this.state.defaultType}"
                     .i18n="${this.state.language}"
+                    .defaultI18n="${this.state.defaultLanguage}"
                     @close-ui="${() =>
                         this.closeUI()}"></tc-configurator-element>
             `,
