@@ -1,4 +1,6 @@
 .reveal .slides > section .tc-icons {
+    vertical-align: -0.125em; // Little adjustment to align the icon
+    // to the baseline of text (magic number coming from font awesome)
     &.tc-small {
         --tc-icon-size: 0.5em;
     }
