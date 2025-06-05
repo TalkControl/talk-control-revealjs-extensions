@@ -83,7 +83,7 @@ A Quote without any style (basic markdown)
 
 > A quote wihtout citation
 
-[Credit of citation](http://www.sfeir.com)
+[Credit of citation](https://github.com/TalkControl)
 
 <!-- .element: class="credits" -->
 
@@ -99,7 +99,7 @@ A Quote without any style (basic markdown)
 ## A dedicate Quote slide
 >  To Quote or not to quote...
 
-[Credit of citation](http://www.sfeir.com)
+[Credit of citation](https://github.com/TalkControl)
 <!-- .element: class="credits" -->
 ```
 
