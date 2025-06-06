@@ -1,0 +1,33 @@
+.reveal .slides section {
+    p:has(img.tc-qrcode) {
+        display: grid;
+        gap: 10px;
+        width: fit-content;
+        //grid-template-areas: img text;
+    }
+
+    p:has(img.tc-qrcode:not(.text-below):not(.text-above)) {
+        grid-template-areas: 'img text';
+        align-items: center;
+    }
+    p:has(img.tc-qrcode:is(.text-below, .text-above)) {
+        grid-template-areas:
+            'img'
+            'text';
+        justify-items: center;
+    }
+    p:has(img.tc-qrcode.text-above) img {
+        order: 1;
+    }
+    p:has(img.tc-qrcode.text-left) img {
+        order: 1;
+    }
+
+    .tc-qrcode {
+        margin: 10px;
+
+        img {
+            grid-area: img;
+        }
+    }
+}
