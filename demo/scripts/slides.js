@@ -40,6 +40,7 @@ function helpersSlides() {
         `${dir}/20_icons.md`,
         `${dir}/30_admonitions.md`,
         `${dir}/40_quotes.md`,
+        `${dir}/50_qrcodes.md`,
     ];
 }
 
