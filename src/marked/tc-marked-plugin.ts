@@ -6,6 +6,7 @@ import { markedStyledImage } from '@anthonypena/marked-styled-image';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
 import { markedTcCols } from './marked-tc-cols';
+import { markedTcQrCode } from './marked-tc-qrcode';
 
 const stylesCssImg = [
     'center',
@@ -61,6 +62,7 @@ export class RevealTalkControlMarkdownPlugin {
                         revealMarkdownPlugin.marked.use(markedTcBg());
                         revealMarkdownPlugin.marked.use(markedTcCols());
                         revealMarkdownPlugin.marked.use(markedTcAdmonition());
+                        revealMarkdownPlugin.marked.use(markedTcQrCode());
                         const initFunctionArray: Array<() => void> = [];
                         if (
                             self.options.fontIcons &&

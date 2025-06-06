@@ -40,6 +40,7 @@ vi.mock('./marked-extensions', () => ({
     markedTcBg: vi.fn().mockReturnValue({}),
     markedTcCols: vi.fn().mockReturnValue({}),
     markedTcIcons: vi.fn().mockReturnValue({}),
+    markedTcQrCode: vi.fn().mockReturnValue({}),
 }));
 
 // Mock reproduction of classStyles
