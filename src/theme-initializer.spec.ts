@@ -2,10 +2,10 @@
  * @vitest-environment jsdom
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { DEFAULT_TYPE } from './utils/const';
 import Reveal from 'reveal.js';
 import { ThemeInitializer } from './theme-initializer';
 import { render } from 'lit-html';
-
 // Mocks
 vi.mock('reveal.js', () => ({
     default: {
@@ -54,6 +54,10 @@ vi.mock('./utils/storage-service', () => ({
             { path: 'slide1.md' },
             { path: 'slide2.md' },
         ]),
+}));
+
+vi.mock('./addons/tc-data-type', () => ({
+    getShowType: vi.fn().mockImplementation(() => DEFAULT_TYPE),
 }));
 
 vi.mock('./addons/tc-ui-config');
