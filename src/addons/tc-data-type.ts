@@ -1,21 +1,27 @@
 import { DEFAULT_TYPE } from '../utils/const';
 import { _handle_parameter } from '../utils/helper';
 
-export function manageShowTypeContent(
-    defaultType: string = DEFAULT_TYPE
-): void {
+export function getShowType(defaultType: string = DEFAULT_TYPE): string {
     const urlParams = new URLSearchParams(window.location.search);
     const slidesElement: HTMLElement =
         document.querySelector('.reveal .slides')!;
-    const slidesType = _handle_parameter(
+    return _handle_parameter(
         urlParams,
         'data-type',
         slidesElement,
         'data-type',
         defaultType
     );
+}
+
+export function manageShowTypeContent(
+    defaultType: string = DEFAULT_TYPE
+): void {
+    const slidesType = getShowType(defaultType);
 
     if (slidesType !== 'all') {
+        const slidesElement: HTMLElement =
+            document.querySelector('.reveal .slides')!;
         Array.from(slidesElement.querySelectorAll('section[data-type-show]'))
             .filter(
                 (el) =>

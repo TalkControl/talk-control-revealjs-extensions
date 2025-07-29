@@ -1,9 +1,23 @@
 /**
  * @vitest-environment jsdom
  */
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterAll, beforeEach, describe, expect, it } from 'vitest';
+import { getShowType, manageShowTypeContent } from './tc-data-type';
+import { DEFAULT_TYPE } from '../utils/const';
 
-import { manageShowTypeContent } from './tc-data-type';
+// Mock window.location
+const mockLocation = {
+    search: '',
+    href: '',
+    origin: 'http://localhost',
+    pathname: '/',
+    hash: '',
+};
+
+Object.defineProperty(window, 'location', {
+    value: mockLocation,
+    writable: true,
+});
 
 const HTML = `
 <div class="reveal">
@@ -30,6 +44,34 @@ const HTML = `
 </div>
 `;
 
+describe(getShowType.name, () => {
+    afterAll(async () => {
+        window.location.search = '';
+    });
+    it('should use default type if nothing is specified', () => {
+        document.body.innerHTML = `<div class="reveal">
+            <div class="slides"></div>
+        </div>`;
+        const type = getShowType();
+        expect(type).toBe(DEFAULT_TYPE);
+    });
+    it('should use type if specified in HTML', () => {
+        document.body.innerHTML = `<div class="reveal">
+            <div class="slides" data-type="test"></div>
+        </div>`;
+        const type = getShowType();
+        expect(type).toBe('test');
+    });
+
+    it('should use type if specified in URL', () => {
+        window.location.search = 'data-type=test2';
+        document.body.innerHTML = `<div class="reveal">
+            <div class="slides"></div>
+        </div>`;
+        const type = getShowType();
+        expect(type).toBe('test2');
+    });
+});
 describe(manageShowTypeContent.name, () => {
     beforeEach(async () => {
         document.body.innerHTML = HTML;

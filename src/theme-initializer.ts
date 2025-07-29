@@ -16,13 +16,14 @@ import { SlidePath } from './models';
 import { TcCustomBackgroundOptions } from './addons/tc-custom-background';
 import { TcThemeOptions } from './addons/tc-theme';
 import { TcUiConfig } from './addons/tc-ui-config';
+import { getShowType } from './addons/tc-data-type';
 import { getSlidesToUse } from './utils/storage-service';
 
 /**
  *
  */
 export interface ThemeInitializerOptions {
-    slidesFactory: () => SlidePath[]; // Function to retrieve the slides informations
+    slidesFactory: (showType?: string) => SlidePath[]; // Function to retrieve the slides informations
     activeCopyClipboard?: boolean; // Default applied is true
     tcMarkedOptions: TalkControlMarkedOptions; // Deal with the font icons
     tcI18nOptions: TcI18nConfig; // Deal with the i18n options
@@ -50,8 +51,11 @@ export const ThemeInitializer = {
             document.querySelector('.slides');
         if (importSlideElement == null) return;
 
+        // Retrieve the data type parameter to apply to a subset of slides
+        const showType = getShowType(defaultSlidesType);
+
         // Retrieve the slide path list
-        const slides = slidesFactory();
+        const slides = slidesFactory(showType);
 
         // Init the uiConfig
         new TcUiConfig(

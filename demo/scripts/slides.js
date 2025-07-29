@@ -10,13 +10,15 @@ console.log('Reveal version', Reveal.VERSION);
 console.log('Reveal instance', Reveal);
 
 // One method per module
-function schoolSlides() {
+function schoolSlides(showType) {
     const dir = '01-classics';
     return [
         '00_intro.md',
         `${dir}/10_chapter1.md`,
         `${dir}/20_transitions.md`,
-        `${dir}/30_code_slides.md`,
+        !showType || showType === 'custom'
+            ? undefined
+            : `${dir}/30_code_slides.md`,
         `${dir}/40_custom_bg_slides.md`,
     ];
 }
@@ -53,17 +55,19 @@ function toolsSlides() {
     ];
 }
 
-function formation() {
+function formation(showType) {
     return [
         //
         ...schoolSlides(),
-        ...speakerSlides(),
-        ...layoutsSlides(),
-        ...helpersSlides(),
-        ...toolsSlides(),
-    ].map((slidePath) => {
-        return { path: slidePath };
-    });
+        ...(!showType || showType === 'speakers' ? speakerSlides() : []),
+        ...(!showType || showType === 'layouts' ? layoutsSlides() : []),
+        ...(!showType || showType === 'helpers' ? helpersSlides() : []),
+        ...(!showType || showType === 'tools' ? toolsSlides() : []),
+    ]
+        .filter((element) => element !== undefined)
+        .map((slidePath) => {
+            return { path: slidePath };
+        });
 }
 
 await ThemeInitializer.init({
