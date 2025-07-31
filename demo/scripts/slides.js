@@ -16,9 +16,7 @@ function schoolSlides(showType) {
         '00_intro.md',
         `${dir}/10_chapter1.md`,
         `${dir}/20_transitions.md`,
-        !showType || showType === 'custom'
-            ? undefined
-            : `${dir}/30_code_slides.md`,
+        showType === 'custom' ? undefined : `${dir}/30_code_slides.md`,
         `${dir}/40_custom_bg_slides.md`,
     ];
 }
@@ -59,10 +57,18 @@ function formation(showType) {
     return [
         //
         ...schoolSlides(),
-        ...(!showType || showType === 'speakers' ? speakerSlides() : []),
-        ...(!showType || showType === 'layouts' ? layoutsSlides() : []),
-        ...(!showType || showType === 'helpers' ? helpersSlides() : []),
-        ...(!showType || showType === 'tools' ? toolsSlides() : []),
+        ...(!showType || showType === 'on-stage' || showType === 'speakers'
+            ? speakerSlides()
+            : []),
+        ...(!showType || showType === 'on-stage' || showType === 'layouts'
+            ? layoutsSlides()
+            : []),
+        ...(!showType || showType === 'on-stage' || showType === 'helpers'
+            ? helpersSlides()
+            : []),
+        ...(!showType || showType === 'on-stage' || showType === 'tools'
+            ? toolsSlides()
+            : []),
     ]
         .filter((element) => element !== undefined)
         .map((slidePath) => {
