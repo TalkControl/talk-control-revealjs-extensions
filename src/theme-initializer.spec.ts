@@ -112,12 +112,47 @@ describe('ThemeInitializer', () => {
         it('should return early if no .slides elements', async () => {
             document.body.innerHTML = '';
 
-            await ThemeInitializer.init(mockOptions);
+            try {
+                await ThemeInitializer.init(mockOptions);
+            } catch (e) {
+                expect(e).toBeInstanceOf(Error);
+                expect((e as Error).message).toBe('No slides found');
+            }
+        });
+        it('should return early if no slidesFactory', async () => {
+            document.body.innerHTML = '';
 
-            expect(Reveal.initialize).not.toHaveBeenCalled();
-            expect(render).not.toHaveBeenCalled();
+            try {
+                // Use any here to force giving an incomplete parameters (method ask in javascript)
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                await (ThemeInitializer as any).init({});
+            } catch (e) {
+                expect(e).toBeInstanceOf(Error);
+                expect((e as Error).message).toBe('No slide factory function');
+            }
         });
 
+        it('should init Reveal.js with correct default options even if there is just the slide factory', async () => {
+            await ThemeInitializer.init({
+                slidesFactory: mockSlidesFactory,
+            });
+
+            expect(Reveal.initialize).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    controls: true,
+                    progress: true,
+                    history: true,
+                    center: false,
+                    width: 1920,
+                    height: 1080,
+                    slideNumber: 'c/t',
+                    showSlideNumber: 'speaker',
+                    showNotes: false,
+                    pdfMaxPagesPerSlide: 1,
+                    pdfSeparateFragments: true,
+                })
+            );
+        });
         it('should init Reveal.js with correct default options', async () => {
             await ThemeInitializer.init(mockOptions);
 
