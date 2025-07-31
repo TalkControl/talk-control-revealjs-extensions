@@ -20,15 +20,34 @@ import { getShowType } from './addons/tc-data-type';
 import { getSlidesToUse } from './utils/storage-service';
 
 /**
+ * Default values to let undefined in options and simplify the usage
+ */
+
+const DEFAULT_CUSTOM_BACKGROUND: TcCustomBackgroundOptions = {
+    basePath: './',
+    mapBackgrounds: () => {
+        return {};
+    },
+};
+
+const DEFAULT_MARKED_OPTIONS: TalkControlMarkedOptions = {};
+
+const DEFAULT_I18N_OPTIONS: TcI18nConfig = {
+    baseMarkdownPath: 'markdown',
+};
+
+const DEFAULT_THEME_OPTIONS = {};
+
+/**
  *
  */
 export interface ThemeInitializerOptions {
     slidesFactory: (showType?: string) => SlidePath[]; // Function to retrieve the slides informations
     activeCopyClipboard?: boolean; // Default applied is true
-    tcMarkedOptions: TalkControlMarkedOptions; // Deal with the font icons
-    tcI18nOptions: TcI18nConfig; // Deal with the i18n options
-    tcCustomBackgroundOptions: TcCustomBackgroundOptions; // Deal with the custom background options
-    tcThemeOptions: TcThemeOptions; // Deal with the theme options
+    tcMarkedOptions?: TalkControlMarkedOptions; // Deal with the font icons
+    tcI18nOptions?: TcI18nConfig; // Deal with the i18n options
+    tcCustomBackgroundOptions?: TcCustomBackgroundOptions; // Deal with the custom background options
+    tcThemeOptions?: TcThemeOptions; // Deal with the theme options
     slidesRenderer?: (element: HTMLElement, slides: SlidePath[]) => RootPart; // Function to render the slides defautl use litHTML
     defaultSlidesType?: string; // Default applied is "on-stage"
 }
@@ -40,10 +59,10 @@ export const ThemeInitializer = {
     async init({
         activeCopyClipboard = true,
         slidesFactory,
-        tcMarkedOptions,
-        tcI18nOptions,
-        tcCustomBackgroundOptions,
-        tcThemeOptions,
+        tcMarkedOptions = DEFAULT_MARKED_OPTIONS,
+        tcI18nOptions = DEFAULT_I18N_OPTIONS,
+        tcCustomBackgroundOptions = DEFAULT_CUSTOM_BACKGROUND,
+        tcThemeOptions = DEFAULT_THEME_OPTIONS,
         defaultSlidesType,
         slidesRenderer = defaultSlideRenderer,
     }: ThemeInitializerOptions) {

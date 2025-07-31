@@ -206,7 +206,7 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 # Code to produce / Markdown
 
 ```markdown
-<!-- .slide: class="transition txt-white" style="--tc-transition-color: cornflowerblue;" -->
+<!-- .slide: class="transition" style="--tc-transition-color: cornflowerblue;" -->
 
 # Talk Control Theme
 
@@ -228,7 +228,7 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 # Code to produce / Markdown
 
 ```markdown
-<!-- .slide: class="transition txt-white" style="--tc-transition-color: cornflowerblue; --tc-transition-line-color: darkorange;" -->
+<!-- .slide: class="transition" style="--tc-transition-color: cornflowerblue; --tc-transition-line-color: darkorange;" -->
 
 # Talk Control Theme
 
