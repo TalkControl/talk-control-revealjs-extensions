@@ -66,9 +66,13 @@ export const ThemeInitializer = {
         defaultSlidesType,
         slidesRenderer = defaultSlideRenderer,
     }: ThemeInitializerOptions) {
+        if (!slidesFactory) {
+            throw new Error('No slide factory function');
+        }
+
         const importSlideElement: HTMLElement | null =
             document.querySelector('.slides');
-        if (importSlideElement == null) return;
+        if (importSlideElement == null) throw new Error('No slides found');
 
         // Retrieve the data type parameter to apply to a subset of slides
         const showType = getShowType(defaultSlidesType);
