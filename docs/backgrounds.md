@@ -1,6 +1,6 @@
 # Backgrounds helpers
 
-In addition to the "revealJS way" to set a background for a slide (`<!-- .slide: data-background="...." -->`), you can use a new syntax:
+In addition to the "Reveal.js way" to set a background for a slide (`<!-- .slide: data-background="...." -->`), you can use a new syntax:
 
 ```md
 ![](./assets/images/light_background.jpg 'tc-bg')

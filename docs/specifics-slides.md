@@ -2,7 +2,7 @@
 
 ## Speaker Slide
 
-2 Configuration of speaker slides exists
+2 Configuration of speaker slides exist
 
 ### One speaker
 
@@ -17,7 +17,7 @@
 
 ### fake@email.com
 
-### Other informations
+### Other information
 
 ![](./assets/images/jf.jpg)<!-- .element: class="speaker" -->
 
@@ -34,7 +34,7 @@
 
 ![](./imgs/speaker-basic.png)
 
-You can also change the order of sub information (here CTO Front & @jefbinomed). You can set up to 6 sub informations : each one is a `<h3>` element
+You can also change the order of sub information (here CTO Front & @jefbinomed). You can set up to 6 sub information : each one is a `<h3>` element
 
 You can also change the number of badge (up to 6). Each should have `class='badge'`
 
@@ -84,7 +84,7 @@ You can also change the number of badge (up to 6). Each should have `class='badg
 
 ![](./imgs/speaker-two.png)
 
-for the version with 2 speakers, only 3 sub informations and only 3
+for the version with 2 speakers, only 3 sub information and only 3
 
 ## Transitions slides
 
@@ -183,14 +183,14 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 
 ## Quotes slides
 
-You could have dedicate quote slide to display a citation
+You could have dedicated quote slide to display a citation
 
 ```md
 <!-- .slide: class="quote-slide" -->
 
-## A dedicate Quote slide
+## A dedicated Quote slide
 
-> A quote wihtout citation
+> A quote without citation
 ```
 
 ![](./imgs/quote-slide.png)

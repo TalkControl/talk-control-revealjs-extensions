@@ -46,24 +46,24 @@ Here is a basic example in your `index.html`:
 
 ## RevealJS
 
-This theme use target for [RevealJS](https://revealjs.com/#/) so all you can do with RevealJS is available with theme.
+This theme is a target for [RevealJS](https://revealjs.com/#/) so all you can do with RevealJS is available with this theme.
 
 You can still use RevealJS API by importing `Reveal` object in `import { Reveal } from "talk-control-revealjs-extensions";`
 
 # Configuration
 
-The main configuration let use customize a lot the theme so it will propose lots of enhancements when calling `ThemeInitializer.init(options)`. All options with (\*) are mandatory
+The main configuration lets you customize a lot the theme so it will propose lots of enhancements when calling `ThemeInitializer.init(options)`. All options with (\*) are mandatory
 
--   `slidesFactory`(\*): A function that return an array of objects describing the Markdown files to load. The show type could be precise in parameters (see "play with show type")
--   `activeCopyClipboard`: True if we use the clipboard, default applied is true
--   `tcMarkedOptions`: An object that could contain icons configuration. Default is an empty object
--   `tcI18nOptions`: Specify the place of markdown files (use for internationalization). Default language is 'EN'. By default, the slides should be placed in a "markdown" repository at the same level as the index.html
--   `tcCustomBackgroundOptions`: Specify the configuration to use custom backgrounds as template.
--   `tcThemeOptions`s: Define the default theme to use (default is 'talk-control').
--   `slidesRenderer`: function that render a Root element (in LitHTML). It takes an html element and the list of slides to render
--   `defaultSlidesType`: Define the "show type" of slides (default is "on-stage")
+-   `slidesFactory`(\*): A function that returns an array of objects describing the Markdown files to load. The show type can be precise in parameters (see "play with show type")
+-   `activeCopyClipboard`: true if we use the clipboard, default applied is true
+-   `tcMarkedOptions`: An object that can contain icons configuration. Default is an empty object
+-   `tcI18nOptions`: Specifies the place of markdown files (use for internationalization). Default language is 'EN'. By default, the slides should be placed in a "markdown" repository at the same level as the index.html
+-   `tcCustomBackgroundOptions`: Specifies the configuration to use custom backgrounds as template.
+-   `tcThemeOptions`: Defines the default theme to use (default is 'talk-control').
+-   `slidesRenderer`: function that renders a Root element (in LitHTML). It takes an html element and the list of slides to render
+-   `defaultSlidesType`: Defines the "show type" of slides (default is "on-stage")
 
-According to the options passed, you can specify the desire configuration to apply
+According to the options passed, you can specify the desired configuration to apply
 
 ## HTML Configuration
 
@@ -123,6 +123,6 @@ See [QRCodes](./qrcode.md)
 
 See [Helpers](./helpers.md)
 
-# Conditionnal display
+# Conditional display
 
 See [ShowType](./show-type.md)

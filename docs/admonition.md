@@ -65,7 +65,7 @@ Pandas are native to central China.
 You can also specify a custom color for the left border and the title using the `tc-admonition-color` attribute. The value should be a valid CSS color.
 
 ```markdown
-!!! custom tc-admonition-type="🕶️ Custombis" tc-admonition-color="#d7be00"
+!!! custom tc-admonition-type="🕶️ Custom" tc-admonition-color="#d7be00"
 Custom and custom color
 !!!
 ```
@@ -83,5 +83,5 @@ Some info block
 
 Custom and custom color
 
-<!-- .element: class="admonition custom" data-admonition-icon="🕶️ Custombis" style="--tc-admonition-bg-color:#d7be00;" -->
+<!-- .element: class="admonition custom" data-admonition-icon="🕶️ Custom" style="--tc-admonition-bg-color:#d7be00;" -->
 ```

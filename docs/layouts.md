@@ -1,14 +1,14 @@
 # Different Layout
 
-For the moment, you have the possibilty to have multiples columns for displaying informations.
+For the moment, you have the possibility to have multiple columns for displaying informations.
 
 ## Multiple column layout
 
-Due to some "magic" done by RevealJS engine, it's recommand to not use multiple columns with vertical slides.
+Due to some "magic" done by RevealJS engine, it's recommended to not use multiple columns with vertical slides.
 
 Multiple columns with background and vertical slides won't work.
 
-A new syntax have to be used
+A new syntax has to be used
 
 ```md
 <!-- .slide: class="tc-multiple-columns" -->
@@ -64,4 +64,4 @@ Some content
 
 ![](./imgs/multiple-cols-bg.png)
 
-Each column is consider as a section, so you can use helpers class in it.
+Each column is considered as a section, so you can use helpers class in it.
