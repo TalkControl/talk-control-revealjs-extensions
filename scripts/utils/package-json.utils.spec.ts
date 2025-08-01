@@ -22,7 +22,7 @@ describe(buildPackageJson.name, () => {
             testContext.readDistFile('package.json')
         );
         expect(distPackageJson.name).toEqual(
-            'talk-control-revealjs-extensions'
+            '@talk-control/talk-control-revealjs-extensions'
         );
         expect(distPackageJson.version).toEqual('1.2.3');
         expect(distPackageJson.type).toEqual('module');
