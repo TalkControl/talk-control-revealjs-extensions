@@ -1,6 +1,6 @@
 # Play with theme
 
-You can use this extensions to create severals theme for your slides to match diferents programs or needs. For example, you want to create your custom theme for a deck... By default, the theme used is "talk-control"
+You can use this extensions to create several theme for your slides to match different programs or needs. For example, you want to create your custom theme for a deck... By default, the theme used is "talk-control"
 
 To this end, you have two possibilities:
 
@@ -9,7 +9,7 @@ To this end, you have two possibilities:
 
 ## Example
 
-In the demo, there is 2 additionnals themes add to show you the possibilities
+In the demo, there is 2 additional themes add to show you the possibilities
 
 ![](./imgs/theme-tc.png)
 
@@ -45,11 +45,11 @@ In your css you have to override what you need in `body[data-theme='XXX']` selec
 
 ## Custom properties (CSS Variables)
 
-By default the theme offers you severals custom properties to override the main elements of your deck. So you can easily define new values for it in your theme to change for your needs. You can see [here](../src/scss/theme/talk-control-custom-properties.scss) the list of custom properties available.
+By default the theme offers you several custom properties to override the main elements of your deck. So you can easily define new values for it in your theme to change for your needs. You can see [here](../src/scss/theme/talk-control-custom-properties.scss) the list of custom properties available.
 
 ### RevealJS custom properties
 
-If you want to complete your theming, RevealJS allows you also to custumize some aspects of Reveal. You can find the list of RevealJS custom properties [here](https://github.com/hakimel/reveal.js/blob/master/css/theme/template/exposer.scss)
+If you want to complete your theming, RevealJS allows you also to customize some aspects of Reveal. You can find the list of RevealJS custom properties [here](https://github.com/hakimel/reveal.js/blob/master/css/theme/template/exposer.scss)
 
 ### SASS Override
 
@@ -86,7 +86,7 @@ tcCustomBackgroundOptions: {
     mapBackgrounds: (theme) => { // function that gives you the theme to do some specifics
         return {
             'orange-slide': '#f9cb9c', // Here, same color for all the slides with 'orange-slide' class
-            'transition-wall': theme === 'dark' ? 'party.jpg' : 'wall.jpg', // Here a diferent image according to the theme if 'transition-wall' is set as class
+            'transition-wall': theme === 'dark' ? 'party.jpg' : 'wall.jpg', // Here a different image according to the theme if 'transition-wall' is set as class
         };
     },
 },
@@ -94,7 +94,7 @@ tcCustomBackgroundOptions: {
 
 You can also specify existing class (`transition`, `speaker-slide`,...) for custom backgrounds
 
-# Setting a default theme if severals availables
+# Setting a default theme if several available
 
 If you have define your own override and you want it as default theme without passing it as parameter or as html attribute, simply set it in option of the initializer method :
 

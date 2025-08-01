@@ -2,19 +2,19 @@
 
 In addition to what RevealJS offers : [RevealJS code features](https://revealjs.com/code/)
 
-Default theme applyed by TalkControl is `a11y-light`;
+Default theme applied by TalkControl is `a11y-light`;
 
 ![](./imgs/code-light.png)
 
 ## Switch to dark background slides
 
-In this mode, the theme applyed is `a11y-dark`
+In this mode, the theme applied is `a11y-dark`
 
 ![](./imgs/code-dark.png)
 
 ## Light slide with dark code background
 
-In this mode, the theme applyed is `a11y-dark`
+In this mode, the theme applied is `a11y-dark`
 
 ![](./imgs/code-light-dark.png)
 
@@ -22,7 +22,7 @@ In this mode, the theme applyed is `a11y-dark`
 
 TalkControl comes with a copy to clipboard icon that includes in clipboard the content of code slide.
 
-/!\ This will work only if you have define an icon library to use (see [icons](./icons.md))
+/!\ This will work only if you have defined an icon library to use (see [icons](./icons.md))
 
 ### Configuration
 
@@ -39,9 +39,9 @@ tcMarkedOptions: {
 
 Here, the copy icon of FontAwesome will be used.
 
-### Desactivation
+### Deactivation
 
-You can desactiv this behaviour by simply setting to `false` the option `activeCopyClipboard` in `ThemeInitializer.init` method. Default value is `true`
+You can desactivate this behaviour by simply setting to `false` the option `activeCopyClipboard` in `ThemeInitializer.init` method. Default value is `true`
 
 ## Size of your code
 
@@ -67,12 +67,12 @@ To force big size, simply suffix your code with class "big-code"
 
 ### Force Medium code
 
-To force big size, simply suffix your code with class "medium-code"
+To force medium size, simply suffix your code with class "medium-code"
 
 ````md
 <!-- .slide: class="with-code" -->
 
-## Some BIG Code
+## Some Medium Code
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -135,7 +135,7 @@ By default there will be only 20 lines of code displayed. If you need more space
 
 ## Center your code on slide
 
-It often arrived that you only display one code block on screen and you it to be center. To do this, add the class `alone` to the code block
+It often happens that you only display one code block on screen and you want it to be centered. To do this, add the class `alone` to the code block
 
 ````md
 <!-- .slide: class="with-code big-code" -->
@@ -155,9 +155,9 @@ It often arrived that you only display one code block on screen and you it to be
 
 This will only work if you have one code block!
 
-## Changing default font applyed
+## Changing default font applied
 
-If you don't like `a11y-light` and `a11y-dark`, you can specify an other font, you will have to override fonts with css like this:
+If you don't like `a11y-light` and `a11y-dark`, you can specify another font, you will have to override fonts with css like this:
 
 ```css
 .with-code {

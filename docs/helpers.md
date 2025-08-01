@@ -42,7 +42,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec risus leo. Ve
 
 ![](./imgs/helper-image-float-left.png)
 
-**Use flex-row positionning:**
+**Use flex-row positioning:**
 
 ```md
 <div class="flex-row">
@@ -187,7 +187,7 @@ Now, we integrate in TalkControl the possibility to directly add classes attribu
 ![](./assets/images/gde.png 'custom-img-style')
 ```
 
-To use this syntax, you have to indicate to ThemeInitialiazer method the class you integrate to help the engine to analyse it:
+To use this syntax, you have to indicate to ThemeInitialiazer method the class you integrate to help the engine to analyze it:
 
 ```javascript
 tcMarkedOptions: {

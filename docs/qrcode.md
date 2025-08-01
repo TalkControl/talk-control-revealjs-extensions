@@ -12,8 +12,8 @@ To generate a QR code, use a syntax similar to an image, but with the `tc-qrcode
 
 -   `text-to-encode`: The data you want the QR code to contain. This is typically a URL.
 -   `tc-qrcode`: The mandatory keyword that triggers the QR code generation.
--   `some text`: the 'legend' text associate
--   the part with `tc-qrcode` will arrive in class attribute, so you can add severals classes in it
+-   `some text`: the 'legend' text associated
+-   the part with `tc-qrcode` will arrive in class attribute, so you can add several classes in it
 
 by default the size of QrCode is 500px square
 
