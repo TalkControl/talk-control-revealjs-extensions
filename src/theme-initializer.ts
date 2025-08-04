@@ -6,6 +6,7 @@ import {
 import { RootPart, html, render } from 'lit-html';
 import { TcI18nConfig, i18n } from './addons/tc-i18n';
 
+import { PluginFunction } from 'reveal.js';
 import Reveal from 'reveal.js';
 import RevealHighlight from 'reveal.js/plugin/highlight/highlight.esm';
 import RevealNotes from 'reveal.js/plugin/notes/notes.esm';
@@ -50,6 +51,7 @@ export interface ThemeInitializerOptions {
     tcThemeOptions?: TcThemeOptions; // Deal with the theme options
     slidesRenderer?: (element: HTMLElement, slides: SlidePath[]) => RootPart; // Function to render the slides defautl use litHTML
     defaultSlidesType?: string; // Default applied is "on-stage"
+    plugins?: PluginFunction[]; // Additionnal RevealJS plugin to add (will be add at the end of the process)
 }
 
 export const ThemeInitializer = {
@@ -65,6 +67,7 @@ export const ThemeInitializer = {
         tcThemeOptions = DEFAULT_THEME_OPTIONS,
         defaultSlidesType,
         slidesRenderer = defaultSlideRenderer,
+        plugins = [],
     }: ThemeInitializerOptions) {
         if (!slidesFactory) {
             throw new Error('No slide factory function');
@@ -109,8 +112,26 @@ export const ThemeInitializer = {
             tcMarkedOptions
         );
 
+        const pluginsToApply = [
+            talkControlMarkedPlugin.getPlugin(), // We don't use RevealMarkdown because we have to add custom marked extensions
+            RevealTalkControlThemePlugin({
+                activeCopyClipboard,
+                tcCustomBackgroundOptions,
+                tcMarkedOptions,
+                tcThemeOptions,
+                defaultSlidesType,
+            }),
+            RevealZoom,
+            RevealNotes,
+            RevealHighlight,
+        ];
+
+        if (plugins && plugins.length > 0) {
+            pluginsToApply.push(...plugins);
+        }
+
         // Init the Reveal Engine
-        Reveal.initialize({
+        return Reveal.initialize({
             controls: true,
             progress: true,
             history: true,
@@ -122,25 +143,14 @@ export const ThemeInitializer = {
             showNotes,
             pdfMaxPagesPerSlide,
             pdfSeparateFragments,
-            plugins: [
-                talkControlMarkedPlugin.getPlugin(), // We don't use RevealMarkdown because we have to add custom marked extensions
-                RevealTalkControlThemePlugin({
-                    activeCopyClipboard,
-                    tcCustomBackgroundOptions,
-                    tcMarkedOptions,
-                    tcThemeOptions,
-                    defaultSlidesType,
-                }),
-                RevealZoom,
-                RevealNotes,
-                RevealHighlight,
-            ],
+            plugins: pluginsToApply,
         }).then(() => {
             Reveal.configure({
                 transition:
                     (Reveal.getQueryHash()
                         .transition as Reveal.Options['transition']) ?? 'none', // default/cube/page/concave/zoom/linear/fade/none
             });
+            return;
         });
     },
 };
