@@ -53,8 +53,11 @@ export function postManageMultiplesColumns() {
         if (!background.hasAttribute('data-loaded')) {
             //RevealJS attribute to avoid double job
             background.setAttribute('data-loaded', 'true');
+            const backgroundContent = background.querySelector(
+                '.slide-background-content'
+            );
             revealJSBackgroundImageCopiedCode(
-                background as HTMLElement,
+                backgroundContent as HTMLElement,
                 section as HTMLElement
             );
         }
