@@ -63,7 +63,13 @@ export function markedTcCols(): marked.MarkedExtension {
                     let attributes = '';
                     let classes = '';
                     if (token.attributes) {
-                        const splitAttributes = token.attributes.split(' ');
+                        const regex = /\s*([a-zA-Z-]+="[^"]*")/g;
+
+                        const matchAttributes = token.attributes.match(regex);
+                        const splitAttributes = matchAttributes
+                            ? matchAttributes.map((match) => match.trim())
+                            : [];
+
                         let attributesWithoutClasses = '';
                         for (const attr of splitAttributes) {
                             if (attr && attr.startsWith('class')) {
@@ -79,8 +85,8 @@ export function markedTcCols(): marked.MarkedExtension {
                         }
                         attributes = ` ${attributesWithoutClasses}`;
                     }
-                    const content = this.parser.parse(token.tokens);
-                    return `<div class="tc-column"><section${attributes} class="tc-column${classes}">\n${content}\n</section></div>`;
+                    const content = this.parser.parse(token.tokens); // We integrate a section to match background mechanism of revealJS (thoses sections are removed after)
+                    return `<div${attributes} class="tc-column${classes}">\n${content}\n</div><section${attributes} class="tc-col-section${classes}"></section>`;
                 },
             },
         ],

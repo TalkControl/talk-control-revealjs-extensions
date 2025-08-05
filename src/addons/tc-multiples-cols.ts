@@ -10,11 +10,10 @@ export function manageMultiplesColumns() {
     for (let i = 0; i < allSlides.length; i++) {
         const slide = allSlides[i];
         slide.classList.remove('stack');
-        const cols = [...slide.querySelectorAll('.tc-column section')];
+        const cols = [...slide.querySelectorAll('.tc-col-section')];
         for (let j = 0; j < cols.length; j++) {
             const col = cols[j];
-            col.removeAttribute('aria-hidden');
-            col.removeAttribute('hidden');
+            col.remove(); // We remove the section in order to avoid strange behaviour with fragment or verticals slides
         }
     }
 }

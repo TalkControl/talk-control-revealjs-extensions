@@ -9,6 +9,8 @@
         position: relative;
         opacity: 1;
         pointer-events: auto;
+    .tc-col-section {
+        display: none;
     }
 }
 
@@ -21,7 +23,8 @@
     width: 100%;
     height: 100%;
 
-    div.tc-column {
+    div.tc-column,
+    div.tc-col-section {
         position: relative;
         opacity: 1;
         visibility: visible;
