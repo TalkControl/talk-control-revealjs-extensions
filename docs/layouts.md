@@ -68,6 +68,14 @@ Some content
 
 ### Multiple column layout (with inverted contrast)
 
+If sometimes you need inverted colors for a slide in this configuration, use the class `contrast-opposite`. And if you need to customize the colors, there is 3 custom properties available:
+
+```scss
+--tc-multiple-col-heading-color: var(--tc-heading-color);
+--tc-multiple-col-color: var(--r-main-color);
+--tc-multiple-col-link-color: var(--r-link-color);
+```
+
 ```md
 <!-- .slide: class="tc-multiple-columns" -->
 
@@ -79,7 +87,7 @@ Some content
 
 ##++##
 
-##++## data-background="./assets/images/light_background.jpg" class="mask inverted-contrast"
+##++## data-background="./assets/images/light_background.jpg" class="mask contrast-opposite"
 
 # Column 2 with image bg
 
