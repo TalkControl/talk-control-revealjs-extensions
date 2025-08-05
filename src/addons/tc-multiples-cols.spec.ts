@@ -10,15 +10,15 @@ const HTML = `
     <div class="slides">
         <section class="stack tc-multiple-columns">
             <div class="tc-column">
-            <section>
             Content
-            </section>
             </div>
+            <section class="tc-col-section">
+            </section>
             <div class="tc-column">
-            <section aria-hidden="true" hidden>
-                Content
-            </section>
+            Content
             </div>
+            <section aria-hidden="true" hidden  class="tc-col-section">
+            </section>
         </section>
         <section class="present" aria-hidden="true" hidden>
             Content
@@ -40,24 +40,8 @@ describe(manageMultiplesColumns.name, () => {
         document.body.innerHTML = HTML;
     });
 
-    it('should remove aria-hidden from sections in columns', () => {
-        const selector = 'section.tc-multiple-columns section[aria-hidden]';
-        expect(document.querySelector(selector)).toBeDefined();
-        manageMultiplesColumns();
-        expect(document.querySelector(selector)).toBeNull();
-    });
-
-    it('should not remove aria-hidden from sections not in columns', () => {
-        const selector = 'section[aria-hidden]';
-        let sectionAriaHidden = [...document.querySelectorAll(selector)];
-        expect(sectionAriaHidden).length(3);
-        manageMultiplesColumns();
-        sectionAriaHidden = [...document.querySelectorAll(selector)];
-        expect(sectionAriaHidden).length(2);
-    });
-
-    it('should remove hidden from sections in columns', () => {
-        const selector = 'section.tc-multiple-columns section[hidden]';
+    it('should remove sections in columns', () => {
+        const selector = 'section.tc-multiple-columns section';
         expect(document.querySelector(selector)).toBeDefined();
         manageMultiplesColumns();
         expect(document.querySelector(selector)).toBeNull();
