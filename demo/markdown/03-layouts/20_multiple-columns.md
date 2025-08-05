@@ -18,7 +18,7 @@ Multiple columns with background and vertical slides won't work.
 
 # Column 1
 
-Some content
+Some content <!-- .element: class="fragment"-->
 
 ##++##
 
@@ -27,6 +27,7 @@ Some content
 # Column 2
 
 Some content
+Some content <!-- .element: class="fragment"-->
 
 ##++##
 
@@ -84,7 +85,7 @@ Some content
 
 ##++##
 
-##++## data-background="./assets/images/light_background.jpg" class="mask"
+##++## data-background="./assets/images/light_background.jpg" class="mask contrast-opposite"
 
 # Column 2 with image bg
 
