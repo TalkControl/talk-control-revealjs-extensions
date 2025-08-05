@@ -8,6 +8,7 @@ import { TcThemeOptions, manageTheme } from './addons/tc-theme';
 import { MarkedTcIconsOptions } from './marked/marked-tc-icons';
 import { TalkControlMarkedOptions } from './marked/tc-marked-plugin';
 import { manageCopyClipboard } from './addons/tc-copy-clipboard';
+import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { manageShowTypeContent } from './addons/tc-data-type';
 import { transformListFragment } from './addons/tc-list-fragment';
 
@@ -58,6 +59,7 @@ export class TalkControlTheme {
 
         Reveal.addEventListener('ready', () => {
             transformListFragment();
+            manageMultiplesColumns();
             customBackgrounds({
                 ...this.optionsCustomBackground,
                 theme: this.themeToUse,

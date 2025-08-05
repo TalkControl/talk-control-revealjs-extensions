@@ -10,6 +10,8 @@ Due to some "magic" done by RevealJS engine, it's recommand to not use multiple 
 
 Multiple columns with background and vertical slides won't work.
 
+Also, only colors and image background are allowed in multiple columns !
+
 ##==##
 
 <!-- .slide: class="tc-multiple-columns" -->
@@ -26,8 +28,7 @@ Some content <!-- .element: class="fragment"-->
 
 # Column 2
 
-Some content
-Some content <!-- .element: class="fragment"-->
+Some content with fragment <!-- .element: class="fragment"-->
 
 ##++##
 
@@ -110,7 +111,7 @@ Some content
 
 ##++##
 
-##++## data-background="./assets/images/light_background.jpg" class="mask"
+##++## data-background="./assets/images/light_background.jpg" class="mask contrast-opposite"
 
 # Column 2 with image bg
 
