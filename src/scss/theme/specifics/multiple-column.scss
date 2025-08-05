@@ -4,11 +4,32 @@
     height: 100%;
 
     div.tc-column {
+        color: var(--tc-multiple-col-color);
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: var(--tc-multiple-col-heading-color);
+        }
+        a {
+            color: var(--tc-multiple-col-link-color);
+        }
+
         flex: 1;
         height: 100%;
         position: relative;
         opacity: 1;
         pointer-events: auto;
+
+        &.contrast-opposite {
+            --tc-multiple-col-color: white;
+            --tc-multiple-col-heading-color: white;
+            --tc-multiple-col-link-color: white;
+        }
+    }
     .tc-col-section {
         display: none;
     }
