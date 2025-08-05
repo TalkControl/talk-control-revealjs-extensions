@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { DEFAULT_TYPE } from './utils/const';
 import Reveal from 'reveal.js';
 import { ThemeInitializer } from './theme-initializer';
-import { manageMultiplesColumns } from './addons/tc-multiples-cols';
+import { postManageMultiplesColumns } from './addons/tc-multiples-cols';
 import { render } from 'lit-html';
 // Mocks
 vi.mock('reveal.js', () => ({
@@ -63,6 +63,7 @@ vi.mock('./addons/tc-data-type', () => ({
 
 vi.mock('./addons/tc-multiples-cols', () => ({
     manageMultiplesColumns: vi.fn(),
+    postManageMultiplesColumns: vi.fn(),
 }));
 
 vi.mock('./addons/tc-ui-config');
@@ -204,7 +205,7 @@ describe('ThemeInitializer', () => {
         it('should call multiple columns', async () => {
             await ThemeInitializer.init(mockOptions);
 
-            expect(manageMultiplesColumns).toHaveBeenCalled();
+            expect(postManageMultiplesColumns).toHaveBeenCalled();
         });
         it('should call Plugin with correct params', async () => {
             await ThemeInitializer.init(mockOptions);

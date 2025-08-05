@@ -3,7 +3,10 @@
  */
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { manageMultiplesColumns } from './tc-multiples-cols';
+import {
+    manageMultiplesColumns,
+    postManageMultiplesColumns,
+} from './tc-multiples-cols';
 
 const HTML = `
 <div class="reveal">
@@ -43,7 +46,7 @@ describe(manageMultiplesColumns.name, () => {
     it('should remove sections in columns', () => {
         const selector = 'section.tc-multiple-columns section';
         expect(document.querySelector(selector)).toBeDefined();
-        manageMultiplesColumns();
+        postManageMultiplesColumns();
         expect(document.querySelector(selector)).toBeNull();
     });
 

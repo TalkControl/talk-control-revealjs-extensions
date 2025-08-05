@@ -19,7 +19,7 @@ import { TcThemeOptions } from './addons/tc-theme';
 import { TcUiConfig } from './addons/tc-ui-config';
 import { getShowType } from './addons/tc-data-type';
 import { getSlidesToUse } from './utils/storage-service';
-import { manageMultiplesColumns } from './addons/tc-multiples-cols';
+import { postManageMultiplesColumns } from './addons/tc-multiples-cols';
 
 /**
  * Default values to let undefined in options and simplify the usage
@@ -152,7 +152,7 @@ export const ThemeInitializer = {
                         .transition as Reveal.Options['transition']) ?? 'none', // default/cube/page/concave/zoom/linear/fade/none
             });
 
-            manageMultiplesColumns();
+            postManageMultiplesColumns();
             return;
         });
     },

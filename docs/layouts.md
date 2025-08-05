@@ -8,6 +8,8 @@ Due to some "magic" done by RevealJS engine, it's recommended to not use multipl
 
 Multiple columns with background and vertical slides won't work.
 
+Also, only colors and image background are allowed in multiple columns !
+
 A new syntax has to be used
 
 ```md
@@ -64,4 +66,28 @@ Some content
 
 ![](./imgs/multiple-cols-bg.png)
 
-Each column is considered as a section, so you can use helpers class in it.
+### Multiple column layout (with inverted contrast)
+
+```md
+<!-- .slide: class="tc-multiple-columns" -->
+
+##++## data-background="red"
+
+# Column 1 with bg
+
+Some content
+
+##++##
+
+##++## data-background="./assets/images/light_background.jpg" class="mask inverted-contrast"
+
+# Column 2 with image bg
+
+Some content
+
+##++##
+```
+
+![](./imgs/multiple-cols-invert.png)
+
+Each column is a div, but you can use helpers class in it.

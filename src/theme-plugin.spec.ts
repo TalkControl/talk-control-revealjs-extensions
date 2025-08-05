@@ -13,7 +13,7 @@ import {
 } from './addons/tc-custom-background';
 import Reveal from 'reveal.js';
 import { manageCopyClipboard } from './addons/tc-copy-clipboard';
-
+import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { manageShowTypeContent } from './addons/tc-data-type';
 import { manageTheme } from './addons/tc-theme';
 import { transformListFragment } from './addons/tc-list-fragment';
@@ -33,6 +33,11 @@ vi.mock('./addons/tc-copy-clipboard', () => ({
 
 vi.mock('./addons/tc-data-type', () => ({
     manageShowTypeContent: vi.fn(),
+}));
+
+vi.mock('./addons/tc-multiples-cols', () => ({
+    manageMultiplesColumns: vi.fn(),
+    postManageMultiplesColumns: vi.fn(),
 }));
 
 vi.mock('./addons/tc-list-fragment', () => ({
@@ -104,6 +109,7 @@ describe('TalkControlTheme', () => {
 
             expect(manageCopyClipboard).not.toHaveBeenCalled();
             expect(manageShowTypeContent).toHaveBeenCalled();
+            expect(manageMultiplesColumns).toHaveBeenCalled();
             expect(transformListFragment).toHaveBeenCalled();
             expect(customBackgrounds).toHaveBeenCalled();
             expect(manageTheme).toHaveBeenCalled();

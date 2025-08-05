@@ -46,6 +46,7 @@
 
     div.tc-column,
     div.tc-col-section {
+        display: block !important;
         position: relative;
         opacity: 1;
         visibility: visible;
