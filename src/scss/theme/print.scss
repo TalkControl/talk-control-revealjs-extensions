@@ -2,19 +2,18 @@
 * Hack for print
 */
 html.print-pdf {
-    .reveal .slides .pdf-page div.slide-background.quote-slide::before {
-        content: '';
-        position: absolute;
-        background-size: contain;
-        filter: brightness(0.25);
-        top: 5px;
-        left: 5px;
-        width: 400px;
-        height: 400px;
-        color: $mainColor;
-    }
-
     .reveal .slides .pdf-page {
+        div.slide-background.quote-slide::before {
+            content: '';
+            position: absolute;
+            background-size: contain;
+            filter: brightness(0.25);
+            top: 5px;
+            left: 5px;
+            width: 400px;
+            height: 400px;
+            color: $mainColor;
+        }
         div.slide-background .slide-background-content:after {
             content: '';
             position: absolute;
@@ -24,6 +23,33 @@ html.print-pdf {
             height: 40px;
             background-repeat: no-repeat;
             background-size: contain;
+        }
+        div.slide-background.tc-multiple-columns {
+            display: flex !important;
+            flex-direction: row;
+            height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+            div.tc-column,
+            div.tc-col-section {
+                display: block !important;
+                position: relative;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        div.slide-background.mask::after,
+        div.slide-background.transition.mask::after {
+            content: '';
+            background-color: rgba(61, 67, 73, 0.7);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
         }
     }
 }

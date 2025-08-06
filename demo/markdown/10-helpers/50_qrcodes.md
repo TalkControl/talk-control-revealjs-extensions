@@ -89,7 +89,7 @@ END:VCARD
 
 ##++##
 
-##--##
+##==##
 
 <!-- .slide: class="with-code" -->
 
@@ -136,7 +136,7 @@ END:VCALENDAR
 
 ##++##
 
-##--##
+##==##
 
 <!-- .slide: class="with-code" -->
 
@@ -174,7 +174,7 @@ mailto:email_address?subject=email_subject&body=email_body
 
 ##++##
 
-##--##
+##==##
 
 <!-- .slide: class="with-code" -->
 
@@ -212,7 +212,7 @@ geo:latitude,longitude,altitude
 
 ##++##
 
-##--##
+##==##
 
 <!-- .slide: class="with-code" -->
 
@@ -250,7 +250,7 @@ smsto:phone_number:message
 
 ##++##
 
-##--##
+##==##
 
 <!-- .slide: class="with-code" -->
 
@@ -288,7 +288,7 @@ WIFI:T:network_type;S:network_name;P:password;H:hidden;;
 
 ##++##
 
-##--##
+##==##
 
 <!-- .slide: class="with-code" -->
 
