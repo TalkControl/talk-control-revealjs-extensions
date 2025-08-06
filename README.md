@@ -6,7 +6,7 @@
 
 <p align="center">
     <a href="https://github.com/TalkControl/talk-control-revealjs-extensions/actions"><img src="https://github.com/TalkControl/talk-control-revealjs-extensions/actions/workflows/main.yml/badge.svg" alt="Build Status"></a>
-    <a href="https://www.npmjs.com/package/talk-control-revealjs-extensions"><img src="https://img.shields.io/npm/v/talk-control-revealjs-extensions.svg" alt="NPM version"></a>
+    <a href="https://www.npmjs.com/package/@talk-control/talk-control-revealjs-extensions"><img src="https://img.shields.io/npm/v/@talk-control/talk-control-revealjs-extensions.svg" alt="NPM version"></a>
     <a href="https://github.com/TalkControl/talk-control-revealjs-extensions/blob/main/LICENSE"><img src="https://img.shields.io/github/license/TalkControl/talk-control-revealjs-extensions" alt="License"></a>
 </p>
 
