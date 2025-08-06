@@ -1,5 +1,6 @@
 import '@fortawesome/fontawesome-free/js/all.js';
 import '@fortawesome/fontawesome-free/css/all.css';
+import '@fortawesome/free-brands-svg-icons/index.js';
 
 import { MarkedTcIconsOptions } from '../marked/marked-tc-icons';
 
