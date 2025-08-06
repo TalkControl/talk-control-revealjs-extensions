@@ -1,4 +1,4 @@
-.reveal .slides > section .tc-icons {
+.reveal .slides section .tc-icons {
     vertical-align: -0.125em; // Little adjustment to align the icon
     // to the baseline of text (magic number coming from font awesome)
     &.tc-small {
@@ -17,7 +17,7 @@
 // Material symbols
 .reveal
     .slides
-    > section
+    section
     .tc-icons:is(
         .material-symbols-rounded,
         .material-symbols-sharp,
@@ -26,7 +26,7 @@
     color: var(--tc-icon-color);
     font-size: var(--tc-icon-size, 1em);
 }
-.reveal .slides > section svg.tc-icons {
+.reveal .slides section svg.tc-icons {
     // Feather icons
     &.feather {
         stroke: var(--tc-icon-color);
