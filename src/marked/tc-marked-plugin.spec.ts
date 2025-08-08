@@ -45,6 +45,9 @@ vi.mock('./marked-extensions', () => ({
 
 // Mock reproduction of classStyles
 const stylesCssImg = [
+    'company',
+    'speaker',
+    'badge',
     'center',
     'full-center',
     'float-left',

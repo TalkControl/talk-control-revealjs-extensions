@@ -18,15 +18,15 @@
 
 ### Other informations
 
-![](./assets/images/jf.jpg)<!-- .element: class="speaker" -->
+![](./assets/images/jf.jpg 'speaker')
 
-![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
+![](./assets/images/gdg-nantes.png 'company')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
 </div>
 
@@ -47,15 +47,15 @@ Code to produce / Markdown
 
 ### Other informations
 
-![](./assets/images/jf.jpg)<!-- .element: class="speaker" -->
+![](./assets/images/jf.jpg 'speaker')
 
-![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
+![](./assets/images/gdg-nantes.png 'company')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
 </div>
 ```
@@ -74,15 +74,15 @@ Code to produce / Markdown
 
 ### fake@email.com
 
-![](./assets/images/jf-2.jpg)<!-- .element: class="speaker" style="--tc-speaker-img-post:right;"-->
+![](./assets/images/jf-2.jpg 'speaker')<!-- .element: style="--tc-speaker-img-post:right;"-->
 
-![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
+![](./assets/images/gdg-nantes.png 'company')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
 # Jef Binomed
 
@@ -92,15 +92,15 @@ Code to produce / Markdown
 
 ### fake@email.com
 
-![](./assets/images/jf-3.png)<!-- .element: class="speaker" -->
+![](./assets/images/jf-3.png 'speaker')
 
-![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
+![](./assets/images/gdg-nantes.png 'company')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
 </div>
 
@@ -119,15 +119,15 @@ Code to produce / Markdown
 
 ### fake@email.com
 
-![](./assets/images/jf-2.jpg)<!-- .element: class="speaker" style="--tc-speaker-img-post:right;"-->
+![](./assets/images/jf-2.jpg 'speaker')<!-- .element: style="--tc-speaker-img-post:right;"-->
 
-![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
+![](./assets/images/gdg-nantes.png 'company')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
 # Jef Binomed
 
@@ -137,15 +137,15 @@ Code to produce / Markdown
 
 ### fake@email.com
 
-![](./assets/images/jf-3.png)<!-- .element: class="speaker" -->
+![](./assets/images/jf-3.png 'speaker')
 
-![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
+![](./assets/images/gdg-nantes.png 'company')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
 </div>
 ```
@@ -160,21 +160,21 @@ Code to produce / Markdown
 
 ## A bio with up to 6 badges and 6 additionnals informations
 
-![](./assets/images/jf.jpg)<!-- .element: class="speaker" -->
+![](./assets/images/jf.jpg 'speaker')
 
-![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
+![](./assets/images/gdg-nantes.png 'company')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
 ### @jefbinomed
 
@@ -203,21 +203,21 @@ Code to produce / Markdown
 
 ## A bio with up to 6 badges and 6 additionnals informations
 
-![](./assets/images/jf.jpg)<!-- .element: class="speaker" -->
+![](./assets/images/jf.jpg 'speaker')
 
-![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
+![](./assets/images/gdg-nantes.png 'company')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
-![](./assets/images/gde.png)<!-- .element: class="badge" -->
+![](./assets/images/gde.png 'badge')
 
-![](./assets/images/wtm.png)<!-- .element: class="badge" -->
+![](./assets/images/wtm.png 'badge')
 
-![](./assets/images/mts.png)<!-- .element: class="badge" -->
+![](./assets/images/mts.png 'badge')
 
 ### @jefbinomed
 
