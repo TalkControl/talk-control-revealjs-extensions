@@ -9,6 +9,9 @@ import { markedTcCols } from './marked-tc-cols';
 import { markedTcQrCode } from './marked-tc-qrcode';
 
 const stylesCssImg = [
+    'company',
+    'speaker',
+    'badge',
     'center',
     'full-center',
     'float-left',
