@@ -12,7 +12,7 @@ Also, only colors and image background are allowed in multiple columns !
 
 A new syntax has to be used
 
-```md
+````md
 <!-- .slide: class="tc-multiple-columns" -->
 
 ##++##
@@ -27,18 +27,22 @@ Some content
 
 # Column 2
 
-Some content
+Some content with code
 
 ##++##
 
-##++##
+##++## class="with-code"
 
 # Column 3
 
-Some content
+Some content with code
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+```
 
 ##++##
-```
+````
 
 ![](./imgs/multiple-cols.png)
 

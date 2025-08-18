@@ -32,17 +32,21 @@ Some content with fragment <!-- .element: class="fragment"-->
 
 ##++##
 
-##++##
+##++## class="with-code"
 
 # Column 3
 
-Some content
+Some content with code
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+```
 
 ##++##
 
 ##==##
 
-<!-- .slide: class="whith-code" -->
+<!-- .slide: class="with-code" -->
 
 # Code to produce / Markdown
 
@@ -96,7 +100,7 @@ Some content
 
 ##==##
 
-<!-- .slide: class="whith-code" -->
+<!-- .slide: class="with-code" -->
 
 # Code to produce / Markdown
 

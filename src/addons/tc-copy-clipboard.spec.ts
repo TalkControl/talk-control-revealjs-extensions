@@ -15,11 +15,14 @@ const HTML = `
         <section class="with-code">
             <pre><code>const example = "test code";</code></pre>
         </section>
-        <section class="with-code">
-            <pre>
-                <code>const example = "test code";</code>
-                <code>function test() { return true; }</code>
-            </pre>
+        <section class="tc-multiple-columns">
+            <div class="tc-column with-code"">
+                <pre>
+                    <code>const example = "test code";</code>
+                    <code>function test() { return true; }</code>
+                </pre>
+            </div>
+            <div class="tc-column"></div>
         </section>
         
     </div>
