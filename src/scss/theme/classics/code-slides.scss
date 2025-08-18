@@ -2,7 +2,7 @@
     @import '../../../../node_modules/highlight.js/scss/a11y-light.scss';
 }
 
-.reveal .slides section:is(.with-code, .with-code-dark, .with-code-bg-dark) {
+.reveal .slides *:is(.with-code, .with-code-dark, .with-code-bg-dark) {
     pre {
         display: block;
         position: relative;
@@ -76,7 +76,7 @@
     }
 }
 // Special case for the dark theme
-.reveal .slides section:is(.with-code-dark, .with-code-bg-dark) {
+.reveal .slides *:is(.with-code-dark, .with-code-bg-dark) {
     pre span.tc-copy-to-clipboard {
         --tc-icon-color: white;
     }
@@ -101,14 +101,14 @@
     background-color: var(--tc-code-dark-background);
 }
 
-.reveal .slides section.with-code-dark:not(.stack):not([class*='transition']) {
+.reveal .slides .with-code-dark:not(.stack):not([class*='transition']) {
     h1,
     h2 {
         color: white;
     }
 }
 
-.reveal .slides section.with-code-bg-dark {
+.reveal .slides .with-code-bg-dark {
     pre {
         background-color: var(--tc-code-dark-background);
     }

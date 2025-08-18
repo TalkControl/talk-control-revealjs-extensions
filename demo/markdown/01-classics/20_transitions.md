@@ -179,7 +179,7 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 
 ##--##
 
-<!-- .slide: class="whith-code" -->
+<!-- .slide: class="with-code" -->
 
 # Code to produce / Markdown
 
@@ -201,7 +201,7 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 
 ##--##
 
-<!-- .slide: class="whith-code" -->
+<!-- .slide: class="with-code" -->
 
 # Code to produce / Markdown
 
@@ -223,7 +223,7 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 
 ##--##
 
-<!-- .slide: class="whith-code" -->
+<!-- .slide: class="with-code" -->
 
 # Code to produce / Markdown
 

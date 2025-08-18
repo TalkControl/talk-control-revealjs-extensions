@@ -2,6 +2,7 @@
     display: flex !important;
     flex-direction: row;
     height: 100%;
+    gap: 15px;
 
     div.tc-column {
         color: var(--tc-multiple-col-color);

@@ -24,7 +24,7 @@ export function manageCopyClipboard(options: TcCopyClipboardOptions): void {
     // First we add to each codeblock the icon
     const preBlocks = [
         ...document.querySelectorAll(
-            '.reveal .slides section[class*="with-code"] pre:has(code)'
+            '.reveal .slides *:is(.with-code, .with-code-dark, .with-code-bg-dark) pre:has(code)'
         ),
     ];
 
