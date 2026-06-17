@@ -1,0 +1,16 @@
+{
+    "lint-on-edit": {
+        "PostToolUse": [
+            {
+                "matcher": "write_to_file|replace_file_content|multi_replace_file_content",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "npm run lint:fix && npm run prettier:fix",
+                        "timeout": 60
+                    }
+                ]
+            }
+        ]
+    }
+}
