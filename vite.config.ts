@@ -15,7 +15,7 @@ export default defineConfig({
         rollupOptions: {
             output: {
                 assetFileNames: (assetInfo) => {
-                    if (assetInfo.name == 'style.css')
+                    if (assetInfo.name?.endsWith('.css'))
                         return 'talk-control-revealjs-theme.css';
                     return assetInfo.name ?? 'vendor.css';
                 },
