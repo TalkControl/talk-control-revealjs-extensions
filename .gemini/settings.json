@@ -6,7 +6,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "FILE=$(echo $GEMINI_TOOL_INPUT | jq -r '.file_path // \"\"'); [[ \"$FILE\" =~ /src/.*\\.(ts|scss)$ ]] && npm run lint:fix && npm run prettier:fix || true",
+                        "command": "FILE=$(echo $GEMINI_TOOL_INPUT | jq -r '.file_path // \"\"'); ./.hooks/post-file-change.sh \"$FILE\" || true",
                         "timeout": 60
                     }
                 ]

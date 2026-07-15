@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-import { execSync } from 'child_process';
 import * as fs from 'fs';
 import * as readline from 'readline';
+import { execSync } from 'child_process';
 
 interface PackageJson {
     version: string;
@@ -12,8 +12,8 @@ async function askQuestion(question: string): Promise<string> {
         input: process.stdin,
         output: process.stdout,
     });
-    return new Promise(resolve => {
-        rl.question(question, answer => {
+    return new Promise((resolve) => {
+        rl.question(question, (answer) => {
             rl.close();
             resolve(answer.trim());
         });
@@ -28,13 +28,17 @@ async function release() {
         console.log('1️⃣  Checking working tree...');
         const status = execSync('git status --porcelain', { encoding: 'utf8' });
         if (status.trim()) {
-            console.error('❌ Working tree is dirty. Commit or stash changes first.');
+            console.error(
+                '❌ Working tree is dirty. Commit or stash changes first.'
+            );
             process.exit(1);
         }
         console.log('✅ Working tree is clean\n');
 
         // Read current version for display
-        const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')) as PackageJson;
+        const pkg = JSON.parse(
+            fs.readFileSync('package.json', 'utf8')
+        ) as PackageJson;
         console.log(`Current version: ${pkg.version}`);
 
         // Step 2: Ask for bump type
@@ -70,10 +74,9 @@ async function release() {
         execSync('git add package.json package-lock.json', {
             stdio: 'inherit',
         });
-        execSync(
-            `git commit -m "chore: bump version to v${newVersion}\n\nCo-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>"`,
-            { stdio: 'inherit' }
-        );
+        execSync(`git commit -m "chore: bump version to v${newVersion}"`, {
+            stdio: 'inherit',
+        });
         execSync(`git tag v${newVersion}`, { stdio: 'inherit' });
         console.log(`✅ Commit & tag created (v${newVersion})\n`);
 
