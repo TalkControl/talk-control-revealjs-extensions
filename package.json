@@ -55,6 +55,8 @@
         "prettier": "prettier . --check",
         "prettier:fix": "prettier . --write",
         "release": "tsx scripts/release.ts",
+        "agents:sync": "tsx scripts/sync-agents.ts",
+        "agents:check": "tsx scripts/sync-agents.ts --check",
         "test": "vitest",
         "_on-change:build": "chokidar \"./src\" -c \"npm run build\"",
         "_on-change:copy": "chokidar \"./dist\" -c \"npm run _prepare-demo\"",

@@ -1,85 +1,96 @@
 ---
 name: release
 description: >
-  Publie une nouvelle version du package npm @talk-control/talk-control-revealjs-extensions.
-  Utilise ce skill dès que l'utilisateur mentionne "release", "publier", "publish", "npm publish",
-  "nouvelle version", "bump version", "tag", ou veut livrer une version sur npm.
-  Le skill guide pas à pas : vérification du working tree, choix du bump, build, tests, commit, tag, push, publish.
+    Publish a new version of the npm package @talk-control/talk-control-revealjs-extensions.
+    Use when the user mentions "release", "publish", "npm publish", "new version", "bump version", or "tag".
+    Guides step by step: working tree check, bump type choice, build, tests, version bump, commit, tag, push, publish.
 ---
 
-# Release — Publication npm
+<!-- AUTO-GENERATED from .agents/skills/release/SKILL.md — do not edit. Edit the source, then run: npm run agents:sync -->
 
-## Étapes
+# Release — npm Publication
 
-### 1. Vérifier que le working tree est propre
+## Overview
+
+The release workflow is automated via `npm run release` (calls `scripts/release.ts`).
+
+**Order of operations — build and tests run BEFORE bumping the version:**
+
+1. Check clean working tree
+2. Ask bump type (patch / minor / major)
+3. Build — stops here if it fails (package.json unchanged)
+4. Tests — stops here if they fail (package.json unchanged)
+5. Bump version in package.json
+6. git commit + git tag vX.Y.Z
+7. git push + git push --tags
+8. npm publish
+
+## Running the Release
+
+```bash
+npm run release
+```
+
+The script is interactive — it will ask for the bump type and show progress for each step.
+
+## Manual Step-by-Step (if the script fails mid-way)
+
+### 1. Check clean working tree
 
 ```bash
 git status --porcelain
 ```
 
-Si la sortie est non vide, **arrête-toi** et demande à l'utilisateur de commiter ou stasher ses changements avant de continuer. Ne pas procéder avec un working tree sale.
+If output is non-empty, commit or stash changes first.
 
-### 2. Demander le type de bump
-
-Utilise `AskUserQuestion` pour demander le type de bump :
-- **patch** — correction de bug, rétrocompatible (ex: 1.0.0-rc-5 → 1.0.0-rc-6)
-- **minor** — nouvelle fonctionnalité rétrocompatible
-- **major** — breaking change
-
-Affiche aussi la version actuelle lue dans `package.json` pour que l'utilisateur sache d'où on part.
-
-### 3. Calculer et appliquer la nouvelle version
-
-Lis la version dans `package.json`, calcule la nouvelle version selon le bump choisi, puis mets à jour `package.json` avec `npm version <patch|minor|major> --no-git-tag-version`.
-
-L'option `--no-git-tag-version` évite que npm crée lui-même le tag git — on le fait manuellement à l'étape 6 pour garder le contrôle.
-
-### 4. Build
+### 2. Build
 
 ```bash
 npm run build
 ```
 
-Si le build échoue, **arrête-toi** et reporte l'erreur à l'utilisateur. Reverts la version dans `package.json` si nécessaire.
-
-### 5. Tests
+### 3. Tests
 
 ```bash
 npx vitest run
 ```
 
-> Note : `npm run test` lance vitest en mode watch (interactif). Utilise `npx vitest run` pour une passe unique non-interactive.
+Note: use `npx vitest run` (single pass), NOT `npm run test` (watch mode).
 
-Si les tests échouent, **arrête-toi** et reporte l'erreur. Reverts la version dans `package.json`.
-
-### 6. Commit + tag
+### 4. Bump version
 
 ```bash
-git add package.json
+npm version patch --no-git-tag-version
+# or: minor / major
+```
+
+`--no-git-tag-version` prevents npm from creating the git tag automatically.
+
+### 5. Commit + Tag
+
+```bash
+git add package.json package-lock.json
 git commit -m "chore: bump version to vX.Y.Z"
 git tag vX.Y.Z
 ```
 
-Remplace `X.Y.Z` par la nouvelle version calculée à l'étape 3.
-
-### 7. Push
+### 6. Push
 
 ```bash
 git push
 git push --tags
 ```
 
-### 8. Publish
+### 7. Publish
 
 ```bash
 npm publish
 ```
 
-`publishConfig.access: "public"` est déjà défini dans `package.json`, pas besoin de `--access public`.
+`publishConfig.access: "public"` is already set in package.json — no `--access public` needed.
 
-## En cas d'erreur
+## If a Step Fails After the Commit
 
-Si une étape échoue après le commit git (étapes 7 ou 8) :
-- Ne pas supprimer le tag git automatiquement
-- Expliquer à l'utilisateur ce qui a échoué et proposer la commande manuelle pour reprendre
-- Pour un échec de publish : `npm publish` peut être relancé sans refaire le commit/tag
+-   Do NOT delete the git tag automatically
+-   `npm publish` can be re-run independently if push succeeded but publish failed
+-   Report what failed and suggest the exact command to resume
