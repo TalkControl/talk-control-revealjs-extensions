@@ -26,6 +26,7 @@ jobs:
         run: |
           npm run lint
           npm run prettier
+          npm run agents:check
       - name: Unit Tests
         run: npm test
       # TODO: setup Playwright tests or remove this 
