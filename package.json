@@ -33,9 +33,9 @@
     "style": "./dist/talk-control-revealjs-theme.css",
     "exports": {
         ".": {
+            "types": "./dist/talk-control-revealjs-extensions.d.ts",
             "import": "./dist/talk-control-revealjs-extensions.js",
-            "require": "./dist/talk-control-revealjs-extensions.umd.cjs",
-            "types": "./dist/talk-control-revealjs-extensions.d.ts"
+            "require": "./dist/talk-control-revealjs-extensions.umd.cjs"
         },
         "./theme": {
             "import": "./dist/talk-control-revealjs-theme.css",
@@ -58,6 +58,8 @@
         "agents:sync": "tsx scripts/sync-agents.ts",
         "agents:check": "tsx scripts/sync-agents.ts --check",
         "test": "vitest",
+        "test:run": "vitest run",
+        "test:contract": "vitest run --config vitest.contract.config.ts",
         "pree2e": "npm run _prepare-demo",
         "e2e": "playwright test",
         "_on-change:build": "chokidar \"./src\" -c \"npm run build\"",
@@ -79,11 +81,12 @@
         "reveal.js": "^5.1.0"
     },
     "devDependencies": {
+        "@arethetypeswrong/cli": "0.18.5",
         "@eslint/js": "^9.6.0",
         "@playwright/test": "^1.64.1",
         "@types/feather-icons": "^4.29.4",
         "@types/marked": "^4.3.0",
-        "@types/node": "^20.14.9",
+        "@types/node": "^24.19.2",
         "@types/reveal.js": "^5.0.3",
         "@types/shelljs": "^0.8.15",
         "chokidar-cli": "^3.0.0",
@@ -92,6 +95,7 @@
         "live-server": "1.1.0",
         "parallelshell": "3.0.1",
         "prettier": "^3.3.3",
+        "publint": "0.3.25",
         "sass": "^1.77.6",
         "shelljs": "^0.8.5",
         "tsx": "^4.16.2",

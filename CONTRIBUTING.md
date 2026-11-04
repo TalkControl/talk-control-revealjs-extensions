@@ -4,7 +4,7 @@ In order to run the project locally, you will need these tools:
 
 **NVM** : https://github.com/creationix/nvm
 
-> Using nvm, install node 20.x.x
+> Using nvm, install node 24.x.x (`nvm install && nvm use` reads `.nvmrc`)
 
 # Commit
 
