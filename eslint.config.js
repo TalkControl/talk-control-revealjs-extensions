@@ -4,7 +4,14 @@ import tseslint from 'typescript-eslint';
 
 export default [
     { files: ['src/**/*.{js,mjs,cjs,ts}'] },
-    { ignores: ['dist/**/*', 'demo/web_modules/**/*'] },
+    {
+        ignores: [
+            'dist/**/*',
+            'demo/web_modules/**/*',
+            // Contract snapshots are generated files (e.g. api.d.ts)
+            '**/__snapshots__/**/*',
+        ],
+    },
     { languageOptions: { globals: globals.browser } },
     pluginJs.configs.recommended,
     ...tseslint.configs.recommended,

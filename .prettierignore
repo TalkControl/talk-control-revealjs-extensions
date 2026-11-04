@@ -1,3 +1,7 @@
 .github
 dist
 node_modules
+# Contract corpus and snapshots must stay byte-exact
+src/marked/__fixtures__/corpus
+src/marked/__snapshots__
+tests/contract/__snapshots__
