@@ -360,7 +360,7 @@
 
 ##==##
 
-<!-- .slide: class="with-code big-code" -->
+<!-- .slide: class="with-code big-code" id="big-code-alone" -->
 
 ## BIG Code centered
 
@@ -387,6 +387,60 @@
 
 <!-- .element: class="alone" -->
 ````
+
+##==##
+
+<!-- .slide: class="with-code big-code" id="big-code-highlight" -->
+
+## BIG Code with highlighted lines (issue #88 reproduction)
+
+```js [1-6|8-11|13-16]
+function configureApplication(options) {
+    const settings = mergeDefaults(options);
+    validateSettings(settings);
+    const logger = createLogger(settings.logLevel);
+    logger.info('Booting application');
+    const router = createRouter(settings.routes);
+
+    router.use(authenticationMiddleware(settings.auth));
+    router.use(loggingMiddleware(logger));
+    router.use(errorBoundary(logger));
+
+    const server = createServer(router);
+    server.listen(settings.port, () => {
+        logger.info(`Listening on port ${settings.port}`);
+    });
+
+    return server;
+}
+```
+
+##==##
+
+<!-- .slide: class="with-code" id="medium-code-highlight" -->
+
+## Medium code with highlighted lines (non-regression)
+
+```js [1-6|8-11|13-16]
+function configureApplication(options) {
+    const settings = mergeDefaults(options);
+    validateSettings(settings);
+    const logger = createLogger(settings.logLevel);
+    logger.info('Booting application');
+    const router = createRouter(settings.routes);
+
+    router.use(authenticationMiddleware(settings.auth));
+    router.use(loggingMiddleware(logger));
+    router.use(errorBoundary(logger));
+
+    const server = createServer(router);
+    server.listen(settings.port, () => {
+        logger.info(`Listening on port ${settings.port}`);
+    });
+
+    return server;
+}
+```
 
 ##==##
 
