@@ -20,7 +20,7 @@ Live demo: <https://talk-control-revealjs-extensions.netlify.app/>
 
 | Technology | Version           | Role                                                               |
 | ---------- | ----------------- | ------------------------------------------------------------------ |
-| Node.js    | 20 (see `.nvmrc`) | Runtime                                                            |
+| Node.js    | 24 (see `.nvmrc`) | Runtime                                                            |
 | TypeScript | ^5.2              | Language — `ES2020` target, strict mode                            |
 | Vite       | ^5.3              | Library bundler (ESM + UMD + `.d.ts` rollup via `vite-plugin-dts`) |
 | Vitest     | ^1.6              | Unit testing                                                       |
@@ -40,6 +40,8 @@ npm install          # Install dependencies
 npm run start        # Dev server at localhost:4242 (builds on src change, live-reloads demo)
 npm run build        # tsc + vite build → dist/ (postbuild copies to demo/)
 npm run test         # Vitest (watch mode)
+npm run test:run     # Vitest, single run
+npm run test:contract # Contract snapshots (corpus + dist/), run after `npm run build`
 npm run lint         # ESLint
 npm run lint:fix     # ESLint with auto-fix
 npm run prettier     # Check formatting
@@ -52,7 +54,16 @@ Run a single test file: `npx vitest run src/addons/tc-copy-clipboard.spec.ts`
 npm run e2e          # Playwright end-to-end tests (Chromium + Firefox), against demo/
 ```
 
-CI runs `lint` → `prettier` → `agents:check` → `test` → `e2e` on every push to `main` and every PR.
+CI runs `lint` → `prettier` → `agents:check` → `test:run` → `build` → `test:contract` → `e2e` on every push to `main` and every PR.
+
+### Contract snapshots
+
+`npm run test:contract` (config `vitest.contract.config.ts`) freezes what we ship, as reviewable file snapshots:
+
+-   `src/marked/*.contract.ts`: the real markdown pipeline (no mock) on the corpus `src/marked/__fixtures__/corpus/*.md`, snapshots in `src/marked/__snapshots__/corpus/*.html`.
+-   `tests/contract/dist.contract.ts`: the built `dist/` (file names, normalized CSS, `:root` custom properties, public `.d.ts`, `publint`, `attw`), snapshots in `tests/contract/__snapshots__/`. It also guards the TalkControl values of the `--r-*` custom properties.
+
+A missing snapshot is written locally but fails in CI (`CI=true`). Every snapshot diff must be explained in the PR that introduces it.
 
 ## Architecture
 
