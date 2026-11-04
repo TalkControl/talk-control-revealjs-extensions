@@ -28,23 +28,39 @@ This will be rendered as a styled block with a "📝 Note" title.
 
 Here is a list of the pre-configured admonition types you can use:
 
-| Type        | Rendered Title |
-| ----------- | -------------- |
-| `abstract`  | 📋 Abstract    |
-| `info`      | ℹ️ Info        |
-| `tip`       | 💡 Tip         |
-| `note`      | 📝 Note        |
-| `success`   | ✅ Success     |
-| `question`  | ? Question     |
-| `warning`   | ⚠️ Warning     |
-| `failure`   | ❌ Failure     |
-| `danger`    | 🔥 Danger      |
-| `important` | ❗ Important   |
-| `bug`       | 🐞 Bug         |
-| `example`   | 💻 Example     |
-| `quote`     | 💬 Quote       |
+| Type        | Rendered Title | Color     |
+| ----------- | -------------- | --------- |
+| `abstract`  | 📋 Abstract    | `#236af7` |
+| `info`      | ℹ️ Info        | `#0b7e9c` |
+| `tip`       | 💡 Tip         | `#05836e` |
+| `note`      | 📝 Note        | `#266bf5` |
+| `success`   | ✅ Success     | `#058722` |
+| `question`  | ? Question     | `#378407` |
+| `warning`   | ⚠️ Warning     | `#b75b07` |
+| `failure`   | ❌ Failure     | `#e90a0a` |
+| `danger`    | 🔥 Danger      | `#e80729` |
+| `important` | ❗ Important   | `#e90a0a` |
+| `bug`       | 🐞 Bug         | `#e70a3d` |
+| `example`   | 💻 Example     | `#8153f5` |
+| `quote`     | 💬 Quote       | `#747474` |
 
 ![](./imgs/admonition.png)
+
+### Accessible colors (WCAG AA)
+
+Each type's border and title color is darkened, within its original hue
+family, to reach at least a **4.5:1** contrast ratio against the default
+light theme's white background (WCAG 1.4.3) — the border also keeps at
+least **3:1** (WCAG 1.4.11), automatically satisfied since 4.5:1 is the
+stricter of the two. This is a visual change from earlier versions: the
+admonition colors are noticeably darker than before.
+
+This fix only targets the library's default **light** theme. The library
+does not ship a dark theme (see `demo/theme-dark.css`, which is specific to
+the demo and not part of the published package): if your deck defines a
+dark background, re-check the contrast of these colors (or your own
+overrides) against it yourself, the same way you would for any other color
+in your theme.
 
 ## Custom Admonitions
 
@@ -69,6 +85,17 @@ You can also specify a custom color for the left border and the title using the 
 Custom and custom color
 !!!
 ```
+
+#### Choosing an accessible custom color
+
+The `custom` type's color is entirely up to you, and the library does not
+validate it. To keep your `custom` admonitions as readable as the
+pre-configured types, pick a color that reaches at least a **4.5:1**
+contrast ratio against the background it is used on (white by default) —
+the same rule applied above to the 13 built-in types. Most browser dev
+tools (e.g. Chrome DevTools' color picker) show a live contrast ratio, or
+you can use any WCAG contrast checker (for example
+[WebAIM's Contrast Checker](https://webaim.org/resources/contrastchecker/)).
 
 ![](./imgs/admonition-custom.png)
 
