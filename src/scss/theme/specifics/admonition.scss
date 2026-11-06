@@ -14,105 +14,105 @@
     }
 
     &.note {
-        border-left-color: #6093f8;
+        border-left-color: #266bf5;
         &:before {
-            color: #6093f8;
+            color: #266bf5;
             content: '📝 Note';
         }
     }
 
     &.abstract {
-        border-left-color: #6e9dfa;
+        border-left-color: #236af7;
         &:before {
-            color: #6e9dfa;
+            color: #236af7;
             content: '📋 Abstract';
         }
     }
 
     &.tip {
-        border-left-color: #33f8d7;
+        border-left-color: #05836e;
         &:before {
-            color: #33f8d7;
+            color: #05836e;
             content: '💡 Tip';
         }
     }
 
     &.info {
-        border-left-color: #7cddf6;
+        border-left-color: #0b7e9c;
         &:before {
-            color: #7cddf6;
+            color: #0b7e9c;
             content: 'ℹ️ Info';
         }
     }
 
     &.success {
-        border-left-color: #6ffa8e;
+        border-left-color: #058722;
         &:before {
-            color: #6ffa8e;
+            color: #058722;
             content: '✅ Success';
         }
     }
 
     &.question {
-        border-left-color: #6bf316;
+        border-left-color: #378407;
         &:before {
-            color: #6bf316;
+            color: #378407;
             content: '? Question';
         }
     }
 
     &.warning {
-        border-left-color: #f9ac65;
+        border-left-color: #b75b07;
         &:before {
-            color: #f9ac65;
+            color: #b75b07;
             content: '⚠️ Warning';
         }
     }
 
     &.failure {
-        border-left-color: #f86262;
+        border-left-color: #e90a0a;
         &:before {
-            color: #f86262;
+            color: #e90a0a;
             content: '❌ Failure';
         }
     }
 
     &.danger {
-        border-left-color: #fa6178;
+        border-left-color: #e80729;
         &:before {
-            color: #fa6178;
+            color: #e80729;
             content: '🔥 Danger';
         }
     }
 
     &.important {
-        border-left-color: #f74c4c;
+        border-left-color: #e90a0a;
         &:before {
-            color: #f74c4c;
+            color: #e90a0a;
             content: '❗ Important';
         }
     }
 
     &.bug {
-        border-left-color: #f8597e;
+        border-left-color: #e70a3d;
         &:before {
-            color: #f8597e;
+            color: #e70a3d;
             content: '🐞 Bug';
         }
     }
 
     &.example {
-        border-left-color: #8b61f6;
+        border-left-color: #8153f5;
         &:before {
-            color: #8b61f6;
+            color: #8153f5;
             content: '💻 Example';
         }
     }
 
     &.quote {
-        border-left-color: #808080;
+        border-left-color: #747474;
         &:before {
-            color: #808080;
+            color: #747474;
             content: '💬 Quote';
         }
     }
