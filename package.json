@@ -24,6 +24,9 @@
     "files": [
         "dist"
     ],
+    "bin": {
+        "talk-control-a11y": "./dist/cli/talk-control-a11y.js"
+    },
     "publishConfig": {
         "access": "public"
     },
@@ -44,7 +47,7 @@
     },
     "scripts": {
         "dev": "npm run start",
-        "build": "tsc && vite build",
+        "build": "tsc && vite build && vite build --config vite.cli.config.ts",
         "prepare": "npm run build",
         "preview": "npm run start",
         "prestart": "npm run _prepare-demo",
@@ -60,8 +63,11 @@
         "test": "vitest",
         "test:run": "vitest run",
         "test:contract": "vitest run --config vitest.contract.config.ts",
-        "pree2e": "npm run _prepare-demo",
+        "pree2e": "npm run _prepare-demo && npm run _prepare-a11y-fixtures",
         "e2e": "playwright test",
+        "prea11y": "npm run build && npm run _prepare-demo",
+        "a11y": "node ./dist/cli/talk-control-a11y.js",
+        "_prepare-a11y-fixtures": "tsx ./scripts/prepare-a11y-fixtures.ts",
         "_on-change:build": "chokidar \"./src\" -c \"npm run build\"",
         "_on-change:copy": "chokidar \"./dist\" -c \"npm run _prepare-demo\"",
         "_build-watch": "parallelshell \"npm run _on-change:build\" \"npm run _on-change:copy\"",
@@ -82,6 +88,7 @@
     },
     "devDependencies": {
         "@arethetypeswrong/cli": "0.18.5",
+        "@axe-core/playwright": "^4.14.0",
         "@eslint/js": "^9.6.0",
         "@playwright/test": "^1.64.1",
         "@types/feather-icons": "^4.29.4",
@@ -94,6 +101,7 @@
         "globals": "^15.8.0",
         "live-server": "1.1.0",
         "parallelshell": "3.0.1",
+        "playwright": "^1.64.1",
         "prettier": "^3.3.3",
         "publint": "0.3.25",
         "sass": "^1.77.6",

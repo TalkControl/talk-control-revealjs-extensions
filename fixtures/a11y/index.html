@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>talk-control-a11y fixture — deliberately broken</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./web_modules/reset.css" />
+        <link rel="stylesheet" href="./web_modules/reveal.css" />
+    </head>
+    <body>
+        <!--
+          Deliberately-broken plain reveal.js deck used only by the
+          talk-control-a11y e2e tests (e2e/a11y-cli.spec.ts). It does not
+          use the TalkControl library on purpose: it only needs to exercise
+          the CLI's axe-core scan, baseline diff and exit-code behavior
+          against known violations, not the library itself (already covered
+          by the other unit/e2e suites).
+        -->
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>talk-control-a11y fixture</h1>
+                    <p>Used by the talk-control-a11y e2e tests only.</p>
+                </section>
+                <section>
+                    <!-- Deliberate violation: image-alt (no alt attribute). -->
+                    <img
+                        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" />
+                    <p>The image above is missing an alt attribute.</p>
+                </section>
+                <section>
+                    <!-- Deliberate violation: color-contrast (~1.5:1). -->
+                    <h2 style="color: #d2d2d2">
+                        This text has about 1.5:1 contrast against its
+                        background.
+                    </h2>
+                </section>
+            </div>
+        </div>
+        <script type="module">
+            import Reveal from './web_modules/reveal.esm.js';
+            window.Reveal = Reveal;
+            Reveal.initialize();
+        </script>
+    </body>
+</html>

@@ -8,6 +8,7 @@ export default [
         ignores: [
             'dist/**/*',
             'demo/web_modules/**/*',
+            'fixtures/a11y/web_modules/**/*',
             // Contract snapshots are generated files (e.g. api.d.ts)
             '**/__snapshots__/**/*',
         ],
