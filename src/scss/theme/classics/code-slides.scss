@@ -14,8 +14,17 @@
         code {
             padding: 10px;
             overflow: auto;
-            max-height: calc(
-                var(--tc-code-line-height) * var(--tc-code-max-lines) - 10px
+            // Cap at the lesser of the configured line-count ceiling and the
+            // height actually available on the slide, so the <code> box never
+            // overflows the slide and keeps an internal scrollbar that
+            // reveal's highlight plugin can use to center highlighted lines.
+            max-height: min(
+                calc(
+                    var(--tc-code-line-height) * var(--tc-code-max-lines) - 10px
+                ),
+                calc(
+                    var(--slide-height, 1080px) - var(--tc-code-reserved-height)
+                )
             );
             word-wrap: normal;
             font-size: var(--tc-code-font-size);
@@ -69,6 +78,10 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
+        // A centered, standalone code block has no title sharing the slide,
+        // so only its own vertical margin needs to be reserved (see `pre`
+        // above: `margin: 20px auto`).
+        --tc-code-reserved-height: 40px;
     }
 
     &.max-height pre code {

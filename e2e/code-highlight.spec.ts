@@ -237,62 +237,56 @@ const RECT_TOLERANCE_PX = 1;
 
 test.describe('big-code highlight centering (issue #88 reproduction)', () => {
     for (const viewport of VIEWPORTS) {
-        // Expected to fail until PR 2 of the #88 implementation plan ships
-        // the SCSS fix: a big-code block taller than the slide overflows the
-        // deck viewport instead of scrolling internally, so the highlighted
-        // lines are never centered.
-        // https://github.com/TalkControl/talk-control-revealjs-extensions/issues/88
-        test.fail(
-            `highlighted lines stay centered within the slide at ${viewport.name}`,
-            async ({ page }) => {
-                await page.setViewportSize({
-                    width: viewport.width,
-                    height: viewport.height,
-                });
-                await page.goto('/index.html?transition=none');
-                await gotoSlideById(page, BIG_CODE_SLIDE_ID);
+        test(`highlighted lines stay centered within the slide at ${viewport.name}`, async ({
+            page,
+        }) => {
+            await page.setViewportSize({
+                width: viewport.width,
+                height: viewport.height,
+            });
+            await page.goto('/index.html?transition=none');
+            await gotoSlideById(page, BIG_CODE_SLIDE_ID);
 
-                for (let step = 0; step < HIGHLIGHT_STEP_COUNT; step += 1) {
-                    if (step > 0) {
-                        await advanceHighlight(page);
-                    }
+            for (let step = 0; step < HIGHLIGHT_STEP_COUNT; step += 1) {
+                if (step > 0) {
+                    await advanceHighlight(page);
+                }
 
-                    const measurement = await measureActiveHighlightedCodeBlock(
-                        page,
-                        BIG_CODE_SLIDE_ID
-                    );
+                const measurement = await measureActiveHighlightedCodeBlock(
+                    page,
+                    BIG_CODE_SLIDE_ID
+                );
 
-                    // 1. The <code> box must stay within the deck's visible viewport.
-                    expect(measurement.codeRect.top).toBeGreaterThanOrEqual(
-                        measurement.viewportRect.top - RECT_TOLERANCE_PX
-                    );
-                    expect(measurement.codeRect.bottom).toBeLessThanOrEqual(
-                        measurement.viewportRect.bottom + RECT_TOLERANCE_PX
-                    );
+                // 1. The <code> box must stay within the deck's visible viewport.
+                expect(measurement.codeRect.top).toBeGreaterThanOrEqual(
+                    measurement.viewportRect.top - RECT_TOLERANCE_PX
+                );
+                expect(measurement.codeRect.bottom).toBeLessThanOrEqual(
+                    measurement.viewportRect.bottom + RECT_TOLERANCE_PX
+                );
 
-                    // 2. The block must have an internal overflow for reveal's
-                    // highlight plugin to be able to scroll/center anything.
-                    expect(measurement.scrollHeight).toBeGreaterThan(
-                        measurement.clientHeight
-                    );
+                // 2. The block must have an internal overflow for reveal's
+                // highlight plugin to be able to scroll/center anything.
+                expect(measurement.scrollHeight).toBeGreaterThan(
+                    measurement.clientHeight
+                );
 
-                    // 3. Away from the scroll boundaries (first and last step),
-                    // the highlighted lines are centered in the visible code box,
-                    // within one line height.
-                    const isBoundaryStep =
-                        step === 0 || step === HIGHLIGHT_STEP_COUNT - 1;
-                    if (!isBoundaryStep) {
-                        expect(measurement.highlightCenter).not.toBeNull();
-                        expect(
-                            Math.abs(
-                                (measurement.highlightCenter as number) -
-                                    measurement.codeCenter
-                            )
-                        ).toBeLessThanOrEqual(measurement.lineHeight);
-                    }
+                // 3. Away from the scroll boundaries (first and last step),
+                // the highlighted lines are centered in the visible code box,
+                // within one line height.
+                const isBoundaryStep =
+                    step === 0 || step === HIGHLIGHT_STEP_COUNT - 1;
+                if (!isBoundaryStep) {
+                    expect(measurement.highlightCenter).not.toBeNull();
+                    expect(
+                        Math.abs(
+                            (measurement.highlightCenter as number) -
+                                measurement.codeCenter
+                        )
+                    ).toBeLessThanOrEqual(measurement.lineHeight);
                 }
             }
-        );
+        });
     }
 });
 
