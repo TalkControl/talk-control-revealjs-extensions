@@ -28,6 +28,11 @@ import { gotoSlide, waitForDeckReady } from './helpers';
  * `#credits-explicit-height-control` below) proves the diagnosis: giving the
  * section an explicit height makes both browsers agree, with virtually no
  * gap at all. That slide is the test suite's positive control.
+ *
+ * Fix: `src/scss/theme/resets.scss` now gives every credits-bearing section
+ * (`:has(> p.credits.credits)`) an explicit `min-height: var(--slide-height)`,
+ * reveal's own content-independent slide height, instead of leaving it at
+ * `height: auto`. All tests below assert for real on both browsers.
  */
 
 const VIEWPORTS = [
@@ -134,13 +139,7 @@ for (const viewport of VIEWPORTS) {
 
         test('issue repro: with-code slide, fragments, credits (#90)', async ({
             page,
-            browserName,
         }) => {
-            test.fail(
-                browserName === 'firefox',
-                '#90: .credits is not anchored to the bottom of the slide on Firefox'
-            );
-
             await page.goto('/index.html');
             await gotoSlideById(page, 'credits-firefox-repro');
 
@@ -166,14 +165,7 @@ for (const viewport of VIEWPORTS) {
 
         test('minimal repro: single paragraph + credits, no with-code, no fragments (#90)', async ({
             page,
-            browserName,
         }) => {
-            test.fail(
-                browserName === 'firefox',
-                '#90: the anchoring bug is not specific to fragments or the with-code class, ' +
-                    'it reproduces on any slide whose section height is not explicit'
-            );
-
             await page.goto('/index.html');
             await gotoSlideById(page, 'credits-minimal-repro');
 
@@ -189,14 +181,7 @@ for (const viewport of VIEWPORTS) {
 
         test('existing witness: transition slide with credits, no fragments', async ({
             page,
-            browserName,
         }) => {
-            test.fail(
-                browserName === 'firefox',
-                '#90: this pre-existing demo slide (shipped before this PR) hits the same ' +
-                    'root cause as the reported case; it is not a case the fix can leave broken'
-            );
-
             await page.goto('/index.html');
             const credits = await gotoSlideByCreditsText(page, 'Georgie Cobbs');
 

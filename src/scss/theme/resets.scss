@@ -30,6 +30,37 @@
         &.stack {
             height: 100%;
         }
+
+        // Issue #90: `p.credits` anchors itself with `position: absolute;
+        // bottom: 0` relative to *this* section. reveal.js never sets an
+        // explicit height on an individual slide section (only the `.stack`
+        // wrapper above gets `height: 100%`), so it is left at the CSS
+        // default `height: auto`. With `height: auto`, Chromium and Firefox
+        // disagree on how tall a block becomes once it contains an
+        // absolutely-positioned, `bottom`-anchored descendant: Chromium
+        // grows it to (almost) the full slide height, Firefox shrinks it to
+        // the height of its in-flow content only (measured directly, see
+        // `e2e/credits.spec.ts`). `p.credits` genuinely is anchored to its
+        // own section's bottom edge correctly in both browsers — the bug is
+        // that the section's own height differs, so "bottom of the section"
+        // lands in very different places on screen.
+        //
+        // Fix: give credits-bearing sections an explicit, browser-agnostic
+        // height via reveal's own `--slide-height` custom property (set by
+        // `Reveal.initialize({ width, height })`, independent of content and
+        // of the `scale()` transform reveal applies to `.slides`). `min-height`
+        // rather than `height` lets content taller than the slide still grow
+        // the section instead of being clipped.
+        //
+        // Scoped to `:has(> p.credits.credits)` rather than applied to every
+        // section: forcing a height on every slide would fight reveal's own
+        // content-height-based vertical centering (`config.center` / a
+        // `.center`-classed slide), which reads `section.scrollHeight` to
+        // compute its `top` offset.
+        &:has(> p.credits.credits) {
+            min-height: var(--slide-height);
+        }
+
         li p {
             font-size: 100%;
         }
