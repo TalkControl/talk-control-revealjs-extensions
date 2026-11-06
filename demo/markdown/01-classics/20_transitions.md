@@ -235,6 +235,92 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 ## With txt white and line colored
 ```
 
+##==##
+
+<!-- .slide: class="with-code" id="credits-firefox-repro" -->
+
+# Credits anchoring regression (#90)
+
+-   First point
+-   Second point
+-   Third point
+    <!-- .element: class="list-fragment" -->
+
+Reference: https://quarkus.io/
+
+<!-- .element: class="credits" -->
+
+##--##
+
+<!-- .slide: class="with-code" -->
+
+# Code to produce / Markdown
+
+```markdown
+# Credits anchoring regression (#90)
+
+-   First point
+-   Second point
+-   Third point
+    <!-- .element: class="list-fragment" -->
+
+Reference: https://quarkus.io/
+
+<!-- .element: class="credits" -->
 ```
 
+<!-- .element: class="big-code" -->
+
+##==##
+
+<!-- .slide: id="credits-minimal-repro" -->
+
+# Credits anchoring regression, minimal case
+
+Reference: https://example.org/
+
+<!-- .element: class="credits" -->
+
+##--##
+
+<!-- .slide: class="with-code" -->
+
+# Code to produce / Markdown
+
+```markdown
+# Credits anchoring regression, minimal case
+
+Reference: https://example.org/
+
+<!-- .element: class="credits" -->
 ```
+
+<!-- .element: class="big-code" -->
+
+##==##
+
+<!-- .slide: id="credits-explicit-height-control" style="height: 100%;" -->
+
+# Credits anchoring control (explicit height)
+
+Reference: https://example.net/
+
+<!-- .element: class="credits" -->
+
+##--##
+
+<!-- .slide: class="with-code" -->
+
+# Code to produce / Markdown
+
+```markdown
+<!-- .slide: style="height: 100%;" -->
+
+# Credits anchoring control (explicit height)
+
+Reference: https://example.net/
+
+<!-- .element: class="credits" -->
+```
+
+<!-- .element: class="big-code" -->
