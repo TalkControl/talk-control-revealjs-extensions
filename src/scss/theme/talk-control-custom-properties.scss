@@ -85,6 +85,7 @@
     --tc-medium-code-font-size: 0.9em; // Font size for medium code
     --tc-medium-code-line-height: 1.7em; // Line height for medium code
     --tc-code-max-lines: 20; // Maximum number of lines for code
+    --tc-code-reserved-height: 340px; // Vertical space (px, slide scale) kept for title/margins around the code block, subtracted from --slide-height
     --tc-code-font-size: var(
         --tc-medium-code-font-size
     ); // Font size applied to code
