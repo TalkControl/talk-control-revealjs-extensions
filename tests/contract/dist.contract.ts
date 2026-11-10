@@ -95,6 +95,8 @@ describe('dist/ contract', () => {
 
     it('ships the expected files, with the exact CSS file name', () => {
         expect(listFiles(DIST)).toEqual([
+            'cli/talk-control-a11y.js',
+            'cli/talk-control-a11y.js.map',
             'images/quotes.webp',
             'package.json',
             DTS_FILE,

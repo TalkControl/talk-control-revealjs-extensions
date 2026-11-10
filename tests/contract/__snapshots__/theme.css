@@ -1529,6 +1529,8 @@ border:initial;
 box-shadow:initial}
 .reveal .slides section.stack{
 height:100%}
+.reveal .slides section:has(>p.credits.credits){
+min-height:var(--slide-height)}
 .reveal .slides section li p{
 font-size:100%}
 .reveal .slides section p.credits.credits{
@@ -1693,7 +1695,7 @@ margin-top:var(--tc-transition-bottom-mg-top)}
 --tc-transition-color: white}
 .reveal .backgrounds div.slide-background[data-background-hash].mask:after,.reveal .backgrounds div.slide-background.transition[data-background-hash].mask:after{
 background-color:#3d4349b3}
-.reveal .backgrounds div.slide-background[data-background-hash*=png]:after,.reveal .backgrounds div.slide-background[data-background-hash*=PNG]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Png]:after,.reveal .backgrounds div.slide-background[data-background-hash*=jpg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=JPG]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Jpg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=jpeg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=JPEG]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Jpeg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=gif]:after,.reveal .backgrounds div.slide-background[data-background-hash*=GIF]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Gif]:after,.reveal .backgrounds div.slide-background[data-background-hash*=svg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=SVG]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Svg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=bmp]:after,.reveal .backgrounds div.slide-background[data-background-hash*=BMP]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Bmp]:after,.reveal .backgrounds div.slide-background[data-background-hash*=webp]:after,.reveal .backgrounds div.slide-background[data-background-hash*=WEBP]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Webp]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=png]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=PNG]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Png]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=jpg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=JPG]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Jpg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=jpeg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=JPEG]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Jpeg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=gif]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=GIF]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Gif]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=svg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=SVG]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Svg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=bmp]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=BMP]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Bmp]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=webp]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=WEBP]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Webp]:after{
+.reveal .backgrounds div.slide-background[data-background-hash*=png]:after,.reveal .backgrounds div.slide-background[data-background-hash*=PNG]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Png]:after,.reveal .backgrounds div.slide-background[data-background-hash*=jpg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=JPG]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Jpg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=jpeg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=JPEG]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Jpeg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=gif]:after,.reveal .backgrounds div.slide-background[data-background-hash*=GIF]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Gif]:after,.reveal .backgrounds div.slide-background[data-background-hash*=svg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=SVG]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Svg]:after,.reveal .backgrounds div.slide-background[data-background-hash*=bmp]:after,.reveal .backgrounds div.slide-background[data-background-hash*=BMP]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Bmp]:after,.reveal .backgrounds div.slide-background[data-background-hash*=webp]:after,.reveal .backgrounds div.slide-background[data-background-hash*=WEBP]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Webp]:after,.reveal .backgrounds div.slide-background[data-background-hash*=avif]:after,.reveal .backgrounds div.slide-background[data-background-hash*=AVIF]:after,.reveal .backgrounds div.slide-background[data-background-hash*=Avif]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=png]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=PNG]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Png]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=jpg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=JPG]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Jpg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=jpeg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=JPEG]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Jpeg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=gif]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=GIF]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Gif]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=svg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=SVG]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Svg]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=bmp]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=BMP]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Bmp]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=webp]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=WEBP]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Webp]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=avif]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=AVIF]:after,.reveal .backgrounds div.slide-background.transition[data-background-hash*=Avif]:after{
 content:"";
 position:absolute;
 top:0;
@@ -1741,7 +1743,7 @@ word-wrap:break-word}
 .reveal .slides *:is(.with-code,.with-code-dark,.with-code-bg-dark) pre code{
 padding:10px;
 overflow:auto;
-max-height:calc(var(--tc-code-line-height) * var(--tc-code-max-lines) - 10px);
+max-height:min(var(--tc-code-line-height) * var(--tc-code-max-lines) - 10px,var(--slide-height, 1080px) - var(--tc-code-reserved-height));
 word-wrap:normal;
 font-size:var(--tc-code-font-size);
 line-height:var(--tc-code-line-height)}
@@ -1778,7 +1780,8 @@ opacity:0}
 .reveal .slides *:is(.with-code,.with-code-dark,.with-code-bg-dark) pre.alone{
 position:absolute;
 top:50%;
-transform:translateY(-50%)}
+transform:translateY(-50%);
+--tc-code-reserved-height: 40px}
 .reveal .slides *:is(.with-code,.with-code-dark,.with-code-bg-dark).max-height pre code{
 --tc-code-max-lines: 30}
 .reveal .slides *:is(.with-code-dark,.with-code-bg-dark) pre span.tc-copy-to-clipboard{
@@ -1982,69 +1985,69 @@ align-items:center;
 height:60px;
 font-size:.8em}
 .reveal .slides section .admonition.note{
-border-left-color:#6093f8}
+border-left-color:#266bf5}
 .reveal .slides section .admonition.note:before{
-color:#6093f8;
+color:#266bf5;
 content:"📝 Note"}
 .reveal .slides section .admonition.abstract{
-border-left-color:#6e9dfa}
+border-left-color:#236af7}
 .reveal .slides section .admonition.abstract:before{
-color:#6e9dfa;
+color:#236af7;
 content:"📋 Abstract"}
 .reveal .slides section .admonition.tip{
-border-left-color:#33f8d7}
+border-left-color:#05836e}
 .reveal .slides section .admonition.tip:before{
-color:#33f8d7;
+color:#05836e;
 content:"💡 Tip"}
 .reveal .slides section .admonition.info{
-border-left-color:#7cddf6}
+border-left-color:#0b7e9c}
 .reveal .slides section .admonition.info:before{
-color:#7cddf6;
+color:#0b7e9c;
 content:"ℹ️ Info"}
 .reveal .slides section .admonition.success{
-border-left-color:#6ffa8e}
+border-left-color:#058722}
 .reveal .slides section .admonition.success:before{
-color:#6ffa8e;
+color:#058722;
 content:"✅ Success"}
 .reveal .slides section .admonition.question{
-border-left-color:#6bf316}
+border-left-color:#378407}
 .reveal .slides section .admonition.question:before{
-color:#6bf316;
+color:#378407;
 content:"? Question"}
 .reveal .slides section .admonition.warning{
-border-left-color:#f9ac65}
+border-left-color:#b75b07}
 .reveal .slides section .admonition.warning:before{
-color:#f9ac65;
+color:#b75b07;
 content:"⚠️ Warning"}
 .reveal .slides section .admonition.failure{
-border-left-color:#f86262}
+border-left-color:#e90a0a}
 .reveal .slides section .admonition.failure:before{
-color:#f86262;
+color:#e90a0a;
 content:"❌ Failure"}
 .reveal .slides section .admonition.danger{
-border-left-color:#fa6178}
+border-left-color:#e80729}
 .reveal .slides section .admonition.danger:before{
-color:#fa6178;
+color:#e80729;
 content:"🔥 Danger"}
 .reveal .slides section .admonition.important{
-border-left-color:#f74c4c}
+border-left-color:#e90a0a}
 .reveal .slides section .admonition.important:before{
-color:#f74c4c;
+color:#e90a0a;
 content:"❗ Important"}
 .reveal .slides section .admonition.bug{
-border-left-color:#f8597e}
+border-left-color:#e70a3d}
 .reveal .slides section .admonition.bug:before{
-color:#f8597e;
+color:#e70a3d;
 content:"🐞 Bug"}
 .reveal .slides section .admonition.example{
-border-left-color:#8b61f6}
+border-left-color:#8153f5}
 .reveal .slides section .admonition.example:before{
-color:#8b61f6;
+color:#8153f5;
 content:"💻 Example"}
 .reveal .slides section .admonition.quote{
-border-left-color:gray}
+border-left-color:#747474}
 .reveal .slides section .admonition.quote:before{
-color:gray;
+color:#747474;
 content:"💬 Quote"}
 .reveal .slides section .admonition.custom{
 border-left-color:var(--tc-admonition-bg-color, #808080)}
@@ -2748,6 +2751,7 @@ grid-area:img}
 --tc-medium-code-font-size: .9em;
 --tc-medium-code-line-height: 1.7em;
 --tc-code-max-lines: 20;
+--tc-code-reserved-height: 340px;
 --tc-code-font-size: var( --tc-medium-code-font-size );
 --tc-code-line-height: var( --tc-medium-code-line-height );
 --tc-code-dark-background: #3f3f3f;
