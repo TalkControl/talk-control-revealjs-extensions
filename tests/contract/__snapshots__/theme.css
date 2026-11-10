@@ -2705,6 +2705,25 @@ order:1}
 margin:10px}
 .reveal .slides section .tc-qrcode img{
 grid-area:img}
+@media(prefers-reduced-motion:reduce){
+.reveal *,.reveal *:before,.reveal *:after{
+animation-duration:0s!important;
+animation-iteration-count:1!important;
+transition-duration:0s!important;
+scroll-behavior:auto!important}
+}
+@media(forced-colors:active){
+.reveal code:not(.hljs){
+border:1px solid CanvasText}
+.reveal .slides *:is(.with-code,.with-code-dark,.with-code-bg-dark) pre span.tc-copy-to-clipboard,.reveal .slides *:is(.with-code,.with-code-dark,.with-code-bg-dark) pre div.tc-copy-popup{
+border:1px solid CanvasText}
+}
+@media(prefers-contrast:more){
+.reveal code:not(.hljs){
+border:1px solid currentColor}
+.reveal .slides section .admonition{
+border-left-width:10px}
+}
 :root{
 --tc-font-size: 1.2em;
 --tc-heading-color: #1d1d1d;
