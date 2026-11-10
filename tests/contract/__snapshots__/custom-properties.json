@@ -44,6 +44,7 @@
     "--tc-medium-code-font-size": ".9em",
     "--tc-medium-code-line-height": "1.7em",
     "--tc-code-max-lines": "20",
+    "--tc-code-reserved-height": "340px",
     "--tc-code-font-size": "var( --tc-medium-code-font-size )",
     "--tc-code-line-height": "var( --tc-medium-code-line-height )",
     "--tc-code-dark-background": "#3f3f3f",
