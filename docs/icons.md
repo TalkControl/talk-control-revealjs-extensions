@@ -107,6 +107,26 @@ You can override the following CSS custom properties to fine-tune the appearance
 
 ![](./imgs/icons-custom.png)
 
+## Accessibility
+
+By default, an icon renders as a plain `<i>` tag with no `aria-hidden` attribute and no accessible name - the same markup Talk-Control has always produced. Two opt-in pseudo-attributes let you tell screen readers what an icon means (or that it means nothing at all), per [WCAG 1.1.1 and 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html):
+
+-   `tc-a11y-hidden`: the icon is purely decorative. It is rendered with `aria-hidden="true"` so assistive technology skips it.
+-   `tc-a11y-label="Accessible name"`: the icon carries meaning. It is rendered with that text as `aria-label`.
+
+```markdown
+A decorative icon: ![](star 'tc-icons fa tc-a11y-hidden')
+
+A meaningful icon: ![](bell 'tc-icons fa tc-a11y-label="New notifications"')
+```
+
+Rules:
+
+-   Both are optional and additive: omit them and nothing changes.
+-   If both are present on the same icon, `tc-a11y-hidden` wins (an icon can't be both hidden from and announced to assistive technology).
+-   The accessible name must be wrapped in double quotes (`"..."`), while the Markdown title itself must stay wrapped in single quotes (`'...'`), so the two don't conflict. A label can't itself contain a double quote.
+-   As with ordinary Markdown images, giving an icon an accessible name is the author's own responsibility: pick wording that makes sense out of context for someone who can't see the icon.
+
 ## "Copy to Clipboard" Icon
 
 As mentioned in the Code documentation, Talk-Control adds a "copy to clipboard" button to code blocks. The icon for this button is taken from the **first** icon library you declare in your configuration.

@@ -50,6 +50,22 @@ declare interface MarkedTcIconsOptions {
     initFunction?: () => void;
 }
 
+declare interface MarkedTcQrCodeOptions {
+    /**
+     * Default alt text used for every QR code that doesn't set its own
+     * `tc-qrcode-alt="..."` override. Use the `{{text}}` placeholder for the
+     * encoded text.
+     *
+     * Can be a single string (applied regardless of language), or a map keyed by
+     * the `data-lang` language code (same convention as the `tc-i18n` addon, eg.
+     * `EN`/`FR`) to localize the message according to the current slide language.
+     *
+     * When omitted, the legacy English message
+     * ("qrcode with base64 information, original text is: ...") is used unchanged.
+     */
+    defaultAlt?: string | Record<string, string>;
+}
+
 export declare function materialSymbolsIconPack(): MarkedTcIconsOptions;
 
 export { Reveal_2 as Reveal }
@@ -83,6 +99,7 @@ export declare interface SlideTreeEntry {
 declare interface TalkControlMarkedOptions {
     fontIcons?: MarkedTcIconsOptions[];
     knowStyles?: string[];
+    qrcode?: MarkedTcQrCodeOptions;
 }
 
 export declare class TcConfiguratorElement extends LitElement {

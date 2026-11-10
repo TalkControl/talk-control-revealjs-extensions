@@ -1,4 +1,5 @@
 import { MarkedTcIconsOptions, markedTcIcons } from './marked-tc-icons';
+import { MarkedTcQrCodeOptions, markedTcQrCode } from './marked-tc-qrcode';
 import { PluginFunction } from 'reveal.js';
 import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
 import { RevealMarkdownPlugin } from '../models';
@@ -6,7 +7,6 @@ import { markedStyledImage } from '@anthonypena/marked-styled-image';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
 import { markedTcCols } from './marked-tc-cols';
-import { markedTcQrCode } from './marked-tc-qrcode';
 
 const stylesCssImg = [
     'company',
@@ -33,6 +33,7 @@ for (let i = 1; i <= 100; i++) {
 export interface TalkControlMarkedOptions {
     fontIcons?: MarkedTcIconsOptions[];
     knowStyles?: string[];
+    qrcode?: MarkedTcQrCodeOptions;
 }
 export class RevealTalkControlMarkdownPlugin {
     private options: TalkControlMarkedOptions;
@@ -65,7 +66,9 @@ export class RevealTalkControlMarkdownPlugin {
                         revealMarkdownPlugin.marked.use(markedTcBg());
                         revealMarkdownPlugin.marked.use(markedTcCols());
                         revealMarkdownPlugin.marked.use(markedTcAdmonition());
-                        revealMarkdownPlugin.marked.use(markedTcQrCode());
+                        revealMarkdownPlugin.marked.use(
+                            markedTcQrCode(self.options.qrcode)
+                        );
                         const initFunctionArray: Array<() => void> = [];
                         if (
                             self.options.fontIcons &&

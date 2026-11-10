@@ -72,4 +72,96 @@ describe(markedTcQrCode.name, () => {
         const html = `<p>some text <img src="${dataBase64}" class="tc-qrcode" alt="qrcode with base64 information, original text is: data"> some text</p>\n`;
         expect(marked.parse(md)).toBe(html);
     });
+
+    describe('accessibility', () => {
+        beforeEach(() => {
+            document.body.innerHTML = '';
+        });
+
+        it('should use a custom alt text per instance (tc-qrcode-alt)', () => {
+            marked.use(markedTcQrCode());
+            const md = `![](data 'tc-qrcode tc-qrcode-alt="Scan to open the website"')\n`;
+            const html = `<p><img src="${dataBase64}" class="tc-qrcode" alt="Scan to open the website"></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should strip the tc-qrcode-alt pseudo-attribute from the class list', () => {
+            marked.use(markedTcQrCode());
+            const md = `![](data 'tc-qrcode tc-qrcode-alt="Scan to open the website" class-1')\n`;
+            const html = `<p><img src="${dataBase64}" class="tc-qrcode class-1" alt="Scan to open the website"></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should escape html-significant characters in the custom alt text', () => {
+            marked.use(markedTcQrCode());
+            const md = `![](data 'tc-qrcode tc-qrcode-alt="A & B <tag>"')\n`;
+            // img.alt is a DOM property assignment, serialized back via outerHTML:
+            // `&` is escaped (to stay a valid attribute value), `<`/`>` don't need
+            // to be inside an attribute value - this is the same safe behavior the
+            // legacy hardcoded alt already relied on (see the "escaped alt text"
+            // corpus fixture).
+            const html = `<p><img src="${dataBase64}" class="tc-qrcode" alt="A &amp; B <tag>"></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should use a configured non-localized default alt when no per-instance override is set', () => {
+            marked.use(
+                markedTcQrCode({
+                    defaultAlt: 'QR code pointing to {{text}}',
+                })
+            );
+            const md = `![](data 'tc-qrcode')\n`;
+            const html = `<p><img src="${dataBase64}" class="tc-qrcode" alt="QR code pointing to data"></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should let a per-instance tc-qrcode-alt override a configured default alt', () => {
+            marked.use(
+                markedTcQrCode({
+                    defaultAlt: 'QR code pointing to {{text}}',
+                })
+            );
+            const md = `![](data 'tc-qrcode tc-qrcode-alt="Custom override"')\n`;
+            const html = `<p><img src="${dataBase64}" class="tc-qrcode" alt="Custom override"></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should localize the default alt text according to the current data-lang', () => {
+            document.body.innerHTML =
+                '<div class="reveal"><div class="slides" data-lang="FR"></div></div>';
+            marked.use(
+                markedTcQrCode({
+                    defaultAlt: {
+                        EN: 'QR code, content: {{text}}',
+                        FR: 'QR code, contenu : {{text}}',
+                    },
+                })
+            );
+            const md = `![](data 'tc-qrcode')\n`;
+            const html = `<p><img src="${dataBase64}" class="tc-qrcode" alt="QR code, contenu : data"></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should fall back to the legacy default alt when the current language has no entry', () => {
+            document.body.innerHTML =
+                '<div class="reveal"><div class="slides" data-lang="DE"></div></div>';
+            marked.use(
+                markedTcQrCode({
+                    defaultAlt: {
+                        FR: 'QR code, contenu : {{text}}',
+                    },
+                })
+            );
+            const md = `![](data 'tc-qrcode')\n`;
+            const html = `<p><img src="${dataBase64}" class="tc-qrcode" alt="qrcode with base64 information, original text is: data"></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should use the legacy default alt when data-lang is absent (unchanged default)', () => {
+            marked.use(markedTcQrCode());
+            const md = `![](data 'tc-qrcode')\n`;
+            const html = `<p><img src="${dataBase64}" class="tc-qrcode" alt="qrcode with base64 information, original text is: data"></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+    });
 });

@@ -157,6 +157,71 @@ describe(markedTcIcons.name, () => {
         expect(marked.parse(md)).toBe(html);
     });
 
+    describe('accessibility', () => {
+        it('should render no aria attribute by default (unchanged)', () => {
+            marked.use(markedIconsFontAwesome);
+            const md = `![](fa-code 'tc-icons fa-icons')\n`;
+            const html = `<p><i class="fa-code tc-icons"></i></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should mark a decorative icon as aria-hidden', () => {
+            marked.use(markedIconsFontAwesome);
+            const md = `![](fa-code 'tc-icons fa-icons tc-a11y-hidden')\n`;
+            const html = `<p><i class="fa-code tc-icons" aria-hidden="true"></i></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should strip the tc-a11y-hidden token from the class list', () => {
+            marked.use(markedIconsFontAwesome);
+            const md = `![](fa-code 'tc-icons fa-icons tc-a11y-hidden tc-big')\n`;
+            const html = `<p><i class="fa-code tc-icons tc-big" aria-hidden="true"></i></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should give a meaningful icon an accessible name', () => {
+            marked.use(markedIconsFontAwesome);
+            const md = `![](fa-code 'tc-icons fa-icons tc-a11y-label="Open menu"')\n`;
+            const html = `<p><i class="fa-code tc-icons" aria-label="Open menu"></i></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should strip the tc-a11y-label pseudo-attribute from the class list', () => {
+            marked.use(markedIconsFontAwesome);
+            const md = `![](fa-code 'tc-icons fa-icons tc-a11y-label="Open menu" tc-big')\n`;
+            const html = `<p><i class="fa-code tc-icons tc-big" aria-label="Open menu"></i></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should escape html-significant characters in the accessible name', () => {
+            marked.use(markedIconsFontAwesome);
+            const md = `![](fa-code 'tc-icons fa-icons tc-a11y-label="A & B <tag>"')\n`;
+            const html = `<p><i class="fa-code tc-icons" aria-label="A &amp; B &lt;tag&gt;"></i></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should prioritize aria-hidden over an accessible name when both are set', () => {
+            marked.use(markedIconsFontAwesome);
+            const md = `![](fa-code 'tc-icons fa-icons tc-a11y-hidden tc-a11y-label="Open menu"')\n`;
+            const html = `<p><i class="fa-code tc-icons" aria-hidden="true"></i></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('should work with a non-class html attribute', () => {
+            marked.use(
+                markedTcIcons({
+                    keyword: 'feather',
+                    copyKeyword: 'copy',
+                    includesKeyword: false,
+                    htmlAttribute: 'data-feather',
+                })
+            );
+            const md = `![](circle 'feather tc-icons tc-a11y-hidden')\n`;
+            const html = `<p><i data-feather="circle" class="tc-icons" aria-hidden="true"></i></p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+    });
+
     it('should convert multiples icons', () => {
         marked.use(markedIconsFontAwesome);
         marked.use(

@@ -37,3 +37,49 @@ To control the position of the text relative to the QR code by adding layout cla
 ```
 
 ![](./imgs/qrcode.png)
+
+## Accessibility
+
+By default, the generated `<img>` gets a hardcoded, English-only `alt` text ("qrcode with base64 information, original text is: ..."). Per [WCAG 1.1.1 and 3.1.2](https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html), you can override it - per QR code, and/or for every QR code at once, localized to your deck's language.
+
+### Per QR code: `tc-qrcode-alt`
+
+Use the `tc-qrcode-alt="..."` pseudo-attribute to give a specific QR code its own alt text:
+
+```markdown
+![](https://example.com 'tc-qrcode tc-qrcode-alt="Scan to open our website"')
+```
+
+The alt text must be wrapped in double quotes (`"..."`), while the Markdown title itself must stay wrapped in single quotes (`'...'`), so the two don't conflict. It can't itself contain a double quote.
+
+### For every QR code: `defaultAlt`
+
+Configure a library-wide default via `tcMarkedOptions.qrcode` in `ThemeInitializer.init`, applied to every QR code that doesn't set its own `tc-qrcode-alt`. Use the `{{text}}` placeholder for the encoded text:
+
+```javascript
+ThemeInitializer.init({
+    // ... other options
+    tcMarkedOptions: {
+        qrcode: {
+            defaultAlt: 'QR code linking to {{text}}',
+        },
+    },
+});
+```
+
+To localize it according to the deck's language, pass a map keyed by the same uppercase language code the [i18n](./i18n.md) addon reads from `data-lang` (eg. `EN`, `FR`):
+
+```javascript
+tcMarkedOptions: {
+    qrcode: {
+        defaultAlt: {
+            EN: 'QR code linking to {{text}}',
+            FR: 'QR code pointant vers {{text}}',
+        },
+    },
+},
+```
+
+The current `data-lang` is resolved the same way the `tc-i18n` addon does. When the current language has no entry in the map (or `defaultAlt` is omitted entirely), the legacy English message is used unchanged - so existing decks keep their exact current output.
+
+`tc-qrcode-alt` always takes precedence over `defaultAlt` for the QR code it's set on.
