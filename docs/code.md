@@ -100,6 +100,16 @@ There are custom properties defined to fix the size of your code. You can look a
 
 By default there will be only 20 lines of code displayed. If you need more space, you could use the class `max-height` that will increase the number of lines to 30 lines.
 
+The code block's height is actually capped by **the lesser of two limits**: the line-count ceiling above (`--tc-code-max-lines`) and the height actually available on the current slide. This second, slide-aware limit is what lets reveal.js's highlight plugin scroll and center a highlighted line even on a `big-code` block tall enough to exceed the configured line count: the `<code>` box keeps an internal scrollbar instead of overflowing past the edge of the slide.
+
+The vertical space reserved around the code block (for the slide's title and margins) is controlled by `--tc-code-reserved-height` (default `340px`). If your slide layout leaves more or less room above/below the code block than the default assumes, override this custom property to recalibrate the limit:
+
+```css
+body {
+    --tc-code-reserved-height: 400px;
+}
+```
+
 ````md
 <!-- .slide: class="with-code-dark max-height" -->
 
