@@ -1,7 +1,7 @@
 import { MarkedTcIconsOptions, markedTcIcons } from './marked-tc-icons';
+import { RevealMarkdownPlugin, TcAdmonitionOptions } from '../models';
 import { PluginFunction } from 'reveal.js';
 import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
-import { RevealMarkdownPlugin } from '../models';
 import { markedStyledImage } from '@anthonypena/marked-styled-image';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
@@ -33,6 +33,7 @@ for (let i = 1; i <= 100; i++) {
 export interface TalkControlMarkedOptions {
     fontIcons?: MarkedTcIconsOptions[];
     knowStyles?: string[];
+    admonitionOptions?: TcAdmonitionOptions;
 }
 export class RevealTalkControlMarkdownPlugin {
     private options: TalkControlMarkedOptions;
@@ -64,7 +65,9 @@ export class RevealTalkControlMarkdownPlugin {
                         );
                         revealMarkdownPlugin.marked.use(markedTcBg());
                         revealMarkdownPlugin.marked.use(markedTcCols());
-                        revealMarkdownPlugin.marked.use(markedTcAdmonition());
+                        revealMarkdownPlugin.marked.use(
+                            markedTcAdmonition(self.options.admonitionOptions)
+                        );
                         revealMarkdownPlugin.marked.use(markedTcQrCode());
                         const initFunctionArray: Array<() => void> = [];
                         if (

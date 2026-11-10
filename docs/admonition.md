@@ -99,6 +99,57 @@ you can use any WCAG contrast checker (for example
 
 ![](./imgs/admonition-custom.png)
 
+## Accessible type label (opt-in)
+
+By default, an admonition's type (e.g. "📝 Note") is only conveyed through
+decorative CSS (the `::before` content in `admonition.scss`): it isn't
+translated, it's read inconsistently (or not at all) by screen readers, and
+when it is read the emoji is announced literally - the type is never exposed
+in the DOM/semantics (WCAG 1.3.1, 1.1.1).
+
+Enable `accessibleTypeLabel` to fix this. It's **disabled by default** so the
+default markup never changes:
+
+```javascript
+tcMarkedOptions: {
+    admonitionOptions: {
+        accessibleTypeLabel: true,
+    },
+},
+```
+
+When enabled:
+
+-   The admonition paragraph gets `role="note"`.
+-   The type is added as real, visually-hidden text (`.tc-visually-hidden`),
+    translated to `EN` or `FR` from the slides' current `data-lang` (see
+    [`i18n.md`](./i18n.md); the library never reads or writes `<html lang>`,
+    see #109) - e.g. `<span class="tc-visually-hidden">Note: </span>` before
+    the content, or `<span class="tc-visually-hidden">Attention: </span>` when
+    `data-lang="FR"`.
+-   For a `custom` admonition, the author-provided `tc-admonition-type` text is
+    used verbatim as the accessible label (it can't be auto-translated); with
+    no `tc-admonition-type` given, the generic, translated "Custom" label is
+    used instead.
+-   The decorative `::before` content (emoji + title) is hidden for every
+    admonition that carries this option, so the type is announced once, not
+    twice. The colored left border stays unchanged.
+
+```markdown
+!!! note
+This is a note. It contains some important information.
+!!!
+```
+
+renders (with the option enabled, `data-lang` unset or `EN`) as:
+
+```html
+<p class="admonition note tc-admonition-a11y" role="note">
+    <span class="tc-visually-hidden">Note: </span>This is a note. It contains
+    some important information.
+</p>
+```
+
 ## Use comment syntax
 
 To use revealJS comment syntax you can use the following code

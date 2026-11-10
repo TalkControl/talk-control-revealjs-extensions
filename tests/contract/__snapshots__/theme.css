@@ -2054,6 +2054,18 @@ border-left-color:var(--tc-admonition-bg-color, #808080)}
 .reveal .slides section .admonition.custom:before{
 color:var(--tc-admonition-bg-color, #808080);
 content:attr(data-admonition-icon)}
+.reveal .slides section .admonition.tc-admonition-a11y:before{
+content:none}
+.tc-visually-hidden{
+position:absolute;
+width:1px;
+height:1px;
+padding:0;
+margin:-1px;
+overflow:hidden;
+clip:rect(0,0,0,0);
+white-space:nowrap;
+border:0}
 .reveal .slides section.quote-slide h1,.reveal .slides section.quote-slide h2,.reveal .slides section.quote-slide h3,.reveal .slides section.quote-slide h4,.reveal .slides section.quote-slide p,.reveal .slides section.quote-slide blockquote,.reveal .slides section.quote-slide code,.reveal .slides section.quote-slide pre,.reveal .slides section.quote-slide a{
 color:var(--tc-quote-color)}
 .reveal .slides section.quote-slide blockquote{
