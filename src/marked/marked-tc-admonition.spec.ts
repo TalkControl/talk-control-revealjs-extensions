@@ -77,6 +77,51 @@ describe(markedTcAdmonition.name, () => {
         const html = `<p class="admonition custom" data-admonition-icon="🐼" style="--tc-admonition-bg-color:#d7be00;">some text</p>\n`;
         expect(marked.parse(md)).toBe(html);
     });
+
+    // Regression tests for #115: an admonition whose content contains inline
+    // Markdown used to crash the whole pipeline with
+    // `Error: Token with "strong" type was not found.`, because the
+    // tokenizer produces INLINE tokens (via `lexer.inlineTokens`) while the
+    // renderer fed them through `parser.parse`, the BLOCK-level entry point.
+    it('should not crash and should render bold content inside an admonition (#115)', () => {
+        marked.use(markedColsInstance);
+        const md = `!!! note\nthis is **bold** content\n!!!`;
+        const html = `<p class="admonition note">this is <strong>bold</strong> content</p>\n`;
+        expect(() => marked.parse(md)).not.toThrow();
+        expect(marked.parse(md)).toBe(html);
+    });
+
+    it('should not crash and should render inline code content inside an admonition (#115)', () => {
+        marked.use(markedColsInstance);
+        const md = '!!! warning\nrun `npm install` first\n!!!';
+        const html = `<p class="admonition warning">run <code>npm install</code> first</p>\n`;
+        expect(() => marked.parse(md)).not.toThrow();
+        expect(marked.parse(md)).toBe(html);
+    });
+
+    it('should not crash and should render a link inside an admonition (#115)', () => {
+        marked.use(markedColsInstance);
+        const md = `!!! info\nsee [the docs](https://example.com) for details\n!!!`;
+        const html = `<p class="admonition info">see <a href="https://example.com">the docs</a> for details</p>\n`;
+        expect(() => marked.parse(md)).not.toThrow();
+        expect(marked.parse(md)).toBe(html);
+    });
+
+    it('should not crash and should render nested emphasis inside an admonition (#115)', () => {
+        marked.use(markedColsInstance);
+        const md = `!!! danger\nthis is **bold with _nested emphasis_ inside**\n!!!`;
+        const html = `<p class="admonition danger">this is <strong>bold with <em>nested emphasis</em> inside</strong></p>\n`;
+        expect(() => marked.parse(md)).not.toThrow();
+        expect(marked.parse(md)).toBe(html);
+    });
+
+    it('should not crash and should render multiple inline Markdown features combined inside an admonition (#115)', () => {
+        marked.use(markedColsInstance);
+        const md = `!!! important\nUse **bold**, \`code\`, and a [link](https://example.com) together\n!!!`;
+        const html = `<p class="admonition important">Use <strong>bold</strong>, <code>code</code>, and a <a href="https://example.com">link</a> together</p>\n`;
+        expect(() => marked.parse(md)).not.toThrow();
+        expect(marked.parse(md)).toBe(html);
+    });
 });
 
 describe(isTcAdmonitionToken.name, () => {
