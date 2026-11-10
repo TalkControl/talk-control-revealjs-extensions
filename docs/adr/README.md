@@ -11,9 +11,10 @@ does, not only _what_ it does.
 
 ## Index
 
-| ADR                                             | Title                         | Status   |
-| ----------------------------------------------- | ----------------------------- | -------- |
-| [0001](./0001-record-architecture-decisions.md) | Record architecture decisions | accepted |
+| ADR                                             | Title                                          | Status   |
+| ----------------------------------------------- | ---------------------------------------------- | -------- |
+| [0001](./0001-record-architecture-decisions.md) | Record architecture decisions                  | accepted |
+| [0002](./0002-zoom-and-reflow-limitation.md)    | Zoom and reflow limitation (WCAG 1.4.4/1.4.10) | proposed |
 
 ## When to write an ADR
 
