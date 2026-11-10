@@ -86,7 +86,11 @@ export class TcRevealjsElement extends LitElement {
         .shortcut-keys.editable {
             border-color: #007acc;
             background: white;
-            outline: none;
+        }
+
+        .shortcut-keys.editable:focus-visible {
+            outline: 2px solid #005a9e;
+            outline-offset: 2px;
         }
 
         .shortcut-description {
@@ -293,7 +297,7 @@ export class TcRevealjsElement extends LitElement {
     render() {
         return html`
             <div class="navigation-mode">
-                <h3>Navigation Mode</h3>
+                <h2>Navigation Mode</h2>
                 <label>
                     <input
                         type="radio"
@@ -319,33 +323,49 @@ export class TcRevealjsElement extends LitElement {
                 class="shortcuts-container"
                 role="table"
                 aria-label="Keyboard shortcuts">
-                ${Object.entries(this.shortcuts).map(
-                    ([id, shortcut]) => html`
-                        <div class="shortcut-item" role="row">
-                            ${this.editMode && shortcut.editable
-                                ? html`
-                                      <input
-                                          class="shortcut-keys editable"
-                                          .value=${shortcut.keys}
-                                          @input=${(e: Event) =>
-                                              this.handleShortcutChange(
-                                                  id,
-                                                  (e.target as HTMLInputElement)
-                                                      .value
-                                              )}
-                                          aria-label="Edit shortcut keys for ${shortcut.description}" />
-                                  `
-                                : html`
-                                      <span class="shortcut-keys" role="cell">
-                                          ${shortcut.keys}
-                                      </span>
-                                  `}
-                            <span class="shortcut-description" role="cell">
-                                ${shortcut.description}
-                            </span>
-                        </div>
-                    `
-                )}
+                <div class="shortcut-item shortcut-header" role="rowgroup">
+                    <div role="row">
+                        <span class="shortcut-keys" role="columnheader">
+                            Keys
+                        </span>
+                        <span class="shortcut-description" role="columnheader">
+                            Description
+                        </span>
+                    </div>
+                </div>
+                <div role="rowgroup">
+                    ${Object.entries(this.shortcuts).map(
+                        ([id, shortcut]) => html`
+                            <div class="shortcut-item" role="row">
+                                ${this.editMode && shortcut.editable
+                                    ? html`
+                                          <input
+                                              class="shortcut-keys editable"
+                                              role="cell"
+                                              .value=${shortcut.keys}
+                                              @input=${(e: Event) =>
+                                                  this.handleShortcutChange(
+                                                      id,
+                                                      (
+                                                          e.target as HTMLInputElement
+                                                      ).value
+                                                  )}
+                                              aria-label="Edit shortcut keys for ${shortcut.description}" />
+                                      `
+                                    : html`
+                                          <span
+                                              class="shortcut-keys"
+                                              role="cell">
+                                              ${shortcut.keys}
+                                          </span>
+                                      `}
+                                <span class="shortcut-description" role="cell">
+                                    ${shortcut.description}
+                                </span>
+                            </div>
+                        `
+                    )}
+                </div>
             </div>
 
             ${this.renderFooterEdit()}
