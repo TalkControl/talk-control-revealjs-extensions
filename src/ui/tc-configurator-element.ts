@@ -1,5 +1,6 @@
 import { LitElement, css, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { getFocusableElements, trapTabKey } from '../utils/focus-trap.js';
 import { SlideTreeEntry } from '../models.js';
 
 @customElement('tc-configurator-element')
@@ -40,13 +41,13 @@ export class TcConfiguratorElement extends LitElement {
                 class="ui-slide-selector-container"
                 role="dialog"
                 aria-modal="true"
-                aria-labelledby="configurator-title">
+                aria-labelledby="configurator-title"
+                @keydown="${this.handleDialogKeydown}">
                 <button
                     id="ui-slide-selector-close"
                     @click="${() => this.closeUI()}"
                     type="button"
-                    aria-label="Close configurator"
-                    @keydown="${this.handleCloseKeydown}">
+                    aria-label="Close configurator">
                     <span aria-hidden="true">✖️</span>
                 </button>
                 <h1 id="configurator-title">Talk Control - Configurator</h1>
@@ -178,11 +179,29 @@ export class TcConfiguratorElement extends LitElement {
         }
     }
 
-    private handleCloseKeydown(event: KeyboardEvent) {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            this.closeUI();
-        }
+    /**
+     * Focus trap: keeps Tab / Shift+Tab navigation inside the dialog so it
+     * never escapes to the rest of the page, including across the shadow
+     * roots of the nested `tc-talk-control-element` / `tc-revealjs-element`.
+     */
+    private handleDialogKeydown(event: KeyboardEvent) {
+        if (!this.shadowRoot) return;
+        trapTabKey(this.shadowRoot, event);
+    }
+
+    firstUpdated() {
+        this.focusFirstElement();
+    }
+
+    /**
+     * Moves initial focus into the dialog when it opens, so keyboard users
+     * land inside the focus trap rather than on whatever was focused (or
+     * the document body) before it appeared.
+     */
+    private focusFirstElement() {
+        if (!this.shadowRoot) return;
+        const [first] = getFocusableElements(this.shadowRoot);
+        first?.focus();
     }
 
     private onConfigChanged = (e: CustomEvent) => {

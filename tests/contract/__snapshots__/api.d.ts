@@ -107,7 +107,19 @@ export declare class TcConfiguratorElement extends LitElement {
     render(): TemplateResult<1>;
     selectTab(tab: 'talk-control' | 'revealjs'): void;
     private handleTabKeydown;
-    private handleCloseKeydown;
+    /**
+     * Focus trap: keeps Tab / Shift+Tab navigation inside the dialog so it
+     * never escapes to the rest of the page, including across the shadow
+     * roots of the nested `tc-talk-control-element` / `tc-revealjs-element`.
+     */
+    private handleDialogKeydown;
+    firstUpdated(): void;
+    /**
+     * Moves initial focus into the dialog when it opens, so keyboard users
+     * land inside the focus trap rather than on whatever was focused (or
+     * the document body) before it appeared.
+     */
+    private focusFirstElement;
     private onConfigChanged;
     /**
      * Handler method that deals with the apply button. it will refresh the page
