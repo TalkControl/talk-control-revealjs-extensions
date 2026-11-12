@@ -160,6 +160,48 @@ describe(
                 '<p class="admonition custom tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Personnalisé: </span>some text</p>\n';
             expect(marked.parse(md)).toBe(html);
         });
+
+        it('translates the accessible label to an author-supplied language', () => {
+            setSlidesLang('ES');
+            marked.use(
+                markedTcAdmonition({
+                    accessibleTypeLabel: true,
+                    labels: { ES: { tip: 'Consejo' } },
+                })
+            );
+            const md = `!!! tip\nsome text\n!!!`;
+            const html =
+                '<p class="admonition tip tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Consejo: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('lets an author-supplied label override a built-in EN/FR translation for the same type', () => {
+            setSlidesLang('FR');
+            marked.use(
+                markedTcAdmonition({
+                    accessibleTypeLabel: true,
+                    labels: { FR: { note: 'Remarque personnalisée' } },
+                })
+            );
+            const md = `!!! note\nsome text\n!!!`;
+            const html =
+                '<p class="admonition note tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Remarque personnalisée: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('falls back to English when neither the built-in nor the author-supplied labels cover the current language', () => {
+            setSlidesLang('DE');
+            marked.use(
+                markedTcAdmonition({
+                    accessibleTypeLabel: true,
+                    labels: { ES: { tip: 'Consejo' } },
+                })
+            );
+            const md = `!!! tip\nsome text\n!!!`;
+            const html =
+                '<p class="admonition tip tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Tip: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
     }
 );
 

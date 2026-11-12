@@ -35,10 +35,27 @@ export interface TcAdmonitionOptions {
      * the emoji is announced literally.
      *
      * When enabled, the type is additionally exposed as real, visually-hidden text in
-     * the DOM — translated according to the slides' current `data-lang` (`EN`/`FR`) —
-     * and the admonition paragraph is given `role="note"`. To avoid announcing the
-     * type twice, the decorative CSS content is hidden whenever this option is active
-     * (see the `.tc-admonition-a11y` modifier in `admonition.scss`).
+     * the DOM — translated according to the slides' current `data-lang` (built-in
+     * `EN`/`FR`, plus any language supplied via `labels`) — and the admonition
+     * paragraph is given `role="note"`. To avoid announcing the type twice, the
+     * decorative CSS content is hidden whenever this option is active (see the
+     * `.tc-admonition-a11y` modifier in `admonition.scss`).
      */
     accessibleTypeLabel?: boolean;
+    /**
+     * Translated type labels for languages beyond the built-in `EN`/`FR`, keyed by
+     * the same `data-lang` value the deck already uses (see `tc-i18n`), then by
+     * admonition type (`note`, `warning`, ... or a custom `tc-admonition-type`).
+     * Only used when `accessibleTypeLabel` is enabled. A language entry here is
+     * merged with (and takes priority over) a built-in `EN`/`FR` translation for
+     * the same key, so this can also be used to override a single built-in label.
+     *
+     * @example
+     * ```javascript
+     * labels: {
+     *     ES: { note: 'Nota', warning: 'Advertencia' },
+     * }
+     * ```
+     */
+    labels?: Record<string, Record<string, string>>;
 }

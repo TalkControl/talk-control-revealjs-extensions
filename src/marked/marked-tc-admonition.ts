@@ -25,13 +25,16 @@ const admonitionRegex = new RegExp(
 );
 const TYPE_ADMONITION_TC = 'admonitionTc';
 
-type AdmonitionLang = 'EN' | 'FR';
+// Any `data-lang` value is accepted: the built-in `EN`/`FR` labels below, plus
+// whatever additional languages the author supplies via `options.labels` (see
+// src/models.ts, `TcAdmonitionOptions.labels`).
+type AdmonitionLang = string;
 
 // Translated, human-readable labels for each type, used only when
 // `accessibleTypeLabel` is enabled (see src/models.ts for the option).
 const admonitionLabels: Record<
     (typeof typesIcons)[number],
-    Record<AdmonitionLang, string>
+    Record<'EN' | 'FR', string>
 > = {
     abstract: { EN: 'Abstract', FR: 'Résumé' },
     info: { EN: 'Info', FR: 'Info' },
@@ -56,33 +59,41 @@ function isDefined<T>(x: T | null | undefined): x is T {
 /**
  * Resolves the language to use for the accessible type label from the slides'
  * `data-lang` attribute (managed by the `tc-i18n` addon, see
- * `src/addons/tc-i18n.ts`). The library never reads/writes `<html lang>`
- * (see #109) - only the `.reveal .slides` element it already manages.
+ * `src/addons/tc-i18n.ts` - itself driven by the `?data-lang=` URL parameter,
+ * so this already is dynamic from the URL, it's just not the `<html lang>`
+ * attribute: the library never reads/writes that one, see #109). Any value is
+ * returned as-is (uppercased): whether it resolves to a translated label
+ * depends on what `resolveAccessibleLabel` finds for it, built-in or
+ * author-supplied via `options.labels`.
  */
 function resolveAdmonitionLang(): AdmonitionLang {
     const slidesElement = document.querySelector('.reveal .slides');
     const lang = slidesElement?.getAttribute('data-lang')?.toUpperCase();
-    return lang === 'FR' ? 'FR' : (DEFAULT_LANGUAGE as AdmonitionLang);
+    return lang || DEFAULT_LANGUAGE;
 }
 
 /**
  * Resolves the accessible (translatable) label for a given admonition token.
  * A `custom` admonition with author-provided text (`tc-admonition-type`) uses
- * that text verbatim (it cannot be auto-translated); otherwise falls back to
- * the translated generic label for the type.
+ * that text verbatim (it cannot be auto-translated); otherwise looks up, in
+ * order: the author-supplied translation for the current language
+ * (`options.labels`), the built-in `EN`/`FR` translation, the built-in
+ * default-language translation, and finally the raw type name.
  */
 function resolveAccessibleLabel(
     typeIcon: string,
     customType: string | undefined,
-    lang: AdmonitionLang
+    lang: AdmonitionLang,
+    customLabels: Record<string, Record<string, string>> | undefined
 ): string {
     if (customType) {
         return customType;
     }
     const labels = admonitionLabels[typeIcon];
     return (
-        labels?.[lang] ??
-        labels?.[DEFAULT_LANGUAGE as AdmonitionLang] ??
+        customLabels?.[lang]?.[typeIcon] ??
+        labels?.[lang as 'EN' | 'FR'] ??
+        labels?.[DEFAULT_LANGUAGE as 'EN' | 'FR'] ??
         typeIcon
     );
 }
@@ -180,7 +191,8 @@ export function markedTcAdmonition(
                         const label = resolveAccessibleLabel(
                             token.typeIcon,
                             token.customType,
-                            lang
+                            lang,
+                            options.labels
                         );
                         const labelSpan = htmlDoc.createElement('span');
                         labelSpan.className = 'tc-visually-hidden';
