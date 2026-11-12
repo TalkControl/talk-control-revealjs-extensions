@@ -11,6 +11,7 @@ import {
     normalizeCss,
     normalizeCssValue,
 } from './normalize';
+import { THEMES } from '../../scripts/utils/highlight-themes.utils';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import fs from 'node:fs';
@@ -94,19 +95,30 @@ describe('dist/ contract', () => {
     });
 
     it('ships the expected files, with the exact CSS file name', () => {
-        expect(listFiles(DIST)).toEqual([
-            'cli/talk-control-a11y.js',
-            'cli/talk-control-a11y.js.map',
-            'images/quotes.webp',
-            'package.json',
-            DTS_FILE,
-            ESM_FILE,
-            `${ESM_FILE}.map`,
-            'talk-control-revealjs-extensions.umd.cjs',
-            'talk-control-revealjs-extensions.umd.cjs.map',
-            CSS_FILE,
-            'talk-control.png',
-        ]);
+        // dist/highlight/ (issue #46) is a generated directory of scoped
+        // highlight.js themes; its exact contents are the dedicated
+        // contract in tests/contract/highlight.contract.ts, which derives
+        // the expected file names from the same THEMES list used here.
+        const highlightFiles = THEMES.flatMap((theme) => [
+            `highlight/${theme}.dark.css`,
+            `highlight/${theme}.light.css`,
+        ]).sort();
+        expect(listFiles(DIST)).toEqual(
+            [
+                'cli/talk-control-a11y.js',
+                'cli/talk-control-a11y.js.map',
+                ...highlightFiles,
+                'images/quotes.webp',
+                'package.json',
+                DTS_FILE,
+                ESM_FILE,
+                `${ESM_FILE}.map`,
+                'talk-control-revealjs-extensions.umd.cjs',
+                'talk-control-revealjs-extensions.umd.cjs.map',
+                CSS_FILE,
+                'talk-control.png',
+            ].sort()
+        );
     });
 
     it('matches the normalized CSS snapshot', async () => {
