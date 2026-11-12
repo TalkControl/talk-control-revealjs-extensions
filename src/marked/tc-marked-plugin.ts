@@ -1,8 +1,8 @@
 import { MarkedTcIconsOptions, markedTcIcons } from './marked-tc-icons';
 import { MarkedTcQrCodeOptions, markedTcQrCode } from './marked-tc-qrcode';
+import { RevealMarkdownPlugin, TcAdmonitionOptions } from '../models';
 import { PluginFunction } from 'reveal.js';
 import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
-import { RevealMarkdownPlugin } from '../models';
 import { markedStyledImage } from '@anthonypena/marked-styled-image';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
@@ -34,6 +34,7 @@ export interface TalkControlMarkedOptions {
     fontIcons?: MarkedTcIconsOptions[];
     knowStyles?: string[];
     qrcode?: MarkedTcQrCodeOptions;
+    admonitionOptions?: TcAdmonitionOptions;
 }
 export class RevealTalkControlMarkdownPlugin {
     private options: TalkControlMarkedOptions;
@@ -65,7 +66,9 @@ export class RevealTalkControlMarkdownPlugin {
                         );
                         revealMarkdownPlugin.marked.use(markedTcBg());
                         revealMarkdownPlugin.marked.use(markedTcCols());
-                        revealMarkdownPlugin.marked.use(markedTcAdmonition());
+                        revealMarkdownPlugin.marked.use(
+                            markedTcAdmonition(self.options.admonitionOptions)
+                        );
                         revealMarkdownPlugin.marked.use(
                             markedTcQrCode(self.options.qrcode)
                         );

@@ -1,0 +1,65 @@
+/**
+ * Accessibility: user-preference media queries (issue #107).
+ *
+ * These are additive `@media` guards only - the default rendering never
+ * changes. They are intentionally kept free of any cascade-layer wrapper so
+ * a later cascade-layer rollout (#35, not started) can slot them into
+ * whatever layer order it defines without this file needing to change or
+ * be re-ordered.
+ */
+
+// 2.3.3 (AAA) / best practice: neutralize every transition and animation the
+// theme declares once the user has asked the OS/browser for reduced motion.
+//
+// The selector is intentionally generic (`.reveal *`) rather than naming the
+// theme's own specific transitions one by one (e.g. the copy-to-clipboard
+// icon in classics/code-slides.scss), so any transition or animation added
+// later by this theme is covered without touching this file again -
+// including reveal.js's own cross-slide transitions, should #9 ever move
+// that CSS into this theme.
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0s !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0s !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+// 1.4.11 (non-text contrast): a couple of theme elements use a box-shadow -
+// not rendered at all in forced-colors mode - as their only visual
+// boundary. Give them an explicit, system-color border so they stay visible
+// once the browser is in forced-colors mode.
+@media (forced-colors: active) {
+    .reveal {
+        code:not(.hljs) {
+            border: 1px solid CanvasText;
+        }
+
+        .slides *:is(.with-code, .with-code-dark, .with-code-bg-dark) pre {
+            span.tc-copy-to-clipboard,
+            div.tc-copy-popup {
+                border: 1px solid CanvasText;
+            }
+        }
+    }
+}
+
+// 1.4.11, non-WHCM path: strengthen the same boundaries when the user has
+// only asked for more contrast (`prefers-contrast: more`), without waiting
+// for a full forced-colors mode.
+@media (prefers-contrast: more) {
+    .reveal {
+        code:not(.hljs) {
+            border: 1px solid currentColor;
+        }
+
+        .slides section .admonition {
+            border-left-width: 10px;
+        }
+    }
+}

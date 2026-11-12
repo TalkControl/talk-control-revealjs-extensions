@@ -50,22 +50,6 @@ declare interface MarkedTcIconsOptions {
     initFunction?: () => void;
 }
 
-declare interface MarkedTcQrCodeOptions {
-    /**
-     * Default alt text used for every QR code that doesn't set its own
-     * `tc-qrcode-alt="..."` override. Use the `{{text}}` placeholder for the
-     * encoded text.
-     *
-     * Can be a single string (applied regardless of language), or a map keyed by
-     * the `data-lang` language code (same convention as the `tc-i18n` addon, eg.
-     * `EN`/`FR`) to localize the message according to the current slide language.
-     *
-     * When omitted, the legacy English message
-     * ("qrcode with base64 information, original text is: ...") is used unchanged.
-     */
-    defaultAlt?: string | Record<string, string>;
-}
-
 export declare function materialSymbolsIconPack(): MarkedTcIconsOptions;
 
 export { Reveal_2 as Reveal }
@@ -99,7 +83,46 @@ export declare interface SlideTreeEntry {
 declare interface TalkControlMarkedOptions {
     fontIcons?: MarkedTcIconsOptions[];
     knowStyles?: string[];
-    qrcode?: MarkedTcQrCodeOptions;
+    admonitionOptions?: TcAdmonitionOptions;
+}
+
+/**
+ * Options for the admonition marked extension (see `src/marked/marked-tc-admonition.ts`).
+ */
+export declare interface TcAdmonitionOptions {
+    /**
+     * Opt-in accessibility enhancement (disabled by default to keep the default
+     * markup unchanged for backward compatibility).
+     *
+     * Today, an admonition's type (e.g. "Note", "Warning") is only conveyed through
+     * decorative CSS (`content: '📝 Note'` in `admonition.scss`): it isn't translated,
+     * it's read inconsistently (or not at all) by screen readers, and when it is read
+     * the emoji is announced literally.
+     *
+     * When enabled, the type is additionally exposed as real, visually-hidden text in
+     * the DOM — translated according to the slides' current `data-lang` (built-in
+     * `EN`/`FR`, plus any language supplied via `labels`) — and the admonition
+     * paragraph is given `role="note"`. To avoid announcing the type twice, the
+     * decorative CSS content is hidden whenever this option is active (see the
+     * `.tc-admonition-a11y` modifier in `admonition.scss`).
+     */
+    accessibleTypeLabel?: boolean;
+    /**
+     * Translated type labels for languages beyond the built-in `EN`/`FR`, keyed by
+     * the same `data-lang` value the deck already uses (see `tc-i18n`), then by
+     * admonition type (`note`, `warning`, ... or a custom `tc-admonition-type`).
+     * Only used when `accessibleTypeLabel` is enabled. A language entry here is
+     * merged with (and takes priority over) a built-in `EN`/`FR` translation for
+     * the same key, so this can also be used to override a single built-in label.
+     *
+     * @example
+     * ```javascript
+     * labels: {
+     *     ES: { note: 'Nota', warning: 'Advertencia' },
+     * }
+     * ```
+     */
+    labels?: Record<string, Record<string, string>>;
 }
 
 export declare class TcConfiguratorElement extends LitElement {
@@ -124,7 +147,19 @@ export declare class TcConfiguratorElement extends LitElement {
     render(): TemplateResult<1>;
     selectTab(tab: 'talk-control' | 'revealjs'): void;
     private handleTabKeydown;
-    private handleCloseKeydown;
+    /**
+     * Focus trap: keeps Tab / Shift+Tab navigation inside the dialog so it
+     * never escapes to the rest of the page, including across the shadow
+     * roots of the nested `tc-talk-control-element` / `tc-revealjs-element`.
+     */
+    private handleDialogKeydown;
+    firstUpdated(): void;
+    /**
+     * Moves initial focus into the dialog when it opens, so keyboard users
+     * land inside the focus trap rather than on whatever was focused (or
+     * the document body) before it appeared.
+     */
+    private focusFirstElement;
     private onConfigChanged;
     /**
      * Handler method that deals with the apply button. it will refresh the page

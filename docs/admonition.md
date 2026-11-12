@@ -99,6 +99,89 @@ you can use any WCAG contrast checker (for example
 
 ![](./imgs/admonition-custom.png)
 
+## Accessible type label (opt-in)
+
+By default, an admonition's type (e.g. "📝 Note") is only conveyed through
+decorative CSS (the `::before` content in `admonition.scss`): it isn't
+translated, it's read inconsistently (or not at all) by screen readers, and
+when it is read the emoji is announced literally - the type is never exposed
+in the DOM/semantics (WCAG 1.3.1, 1.1.1).
+
+Enable `accessibleTypeLabel` to fix this. It's **disabled by default** so the
+default markup never changes:
+
+```javascript
+tcMarkedOptions: {
+    admonitionOptions: {
+        accessibleTypeLabel: true,
+    },
+},
+```
+
+When enabled:
+
+-   The admonition paragraph gets `role="note"`.
+-   The type is added as real, visually-hidden text (`.tc-visually-hidden`),
+    translated from the slides' current `data-lang` - e.g.
+    `<span class="tc-visually-hidden">Note: </span>` before the content, or
+    `<span class="tc-visually-hidden">Attention: </span>` when
+    `data-lang="FR"`. `EN` and `FR` are built in; see "Additional languages"
+    below to supply more.
+-   `data-lang` is already dynamic from the URL: it's set by the `tc-i18n`
+    addon from the `?data-lang=` query parameter (see [`i18n.md`](./i18n.md)),
+    before the slides are parsed, so e.g. `?data-lang=fr` on the deck's URL is
+    enough to get the French labels, no extra wiring needed. This is a
+    different thing from the document's `<html lang>` attribute, which the
+    library never reads or writes (see #109) - that one remains the speaker's
+    own responsibility to set.
+-   For a `custom` admonition, the author-provided `tc-admonition-type` text is
+    used verbatim as the accessible label (it can't be auto-translated); with
+    no `tc-admonition-type` given, the generic, translated "Custom" label is
+    used instead.
+-   The decorative `::before` content (emoji + title) is hidden for every
+    admonition that carries this option, so the type is announced once, not
+    twice. The colored left border stays unchanged.
+
+```markdown
+!!! note
+This is a note. It contains some important information.
+!!!
+```
+
+renders (with the option enabled, `data-lang` unset or `EN`) as:
+
+```html
+<p class="admonition note tc-admonition-a11y" role="note">
+    <span class="tc-visually-hidden">Note: </span>This is a note. It contains
+    some important information.
+</p>
+```
+
+### Additional languages
+
+Only `EN` and `FR` are translated out of the box. Supply `labels` to add any
+other language your deck's `data-lang` uses, keyed by that same value, then by
+admonition type:
+
+```javascript
+tcMarkedOptions: {
+    admonitionOptions: {
+        accessibleTypeLabel: true,
+        labels: {
+            ES: { note: 'Nota', warning: 'Advertencia' },
+        },
+    },
+},
+```
+
+-   A language entry here is merged with (and takes priority over) a built-in
+    `EN`/`FR` translation for the same type, so this can also override a
+    single built-in label without having to redefine the whole set.
+-   A type with no matching entry - in `labels` or in the built-ins - falls
+    back to its `EN` label.
+-   `custom` admonitions are unaffected: their accessible label always comes
+    from the author's own `tc-admonition-type`, translated or not.
+
 ## Use comment syntax
 
 To use revealJS comment syntax you can use the following code

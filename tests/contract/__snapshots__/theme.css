@@ -2054,6 +2054,18 @@ border-left-color:var(--tc-admonition-bg-color, #808080)}
 .reveal .slides section .admonition.custom:before{
 color:var(--tc-admonition-bg-color, #808080);
 content:attr(data-admonition-icon)}
+.reveal .slides section .admonition.tc-admonition-a11y:before{
+content:none}
+.tc-visually-hidden{
+position:absolute;
+width:1px;
+height:1px;
+padding:0;
+margin:-1px;
+overflow:hidden;
+clip:rect(0,0,0,0);
+white-space:nowrap;
+border:0}
 .reveal .slides section.quote-slide h1,.reveal .slides section.quote-slide h2,.reveal .slides section.quote-slide h3,.reveal .slides section.quote-slide h4,.reveal .slides section.quote-slide p,.reveal .slides section.quote-slide blockquote,.reveal .slides section.quote-slide code,.reveal .slides section.quote-slide pre,.reveal .slides section.quote-slide a{
 color:var(--tc-quote-color)}
 .reveal .slides section.quote-slide blockquote{
@@ -2705,6 +2717,25 @@ order:1}
 margin:10px}
 .reveal .slides section .tc-qrcode img{
 grid-area:img}
+@media(prefers-reduced-motion:reduce){
+.reveal *,.reveal *:before,.reveal *:after{
+animation-duration:0s!important;
+animation-iteration-count:1!important;
+transition-duration:0s!important;
+scroll-behavior:auto!important}
+}
+@media(forced-colors:active){
+.reveal code:not(.hljs){
+border:1px solid CanvasText}
+.reveal .slides *:is(.with-code,.with-code-dark,.with-code-bg-dark) pre span.tc-copy-to-clipboard,.reveal .slides *:is(.with-code,.with-code-dark,.with-code-bg-dark) pre div.tc-copy-popup{
+border:1px solid CanvasText}
+}
+@media(prefers-contrast:more){
+.reveal code:not(.hljs){
+border:1px solid currentColor}
+.reveal .slides section .admonition{
+border-left-width:10px}
+}
 :root{
 --tc-font-size: 1.2em;
 --tc-heading-color: #1d1d1d;
@@ -2968,6 +2999,34 @@ border-radius:10px;
 background-color:#fafafa;
 box-shadow:#37474f 2px 2px 4px 2px;
 z-index:100}
+#tc-configurator-trigger{
+position:fixed;
+top:16px;
+right:16px;
+width:44px;
+height:44px;
+padding:0;
+display:flex;
+align-items:center;
+justify-content:center;
+border:none;
+border-radius:50%;
+background-color:#06c;
+color:#fff;
+font-size:1.2rem;
+line-height:1;
+cursor:pointer;
+box-shadow:0 2px 8px #0000004d;
+transition:background-color .2s ease,transform .2s ease;
+z-index:30}
+#tc-configurator-trigger:hover{
+background-color:#005a9e;
+transform:translateY(-1px)}
+#tc-configurator-trigger:focus-visible{
+outline:2px solid white;
+outline-offset:2px}
+#tc-configurator-trigger[inert]{
+opacity:.5}
 /*!
 * Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com
 * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
