@@ -85,7 +85,17 @@ export function markedTcAdmonition(): marked.MarkedExtension {
                         return false;
                     }
 
-                    const content = this.parser.parse(token.tokens);
+                    // token.tokens holds INLINE tokens (produced by
+                    // `this.lexer.inlineTokens(...)` in the tokenizer above),
+                    // so they must be rendered via `parseInline`, not `parse`
+                    // (the block-level entry point, which has no renderer
+                    // registered for inline token types such as `strong` or
+                    // `codespan` and throws — see #115). We wrap the result in
+                    // a `<p>` ourselves to match what `parser.parse` produced
+                    // for the plain-text case (`renderer.paragraph`).
+                    const content = `<p>${this.parser.parseInline(
+                        token.tokens
+                    )}</p>`;
                     const parser = new DOMParser();
                     const htmlDoc = parser.parseFromString(
                         content,

@@ -70,3 +70,27 @@ Entities: &amp; &lt;div&gt; "double" 'single' &copy; < > &
 
 !!! warning
 Unclosed admonition at the end of the slide
+
+##==##
+
+# Admonitions, inline Markdown (#115)
+
+!!! note
+this is **bold** content
+!!!
+
+!!! warning
+run `npm install` first
+!!!
+
+!!! info
+see [the docs](https://example.com) for details
+!!!
+
+!!! danger
+this is **bold with _nested emphasis_ inside**
+!!!
+
+!!! important
+Use **bold**, `code`, and a [link](https://example.com) together
+!!!
