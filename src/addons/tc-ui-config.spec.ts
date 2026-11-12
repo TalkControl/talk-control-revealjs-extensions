@@ -290,4 +290,97 @@ describe('TcUiConfig', () => {
             expect(document.querySelector('#ui-slide-selector')).toBeNull();
         });
     });
+
+    describe('Visible trigger button (issue #106)', () => {
+        it('creates a keyboard-reachable, labelled trigger button on init', () => {
+            const button = document.querySelector(
+                '#tc-configurator-trigger'
+            ) as HTMLButtonElement;
+
+            expect(button).toBeTruthy();
+            expect(button.tagName).toBe('BUTTON');
+            expect(button.getAttribute('aria-label')).toMatch(/configurator/i);
+            expect(button.hasAttribute('disabled')).toBe(false);
+            expect(button.getAttribute('tabindex')).not.toBe('-1');
+        });
+
+        it('does not create a second trigger button on a later call', () => {
+            tcUiConfig.createTriggerButton();
+
+            expect(
+                document.querySelectorAll('#tc-configurator-trigger')
+            ).toHaveLength(1);
+        });
+
+        it('opens the UI when the trigger button is clicked', () => {
+            const openUISpy = vi.spyOn(tcUiConfig, 'openUI');
+            const button = document.querySelector(
+                '#tc-configurator-trigger'
+            ) as HTMLButtonElement;
+
+            button.click();
+
+            expect(openUISpy).toHaveBeenCalled();
+            expect(tcUiConfig['state'].show).toBe(true);
+        });
+    });
+
+    describe('Inert on the rest of the page while open (issue #106)', () => {
+        it('makes every sibling of the dialog container inert once opened', () => {
+            tcUiConfig.openUI();
+
+            const container = document.querySelector('#ui-slide-selector')!;
+            const siblings = Array.from(document.body.children).filter(
+                (el) => el !== container
+            );
+
+            expect(siblings.length).toBeGreaterThan(0);
+            for (const sibling of siblings) {
+                expect(sibling.hasAttribute('inert')).toBe(true);
+            }
+            expect(container.hasAttribute('inert')).toBe(false);
+        });
+
+        it('removes inert from every sibling once closed', () => {
+            tcUiConfig.openUI();
+            tcUiConfig.closeUI();
+
+            const siblings = Array.from(document.body.children);
+            for (const sibling of siblings) {
+                expect(sibling.hasAttribute('inert')).toBe(false);
+            }
+        });
+    });
+
+    describe('Focus restoration (issue #106)', () => {
+        it('restores focus to the element that triggered the opening', () => {
+            const button = document.querySelector(
+                '#tc-configurator-trigger'
+            ) as HTMLButtonElement;
+            button.focus();
+            expect(document.activeElement).toBe(button);
+
+            // lit-html is mocked in this file, so the configurator never
+            // actually renders/moves focus into itself here - that cross-
+            // module behavior (tc-configurator-element's own initial-focus
+            // handling) is covered by tc-configurator-element.spec.ts. This
+            // test only exercises TcUiConfig's own responsibility: capturing
+            // what had focus on open, and restoring it on close.
+            tcUiConfig.openUI();
+
+            tcUiConfig.closeUI();
+            expect(document.activeElement).toBe(button);
+        });
+
+        it('does not throw when the triggering element is no longer in the DOM', () => {
+            const transientButton = document.createElement('button');
+            document.body.appendChild(transientButton);
+            transientButton.focus();
+
+            tcUiConfig.openUI();
+            transientButton.remove();
+
+            expect(() => tcUiConfig.closeUI()).not.toThrow();
+        });
+    });
 });

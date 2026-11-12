@@ -15,6 +15,11 @@ export class TcUiConfig {
         defaultLanguage: string;
     };
 
+    /** The element focus should return to once the dialog closes. */
+    private previouslyFocusedElement: HTMLElement | null = null;
+    /** Siblings of the dialog's container that were made `inert` while it is open. */
+    private inertedElements: HTMLElement[] = [];
+
     constructor(
         slides: SlidePath[],
         defaultLanguage: string,
@@ -38,6 +43,47 @@ export class TcUiConfig {
         document.body.addEventListener('keyup', (e) => this._keyUpHandler(e));
 
         this.initModes();
+        this.createTriggerButton();
+    }
+
+    /**
+     * Creates the visible, keyboard-reachable button that opens the
+     * configurator. Until now the dialog could only be opened with the `C`
+     * keyboard shortcut, with no on-screen control for users who don't know
+     * about it.
+     */
+    createTriggerButton(): HTMLButtonElement {
+        let button = document.querySelector(
+            '#tc-configurator-trigger'
+        ) as HTMLButtonElement;
+        if (!button) {
+            button = document.createElement('button');
+            button.id = 'tc-configurator-trigger';
+            button.type = 'button';
+            button.setAttribute(
+                'aria-label',
+                'Open the TalkControl configurator (shortcut: C)'
+            );
+            button.title = 'Open the TalkControl configurator (shortcut: C)';
+            button.innerHTML = '<span aria-hidden="true">⚙️</span>';
+            button.addEventListener('click', () => this.openUI());
+            document.body.appendChild(button);
+        }
+        return button;
+    }
+
+    /**
+     * Opens the configurator, remembering what had focus so it can be
+     * restored on close, and making the rest of the page `inert` so focus
+     * and screen-reader navigation stay trapped in the dialog.
+     */
+    openUI(): void {
+        if (this.state.show) return;
+        this.previouslyFocusedElement =
+            (document.activeElement as HTMLElement) ?? null;
+        this.state.show = true;
+        this.resetOrCreateUI();
+        this.applyInert();
     }
 
     /**
@@ -116,8 +162,7 @@ export class TcUiConfig {
             !this.state.show
         ) {
             e.preventDefault();
-            this.state.show = true;
-            this.resetOrCreateUI();
+            this.openUI();
         } else if (e.key === 'Escape' && this.state.show) {
             e.preventDefault();
             this.closeUI();
@@ -125,7 +170,8 @@ export class TcUiConfig {
     }
 
     /**
-     * Close the UI
+     * Close the UI, lifting the `inert` applied to the rest of the page and
+     * restoring focus to whatever triggered the dialog's opening.
      */
     closeUI() {
         this.state.show = false;
@@ -133,6 +179,47 @@ export class TcUiConfig {
             document.querySelector('#ui-slide-selector')!;
         if (elementSelection) {
             elementSelection.remove();
+        }
+        this.removeInert();
+        this.restoreFocus();
+    }
+
+    /**
+     * Makes every sibling of the dialog's container `inert`, so focus,
+     * pointer interaction and assistive-technology navigation stay trapped
+     * inside the configurator while it is open.
+     */
+    private applyInert(): void {
+        const container = document.querySelector('#ui-slide-selector');
+        this.inertedElements = Array.from(document.body.children).filter(
+            (element): element is HTMLElement =>
+                element !== container && element instanceof HTMLElement
+        );
+        for (const element of this.inertedElements) {
+            element.setAttribute('inert', '');
+        }
+    }
+
+    /**
+     * Lifts the `inert` applied by {@link applyInert}.
+     */
+    private removeInert(): void {
+        for (const element of this.inertedElements) {
+            element.removeAttribute('inert');
+        }
+        this.inertedElements = [];
+    }
+
+    /**
+     * Restores focus to the element that was focused right before the
+     * dialog opened (the visible trigger button, or whatever had focus when
+     * the `C` shortcut was used).
+     */
+    private restoreFocus(): void {
+        const target = this.previouslyFocusedElement;
+        this.previouslyFocusedElement = null;
+        if (target && document.body.contains(target)) {
+            target.focus();
         }
     }
 

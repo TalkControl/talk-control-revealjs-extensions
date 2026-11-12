@@ -11,3 +11,50 @@ tc-configurator-element {
 
     z-index: 100;
 }
+
+// Visible, keyboard-reachable entry point for the configurator (issue #106):
+// until now it could only be opened with the "C" keyboard shortcut.
+#tc-configurator-trigger {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+
+    width: 44px;
+    height: 44px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+    background-color: #0066cc;
+    color: white;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+
+    z-index: 30;
+
+    &:hover {
+        background-color: #005a9e;
+        transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 2px;
+    }
+
+    // Dimmed by the browser while the configurator dialog is open (it is
+    // then also `inert`, so it can't be activated or reached by Tab).
+    &[inert] {
+        opacity: 0.5;
+    }
+}
