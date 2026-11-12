@@ -18,3 +18,14 @@ export { fontAwesomeIconPack } from './icons-config/font-awesome-pack';
 export { featherIconPack } from './icons-config/feather-icons-pack';
 
 export { materialSymbolsIconPack } from './icons-config/material-symbols-pack';
+
+export {
+    TcVendorLoadError,
+    configureVendorLoader,
+    loadVendorModule,
+    loadVendorScript,
+    loadVendorStylesheet,
+    resolveVendorUrl,
+    waitForFonts,
+} from './utils/tc-vendor-loader';
+export type { TcVendorLoaderOptions } from './utils/tc-vendor-loader';

@@ -68,9 +68,14 @@ vi.mock('./addons/tc-multiples-cols', () => ({
 
 vi.mock('./addons/tc-ui-config');
 
+vi.mock('./utils/tc-vendor-loader', () => ({
+    configureVendorLoader: vi.fn(),
+}));
+
 // Get a representation of this mock class
 const I18nMocked = vi.mocked(await import('./addons/tc-i18n'));
 const ThemeMocked = vi.mocked(await import('./theme-plugin'));
+const VendorLoaderMocked = vi.mocked(await import('./utils/tc-vendor-loader'));
 
 describe('ThemeInitializer', () => {
     let slidesElement: HTMLElement;
@@ -183,6 +188,23 @@ describe('ThemeInitializer', () => {
             await ThemeInitializer.init(mockOptions);
 
             expect(mockSlidesFactory).toHaveBeenCalled();
+        });
+        it('should configure the vendor loader with vendorBaseUrl', async () => {
+            await ThemeInitializer.init({
+                ...mockOptions,
+                vendorBaseUrl: '/cdn/vendor',
+            });
+
+            expect(
+                VendorLoaderMocked.configureVendorLoader
+            ).toHaveBeenCalledWith({ vendorBaseUrl: '/cdn/vendor' });
+        });
+        it('should configure the vendor loader even without vendorBaseUrl', async () => {
+            await ThemeInitializer.init(mockOptions);
+
+            expect(
+                VendorLoaderMocked.configureVendorLoader
+            ).toHaveBeenCalledWith({ vendorBaseUrl: undefined });
         });
         it('should call renderer', async () => {
             await ThemeInitializer.init(mockOptions);

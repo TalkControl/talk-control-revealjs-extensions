@@ -17,6 +17,7 @@ import { SlidePath } from './models';
 import { TcCustomBackgroundOptions } from './addons/tc-custom-background';
 import { TcThemeOptions } from './addons/tc-theme';
 import { TcUiConfig } from './addons/tc-ui-config';
+import { configureVendorLoader } from './utils/tc-vendor-loader';
 import { getShowType } from './addons/tc-data-type';
 import { getSlidesToUse } from './utils/storage-service';
 import { postManageMultiplesColumns } from './addons/tc-multiples-cols';
@@ -53,6 +54,7 @@ export interface ThemeInitializerOptions {
     slidesRenderer?: (element: HTMLElement, slides: SlidePath[]) => RootPart; // Function to render the slides defautl use litHTML
     defaultSlidesType?: string; // Default applied is "on-stage"
     plugins?: PluginFunction[]; // Additionnal RevealJS plugin to add (will be add at the end of the process)
+    vendorBaseUrl?: string | URL; // Base URL of the vendored assets folder (dist/vendor/), see docs/vendor.md
 }
 
 export const ThemeInitializer = {
@@ -69,7 +71,10 @@ export const ThemeInitializer = {
         defaultSlidesType,
         slidesRenderer = defaultSlideRenderer,
         plugins = [],
+        vendorBaseUrl,
     }: ThemeInitializerOptions) {
+        configureVendorLoader({ vendorBaseUrl });
+
         if (!slidesFactory) {
             throw new Error('No slide factory function');
         }
