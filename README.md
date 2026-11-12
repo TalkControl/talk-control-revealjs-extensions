@@ -40,7 +40,8 @@ Talk Control adds numerous out-of-the-box features:
 
 ## How to
 
-See [How to](./docs/how-to.md)
+See [How to](./docs/how-to.md), and [Attributes](./docs/attributes.md) for
+the `data-tc-*` attributes (icon color/size, admonition color).
 
 ## Development
 

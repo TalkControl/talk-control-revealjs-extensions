@@ -86,6 +86,12 @@ Custom and custom color
 !!!
 ```
 
+The parser renders this as a `data-tc-admonition-bg-color` attribute on the
+admonition (read in CSS via typed `attr()`, see [Attributes](./attributes.md)),
+not an inline `style` - so a `custom` admonition written directly in HTML or
+via reveal.js' `<!-- .element: -->` comment syntax should use that same
+attribute (see "Use comment syntax" below).
+
 #### Choosing an accessible custom color
 
 The `custom` type's color is entirely up to you, and the library does not
@@ -193,5 +199,9 @@ Some info block
 
 Custom and custom color
 
-<!-- .element: class="admonition custom" data-admonition-icon="🕶️ Custom" style="--tc-admonition-bg-color:#d7be00;" -->
+<!-- .element: class="admonition custom" data-admonition-icon="🕶️ Custom" data-tc-admonition-bg-color="#d7be00" -->
 ```
+
+A manually-authored `style="--tc-admonition-bg-color:…"` keeps working
+exactly as before (see [Attributes](./attributes.md) for the full
+`data-tc-*` story, including browser support and the temporary polyfill).

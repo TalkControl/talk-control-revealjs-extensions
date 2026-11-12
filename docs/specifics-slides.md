@@ -51,7 +51,7 @@ You can also change the number of badge (up to 6). Each should have `class='badg
 
 ### fake@email.com
 
-![](./assets/images/jf-2.jpg)<!-- .element: class="speaker" style="--tc-speaker-img-post:right;"-->
+![](./assets/images/jf-2.jpg)<!-- .element: class="speaker" style="--tc-speaker-img-pos:right;"-->
 
 ![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
 
