@@ -1,3 +1,5 @@
+import { DEFAULT_LANGUAGE } from '../utils/const';
+import { TcAdmonitionOptions } from '../models';
 import { marked } from 'marked';
 
 const typesIcons = [
@@ -23,8 +25,77 @@ const admonitionRegex = new RegExp(
 );
 const TYPE_ADMONITION_TC = 'admonitionTc';
 
+// Any `data-lang` value is accepted: the built-in `EN`/`FR` labels below, plus
+// whatever additional languages the author supplies via `options.labels` (see
+// src/models.ts, `TcAdmonitionOptions.labels`).
+type AdmonitionLang = string;
+
+// Translated, human-readable labels for each type, used only when
+// `accessibleTypeLabel` is enabled (see src/models.ts for the option).
+const admonitionLabels: Record<
+    (typeof typesIcons)[number],
+    Record<'EN' | 'FR', string>
+> = {
+    abstract: { EN: 'Abstract', FR: 'Résumé' },
+    info: { EN: 'Info', FR: 'Info' },
+    tip: { EN: 'Tip', FR: 'Astuce' },
+    note: { EN: 'Note', FR: 'Remarque' },
+    success: { EN: 'Success', FR: 'Succès' },
+    question: { EN: 'Question', FR: 'Question' },
+    warning: { EN: 'Warning', FR: 'Attention' },
+    failure: { EN: 'Failure', FR: 'Échec' },
+    danger: { EN: 'Danger', FR: 'Danger' },
+    important: { EN: 'Important', FR: 'Important' },
+    bug: { EN: 'Bug', FR: 'Bug' },
+    example: { EN: 'Example', FR: 'Exemple' },
+    quote: { EN: 'Quote', FR: 'Citation' },
+    custom: { EN: 'Custom', FR: 'Personnalisé' },
+};
+
 function isDefined<T>(x: T | null | undefined): x is T {
     return x != undefined;
+}
+
+/**
+ * Resolves the language to use for the accessible type label from the slides'
+ * `data-lang` attribute (managed by the `tc-i18n` addon, see
+ * `src/addons/tc-i18n.ts` - itself driven by the `?data-lang=` URL parameter,
+ * so this already is dynamic from the URL, it's just not the `<html lang>`
+ * attribute: the library never reads/writes that one, see #109). Any value is
+ * returned as-is (uppercased): whether it resolves to a translated label
+ * depends on what `resolveAccessibleLabel` finds for it, built-in or
+ * author-supplied via `options.labels`.
+ */
+function resolveAdmonitionLang(): AdmonitionLang {
+    const slidesElement = document.querySelector('.reveal .slides');
+    const lang = slidesElement?.getAttribute('data-lang')?.toUpperCase();
+    return lang || DEFAULT_LANGUAGE;
+}
+
+/**
+ * Resolves the accessible (translatable) label for a given admonition token.
+ * A `custom` admonition with author-provided text (`tc-admonition-type`) uses
+ * that text verbatim (it cannot be auto-translated); otherwise looks up, in
+ * order: the author-supplied translation for the current language
+ * (`options.labels`), the built-in `EN`/`FR` translation, the built-in
+ * default-language translation, and finally the raw type name.
+ */
+function resolveAccessibleLabel(
+    typeIcon: string,
+    customType: string | undefined,
+    lang: AdmonitionLang,
+    customLabels: Record<string, Record<string, string>> | undefined
+): string {
+    if (customType) {
+        return customType;
+    }
+    const labels = admonitionLabels[typeIcon];
+    return (
+        customLabels?.[lang]?.[typeIcon] ??
+        labels?.[lang as 'EN' | 'FR'] ??
+        labels?.[DEFAULT_LANGUAGE as 'EN' | 'FR'] ??
+        typeIcon
+    );
 }
 
 interface TcAdmonitionToken extends marked.Tokens.Generic {
@@ -36,7 +107,9 @@ interface TcAdmonitionToken extends marked.Tokens.Generic {
     tokens: marked.Token[];
 }
 
-export function markedTcAdmonition(): marked.MarkedExtension {
+export function markedTcAdmonition(
+    options: TcAdmonitionOptions = {}
+): marked.MarkedExtension {
     return {
         extensions: [
             {
@@ -115,6 +188,26 @@ export function markedTcAdmonition(): marked.MarkedExtension {
                             'style',
                             `--tc-admonition-bg-color:${token.customColor};`
                         );
+                    }
+                    if (options.accessibleTypeLabel && paragraph) {
+                        // Opt-in a11y enhancement (#104): expose the type as real,
+                        // visually-hidden, translated text instead of relying solely
+                        // on the decorative CSS `::before` content. The modifier
+                        // class also tells admonition.scss to hide that decorative
+                        // content, avoiding a double (visual/vocal) announcement.
+                        paragraph.classList.add('tc-admonition-a11y');
+                        paragraph.setAttribute('role', 'note');
+                        const lang = resolveAdmonitionLang();
+                        const label = resolveAccessibleLabel(
+                            token.typeIcon,
+                            token.customType,
+                            lang,
+                            options.labels
+                        );
+                        const labelSpan = htmlDoc.createElement('span');
+                        labelSpan.className = 'tc-visually-hidden';
+                        labelSpan.textContent = `${label}: `;
+                        paragraph.insertBefore(labelSpan, paragraph.firstChild);
                     }
 
                     return paragraph?.outerHTML + '\n';

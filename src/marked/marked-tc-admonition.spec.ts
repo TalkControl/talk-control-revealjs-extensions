@@ -124,6 +124,132 @@ describe(markedTcAdmonition.name, () => {
     });
 });
 
+describe(
+    markedTcAdmonition.name + ' - accessible type label (opt-in, #104)',
+    () => {
+        beforeEach(() => {
+            marked.setOptions(marked.getDefaults());
+            document.body.innerHTML = '';
+        });
+
+        function setSlidesLang(lang?: string): void {
+            document.body.innerHTML = `<div class="reveal"><div class="slides"${
+                lang ? ` data-lang="${lang}"` : ''
+            }></div></div>`;
+        }
+
+        it('keeps the default markup unchanged when the option is explicitly disabled', () => {
+            marked.use(markedTcAdmonition({ accessibleTypeLabel: false }));
+            const md = `!!! note\nsome text\n!!!`;
+            const html = `<p class="admonition note">some text</p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('keeps the default markup unchanged when no options are given at all', () => {
+            marked.use(markedTcAdmonition());
+            const md = `!!! note\nsome text\n!!!`;
+            const html = `<p class="admonition note">some text</p>\n`;
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('exposes the type as real, visually-hidden, translated text with role="note" (EN default)', () => {
+            setSlidesLang();
+            marked.use(markedTcAdmonition({ accessibleTypeLabel: true }));
+            const md = `!!! note\nsome text\n!!!`;
+            const html =
+                '<p class="admonition note tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Note: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('translates the accessible label to French when the slides data-lang is "FR"', () => {
+            setSlidesLang('FR');
+            marked.use(markedTcAdmonition({ accessibleTypeLabel: true }));
+            const md = `!!! warning\nsome text\n!!!`;
+            const html =
+                '<p class="admonition warning tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Attention: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('falls back to English when the slides data-lang is unsupported', () => {
+            setSlidesLang('DE');
+            marked.use(markedTcAdmonition({ accessibleTypeLabel: true }));
+            const md = `!!! tip\nsome text\n!!!`;
+            const html =
+                '<p class="admonition tip tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Tip: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('is case-insensitive on the data-lang value ("fr")', () => {
+            setSlidesLang('fr');
+            marked.use(markedTcAdmonition({ accessibleTypeLabel: true }));
+            const md = `!!! danger\nsome text\n!!!`;
+            const html =
+                '<p class="admonition danger tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Danger: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('uses the author-provided custom type text as the accessible label for custom admonitions', () => {
+            setSlidesLang();
+            marked.use(markedTcAdmonition({ accessibleTypeLabel: true }));
+            const md = `!!! custom tc-admonition-type="🐼 Panda Facts"\nsome text\n!!!`;
+            const html =
+                '<p class="admonition custom tc-admonition-a11y" data-admonition-icon="🐼 Panda Facts" role="note"><span class="tc-visually-hidden">🐼 Panda Facts: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('falls back to the translated generic "Custom" label when no custom type text is provided', () => {
+            setSlidesLang('FR');
+            marked.use(markedTcAdmonition({ accessibleTypeLabel: true }));
+            const md = `!!! custom\nsome text\n!!!`;
+            const html =
+                '<p class="admonition custom tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Personnalisé: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('translates the accessible label to an author-supplied language', () => {
+            setSlidesLang('ES');
+            marked.use(
+                markedTcAdmonition({
+                    accessibleTypeLabel: true,
+                    labels: { ES: { tip: 'Consejo' } },
+                })
+            );
+            const md = `!!! tip\nsome text\n!!!`;
+            const html =
+                '<p class="admonition tip tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Consejo: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('lets an author-supplied label override a built-in EN/FR translation for the same type', () => {
+            setSlidesLang('FR');
+            marked.use(
+                markedTcAdmonition({
+                    accessibleTypeLabel: true,
+                    labels: { FR: { note: 'Remarque personnalisée' } },
+                })
+            );
+            const md = `!!! note\nsome text\n!!!`;
+            const html =
+                '<p class="admonition note tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Remarque personnalisée: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+
+        it('falls back to English when neither the built-in nor the author-supplied labels cover the current language', () => {
+            setSlidesLang('DE');
+            marked.use(
+                markedTcAdmonition({
+                    accessibleTypeLabel: true,
+                    labels: { ES: { tip: 'Consejo' } },
+                })
+            );
+            const md = `!!! tip\nsome text\n!!!`;
+            const html =
+                '<p class="admonition tip tc-admonition-a11y" role="note"><span class="tc-visually-hidden">Tip: </span>some text</p>\n';
+            expect(marked.parse(md)).toBe(html);
+        });
+    }
+);
+
 describe(isTcAdmonitionToken.name, () => {
     it('returns true for valid TcAdmintionToken', () => {
         const validToken = {

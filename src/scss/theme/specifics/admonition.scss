@@ -141,4 +141,31 @@ $admonition-quote-color: #747474;
             content: attr(data-admonition-icon);
         }
     }
+
+    // Opt-in accessible type label (#104, see `TcAdmonitionOptions.accessibleTypeLabel`
+    // in src/models.ts): when active, the type is exposed as real,
+    // visually-hidden, translated text (`.tc-visually-hidden` below) instead of
+    // this decorative `::before` content - which isn't translated, is read
+    // inconsistently by screen readers, and would otherwise be announced a
+    // second time alongside the real text. This rule must stay last in this
+    // block so it wins over every `&.<type>:before` rule above it (same
+    // selector specificity, later source order).
+    &.tc-admonition-a11y:before {
+        content: none;
+    }
+}
+
+// Generic, reusable technique to hide content visually while keeping it in
+// the accessibility tree (standard "clip" pattern). Scoped to the admonition
+// a11y label for now (#104); promote to a shared helper if reused elsewhere.
+.tc-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
