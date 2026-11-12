@@ -109,20 +109,20 @@ You can override the following CSS custom properties to fine-tune the appearance
 
 ## Accessibility
 
-By default, an icon renders as a plain `<i>` tag with no `aria-hidden` attribute and no accessible name - the same markup Talk-Control has always produced. Two opt-in pseudo-attributes let you tell screen readers what an icon means (or that it means nothing at all), per [WCAG 1.1.1 and 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html):
+By default, an icon is treated as **decorative**: it renders with `aria-hidden="true"` so assistive technology skips it entirely, per [WCAG 1.1.1 and 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html). This matches how most icons are actually used (next to a text label, or purely ornamental): the common case needs no markup at all. One opt-in pseudo-attribute lets you tell screen readers that an icon carries meaning on its own:
 
--   `tc-a11y-hidden`: the icon is purely decorative. It is rendered with `aria-hidden="true"` so assistive technology skips it.
--   `tc-a11y-label="Accessible name"`: the icon carries meaning. It is rendered with that text as `aria-label`.
+-   `tc-a11y-label="Accessible name"`: the icon carries meaning (e.g. it's the only content of a button). It is rendered with that text as `aria-label` instead of `aria-hidden`.
+-   `tc-a11y-hidden`: marks the icon decorative explicitly. Since this is already the default, it has no visible effect on its own - use it only if you want the intent to be explicit in your Markdown source.
 
 ```markdown
-A decorative icon: ![](star 'tc-icons fa tc-a11y-hidden')
+A decorative icon (default, no pseudo-attribute needed): ![](star 'tc-icons fa')
 
 A meaningful icon: ![](bell 'tc-icons fa tc-a11y-label="New notifications"')
 ```
 
 Rules:
 
--   Both are optional and additive: omit them and nothing changes.
+-   Both are optional: omit them and the icon stays decorative.
 -   If both are present on the same icon, `tc-a11y-hidden` wins (an icon can't be both hidden from and announced to assistive technology).
 -   The accessible name must be wrapped in double quotes (`"..."`), while the Markdown title itself must stay wrapped in single quotes (`'...'`), so the two don't conflict. A label can't itself contain a double quote.
 -   As with ordinary Markdown images, giving an icon an accessible name is the author's own responsibility: pick wording that makes sense out of context for someone who can't see the icon.

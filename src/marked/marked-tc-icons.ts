@@ -146,12 +146,13 @@ export function markedTcIcons({
                         classAttr = ` class="tc-icons${token.options?.trim() ? ' ' + token.options : ''}"`;
                         token.options = '';
                     }
-                    // Decorative wins over a meaningful label if both are set: an
-                    // icon can't be both hidden from and announced to the a11y tree.
-                    let a11yAttr = '';
-                    if (token.a11yHidden) {
-                        a11yAttr = ' aria-hidden="true"';
-                    } else if (token.a11yLabel) {
+                    // An icon is decorative by default (`aria-hidden="true"`) unless
+                    // the author opts it into the a11y tree with `tc-a11y-label`.
+                    // `tc-a11y-hidden` is still accepted for authors who want to say
+                    // so explicitly, and still wins if both are set on the same icon
+                    // (it can't be both hidden from and announced to assistive tech).
+                    let a11yAttr = ' aria-hidden="true"';
+                    if (token.a11yLabel && !token.a11yHidden) {
                         a11yAttr = ` aria-label="${escapeHtmlAttribute(token.a11yLabel)}"`;
                     }
                     if (iconInTag) {
