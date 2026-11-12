@@ -1,11 +1,27 @@
 // Code from taken from https://github.com/kuroidoruido/js-libs/blob/main/libs/marked-djot-div
+import {
+    escapeHtmlAttribute,
+    extractFlagOption,
+    extractQuotedOption,
+} from '../utils/marked-inline-options';
 import { marked } from 'marked';
 
+// Group 1: iconHref, Group 2: the opening quote character ( ' or " ), Group 3: the options
+// The closing quote is matched via a backreference to group 2, so the options (group 3)
+// can safely contain the *other* quote character - this is what lets authors embed an
+// a11y pseudo-attribute (eg. tc-a11y-label="...") inside the single-quoted title.
 const iconRegex = new RegExp(
-    `!\\[\\]\\(([\\w-_\\s]+)\\s+["']([\\w-_\\s]*)["']\\)`
+    `!\\[\\]\\(([\\w-_\\s]+)\\s+(["'])([\\s\\S]*?)\\2\\)`
 );
 const tokenizerRule = new RegExp(`^${iconRegex.source}`);
 const TYPE_ICONS_TC = 'iconsTc';
+
+// Pseudo-attribute keywords recognized inside the icon options string to express
+// accessibility intent (see docs/icons.md "Accessibility"):
+// - `tc-a11y-hidden`: the icon is decorative, it gets `aria-hidden="true"`.
+// - `tc-a11y-label="..."`: the icon is meaningful, it gets that `aria-label`.
+const A11Y_HIDDEN_KEYWORD = 'tc-a11y-hidden';
+const A11Y_LABEL_KEYWORD = 'tc-a11y-label';
 
 function isDefined<T>(x: T | null | undefined): x is T {
     return x != undefined;
@@ -53,6 +69,16 @@ interface TcIconsToken extends marked.Tokens.Generic {
     keyword: string;
     iconHref: string;
     options: string;
+    /**
+     * true when the author marked this icon as decorative (`tc-a11y-hidden`):
+     * it is rendered with `aria-hidden="true"` and has no accessible name.
+     */
+    a11yHidden: boolean;
+    /**
+     * the accessible name given by the author (`tc-a11y-label="..."`), rendered
+     * as `aria-label` when the icon isn't decorative.
+     */
+    a11yLabel?: string;
 }
 
 export function markedTcIcons({
@@ -66,7 +92,7 @@ export function markedTcIcons({
     const regexp = new RegExp(`(?=.*tc-icons)(?=.*${keyword})`, 'g');
     /*
     (?=.*tc-icons)(?=.*${keyword}) : lookahead positive to check existence of two required words
-    Else, it capture words that are not "tc-icons" ni "${keyword}" 
+    Else, it capture words that are not "tc-icons" ni "${keyword}"
      */
     return {
         extensions: [
@@ -84,19 +110,28 @@ export function markedTcIcons({
                         return undefined;
                     }
                     const iconHref = match?.[1];
-                    const paramsIcons = match?.[2];
+                    const paramsIconsRaw = match?.[3] ?? '';
                     // Secondly, we check that keywords are presents
-                    if (!regexp.test(paramsIcons)) {
+                    if (!regexp.test(paramsIconsRaw)) {
                         return undefined;
                     }
+                    // Extract the a11y pseudo-attributes before the generic option
+                    // parsing below, since that one simply space-splits the string
+                    // and would otherwise shred a quoted label into several tokens.
+                    const { value: a11yLabel, remaining: withoutLabel } =
+                        extractQuotedOption(paramsIconsRaw, A11Y_LABEL_KEYWORD);
+                    const { present: a11yHidden, remaining: withoutA11y } =
+                        extractFlagOption(withoutLabel, A11Y_HIDDEN_KEYWORD);
                     // Finally we extract options and iconHref
-                    const options = extractOptions(paramsIcons, keyword);
+                    const options = extractOptions(withoutA11y, keyword);
                     const token: TcIconsToken = {
                         type: TYPE_ICONS_TC,
                         raw: match?.[0],
                         keyword,
                         options,
                         iconHref,
+                        a11yHidden,
+                        a11yLabel,
                     };
                     return token;
                 },
@@ -111,18 +146,27 @@ export function markedTcIcons({
                         classAttr = ` class="tc-icons${token.options?.trim() ? ' ' + token.options : ''}"`;
                         token.options = '';
                     }
+                    // An icon is decorative by default (`aria-hidden="true"`) unless
+                    // the author opts it into the a11y tree with `tc-a11y-label`.
+                    // `tc-a11y-hidden` is still accepted for authors who want to say
+                    // so explicitly, and still wins if both are set on the same icon
+                    // (it can't be both hidden from and announced to assistive tech).
+                    let a11yAttr = ' aria-hidden="true"';
+                    if (token.a11yLabel && !token.a11yHidden) {
+                        a11yAttr = ` aria-label="${escapeHtmlAttribute(token.a11yLabel)}"`;
+                    }
                     if (iconInTag) {
                         const strData =
                             `${includesKeyword ? keyword + ' ' : ''} ${token.options}`
                                 .trim()
                                 .replace(/\s+/g, ' ');
-                        return `<i ${htmlAttribute}="${strData}"${classAttr}>${token.iconHref}</i>`;
+                        return `<i ${htmlAttribute}="${strData}"${classAttr}${a11yAttr}>${token.iconHref}</i>`;
                     } else {
                         const strData =
                             `${includesKeyword ? keyword + ' ' : ''}${token.iconHref} ${token.options}`
                                 .trim()
                                 .replace(/\s+/g, ' ');
-                        return `<i ${htmlAttribute}="${strData}"${classAttr}></i>`;
+                        return `<i ${htmlAttribute}="${strData}"${classAttr}${a11yAttr}></i>`;
                     }
                 },
             },
