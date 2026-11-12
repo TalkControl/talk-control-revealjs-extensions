@@ -55,6 +55,18 @@ If you want to complete your theming, RevealJS allows you also to customize some
 
 For the moment SASS Overriding is not available.
 
+## Accessibility: user preferences
+
+The theme itself honors three user/OS preferences, through additive `@media` guards only (see [`src/scss/theme/a11y/motion-contrast.scss`](../src/scss/theme/a11y/motion-contrast.scss)). None of them changes the default rendering - they only take effect once the corresponding preference is active:
+
+-   `prefers-reduced-motion: reduce` - every transition and animation declared by the theme (e.g. the copy-to-clipboard icon feedback) is neutralized to a zero duration, and smooth scrolling is turned off.
+-   `forced-colors: active` (Windows High Contrast Mode and similar) - the couple of theme elements that use a `box-shadow` as their only visual boundary (not rendered at all in forced-colors mode) get an explicit, system-color (`CanvasText`) border instead, so they stay visible.
+-   `prefers-contrast: more` - the same boundaries are strengthened (an explicit border, a thicker admonition border) without waiting for a full forced-colors mode.
+
+These rules are intentionally kept free of any cascade-layer wrapper, so a later `@layer` rollout can slot them into whatever layer order it defines.
+
+Out of scope, by design: the library does not ship a real dark theme (see the `dark` demo theme for a hand-authored example you can adapt), and zoom/reflow (text resizing, 400% zoom) is a separate, ongoing concern.
+
 ## Custom background keys
 
 You can define background (images, colors, gif, videos, ...) that will be always there for a kind of slide. To do this, you will have to specify in the ThemeInitializer.init method the `tcCustomBackgroundOptions` option.
