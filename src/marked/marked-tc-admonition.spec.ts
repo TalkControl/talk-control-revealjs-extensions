@@ -74,8 +74,17 @@ describe(markedTcAdmonition.name, () => {
     it('should parse identify custom admonition color', () => {
         marked.use(markedColsInstance);
         const md = `!!! custom tc-admonition-type="🐼" tc-admonition-color="#d7be00"\nsome text\n!!!`;
-        const html = `<p class="admonition custom" data-admonition-icon="🐼" style="--tc-admonition-bg-color:#d7be00;">some text</p>\n`;
+        const html = `<p class="admonition custom" data-admonition-icon="🐼" data-tc-admonition-bg-color="#d7be00">some text</p>\n`;
         expect(marked.parse(md)).toBe(html);
+    });
+
+    it('should not add a data-tc-admonition-bg-color attribute when no color is given', () => {
+        marked.use(markedColsInstance);
+        const md = `!!! custom\nsome text\n!!!`;
+        const html = `<p class="admonition custom">some text</p>\n`;
+        expect(marked.parse(md)).toBe(html);
+        expect(marked.parse(md)).not.toContain('data-tc-admonition-bg-color');
+        expect(marked.parse(md)).not.toContain('style=');
     });
 
     // Regression tests for #115: an admonition whose content contains inline

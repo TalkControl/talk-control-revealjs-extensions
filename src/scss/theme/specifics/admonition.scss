@@ -1,3 +1,9 @@
+// Typed `attr()` type token (`<color>`), unquoted so Sass does not try to
+// parse the angle brackets as its own syntax (see docs/attributes.md and #52
+// for the full `data-tc-*` attribute story). This file is compiled on its
+// own by admonition.spec.ts, so it cannot rely on a shared partial for this.
+$tc-attr-color-type: unquote('<color>');
+
 // WCAG AA contrast colors for each admonition type.
 // Each color is defined once here and referenced for both the
 // border-left-color and the :before text color of its type.
@@ -152,6 +158,34 @@ $admonition-quote-color: #747474;
     // selector specificity, later source order).
     &.tc-admonition-a11y:before {
         content: none;
+    }
+}
+
+// `data-tc-admonition-bg-color` (emitted by the markdown parser for custom
+// admonitions, see src/marked/marked-tc-admonition.ts) overrides the
+// `--tc-admonition-bg-color` custom property above via typed `attr()`
+// (Chrome/Edge 133+, Firefox 155+, see docs/attributes.md and #52). Declared
+// AFTER the `.custom` rule above on purpose, and gated behind `@supports`: a
+// browser that does not understand typed `attr()` never sees these
+// declarations at all, and keeps resolving `var(--tc-admonition-bg-color, …)`
+// above - itself fed, on Safari stable, by the temporary `tc-attr-polyfill`
+// addon (see #93). A `style="--tc-admonition-bg-color:…"` written by hand
+// keeps working as the `attr()` fallback.
+@supports (
+    color:
+        attr(data-tc-admonition-bg-color type(#{$tc-attr-color-type}), inherit)
+) {
+    .reveal .slides section .admonition.custom {
+        border-left-color: attr(
+            data-tc-admonition-bg-color type(#{$tc-attr-color-type}),
+            var(--tc-admonition-bg-color, #808080)
+        );
+        &:before {
+            color: attr(
+                data-tc-admonition-bg-color type(#{$tc-attr-color-type}),
+                var(--tc-admonition-bg-color, #808080)
+            );
+        }
     }
 }
 

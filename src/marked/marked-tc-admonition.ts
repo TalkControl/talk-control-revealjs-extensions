@@ -184,9 +184,18 @@ export function markedTcAdmonition(
                         );
                     }
                     if (token.customColor) {
+                        // Emits the `data-tc-admonition-bg-color` attribute
+                        // (1:1 naming convention with the `--tc-admonition-bg-color`
+                        // custom property it feeds, see docs/attributes.md and
+                        // #52) instead of an inline `style`, so CSS can read it
+                        // via typed `attr()` (Chrome/Edge 133+, Firefox 155+) or,
+                        // on Safari stable, via the temporary
+                        // `tc-attr-polyfill` addon (#93). A `style="--tc-admonition-bg-color:…"`
+                        // written by hand continues to work (used as the
+                        // `attr()` fallback, see admonition.scss).
                         paragraph?.setAttribute(
-                            'style',
-                            `--tc-admonition-bg-color:${token.customColor};`
+                            'data-tc-admonition-bg-color',
+                            token.customColor
                         );
                     }
                     if (options.accessibleTypeLabel && paragraph) {

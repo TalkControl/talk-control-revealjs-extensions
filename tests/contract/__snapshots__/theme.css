@@ -2056,6 +2056,12 @@ color:var(--tc-admonition-bg-color, #808080);
 content:attr(data-admonition-icon)}
 .reveal .slides section .admonition.tc-admonition-a11y:before{
 content:none}
+@supports (color: attr(data-tc-admonition-bg-color type(<color>),inherit)){
+.reveal .slides section .admonition.custom{
+border-left-color:attr(data-tc-admonition-bg-color type(<color>),var(--tc-admonition-bg-color, #808080))}
+.reveal .slides section .admonition.custom:before{
+color:attr(data-tc-admonition-bg-color type(<color>),var(--tc-admonition-bg-color, #808080))}
+}
 .tc-visually-hidden{
 position:absolute;
 width:1px;
@@ -2102,6 +2108,19 @@ height:var(--tc-icon-size, 1em)}
 color:var(--tc-icon-color);
 width:var(--tc-icon-size, 1em);
 height:var(--tc-icon-size, 1em)}
+@supports (color: attr(data-tc-icon-color type(<color>),inherit)){
+.reveal .slides section .tc-icons:is(.material-symbols-rounded,.material-symbols-sharp,.material-symbols-outlined){
+color:attr(data-tc-icon-color type(<color>),var(--tc-icon-color));
+font-size:attr(data-tc-icon-size type(<length>),var(--tc-icon-size, 1em))}
+.reveal .slides section svg.tc-icons.feather{
+stroke:attr(data-tc-icon-color type(<color>),var(--tc-icon-color));
+width:attr(data-tc-icon-size type(<length>),var(--tc-icon-size, 1em));
+height:attr(data-tc-icon-size type(<length>),var(--tc-icon-size, 1em))}
+.reveal .slides section svg.tc-icons.svg-inline--fa{
+color:attr(data-tc-icon-color type(<color>),var(--tc-icon-color));
+width:attr(data-tc-icon-size type(<length>),var(--tc-icon-size, 1em));
+height:attr(data-tc-icon-size type(<length>),var(--tc-icon-size, 1em))}
+}
 .reveal .slides section .center,.reveal .slides section .center+*{
 display:block;
 margin:auto;
