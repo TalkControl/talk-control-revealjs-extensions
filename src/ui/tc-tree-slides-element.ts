@@ -43,16 +43,24 @@ export class TcTreeSlidesElement extends LitElement {
     ) {
         if (value) {
             // We have a tree to render
+            const checkedCount = value.reduce(
+                (acc, elt) => acc + (elt.check ? 1 : 0),
+                0
+            );
+            const allChecked = checkedCount === value.length;
+            const noneChecked = checkedCount === 0;
+            const indeterminate = !allChecked && !noneChecked;
+
             return html`<li>
-                <input @click="${(e: InputEvent) =>
-                    this.checkPrefix(
-                        e,
-                        key as string
-                    )}" type="checkbox" .checked=${
-                    value.reduce((acc, elt) => acc + (elt.check ? 1 : 0), 0) ===
-                    value.length
-                }></input><span>${key}</span>
-                <ul>
+                <input
+                    @click="${(e: InputEvent) =>
+                        this.checkPrefix(e, key as string)}"
+                    type="checkbox"
+                    aria-label="Select all slides under ${key}"
+                    .checked=${allChecked}
+                    .indeterminate=${indeterminate} />
+                <span>${key}</span>
+                <ul aria-label="${key}">
                     ${value.map((elt) => this.renderLiElement(elt))}
                 </ul>
             </li>`;
@@ -69,13 +77,13 @@ export class TcTreeSlidesElement extends LitElement {
      */
     renderLiElement(slide: SlideTreeEntry) {
         return html`<li>
-                    <input @click="${(e: InputEvent) =>
-                        this.checkSlide(
-                            e,
-                            slide.index
-                        )}" type="checkbox" .checked=${slide.check}>
-                        </input>${slide.path}
-                </li>`;
+            <input
+                @click="${(e: InputEvent) => this.checkSlide(e, slide.index)}"
+                type="checkbox"
+                aria-label="Select slide ${slide.path}"
+                .checked=${slide.check} />
+            ${slide.path}
+        </li>`;
     }
 
     /**
