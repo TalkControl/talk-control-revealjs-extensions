@@ -105,3 +105,15 @@ await ThemeInitializer.init({
     },
     tcThemeOptions: {},
 });
+
+// Demo-only: the highlight.js theme override (docs/code.md, "Changing the
+// highlight.js theme") only applies to the "sample" theme, so the default
+// rendering never changes. By this point `ThemeInitializer.init` has
+// resolved `Reveal.initialize()`, whose `ready` event already set
+// `document.body`'s `data-theme` attribute (see src/addons/tc-theme.ts).
+// A theme change always reloads the page (tc-configurator-element.ts), so
+// a one-off check here (no observer) is enough.
+if (document.body.getAttribute('data-theme') === 'sample') {
+    document.getElementById('theme-highlight-light').disabled = false;
+    document.getElementById('theme-highlight-dark').disabled = false;
+}

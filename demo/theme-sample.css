@@ -105,7 +105,7 @@ body[data-theme='sample'] {
     --tc-code-line-height: var(
         --tc-big-code-line-height
     ); /* Line height applied to code */
-    --tc-code-dark-background: #92004c; /* Background color for code in dark mode */
+    --tc-code-dark-background: #282c34; /* Background color for code in dark mode, matching the atom-one-dark highlight theme override (see ./scripts/slides.js and docs/code.md) */
 
     /*////////////////////////
     // Properties for icons
