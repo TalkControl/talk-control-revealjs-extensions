@@ -25,11 +25,30 @@
         margin-left: 10px;
     }
 
+    // `full-center` centers its content both horizontally and vertically.
+    // It is produced three different ways: on the <section> itself
+    // (`.slide: class="full-center"`, which only targets its child <p>, see
+    // `&.full-center p` below), by hand (`<div class="full-center">`), or
+    // directly on an <img> (`![](img 'full-center')`, via
+    // `markedStyledImage`, see `img.full-center` below).
+    //
+    // The two container forms (the section's <p>, and a hand-authored
+    // `<div class="full-center">`) size themselves from reveal.js's own
+    // `--slide-width`/`--slide-height` custom properties rather than a plain
+    // `100%`. A `100%` here has to resolve through the <section>'s own box,
+    // and Chromium and Firefox do not agree on the result: Chromium comes
+    // close to the full slide height, but Firefox collapses the container
+    // down to the height of its in-flow content (the slide's headings)
+    // instead, pinning the "centered" image near the top of the slide. Using
+    // the custom properties directly - the same pattern `resets.scss` uses
+    // for `p.credits` (#90) - sidesteps that resolution entirely: both
+    // browsers then render identically (confirmed by direct measurement, see
+    // the PR description for the full before/after tables).
     &.full-center p,
-    :not(section).full-center {
+    :not(section):not(img).full-center {
         position: absolute;
-        width: 100%;
-        height: 100%;
+        width: var(--slide-width);
+        height: var(--slide-height);
         top: 0;
         left: 0;
         margin: 0;
@@ -38,6 +57,53 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        // Neutralizes the flex item's automatic minimum size (MDN,
+        // "Controlling flex item ratios") so a child never pushes this box
+        // past the fixed size set above.
+        min-height: 0;
+        min-width: 0;
+    }
+
+    // `img.full-center` is the third form above: the class lands directly on
+    // the <img>, with no wrapping element of our own. Making the img itself
+    // the `position: absolute; width/height: 100%` box (as above) forces the
+    // default `object-fit: fill`, stretching the image to the slide's own
+    // aspect ratio instead of preserving its own - confirmed by direct
+    // measurement to happen identically on both browsers (a square image
+    // rendered non-square), unlike the container bug above. Related reports
+    // on replaced elements sized by a percentage in a flex context: Mozilla
+    // bugs 2064812, 2055777, 1953879, and the still-open
+    // csswg-drafts#12012 discussion.
+    //
+    // Instead, promote the wrapping element (the <p> markdown adds around a
+    // lone image, or a hand-authored <div>) to the centering box, and let the
+    // image size itself (`width/height: auto`, capped by
+    // `max-width`/`max-height`): its own ratio is then always preserved.
+    :not(section):has(> img.full-center) {
+        position: absolute;
+        width: var(--slide-width);
+        height: var(--slide-height);
+        top: 0;
+        left: 0;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        place-items: center;
+    }
+
+    img.full-center {
+        position: static;
+        width: auto;
+        height: auto;
+        // Capped against the slide's own pixel size rather than a
+        // percentage: a percentage max-height on a replaced element only
+        // resolves once the containing block's own height was specified as
+        // a length, and the wrapping element above gets its definite size
+        // from the very same `--slide-height` custom property, so stating
+        // the cap in the same unit sidesteps that resolution question
+        // entirely instead of relying on it.
+        max-width: var(--slide-width);
+        max-height: var(--slide-height);
     }
 
     &.flex-row p,

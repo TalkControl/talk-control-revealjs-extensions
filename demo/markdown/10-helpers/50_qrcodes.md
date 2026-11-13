@@ -53,7 +53,7 @@ The qrcode is inline (it's an img). text to produce :
 
 ##==##
 
-<!-- .slide: class="tc-multiple-columns" -->
+<!-- .slide: class="tc-multiple-columns" id="full-center-qrcode" -->
 
 ##++##
 

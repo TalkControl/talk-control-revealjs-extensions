@@ -232,6 +232,8 @@ Div with height of 600px;
 
 ##==##
 
+<!-- .slide: id="full-center-div" -->
+
 # Slide with center image (horizontal & vertical)
 
 ## First way
@@ -256,7 +258,7 @@ Div with height of 600px;
 
 ##==##
 
-<!-- .slide: class="full-center" -->
+<!-- .slide: class="full-center" id="full-center-slide" -->
 
 # Slide with center image (horizontal & vertical)
 
@@ -274,6 +276,68 @@ Div with height of 600px;
 <!-- .slide: class="full-center" -->
 
 ![](./assets/images/300x300.png)
+```
+
+<!-- .element: class="big-code" -->
+
+##==##
+
+<!-- .slide: id="full-center-img" -->
+
+# Slide with center image (horizontal & vertical)
+
+## Third way
+
+![](./assets/images/300x300.png 'full-center')
+
+##--##
+
+<!-- .slide: class="with-code" -->
+
+# Code to produce / Markdown
+
+```markdown
+![](./assets/images/300x300.png 'full-center')
+```
+
+<!-- .element: class="big-code" -->
+
+##==##
+
+<!-- .slide: id="full-center-img-landscape" -->
+
+# Slide with center image, large landscape image capped to the slide
+
+![](./assets/images/1000x200.png 'full-center')
+
+##--##
+
+<!-- .slide: class="with-code" -->
+
+# Code to produce / Markdown
+
+```markdown
+![](./assets/images/1000x200.png 'full-center')
+```
+
+<!-- .element: class="big-code" -->
+
+##==##
+
+<!-- .slide: id="full-center-img-portrait" -->
+
+# Slide with center image, large portrait image capped to the slide
+
+![](./assets/images/jf-3.png 'full-center')
+
+##--##
+
+<!-- .slide: class="with-code" -->
+
+# Code to produce / Markdown
+
+```markdown
+![](./assets/images/jf-3.png 'full-center')
 ```
 
 <!-- .element: class="big-code" -->
