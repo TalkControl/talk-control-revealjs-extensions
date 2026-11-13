@@ -115,6 +115,15 @@ See [icons](./icons.md)
 
 See [admonitions](./admonition.md)
 
+# Attribute or variable?
+
+A few components (icons, `custom` admonitions) can be overridden either way:
+a `data-tc-*` attribute on a single element, or a `--tc-*` CSS custom
+property for every matching element in a section. Use the attribute when
+only one element should change; use the custom property for a broader,
+CSS-level override. See [Attributes](./attributes.md) for the full naming
+convention, priority order, and browser support.
+
 # QRCodes
 
 See [QRCodes](./qrcode.md)

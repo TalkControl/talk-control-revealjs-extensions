@@ -1,3 +1,9 @@
+// Typed `attr()` type tokens (`<color>`, `<length>`), unquoted so Sass does
+// not try to parse the angle brackets as its own syntax (see docs/attributes.md
+// and #52 for the full `data-tc-*` attribute story).
+$tc-attr-color-type: unquote('<color>');
+$tc-attr-length-type: unquote('<length>');
+
 .reveal .slides section .tc-icons {
     vertical-align: -0.125em; // Little adjustment to align the icon
     // to the baseline of text (magic number coming from font awesome)
@@ -39,5 +45,65 @@
         color: var(--tc-icon-color);
         width: var(--tc-icon-size, 1em); // Default size
         height: var(--tc-icon-size, 1em); // Default size
+    }
+}
+
+// `data-tc-icon-color`/`data-tc-icon-size` override the `--tc-*` custom
+// properties above via typed `attr()` (Chrome/Edge 133+, Firefox 155+, see
+// docs/attributes.md and #52). This block is declared AFTER the `var(--tc-*)`
+// rules above on purpose, and gated behind `@supports`: a browser that does
+// not understand typed `attr()` never sees these declarations at all, and
+// keeps resolving `var(--tc-*)` above - itself fed, on Safari stable, by the
+// temporary `tc-attr-polyfill` addon (see #93).
+@supports (
+    color: attr(data-tc-icon-color type(#{$tc-attr-color-type}), inherit)
+) {
+    .reveal
+        .slides
+        section
+        .tc-icons:is(
+            .material-symbols-rounded,
+            .material-symbols-sharp,
+            .material-symbols-outlined
+        ) {
+        color: attr(
+            data-tc-icon-color type(#{$tc-attr-color-type}),
+            var(--tc-icon-color)
+        );
+        font-size: attr(
+            data-tc-icon-size type(#{$tc-attr-length-type}),
+            var(--tc-icon-size, 1em)
+        );
+    }
+    .reveal .slides section svg.tc-icons {
+        &.feather {
+            stroke: attr(
+                data-tc-icon-color type(#{$tc-attr-color-type}),
+                var(--tc-icon-color)
+            );
+            width: attr(
+                data-tc-icon-size type(#{$tc-attr-length-type}),
+                var(--tc-icon-size, 1em)
+            );
+            height: attr(
+                data-tc-icon-size type(#{$tc-attr-length-type}),
+                var(--tc-icon-size, 1em)
+            );
+        }
+
+        &.svg-inline--fa {
+            color: attr(
+                data-tc-icon-color type(#{$tc-attr-color-type}),
+                var(--tc-icon-color)
+            );
+            width: attr(
+                data-tc-icon-size type(#{$tc-attr-length-type}),
+                var(--tc-icon-size, 1em)
+            );
+            height: attr(
+                data-tc-icon-size type(#{$tc-attr-length-type}),
+                var(--tc-icon-size, 1em)
+            );
+        }
     }
 }

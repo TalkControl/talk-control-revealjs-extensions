@@ -74,7 +74,7 @@ Code to produce / Markdown
 
 ### fake@email.com
 
-![](./assets/images/jf-2.jpg 'speaker')<!-- .element: style="--tc-speaker-img-post:right;"-->
+![](./assets/images/jf-2.jpg 'speaker')<!-- .element: style="--tc-speaker-img-pos:right;"-->
 
 ![](./assets/images/gdg-nantes.png 'company')
 
@@ -119,7 +119,7 @@ Code to produce / Markdown
 
 ### fake@email.com
 
-![](./assets/images/jf-2.jpg 'speaker')<!-- .element: style="--tc-speaker-img-post:right;"-->
+![](./assets/images/jf-2.jpg 'speaker')<!-- .element: style="--tc-speaker-img-pos:right;"-->
 
 ![](./assets/images/gdg-nantes.png 'company')
 

@@ -7,6 +7,7 @@ import {
 import { TcThemeOptions, manageTheme } from './addons/tc-theme';
 import { MarkedTcIconsOptions } from './marked/marked-tc-icons';
 import { TalkControlMarkedOptions } from './marked/tc-marked-plugin';
+import { manageAttrPolyfill } from './addons/tc-attr-polyfill';
 import { manageCopyClipboard } from './addons/tc-copy-clipboard';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { manageShowTypeContent } from './addons/tc-data-type';
@@ -58,6 +59,7 @@ export class TalkControlTheme {
         this.path = this.extractPath();
 
         Reveal.addEventListener('ready', () => {
+            manageAttrPolyfill(this.slidesElement);
             transformListFragment();
             manageMultiplesColumns();
             customBackgrounds({
