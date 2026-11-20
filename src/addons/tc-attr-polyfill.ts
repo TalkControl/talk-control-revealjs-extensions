@@ -4,33 +4,23 @@
  *
  * Chrome/Edge 133+ and Firefox 155+ read `--tc-*` custom properties directly
  * from `data-tc-*` attributes via typed `attr()` in CSS (see
- * `src/scss/theme/helpers/icons.scss` and
- * `src/scss/theme/specifics/admonition.scss`). Safari stable does not
- * support the typed form yet. This module detects that case and mirrors the
- * finite set of `data-tc-*` attributes below onto the matching inline
- * `--tc-*` custom property, so the same CSS rules resolve the same value on
- * every browser.
+ * `src/scss/theme/helpers/icons.scss`, `src/scss/theme/specifics/admonition.scss`
+ * and `src/scss/theme/classics/transitions.scss`). Safari stable does not
+ * support the typed form yet. This module detects that case and mirrors
+ * *any* `data-tc-*` attribute onto the matching inline `--tc-*` custom
+ * property, so the same CSS rules resolve the same value on every browser.
  *
- * The mapping is a 1:1 naming convention (`data-tc-X` -> `--tc-X`), kept as
- * an explicit table rather than derived "magically" from the attribute name.
+ * The mapping is a 1:1 naming convention (`data-tc-X` -> `--tc-X`), derived
+ * directly from the attribute name (strip the `data-` prefix) rather than
+ * kept as an explicit table. This is a deliberate change from the original
+ * design (#52): a hand-maintained table had to grow by one entry for every
+ * new `data-tc-*` attribute added to the SCSS (see the review on #134),
+ * which does not scale. The naming convention itself was always strict 1:1
+ * (documented in docs/attributes.md), so deriving the custom property name
+ * from the attribute name loses no information.
  */
 
-/**
- * The finite set of `data-tc-*` attributes this polyfill understands, and
- * the `--tc-*` custom property each one feeds. Keep this table in sync with
- * the SCSS files that read these custom properties (a guard test in
- * `src/marked/marked-tc-admonition.spec.ts` / PR 2 of #52 checks this).
- */
-const ATTR_TO_CSS_VAR: Record<string, string> = {
-    'data-tc-icon-color': '--tc-icon-color',
-    'data-tc-icon-size': '--tc-icon-size',
-    'data-tc-admonition-bg-color': '--tc-admonition-bg-color',
-};
-
-const WATCHED_ATTRIBUTES = Object.keys(ATTR_TO_CSS_VAR);
-const WATCHED_ATTRIBUTES_SELECTOR = WATCHED_ATTRIBUTES.map(
-    (attrName) => `[${attrName}]`
-).join(',');
+const DATA_TC_PREFIX = 'data-tc-';
 
 /**
  * CSS declaration used to detect native support for typed `attr()`. It is
@@ -51,7 +41,19 @@ function supportsTypedAttr(): boolean {
 }
 
 /**
- * Mirrors every watched `data-tc-*` attribute present on `element` onto its
+ * Derives the `--tc-*` custom property name fed by a `data-tc-*` attribute,
+ * by convention (strip the `data-` prefix). Returns `null` for an attribute
+ * that is not one of ours.
+ */
+function cssVarForAttribute(attrName: string): string | null {
+    if (!attrName.startsWith(DATA_TC_PREFIX)) {
+        return null;
+    }
+    return `--${attrName.slice('data-'.length)}`;
+}
+
+/**
+ * Mirrors every `data-tc-*` attribute present on `element` onto its
  * matching inline `--tc-*` custom property. Writing inline always wins over
  * a manually-authored `style="--tc-*"` or a class-based default (`tc-small`
  * / `tc-big`), matching the documented priority order: attribute > inline
@@ -62,35 +64,43 @@ function applyWatchedAttributes(element: Element): void {
     if (!htmlElement.style) {
         return;
     }
-    for (const [attrName, cssVar] of Object.entries(ATTR_TO_CSS_VAR)) {
-        if (htmlElement.hasAttribute(attrName)) {
-            const value = htmlElement.getAttribute(attrName);
-            if (value !== null) {
-                htmlElement.style.setProperty(cssVar, value);
-            }
+    for (const attrName of htmlElement.getAttributeNames()) {
+        const cssVar = cssVarForAttribute(attrName);
+        if (!cssVar) {
+            continue;
+        }
+        const value = htmlElement.getAttribute(attrName);
+        if (value !== null) {
+            htmlElement.style.setProperty(cssVar, value);
         }
     }
 }
 
 /**
- * Applies `applyWatchedAttributes` to `root` itself (if it matches) and to
- * every matching descendant.
+ * Applies `applyWatchedAttributes` to `root` itself and to every descendant.
+ *
+ * There is no CSS selector for "an attribute whose *name* starts with X"
+ * (only `[attr^=value]`, which matches on the attribute's *value*), so this
+ * cannot be a `querySelectorAll` call. Instead it walks the actual element
+ * tree with a `TreeWalker` and inspects each element's real attributes.
+ * This is O(elements x attributes per element), which is fine for a slide
+ * deck: it runs once at activation and once per node added afterwards, not
+ * on every frame.
  */
 function applyWatchedAttributesTree(root: Element): void {
     applyWatchedAttributes(root);
-    if (!WATCHED_ATTRIBUTES_SELECTOR) {
-        return;
-    }
-    const descendants = root.querySelectorAll(WATCHED_ATTRIBUTES_SELECTOR);
-    for (const descendant of descendants) {
-        applyWatchedAttributes(descendant);
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
+    let node = walker.nextNode();
+    while (node) {
+        applyWatchedAttributes(node as Element);
+        node = walker.nextNode();
     }
 }
 
 /**
- * Handles a single `MutationObserver` record: re-applies watched attributes
- * on newly added nodes, and keeps a changed/removed attribute's `--tc-*`
- * property in sync (removing it when the attribute is removed).
+ * Handles a single `MutationObserver` record: re-applies `data-tc-*`
+ * attributes on newly added nodes, and keeps a changed/removed attribute's
+ * `--tc-*` property in sync (removing it when the attribute is removed).
  */
 function handleMutation(mutation: MutationRecord): void {
     if (mutation.type === 'childList') {
@@ -103,7 +113,7 @@ function handleMutation(mutation: MutationRecord): void {
     }
 
     if (mutation.type === 'attributes' && mutation.attributeName) {
-        const cssVar = ATTR_TO_CSS_VAR[mutation.attributeName];
+        const cssVar = cssVarForAttribute(mutation.attributeName);
         if (!cssVar) {
             return;
         }
@@ -126,8 +136,10 @@ function handleMutation(mutation: MutationRecord): void {
  * when the browser already supports typed `attr()` natively.
  *
  * Otherwise performs an initial scan of `root` and watches it (and its
- * subtree, for slides added after the fact) with a `MutationObserver`
- * scoped to the finite set of watched attributes.
+ * subtree, for slides added after the fact) with a `MutationObserver`. The
+ * observer watches every attribute mutation (no `attributeFilter`, since the
+ * set of `data-tc-*` attributes is open-ended) and filters by the
+ * `data-tc-` prefix in the handler instead.
  */
 export function manageAttrPolyfill(root: HTMLElement | null): void {
     if (!root) {
@@ -149,7 +161,6 @@ export function manageAttrPolyfill(root: HTMLElement | null): void {
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: WATCHED_ATTRIBUTES,
     });
 }
 
@@ -157,7 +168,7 @@ export function manageAttrPolyfill(root: HTMLElement | null): void {
 export const _internals =
     typeof process !== 'undefined' && process?.env?.NODE_ENV === 'test'
         ? {
-              ATTR_TO_CSS_VAR,
+              cssVarForAttribute,
               supportsTypedAttr,
               applyWatchedAttributes,
               applyWatchedAttributesTree,

@@ -1,8 +1,7 @@
-// Typed `attr()` type tokens (`<color>`, `<length>`), unquoted so Sass does
-// not try to parse the angle brackets as its own syntax (see docs/attributes.md
-// and #52 for the full `data-tc-*` attribute story).
-$tc-attr-color-type: unquote('<color>');
-$tc-attr-length-type: unquote('<length>');
+// Typed `attr()` type tokens (`$tc-attr-color-type`/`$tc-attr-length-type`),
+// shared with admonition.scss and transitions.scss (see docs/attributes.md
+// and #52/#134 for the full `data-tc-*` attribute story).
+@import './tc-attr-types';
 
 .reveal .slides section .tc-icons {
     vertical-align: -0.125em; // Little adjustment to align the icon

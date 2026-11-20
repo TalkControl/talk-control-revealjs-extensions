@@ -38,7 +38,7 @@ describe('tc-attr-polyfill', () => {
         expect(icon.style.getPropertyValue('--tc-icon-color')).toBe('');
     });
 
-    it('mirrors a watched data-tc-* attribute onto its --tc-* custom property when unsupported', () => {
+    it('mirrors any data-tc-* attribute onto its --tc-* custom property when unsupported', () => {
         vi.stubGlobal('CSS', { supports: () => false });
 
         const root = document.querySelector('.slides') as HTMLElement;
@@ -50,7 +50,21 @@ describe('tc-attr-polyfill', () => {
         expect(icon.style.getPropertyValue('--tc-icon-color')).toBe('red');
     });
 
-    it('copies all three mapped keys (icon color, icon size, admonition bg color)', () => {
+    it('mirrors a data-tc-* attribute never seen before, by convention', () => {
+        vi.stubGlobal('CSS', { supports: () => false });
+
+        const root = document.querySelector('.slides') as HTMLElement;
+        root.innerHTML = `<h1 data-tc-transition-color="cornflowerblue"></h1>`;
+
+        manageAttrPolyfill(root);
+
+        const h1 = root.querySelector('h1') as HTMLElement;
+        expect(h1.style.getPropertyValue('--tc-transition-color')).toBe(
+            'cornflowerblue'
+        );
+    });
+
+    it('mirrors several data-tc-* attributes at once, each to its own --tc-* property', () => {
         vi.stubGlobal('CSS', { supports: () => false });
 
         const root = document.querySelector('.slides') as HTMLElement;
@@ -98,6 +112,24 @@ describe('tc-attr-polyfill', () => {
         expect(icon.style.getPropertyValue('--tc-icon-color')).toBe('green');
     });
 
+    it('applies a never-seen-before attribute on a nested element added after activation', async () => {
+        vi.stubGlobal('CSS', { supports: () => false });
+
+        const root = document.querySelector('.slides') as HTMLElement;
+        manageAttrPolyfill(root);
+
+        const wrapper = document.createElement('section');
+        wrapper.innerHTML = `<h1 data-tc-transition-line-color="darkorange"></h1>`;
+        root.appendChild(wrapper);
+
+        await flushMutations();
+
+        const h1 = wrapper.querySelector('h1') as HTMLElement;
+        expect(h1.style.getPropertyValue('--tc-transition-line-color')).toBe(
+            'darkorange'
+        );
+    });
+
     it('keeps the property in sync when the attribute is modified then removed', async () => {
         vi.stubGlobal('CSS', { supports: () => false });
 
@@ -117,16 +149,15 @@ describe('tc-attr-polyfill', () => {
         expect(icon.style.getPropertyValue('--tc-icon-color')).toBe('');
     });
 
-    it('ignores an unknown data-tc-* attribute', () => {
+    it('ignores an attribute that is not a data-tc-* attribute', () => {
         vi.stubGlobal('CSS', { supports: () => false });
 
         const root = document.querySelector('.slides') as HTMLElement;
-        root.innerHTML = `<i class="tc-icons" data-tc-foo="bar"></i>`;
+        root.innerHTML = `<i class="tc-icons" data-other="bar"></i>`;
 
         expect(() => manageAttrPolyfill(root)).not.toThrow();
 
         const icon = root.querySelector('.tc-icons') as HTMLElement;
-        expect(icon.style.getPropertyValue('--tc-foo')).toBe('');
         expect(icon.getAttribute('style')).toBeFalsy();
     });
 
@@ -148,12 +179,18 @@ describe('tc-attr-polyfill', () => {
     });
 
     describe('_internals', () => {
-        it('exposes the finite attribute-to-css-var mapping table', () => {
-            expect(_internals?.ATTR_TO_CSS_VAR).toEqual({
-                'data-tc-icon-color': '--tc-icon-color',
-                'data-tc-icon-size': '--tc-icon-size',
-                'data-tc-admonition-bg-color': '--tc-admonition-bg-color',
-            });
+        it('derives the css var name from the attribute name by convention', () => {
+            expect(_internals?.cssVarForAttribute('data-tc-icon-color')).toBe(
+                '--tc-icon-color'
+            );
+            expect(
+                _internals?.cssVarForAttribute('data-tc-transition-color')
+            ).toBe('--tc-transition-color');
+        });
+
+        it('returns null for an attribute outside the data-tc-* namespace', () => {
+            expect(_internals?.cssVarForAttribute('data-other')).toBeNull();
+            expect(_internals?.cssVarForAttribute('class')).toBeNull();
         });
     });
 });

@@ -181,6 +181,8 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 
 ![](./imgs/transition-txt-color-underline-color.png)
 
+The same override, scoped to the title/subtitle element itself via `data-tc-transition-color`/`data-tc-transition-line-color` instead of an inline `style` on the slide, is documented in [Attributes](./attributes.md).
+
 ## Quotes slides
 
 You could have dedicated quote slide to display a citation

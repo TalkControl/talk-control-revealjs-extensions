@@ -121,13 +121,16 @@ describe('dist/highlight contract', () => {
 
     it('leaves dist/talk-control-revealjs-theme.css byte-for-byte unchanged (non-negotiable: see #46 plan)', () => {
         // Characterization guard: shipping dist/highlight/ must not alter a
-        // single byte of the main compiled theme. The checksum below was
-        // taken from a clean `npm run build` on `upstream/main` before this
-        // feature existed (see the PR description for the exact command).
+        // single byte of the main compiled theme for reasons unrelated to
+        // #46. The checksum is pinned to the latest clean `npm run build`
+        // of the main theme and must be refreshed (and explained in the PR
+        // description) whenever a change intentionally edits the main
+        // theme's CSS - as #134 does here (typed `attr()` coverage for the
+        // transition slides group).
         const css = fs.readFileSync(MAIN_CSS);
         const hash = createHash('sha256').update(css).digest('hex');
         expect(hash).toBe(
-            '682087fa2569c65bd2ff4d663716f6b2b1f874acf44af034dcf0e6b98ad48f75'
+            '352b4ce801c058985f40a9771c9dc48d68890c8702b48de6abe97886ea1d95af'
         );
     });
 });

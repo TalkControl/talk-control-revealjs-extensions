@@ -1,8 +1,10 @@
-// Typed `attr()` type token (`<color>`), unquoted so Sass does not try to
-// parse the angle brackets as its own syntax (see docs/attributes.md and #52
-// for the full `data-tc-*` attribute story). This file is compiled on its
-// own by admonition.spec.ts, so it cannot rely on a shared partial for this.
-$tc-attr-color-type: unquote('<color>');
+// Typed `attr()` type token (`$tc-attr-color-type`), shared with icons.scss
+// and transitions.scss (see docs/attributes.md and #52/#134 for the full
+// `data-tc-*` attribute story). This file is also compiled on its own by
+// admonition.spec.ts: Dart Sass resolves a relative `@import` the same way
+// whether the importing file is itself the compile entry point or not, so
+// the shared partial works here too.
+@import '../helpers/tc-attr-types';
 
 // WCAG AA contrast colors for each admonition type.
 // Each color is defined once here and referenced for both the
