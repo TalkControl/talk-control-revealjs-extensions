@@ -1,0 +1,12 @@
+// Shared typed `attr()` type tokens (`<color>`, `<length>`), unquoted so
+// Sass does not try to parse the angle brackets as its own syntax. Used by
+// every `--tc-*` group that reads a `data-tc-*` attribute via typed `attr()`
+// (icons, admonitions, transitions - see docs/attributes.md and #52/#134).
+//
+// Plain legacy `@import` (not `@use`): safe to import this partial from
+// several files, including ones compiled standalone (e.g. admonition.scss,
+// compiled directly by admonition.spec.ts) - Sass resolves `@import` paths
+// relative to the importing file either way, and re-declaring the same
+// variable value is a no-op.
+$tc-attr-color-type: unquote('<color>');
+$tc-attr-length-type: unquote('<length>');

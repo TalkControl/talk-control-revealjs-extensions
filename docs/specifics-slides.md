@@ -51,7 +51,7 @@ You can also change the number of badge (up to 6). Each should have `class='badg
 
 ### fake@email.com
 
-![](./assets/images/jf-2.jpg)<!-- .element: class="speaker" style="--tc-speaker-img-post:right;"-->
+![](./assets/images/jf-2.jpg)<!-- .element: class="speaker" style="--tc-speaker-img-pos:right;"-->
 
 ![](./assets/images/gdg-nantes.png)<!-- .element: class="company" -->
 
@@ -180,6 +180,8 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 ```
 
 ![](./imgs/transition-txt-color-underline-color.png)
+
+The same override, scoped to the title/subtitle element itself via `data-tc-transition-color`/`data-tc-transition-line-color` instead of an inline `style` on the slide, is documented in [Attributes](./attributes.md).
 
 ## Quotes slides
 

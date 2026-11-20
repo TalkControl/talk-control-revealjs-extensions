@@ -104,19 +104,27 @@ Material big![](person 'material-symbols material-symbols-sharp tc-icons tc-big'
 Feather big![](user 'feather tc-icons tc-big')
 FA big![](fa-user 'fa-solid fa tc-icons tc-big')
 
-Material colored![](person 'material-symbols material-symbols-rounded tc-icons')<!-- .element: style="--tc-icon-color:red" -->
-Feather colored![](user 'feather tc-icons')<!-- .element: style="--tc-icon-color:red" -->
-FA colored![](fa-user 'fa-solid fa tc-icons')<!-- .element: style="--tc-icon-color:red" -->
+Material colored![](person 'material-symbols material-symbols-rounded tc-icons')<!-- .element: data-tc-icon-color="red" -->
+Feather colored![](user 'feather tc-icons')<!-- .element: data-tc-icon-color="red" -->
+FA colored (classic `style` fallback)![](fa-user 'fa-solid fa tc-icons')<!-- .element: style="--tc-icon-color:red" -->
 
-Material custom size![](person 'material-symbols material-symbols-rounded tc-icons')<!-- .element: style="--tc-icon-size:3em;" -->
-Feather custom size![](user 'feather tc-icons')<!-- .element: style="--tc-icon-size:3em;" -->
-FA custom size![](fa-user 'fa-solid fa tc-icons')<!-- .element: style="--tc-icon-size:3em;" -->
+Material custom size![](person 'material-symbols material-symbols-rounded tc-icons')<!-- .element: data-tc-icon-size="3em" -->
+Feather custom size![](user 'feather tc-icons')<!-- .element: data-tc-icon-size="3em" -->
+FA custom size (classic `style` fallback)![](fa-user 'fa-solid fa tc-icons')<!-- .element: style="--tc-icon-size:3em;" -->
 
 ##--##
 
 <!-- .slide: class="with-code" -->
 
 # Code to produce / Markdown
+
+The `data-tc-icon-color`/`data-tc-icon-size` attributes are read directly in
+CSS via typed `attr()` (Chrome/Edge 133+, Firefox 155+); Safari stable falls
+back to the `--tc-icon-color`/`--tc-icon-size` custom properties via the
+temporary `tc-attr-polyfill` addon (see [attributes](../../../docs/attributes.md)
+and #93). A manually-authored `style="--tc-icon-color:…"` - shown below on
+the Font Awesome icons - keeps working exactly as before, and is used as the
+`attr()` fallback value.
 
 ```markdown
 Material small![](person 'material-symbols material-symbols-sharp tc-icons tc-small')
@@ -127,11 +135,11 @@ Material big![](person 'material-symbols material-symbols-sharp tc-icons tc-big'
 Feather big![](user 'feather tc-icons tc-big')
 FA big![](fa-user 'fa-solid fa tc-icons tc-big')
 
-Material colored![](person 'material-symbols material-symbols-rounded tc-icons')<!-- .element: style="--tc-icon-color:red" -->
-Feather colored![](user 'feather tc-icons')<!-- .element: style="--tc-icon-color:red" -->
-FA colored![](fa-user 'fa-solid fa tc-icons')<!-- .element: style="--tc-icon-color:red" -->
+Material colored![](person 'material-symbols material-symbols-rounded tc-icons')<!-- .element: data-tc-icon-color="red" -->
+Feather colored![](user 'feather tc-icons')<!-- .element: data-tc-icon-color="red" -->
+FA colored (classic `style` fallback)![](fa-user 'fa-solid fa tc-icons')<!-- .element: style="--tc-icon-color:red" -->
 
-Material custom size![](person 'material-symbols material-symbols-rounded tc-icons')<!-- .element: style="--tc-icon-size:3em;" -->
-Feather custom size![](user 'feather tc-icons')<!-- .element: style="--tc-icon-size:3em;" -->
-FA custom size![](fa-user 'fa-solid fa tc-icons')<!-- .element: style="--tc-icon-size:3em;" -->
+Material custom size![](person 'material-symbols material-symbols-rounded tc-icons')<!-- .element: data-tc-icon-size="3em" -->
+Feather custom size![](user 'feather tc-icons')<!-- .element: data-tc-icon-size="3em" -->
+FA custom size (classic `style` fallback)![](fa-user 'fa-solid fa tc-icons')<!-- .element: style="--tc-icon-size:3em;" -->
 ```

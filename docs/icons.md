@@ -107,6 +107,22 @@ You can override the following CSS custom properties to fine-tune the appearance
 
 ![](./imgs/icons-custom.png)
 
+### Per-icon override via attribute
+
+To override the color or size of a **single** icon (rather than every icon in
+a section), add the matching `data-tc-icon-color`/`data-tc-icon-size`
+attribute on it instead:
+
+```markdown
+A red heart: ![](heart 'tc-icons fa')<!-- .element: data-tc-icon-color="red" -->
+A bigger heart: ![](heart 'tc-icons fa')<!-- .element: data-tc-icon-size="3em" -->
+```
+
+A manually-authored `style="--tc-icon-color:…"`/`style="--tc-icon-size:…"`
+keeps working exactly as before. See [Attributes](./attributes.md) for the
+full `data-tc-*` story (naming convention, priority order, browser support,
+and the temporary polyfill).
+
 ## Accessibility
 
 By default, an icon is treated as **decorative**: it renders with `aria-hidden="true"` so assistive technology skips it entirely, per [WCAG 1.1.1 and 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html). This matches how most icons are actually used (next to a text label, or purely ornamental): the common case needs no markup at all. One opt-in pseudo-attribute lets you tell screen readers that an icon carries meaning on its own:

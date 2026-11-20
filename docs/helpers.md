@@ -2,6 +2,10 @@
 
 Talk-Control provides a set of CSS helper classes to easily control the layout, sizing, and behavior of elements within your slides. These can be applied to images, text blocks, and other elements using Markdown attributes.
 
+See also [Attributes](./attributes.md) for the finite set of `data-tc-*`
+attributes that override a single component's `--tc-*` custom property (icon
+color/size, admonition background color) directly in Markdown.
+
 ## Layout Helpers
 
 These classes help you position elements on your slide.

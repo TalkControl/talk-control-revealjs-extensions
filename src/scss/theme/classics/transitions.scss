@@ -1,3 +1,8 @@
+// Typed `attr()` type tokens (`$tc-attr-color-type`/`$tc-attr-length-type`),
+// shared with icons.scss and admonition.scss (see docs/attributes.md and
+// #52/#134 for the full `data-tc-*` attribute story).
+@import '../helpers/tc-attr-types';
+
 .reveal .slides section:not(.stack)[class*='transition'],
 .reveal .slides section:not(.stack).first-slide {
     background: rgba(0, 0, 0, 0);
@@ -69,6 +74,98 @@
     &.mask,
     &.txt-white {
         --tc-transition-color: white;
+    }
+}
+
+// `data-tc-transition-*` attributes override the matching `--tc-transition-*`
+// custom properties above via typed `attr()` (Chrome/Edge 133+, Firefox
+// 155+, see docs/attributes.md and #52/#134). Declared AFTER the `var(--tc-*)`
+// rules above on purpose, and gated behind `@supports`: a browser that does
+// not understand typed `attr()` never sees these declarations at all, and
+// keeps resolving `var(--tc-*)` above - itself fed, on Safari stable, by the
+// temporary `tc-attr-polyfill` addon (see #93).
+//
+// `--tc-transition-display-line` is intentionally NOT covered here: it holds
+// a bare CSS keyword (`block`/`none`), which does not map cleanly onto a
+// `<color>`/`<length>` typed `attr()` token, unlike every other variable in
+// this group. It stays `var(...)`-only, overridable the same way it always
+// was (a manually-authored inline `style="--tc-transition-display-line:…"`).
+@supports (
+    color: attr(data-tc-transition-color type(#{$tc-attr-color-type}), inherit)
+) {
+    .reveal .slides section:not(.stack)[class*='transition'],
+    .reveal .slides section:not(.stack).first-slide {
+        h1 {
+            color: attr(
+                data-tc-transition-color type(#{$tc-attr-color-type}),
+                var(--tc-transition-color)
+            );
+            font-size: attr(
+                data-tc-transition-title-font-size type(#{$tc-attr-length-type}),
+                var(--tc-transition-title-font-size)
+            );
+            padding: attr(
+                data-tc-transition-padding-h1 type(#{$tc-attr-length-type}),
+                var(--tc-transition-padding-h1)
+            );
+            margin-top: attr(
+                data-tc-transition-margin-top type(#{$tc-attr-length-type}),
+                var(--tc-transition-margin-top)
+            );
+
+            &:before {
+                background: attr(
+                    data-tc-transition-line-color type(#{$tc-attr-color-type}),
+                    var(
+                        --tc-transition-line-color,
+                        var(--tc-transition-color, var(--tc-heading-color))
+                    )
+                );
+                left: attr(
+                    data-tc-transition-padding-h1 type(#{$tc-attr-length-type}),
+                    var(--tc-transition-padding-h1)
+                );
+            }
+        }
+
+        h2 {
+            color: attr(
+                data-tc-transition-color type(#{$tc-attr-color-type}),
+                var(--tc-transition-color)
+            );
+            font-size: attr(
+                data-tc-transition-sub-title-font-size
+                    type(#{$tc-attr-length-type}),
+                var(--tc-transition-sub-title-font-size)
+            );
+            padding-left: attr(
+                data-tc-transition-padding-h1 type(#{$tc-attr-length-type}),
+                var(--tc-transition-padding-h1)
+            );
+        }
+
+        &.left h1,
+        &.right h1 {
+            margin-top: attr(
+                data-tc-transition-left-right-mg-top
+                    type(#{$tc-attr-length-type}),
+                var(--tc-transition-left-right-mg-top)
+            );
+        }
+
+        &.top h1 {
+            margin-top: attr(
+                data-tc-transition-top-mg-top type(#{$tc-attr-length-type}),
+                var(--tc-transition-top-mg-top)
+            );
+        }
+
+        &.bottom h1 {
+            margin-top: attr(
+                data-tc-transition-bottom-mg-top type(#{$tc-attr-length-type}),
+                var(--tc-transition-bottom-mg-top)
+            );
+        }
     }
 }
 

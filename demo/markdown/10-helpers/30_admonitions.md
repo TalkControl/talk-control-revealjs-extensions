@@ -31,7 +31,7 @@ Some text with admoniotion block. This texte is long enough to show you that it 
     </div>
     <div>
         <p class="admonition custom" data-admonition-icon="🐼 Custom">custom</p>
-        <p class="admonition custom" data-admonition-icon="🕶️ Custombis" style="--tc-admonition-bg-color:#d7be00;">custom and custom color</p>
+        <p class="admonition custom" data-admonition-icon="🕶️ Custombis" data-tc-admonition-bg-color="#d7be00">custom and custom color</p>
     </div>
 </div>
 
@@ -73,7 +73,7 @@ Some text with admoniotion block. This texte is long enough to show you that it 
         <p
             class="admonition custom"
             data-admonition-icon="🕶️ Custombis"
-            style="--tc-admonition-bg-color:#d7be00;">
+            data-tc-admonition-bg-color="#d7be00">
             custom and custom color
         </p>
     </div>
@@ -83,6 +83,8 @@ Some text with admoniotion block. This texte is long enough to show you that it 
 ##==##
 
 # Admonition Blocks - using markdown
+
+_Classic `style="--tc-admonition-bg-color:…"` fallback, see [attributes](../../../docs/attributes.md)_
 
 Some info block
 
@@ -113,6 +115,8 @@ Custom and custom color
 ##==##
 
 # Admonition Blocks - using custom syntax
+
+_The parser emits `data-tc-admonition-bg-color` for you from `tc-admonition-color`, see [attributes](../../../docs/attributes.md)_
 
 !!! info
 Some info block
