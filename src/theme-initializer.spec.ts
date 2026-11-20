@@ -207,6 +207,60 @@ describe('ThemeInitializer', () => {
 
             expect(postManageMultiplesColumns).toHaveBeenCalled();
         });
+
+        it('should await ensureLoaded of every configured icon pack before initializing Reveal', async () => {
+            let resolveEnsureLoaded!: () => void;
+            const ensureLoaded = vi.fn().mockReturnValue(
+                new Promise<void>((resolve) => {
+                    resolveEnsureLoaded = resolve;
+                })
+            );
+
+            const initPromise = ThemeInitializer.init({
+                ...mockOptions,
+                tcMarkedOptions: {
+                    ...mockTcMarkedOptions,
+                    fontIcons: [
+                        {
+                            keyword: 'feather',
+                            copyKeyword: 'copy',
+                            htmlAttribute: 'data-feather',
+                            ensureLoaded,
+                        },
+                    ],
+                },
+            });
+
+            // Flush the earlier awaited steps (i18n, slidesRenderer…) so
+            // execution actually reaches the ensureLoaded call, without
+            // resolving it yet.
+            await vi.waitFor(() => expect(ensureLoaded).toHaveBeenCalled());
+            // Reveal.initialize must not run before ensureLoaded resolves.
+            expect(Reveal.initialize).not.toHaveBeenCalled();
+
+            resolveEnsureLoaded();
+            await initPromise;
+
+            expect(Reveal.initialize).toHaveBeenCalled();
+        });
+
+        it('should not fail when a configured icon pack has no ensureLoaded', async () => {
+            await ThemeInitializer.init({
+                ...mockOptions,
+                tcMarkedOptions: {
+                    ...mockTcMarkedOptions,
+                    fontIcons: [
+                        {
+                            keyword: 'fa',
+                            copyKeyword: 'fa-copy',
+                            htmlAttribute: 'class',
+                        },
+                    ],
+                },
+            });
+
+            expect(Reveal.initialize).toHaveBeenCalled();
+        });
         it('should call Plugin with correct params', async () => {
             await ThemeInitializer.init(mockOptions);
 

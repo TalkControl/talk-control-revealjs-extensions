@@ -103,7 +103,30 @@ describe('dist/ contract', () => {
             `highlight/${theme}.dark.css`,
             `highlight/${theme}.light.css`,
         ]).sort();
-        expect(listFiles(DIST)).toEqual(
+
+        // feather-icons (#95, PR 2) is lazy-loaded via a bare dynamic
+        // `import('feather-icons')`: Rollup code-splits it into its own
+        // content-hashed chunk for the ESM build only (the UMD build can't
+        // code-split, so it stays fully inlined there - see
+        // src/icons-config/feather-icons-pack.ts and docs/vendor.md). The
+        // hash changes whenever feather-icons' own content changes, so it's
+        // asserted by pattern rather than hardcoded into the exact file list
+        // below.
+        const allFiles = listFiles(DIST);
+        const featherChunkFiles = allFiles.filter((file) =>
+            /^feather-[\w-]+\.js(\.map)?$/.test(file)
+        );
+        expect(featherChunkFiles.sort()).toEqual(
+            [
+                expect.stringMatching(/^feather-[\w-]+\.js$/),
+                expect.stringMatching(/^feather-[\w-]+\.js\.map$/),
+            ].sort()
+        );
+
+        const otherFiles = allFiles.filter(
+            (file) => !featherChunkFiles.includes(file)
+        );
+        expect(otherFiles).toEqual(
             [
                 'cli/talk-control-a11y.js',
                 'cli/talk-control-a11y.js.map',
