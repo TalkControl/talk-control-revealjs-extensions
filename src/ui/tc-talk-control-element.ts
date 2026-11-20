@@ -421,17 +421,6 @@ export class TcTalkControlElement extends LitElement {
         };
     }
 
-    /**
-     * Gestion du focus initial
-     */
-    firstUpdated() {
-        // Focus sur le premier champ de saisie
-        const firstInput = this.shadowRoot?.querySelector(
-            'input'
-        ) as HTMLInputElement;
-        firstInput?.focus();
-    }
-
     static styles = css`
         :host {
             --tc-ui-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI',
