@@ -1,40 +1,24 @@
 /**
- * Loader for assets vendored into `dist/vendor/` (icon packs fonts/CSS/JS,
+ * Loader for assets vendored into `dist/vendor/` (icon packs fonts/CSS,
  * Mermaid's ESM build, …). Every icon pack and #92 (Mermaid) share this
- * single mechanism instead of each inventing its own `<link>`/`<script>`
- * injection and its own "where are my assets" option.
+ * single mechanism instead of each inventing its own `<link>` injection or
+ * dynamic `import()`.
  *
- * See `docs/vendor.md` for the consumer-facing contract and `scripts/copy-vendor.ts`
- * for how `dist/vendor/` is populated at build time.
+ * The vendor folder is always resolved next to the library's own module
+ * (`new URL('./vendor/', import.meta.url)`) — see `docs/vendor.md` for the
+ * consumer-facing contract and `scripts/copy-vendor.ts` for how
+ * `dist/vendor/` is populated at build time.
  */
 
-/**
- * Options accepted by {@link configureVendorLoader}, and re-exposed on
- * `ThemeInitializerOptions.vendorBaseUrl` for the common case.
- */
-export interface TcVendorLoaderOptions {
-    /**
-     * Base URL of the vendored assets folder (the `dist/vendor/` folder,
-     * deployed anywhere: same origin, a CDN, a sub-path…).
-     *
-     * Accepts an absolute URL, a root-relative path (`/vendor/`) or a path
-     * relative to `document.baseURI`. Defaults to
-     * `new URL('./vendor/', import.meta.url)`, which — in the published ESM
-     * build — resolves next to `dist/talk-control-revealjs-extensions.js`,
-     * i.e. `dist/vendor/`.
-     */
-    vendorBaseUrl?: string | URL;
-}
-
-type VendorAssetKind = 'stylesheet' | 'script' | 'module';
+type VendorAssetKind = 'stylesheet' | 'module';
 
 /** Swappable module importer, so `loadVendorModule` can be unit-tested without a real network import. */
 type VendorModuleImporter = (url: string) => Promise<unknown>;
 
 const DEFAULT_IMPORTER: VendorModuleImporter = (url) =>
-    // The URL is only known at runtime (it depends on `vendorBaseUrl`), so
-    // Vite/Rollup cannot statically analyze this import: `@vite-ignore`
-    // tells it not to try, and to leave the dynamic `import()` as-is.
+    // The URL is only known at runtime, so Vite/Rollup cannot statically
+    // analyze this import: `@vite-ignore` tells it not to try, and to leave
+    // the dynamic `import()` as-is.
     import(/* @vite-ignore */ url);
 
 const DEFAULT_VENDOR_BASE_URL = (): URL =>
@@ -44,16 +28,14 @@ const DEFAULT_VENDOR_BASE_URL = (): URL =>
     // resolve for real in the browser, next to wherever this module ends up.
     new URL(/* @vite-ignore */ './vendor/', import.meta.url);
 
-let vendorBaseUrl: URL = DEFAULT_VENDOR_BASE_URL();
 let moduleImporter: VendorModuleImporter = DEFAULT_IMPORTER;
 
 const stylesheetCache = new Map<string, Promise<void>>();
-const scriptCache = new Map<string, Promise<void>>();
 const moduleCache = new Map<string, Promise<unknown>>();
 
 /**
- * Error raised when a vendored asset (stylesheet, script or module) fails to
- * load. Callers (`ThemeInitializer.init`, the async icon pack wrappers) are
+ * Error raised when a vendored asset (stylesheet or module) fails to load.
+ * Callers (`ThemeInitializer.init`, the async icon pack wrappers) are
  * expected to catch it, log it, and keep going without the asset: a missing
  * icon pack must never prevent the slides from rendering.
  */
@@ -64,7 +46,7 @@ export class TcVendorLoadError extends Error {
 
     constructor(url: string, kind: VendorAssetKind, cause?: unknown) {
         super(
-            `Cannot load \`${url}\`. The \`vendor/\` folder of TalkControl must be served next to the library script, or set \`vendorBaseUrl\` in \`ThemeInitializer.init\`.`
+            `Cannot load \`${url}\`. The \`vendor/\` folder of TalkControl must be served next to the library script.`
         );
         this.name = 'TcVendorLoadError';
         this.url = url;
@@ -74,32 +56,8 @@ export class TcVendorLoadError extends Error {
 }
 
 /**
- * Configures the vendor loader. Called once by `ThemeInitializer.init`
- * (idempotent: the last call wins), and usable directly for the async icon
- * pack API (#95 PR 5) or by #92 (Mermaid) outside of `init`.
- *
- * Does not reset anything already loaded/cached: it only changes where the
- * *next* `resolveVendorUrl` calls resolve against.
- */
-export function configureVendorLoader(
-    options: TcVendorLoaderOptions = {}
-): void {
-    if (options.vendorBaseUrl !== undefined) {
-        vendorBaseUrl = normalizeVendorBaseUrl(options.vendorBaseUrl);
-    }
-}
-
-function normalizeVendorBaseUrl(base: string | URL): URL {
-    if (base instanceof URL) {
-        return base;
-    }
-    const withTrailingSlash = base.endsWith('/') ? base : `${base}/`;
-    return new URL(withTrailingSlash, document.baseURI);
-}
-
-/**
  * Resolves a vendor-relative path (e.g. `'fonts/font-awesome/css/all.min.css'`)
- * against the configured `vendorBaseUrl`.
+ * against the vendor folder, always next to the library's own module.
  *
  * Throws synchronously for a path that escapes the vendor folder (`..`
  * segment) or that is already absolute (root-relative or a full URL): such a
@@ -108,7 +66,7 @@ function normalizeVendorBaseUrl(base: string | URL): URL {
  */
 export function resolveVendorUrl(path: string): URL {
     assertSafeRelativePath(path);
-    return new URL(path, vendorBaseUrl);
+    return new URL(path, DEFAULT_VENDOR_BASE_URL());
 }
 
 const ABSOLUTE_URL_RE = /^[a-z][a-z0-9+.-]*:/i;
@@ -153,37 +111,13 @@ export function loadVendorStylesheet(path: string): Promise<void> {
     });
 }
 
-/**
- * Injects a classic (non-module) `<script>` for the given vendor-relative
- * path and resolves once it has loaded. For UMD/IIFE vendor files (e.g.
- * `feather.min.js`, `all.min.js`) that only work as a plain `<script src>`.
- *
- * Same cache/dedup/no-reinject/retry-after-failure rules as
- * {@link loadVendorStylesheet}.
- */
-export function loadVendorScript(path: string): Promise<void> {
-    const src = resolveVendorUrl(path).href;
-    return loadElementOnce(scriptCache, 'script', src, {
-        alreadyPresent: () =>
-            Array.from(
-                document.querySelectorAll<HTMLScriptElement>('script')
-            ).some((script) => script.src === src),
-        createElement: () => {
-            const script = document.createElement('script');
-            script.src = src;
-            script.async = true;
-            return script;
-        },
-    });
-}
-
 function loadElementOnce(
     cache: Map<string, Promise<void>>,
-    kind: 'stylesheet' | 'script',
+    kind: 'stylesheet',
     resolvedUrl: string,
     hooks: {
         alreadyPresent: () => boolean;
-        createElement: () => HTMLLinkElement | HTMLScriptElement;
+        createElement: () => HTMLLinkElement;
     }
 ): Promise<void> {
     const cached = cache.get(resolvedUrl);
@@ -283,9 +217,7 @@ export function waitForFonts(
 
 function resetCache(): void {
     stylesheetCache.clear();
-    scriptCache.clear();
     moduleCache.clear();
-    vendorBaseUrl = DEFAULT_VENDOR_BASE_URL();
     moduleImporter = DEFAULT_IMPORTER;
 }
 

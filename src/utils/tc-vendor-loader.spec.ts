@@ -4,9 +4,7 @@
 import {
     TcVendorLoadError,
     _internals,
-    configureVendorLoader,
     loadVendorModule,
-    loadVendorScript,
     loadVendorStylesheet,
     resolveVendorUrl,
     waitForFonts,
@@ -29,34 +27,6 @@ describe(resolveVendorUrl.name, () => {
         expect(url.pathname.endsWith('/vendor/fonts/x/a.css')).toBe(true);
     });
 
-    it('resolves against a configured vendorBaseUrl without a trailing slash', () => {
-        configureVendorLoader({ vendorBaseUrl: '/cdn/vendor' });
-
-        const url = resolveVendorUrl('fonts/x/a.css');
-
-        expect(url.pathname).toBe('/cdn/vendor/fonts/x/a.css');
-    });
-
-    it('resolves a relative vendorBaseUrl against document.baseURI', () => {
-        configureVendorLoader({ vendorBaseUrl: 'cdn/vendor' });
-
-        const url = resolveVendorUrl('fonts/x/a.css');
-
-        expect(url.href).toBe(
-            new URL('cdn/vendor/fonts/x/a.css', document.baseURI).href
-        );
-    });
-
-    it('accepts a URL instance for vendorBaseUrl', () => {
-        configureVendorLoader({
-            vendorBaseUrl: new URL('https://cdn.example.com/vendor/'),
-        });
-
-        const url = resolveVendorUrl('fonts/x/a.css');
-
-        expect(url.href).toBe('https://cdn.example.com/vendor/fonts/x/a.css');
-    });
-
     it('throws for a path containing a ".." segment', () => {
         expect(() => resolveVendorUrl('../secrets.css')).toThrow();
         expect(() => resolveVendorUrl('fonts/../../a.css')).toThrow();
@@ -70,13 +40,6 @@ describe(resolveVendorUrl.name, () => {
         expect(() =>
             resolveVendorUrl('https://evil.example.com/a.css')
         ).toThrow();
-    });
-
-    it('the last configureVendorLoader call wins', () => {
-        configureVendorLoader({ vendorBaseUrl: '/first/' });
-        configureVendorLoader({ vendorBaseUrl: '/second/' });
-
-        expect(resolveVendorUrl('a.css').pathname).toBe('/second/a.css');
     });
 });
 
@@ -100,7 +63,7 @@ describe(loadVendorStylesheet.name, () => {
         await expect(promise).resolves.toBeUndefined();
     });
 
-    it('rejects with a TcVendorLoadError naming the URL and vendorBaseUrl when the <link> fires "error"', async () => {
+    it('rejects with a TcVendorLoadError naming the URL when the <link> fires "error"', async () => {
         const promise = loadVendorStylesheet('fonts/x/a.css');
         const link = document.querySelector('link[rel="stylesheet"]')!;
 
@@ -110,7 +73,6 @@ describe(loadVendorStylesheet.name, () => {
         await promise.catch((error: TcVendorLoadError) => {
             expect(error.kind).toBe('stylesheet');
             expect(error.message).toContain(error.url);
-            expect(error.message).toContain('vendorBaseUrl');
         });
     });
 
@@ -156,46 +118,6 @@ describe(loadVendorStylesheet.name, () => {
         expect(
             document.querySelectorAll('link[rel="stylesheet"]')
         ).toHaveLength(1);
-    });
-});
-
-describe(loadVendorScript.name, () => {
-    it('injects a single classic <script> (no type="module") for two concurrent calls', () => {
-        const first = loadVendorScript('fonts/feather/feather.min.js');
-        const second = loadVendorScript('fonts/feather/feather.min.js');
-
-        expect(first).toBe(second);
-        const scripts = document.querySelectorAll('script');
-        expect(scripts).toHaveLength(1);
-        expect(scripts[0].type).not.toBe('module');
-    });
-
-    it('resolves once the injected <script> fires "load"', async () => {
-        const promise = loadVendorScript('fonts/feather/feather.min.js');
-        const script = document.querySelector('script')!;
-
-        script.dispatchEvent(new Event('load'));
-
-        await expect(promise).resolves.toBeUndefined();
-    });
-
-    it('rejects with a TcVendorLoadError on "error"', async () => {
-        const promise = loadVendorScript('fonts/feather/feather.min.js');
-        document.querySelector('script')!.dispatchEvent(new Event('error'));
-
-        await expect(promise).rejects.toMatchObject({
-            kind: 'script',
-        });
-    });
-
-    it('does not re-inject if a script with the same resolved URL already exists in the DOM', () => {
-        const existing = document.createElement('script');
-        existing.src = resolveVendorUrl('fonts/feather/feather.min.js').href;
-        document.head.appendChild(existing);
-
-        void loadVendorScript('fonts/feather/feather.min.js');
-
-        expect(document.querySelectorAll('script')).toHaveLength(1);
     });
 });
 
