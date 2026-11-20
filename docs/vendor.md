@@ -6,9 +6,18 @@ bundle. Instead, TalkControl ships them as plain files under `dist/vendor/`
 and loads them by URL, on demand, only when a feature that needs them is
 actually configured.
 
-This page documents the mechanism itself. It does not yet change what gets
-loaded: as of this version, `dist/vendor/` ships empty — no icon pack has
-moved to it yet (see issue #95, PR 2 to 4).
+This page documents the mechanism itself. As of this version, `dist/vendor/`
+still ships empty: Feather Icons (issue #95, PR 2) is now lazy-loaded, but via
+a plain dynamic `import('feather-icons')` of the npm package rather than
+through this vendor mechanism — `feather-icons` publishes only a CJS/UMD
+build, with no ESM file this mechanism could `import()` at a vendored URL
+(see `src/icons-config/feather-icons-pack.ts` for the full reasoning). That
+dynamic import lets the **ESM** build code-split Feather into its own lazy
+chunk; it does **not** shrink the **UMD** build, since Rollup's UMD output has
+no code-splitting and a statically-reachable `import()` like this one gets
+inlined regardless — a known, accepted limitation for UMD consumers. Material
+Symbols and Font Awesome (#95, PR 3 and 4) are still fully embedded and
+haven't moved to either mechanism yet.
 
 ## The `dist/vendor/` folder
 

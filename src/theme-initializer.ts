@@ -113,6 +113,16 @@ export const ThemeInitializer = {
             tcMarkedOptions
         );
 
+        // Let every configured icon pack finish its one-time async load (eg.
+        // a lazy-loaded library) before Reveal starts rendering the first
+        // slide, so there's no flash of un-replaced icon placeholders. A
+        // pack without `ensureLoaded` (ie. not lazy-loaded) is a no-op here.
+        await Promise.all(
+            (tcMarkedOptions.fontIcons ?? []).map((fontIconPack) =>
+                fontIconPack.ensureLoaded?.()
+            )
+        );
+
         const pluginsToApply = [
             talkControlMarkedPlugin.getPlugin(), // We don't use RevealMarkdown because we have to add custom marked extensions
             RevealTalkControlThemePlugin({
