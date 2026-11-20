@@ -325,10 +325,6 @@ export declare class TcTalkControlElement extends LitElement {
         isValid: boolean;
         isDirty: boolean;
     };
-    /**
-     * Gestion du focus initial
-     */
-    firstUpdated(): void;
     static styles: CSSResult;
 }
 

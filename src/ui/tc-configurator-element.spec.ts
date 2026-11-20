@@ -135,4 +135,26 @@ describe('TcConfiguratorElement (issue #106 - a11y)', () => {
             expect(event.defaultPrevented).toBe(false);
         });
     });
+
+    describe('tab switching keeps focus on the selected tab button (issue #131)', () => {
+        it('stays on the "Talk Control" tab button after switching away and back to it', async () => {
+            const talkControlTab = element.shadowRoot!.querySelector(
+                '#talk-control-tab'
+            ) as HTMLButtonElement;
+            const revealjsTab = element.shadowRoot!.querySelector(
+                '#revealjs-tab'
+            ) as HTMLButtonElement;
+
+            // Switching away and back remounts the nested
+            // <tc-talk-control-element> (conditionally rendered per tab):
+            // it must not grab focus for itself and fight with `selectTab`'s
+            // own focus() call on the tab button.
+            revealjsTab.click();
+            await element.updateComplete;
+            talkControlTab.click();
+            await element.updateComplete;
+
+            expect(element.shadowRoot!.activeElement).toBe(talkControlTab);
+        });
+    });
 });
