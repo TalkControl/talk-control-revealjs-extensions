@@ -2115,10 +2115,10 @@ margin-right:40px}
 .reveal .slides section .float-right{
 float:right;
 margin-left:10px}
-.reveal .slides section.full-center p,.reveal .slides section :not(section).full-center{
+.reveal .slides section.full-center p,.reveal .slides section :not(section):not(img).full-center{
 position:absolute;
-width:100%;
-height:100%;
+width:var(--slide-width);
+height:var(--slide-height);
 top:0;
 left:0;
 margin:0;
@@ -2126,7 +2126,25 @@ padding:0;
 display:flex;
 flex-direction:column;
 align-items:center;
-justify-content:center}
+justify-content:center;
+min-height:0;
+min-width:0}
+.reveal .slides section :not(section):has(>img.full-center){
+position:absolute;
+width:var(--slide-width);
+height:var(--slide-height);
+top:0;
+left:0;
+margin:0;
+padding:0;
+display:grid;
+place-items:center}
+.reveal .slides section img.full-center{
+position:static;
+width:auto;
+height:auto;
+max-width:var(--slide-width);
+max-height:var(--slide-height)}
 .reveal .slides section.flex-row p,.reveal .slides section :not(section).flex-row{
 display:flex;
 flex-direction:row;

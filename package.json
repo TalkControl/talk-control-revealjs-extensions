@@ -43,7 +43,8 @@
         "./theme": {
             "import": "./dist/talk-control-revealjs-theme.css",
             "require": "./dist/talk-control-revealjs-theme.css"
-        }
+        },
+        "./highlight/*": "./dist/highlight/*.css"
     },
     "scripts": {
         "dev": "npm run start",
@@ -52,7 +53,7 @@
         "preview": "npm run start",
         "prestart": "npm run _prepare-demo",
         "start": "parallelshell \"npm run _serve\" \"npm run _build-watch\"",
-        "postbuild": "tsx ./scripts/prepare-publish.ts",
+        "postbuild": "tsx ./scripts/prepare-publish.ts && tsx ./scripts/build-highlight-themes.ts",
         "lint": "eslint",
         "lint:fix": "eslint --fix",
         "prettier": "prettier . --check",

@@ -23,6 +23,27 @@
             type="text/css"
             href="./web_modules/talk-control-revealjs-extensions/talk-control-revealjs-theme.css"
             id="theme" />
+        <!--
+            Overrides the embedded highlight.js code theme (see
+            docs/code.md, "Changing the highlight.js theme"). Shipped by
+            the library in dist/highlight/ (see package.json "exports"),
+            loaded here after the main theme so it wins the cascade at
+            equal selector specificity. Disabled by default: only enabled
+            (see ./scripts/slides.js) when data-theme=sample is active, so
+            the demo's default rendering never changes.
+        -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="./web_modules/talk-control-revealjs-extensions/highlight/atom-one-light.light.css"
+            id="theme-highlight-light"
+            disabled />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="./web_modules/talk-control-revealjs-extensions/highlight/atom-one-dark.dark.css"
+            id="theme-highlight-dark"
+            disabled />
         <link rel="stylesheet" type="text/css" href="./demo.css" />
         <link
             rel="stylesheet"
