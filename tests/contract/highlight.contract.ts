@@ -125,12 +125,12 @@ describe('dist/highlight contract', () => {
         // #46. The checksum is pinned to the latest clean `npm run build`
         // of the main theme and must be refreshed (and explained in the PR
         // description) whenever a change intentionally edits the main
-        // theme's CSS - as #134 does here (typed `attr()` coverage for the
-        // transition slides group).
+        // theme's CSS - as #95 PR 3 does here (the Material Symbols
+        // @font-face and classes leave the theme, now vendored in dist/vendor/).
         const css = fs.readFileSync(MAIN_CSS);
         const hash = createHash('sha256').update(css).digest('hex');
         expect(hash).toBe(
-            '352b4ce801c058985f40a9771c9dc48d68890c8702b48de6abe97886ea1d95af'
+            '4f6fb6f1f180bc7d0d72900ce944b17d6fc22867c252190e2f2d74ea6d5da34e'
         );
     });
 });

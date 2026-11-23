@@ -10,8 +10,12 @@ This page documents the mechanism itself. As of this version, `dist/vendor/`
 contains Feather Icons (issue #95, PR 2): its UMD-only `feather.min.js` is
 copied to `dist/vendor/icons/feather/dist/` and injected as a classic
 `<script>` by `loadVendorScript`, only when `featherIconPack()` is configured.
-It is absent from both the ESM and the UMD bundles. Material Symbols and Font
-Awesome (#95, PR 3 and 4) are still fully embedded and haven't moved yet.
+It is absent from both the ESM and the UMD bundles. Material Symbols (#95,
+PR 3) is vendored too: its three stylesheets and woff2 fonts are copied side by
+side into `dist/vendor/icons/material-symbols/` (the CSS use relative
+`url("./*.woff2")`) and loaded by `loadVendorStylesheet` when
+`materialSymbolsIconPack()` is configured. Font Awesome (PR 4) is still fully
+embedded and hasn't moved yet.
 
 ## The `dist/vendor/` folder
 
