@@ -69,6 +69,19 @@ declare interface MarkedTcIconsOptions {
      * @returns
      */
     initFunction?: () => void;
+    /**
+     * Optional one-time async load step for a pack whose underlying library
+     * is lazy-loaded (e.g. a dynamic `import()`, a vendored stylesheet/module
+     * via `tc-vendor-loader`). When present, `ThemeInitializer.init` awaits
+     * it, for every configured pack, before `Reveal.initialize` - so the
+     * library is ready before the first Markdown render/`ready` event calls
+     * `initFunction`. Must never reject: a failed load should resolve
+     * anyway (after logging), so a missing pack never blocks slide
+     * rendering. Safe to call more than once - implementations are expected
+     * to cache their own load promise.
+     * @returns a promise that never rejects
+     */
+    ensureLoaded?: () => Promise<void>;
 }
 
 declare interface MarkedTcQrCodeOptions {
@@ -434,7 +447,7 @@ export declare interface ThemeInitializerOptions {
  * consumer-facing contract and `scripts/copy-vendor.ts` for how
  * `dist/vendor/` is populated at build time.
  */
-declare type VendorAssetKind = 'stylesheet' | 'module';
+declare type VendorAssetKind = 'stylesheet' | 'script' | 'module';
 
 /**
  * Waits for the given CSS font-face specs (e.g.

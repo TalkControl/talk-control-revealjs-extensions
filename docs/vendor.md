@@ -6,9 +6,12 @@ bundle. Instead, TalkControl ships them as plain files under `dist/vendor/`
 and loads them by URL, on demand, only when a feature that needs them is
 actually configured.
 
-This page documents the mechanism itself. It does not yet change what gets
-loaded: as of this version, `dist/vendor/` ships empty — no icon pack has
-moved to it yet (see issue #95, PR 2 to 4).
+This page documents the mechanism itself. As of this version, `dist/vendor/`
+contains Feather Icons (issue #95, PR 2): its UMD-only `feather.min.js` is
+copied to `dist/vendor/icons/feather/dist/` and injected as a classic
+`<script>` by `loadVendorScript`, only when `featherIconPack()` is configured.
+It is absent from both the ESM and the UMD bundles. Material Symbols and Font
+Awesome (#95, PR 3 and 4) are still fully embedded and haven't moved yet.
 
 ## The `dist/vendor/` folder
 

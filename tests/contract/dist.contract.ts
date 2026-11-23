@@ -117,6 +117,11 @@ describe('dist/ contract', () => {
                 'talk-control-revealjs-extensions.umd.cjs.map',
                 CSS_FILE,
                 'talk-control.png',
+                // dist/vendor/ (#95): vendored third-party assets, one entry
+                // per scripts/vendor-manifest.ts (Feather for now).
+                'vendor/THIRD-PARTY-LICENSES.txt',
+                'vendor/icons/feather/LICENSE',
+                'vendor/icons/feather/dist/feather.min.js',
             ].sort()
         );
     });

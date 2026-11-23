@@ -5,6 +5,7 @@ import {
     TcVendorLoadError,
     _internals,
     loadVendorModule,
+    loadVendorScript,
     loadVendorStylesheet,
     resolveVendorUrl,
     waitForFonts,
@@ -118,6 +119,42 @@ describe(loadVendorStylesheet.name, () => {
         expect(
             document.querySelectorAll('link[rel="stylesheet"]')
         ).toHaveLength(1);
+    });
+});
+
+describe(loadVendorScript.name, () => {
+    it('injects a single <script> for two concurrent calls on the same URL', () => {
+        const first = loadVendorScript('icons/x/x.min.js');
+        const second = loadVendorScript('icons/x/x.min.js');
+
+        expect(first).toBe(second);
+        expect(document.querySelectorAll('script')).toHaveLength(1);
+        expect(document.querySelector('script')!.src).toBe(
+            resolveVendorUrl('icons/x/x.min.js').href
+        );
+    });
+
+    it('resolves once the injected <script> fires "load"', async () => {
+        const promise = loadVendorScript('icons/x/x.min.js');
+
+        document.querySelector('script')!.dispatchEvent(new Event('load'));
+
+        await expect(promise).resolves.toBeUndefined();
+    });
+
+    it('rejects with a TcVendorLoadError of kind "script" on "error", and allows a retry', async () => {
+        const failed = loadVendorScript('icons/x/x.min.js');
+        document.querySelector('script')!.dispatchEvent(new Event('error'));
+
+        await expect(failed).rejects.toThrow(TcVendorLoadError);
+        await failed.catch((error: TcVendorLoadError) => {
+            expect(error.kind).toBe('script');
+        });
+        expect(document.querySelectorAll('script')).toHaveLength(0);
+
+        const retry = loadVendorScript('icons/x/x.min.js');
+        expect(retry).not.toBe(failed);
+        expect(document.querySelectorAll('script')).toHaveLength(1);
     });
 });
 

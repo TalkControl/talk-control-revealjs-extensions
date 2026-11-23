@@ -10,7 +10,7 @@
  * `dist/vendor/` is populated at build time.
  */
 
-type VendorAssetKind = 'stylesheet' | 'module';
+type VendorAssetKind = 'stylesheet' | 'script' | 'module';
 
 /** Swappable module importer, so `loadVendorModule` can be unit-tested without a real network import. */
 type VendorModuleImporter = (url: string) => Promise<unknown>;
@@ -31,6 +31,7 @@ const DEFAULT_VENDOR_BASE_URL = (): URL =>
 let moduleImporter: VendorModuleImporter = DEFAULT_IMPORTER;
 
 const stylesheetCache = new Map<string, Promise<void>>();
+const scriptCache = new Map<string, Promise<void>>();
 const moduleCache = new Map<string, Promise<unknown>>();
 
 /**
@@ -111,13 +112,38 @@ export function loadVendorStylesheet(path: string): Promise<void> {
     });
 }
 
+/**
+ * Injects a classic `<script>` for the given vendor-relative path and
+ * resolves once it has executed. For vendored libraries that only ship a
+ * UMD/IIFE build (no ES module to `import()`, e.g. Feather Icons): the
+ * script exposes itself as a global, which the caller then reads.
+ *
+ * Deduplicated per resolved URL, like {@link loadVendorStylesheet}. A failed
+ * load removes the cache entry and the element, so a later call can retry.
+ */
+export function loadVendorScript(path: string): Promise<void> {
+    const src = resolveVendorUrl(path).href;
+    return loadElementOnce(scriptCache, 'script', src, {
+        alreadyPresent: () =>
+            Array.from(
+                document.querySelectorAll<HTMLScriptElement>('script')
+            ).some((script) => script.src === src),
+        createElement: () => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            return script;
+        },
+    });
+}
+
 function loadElementOnce(
     cache: Map<string, Promise<void>>,
-    kind: 'stylesheet',
+    kind: 'stylesheet' | 'script',
     resolvedUrl: string,
     hooks: {
         alreadyPresent: () => boolean;
-        createElement: () => HTMLLinkElement;
+        createElement: () => HTMLLinkElement | HTMLScriptElement;
     }
 ): Promise<void> {
     const cached = cache.get(resolvedUrl);
@@ -217,6 +243,7 @@ export function waitForFonts(
 
 function resetCache(): void {
     stylesheetCache.clear();
+    scriptCache.clear();
     moduleCache.clear();
     moduleImporter = DEFAULT_IMPORTER;
 }
