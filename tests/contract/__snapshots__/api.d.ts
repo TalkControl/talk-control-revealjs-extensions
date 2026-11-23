@@ -451,7 +451,7 @@ export declare interface ThemeInitializerOptions {
  * consumer-facing contract and `scripts/copy-vendor.ts` for how
  * `dist/vendor/` is populated at build time.
  */
-declare type VendorAssetKind = 'stylesheet' | 'module';
+declare type VendorAssetKind = 'stylesheet' | 'script' | 'module';
 
 /**
  * Waits for the given CSS font-face specs (e.g.

@@ -63,8 +63,8 @@ Here is a circle: ![](circle 'tc-icons feather')
 
 Feather icons are rendered using JavaScript. The necessary initialization is handled automatically by Talk-Control.
 
-Feather is **lazy-loaded**: the `feather-icons` library is only fetched (via a
-dynamic `import()`) once `featherIconPack()` is actually included in your
+Feather is **lazy-loaded**: the `feather-icons` library is only fetched (a
+vendored script under `vendor/icons/feather/`) once `featherIconPack()` is actually included in your
 `fontIcons` array, and loading completes before the first slide renders - a
 consumer who doesn't configure Feather never downloads or executes its code.
 Font Awesome and Material Symbols are **not yet** lazy-loaded (still fully
