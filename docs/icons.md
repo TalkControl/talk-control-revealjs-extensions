@@ -67,8 +67,8 @@ Feather is **lazy-loaded**: the `feather-icons` library is only fetched (a
 vendored script under `vendor/icons/feather/`) once `featherIconPack()` is actually included in your
 `fontIcons` array, and loading completes before the first slide renders - a
 consumer who doesn't configure Feather never downloads or executes its code.
-Font Awesome and Material Symbols are **not yet** lazy-loaded (still fully
-embedded in the bundle regardless of configuration) - see issue #95.
+Font Awesome is **not yet** lazy-loaded (still fully embedded in the bundle
+regardless of configuration) - see issue #95.
 
 ![](./imgs/icons-feather.png)
 
@@ -80,6 +80,12 @@ embedded in the bundle regardless of configuration) - see issue #95.
 ```markdown
 An account icon: ![](account_circle 'tc-icons material-symbols')
 ```
+
+Material Symbols is **lazy-loaded**: its stylesheets and fonts (the three
+families Outlined, Rounded and Sharp, under `vendor/icons/material-symbols/`) are only fetched once
+`materialSymbolsIconPack()` is included in your `fontIcons` array, and the
+first slide renders once the fonts are ready. A consumer who doesn't configure
+it downloads nothing (~14.7 MB of fonts no longer sit in the theme CSS).
 
 ![](./imgs/icons-material.png)
 

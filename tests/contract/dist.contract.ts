@@ -118,10 +118,17 @@ describe('dist/ contract', () => {
                 CSS_FILE,
                 'talk-control.png',
                 // dist/vendor/ (#95): vendored third-party assets, one entry
-                // per scripts/vendor-manifest.ts (Feather for now).
+                // per scripts/vendor-manifest.ts (Feather, Material Symbols).
                 'vendor/THIRD-PARTY-LICENSES.txt',
                 'vendor/icons/feather/LICENSE',
                 'vendor/icons/feather/dist/feather.min.js',
+                'vendor/icons/material-symbols/LICENSE',
+                'vendor/icons/material-symbols/material-symbols-outlined.woff2',
+                'vendor/icons/material-symbols/material-symbols-rounded.woff2',
+                'vendor/icons/material-symbols/material-symbols-sharp.woff2',
+                'vendor/icons/material-symbols/outlined.css',
+                'vendor/icons/material-symbols/rounded.css',
+                'vendor/icons/material-symbols/sharp.css',
             ].sort()
         );
     });
