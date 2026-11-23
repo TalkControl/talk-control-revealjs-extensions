@@ -25,4 +25,21 @@ export const VENDOR_MANIFEST: VendorEntry[] = [
         include: ['outlined.css', 'rounded.css', 'sharp.css', '*.woff2'],
         licenses: ['LICENSE'],
     },
+    {
+        // Font mode only (#96): the pack declares `htmlAttribute: 'class'`, so
+        // `js/all.js` (SVG replacement) is not vendored. `all.min.css`
+        // references `../webfonts/*.woff2`, hence the `css/` + `webfonts/`
+        // structure is kept. Only the three families the CSS actually uses
+        // are copied (the .ttf fallbacks and the v4 compat font are dropped).
+        name: 'font-awesome',
+        from: 'node_modules/@fortawesome/fontawesome-free',
+        to: 'icons/font-awesome',
+        include: [
+            'css/all.min.css',
+            'webfonts/fa-solid-900.woff2',
+            'webfonts/fa-regular-400.woff2',
+            'webfonts/fa-brands-400.woff2',
+        ],
+        licenses: ['LICENSE.txt'],
+    },
 ];

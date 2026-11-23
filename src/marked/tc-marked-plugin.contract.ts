@@ -8,9 +8,6 @@
  * TalkControl extensions. Each corpus case produces a reviewable `.html`
  * snapshot in `__snapshots__/corpus/`. Any change of these files must be
  * explained in the pull request that introduces it.
- *
- * Font Awesome is covered by `tc-marked-plugin.font-awesome.contract.ts`
- * (its `all.js` patches the DOM, so it runs in its own test file).
  */
 import {
     CORPUS_CASES,
@@ -19,16 +16,18 @@ import {
 } from './__fixtures__/render-corpus';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { featherIconPack } from '../icons-config/feather-icons-pack';
+import { fontAwesomeIconPack } from '../icons-config/font-awesome-pack';
 import { materialSymbolsIconPack } from '../icons-config/material-symbols-pack';
 
-const FONT_AWESOME_CASE = 'icons-font-awesome';
-const CASES = CORPUS_CASES.filter((name) => name !== FONT_AWESOME_CASE);
+const CASES = CORPUS_CASES;
 
 describe('RevealTalkControlMarkdownPlugin contract (corpus)', () => {
     let rendered: RenderedCorpus;
 
     beforeAll(async () => {
+        // Same order as the demo deck (demo/scripts/slides.js).
         rendered = await renderCorpus(CASES, [
+            fontAwesomeIconPack(),
             featherIconPack(),
             materialSymbolsIconPack(),
         ]);

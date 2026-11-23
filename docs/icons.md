@@ -50,6 +50,21 @@ To use a Font Awesome icon, use the `fa` keyword. You can include the style (e.g
 This is a house icon: ![](fa-house 'tc-icons fa')
 ```
 
+Font Awesome is **lazy-loaded**, in font mode only: its minified stylesheet and
+the three fonts (Free Solid, Free Regular, Brands, under
+`vendor/icons/font-awesome/`) are only fetched once `fontAwesomeIconPack()` is
+included in your `fontIcons` array, and the first slide renders once the fonts
+are ready. Icons are rendered as `<i>` elements through the font (no
+`all.js`, no SVG replacement).
+
+> **Breaking change.** Font Awesome classes (`fa-*`) used in raw HTML **without**
+> declaring `fontAwesomeIconPack()` used to work as a side effect of the
+> library embedding Font Awesome for everyone. They no longer do: declare the
+> pack in `fontIcons`. Also, the JS SVG mode is gone: icons are now fonts, so
+> SVG-only Font Awesome features (`data-fa-transform`, `data-fa-mask`, layers,
+> `svg-inline--fa` styling) are not available, and the Font Awesome v4/v5
+> compatibility font aliases are not shipped.
+
 ![](./imgs/icons-fa.png)
 
 ### Feather Icons
@@ -67,8 +82,6 @@ Feather is **lazy-loaded**: the `feather-icons` library is only fetched (a
 vendored script under `vendor/icons/feather/`) once `featherIconPack()` is actually included in your
 `fontIcons` array, and loading completes before the first slide renders - a
 consumer who doesn't configure Feather never downloads or executes its code.
-Font Awesome is **not yet** lazy-loaded (still fully embedded in the bundle
-regardless of configuration) - see issue #95.
 
 ![](./imgs/icons-feather.png)
 

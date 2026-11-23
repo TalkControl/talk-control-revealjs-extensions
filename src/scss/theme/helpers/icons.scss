@@ -38,13 +38,21 @@
         width: var(--tc-icon-size, 1em); // Default size
         height: var(--tc-icon-size, 1em); // Default size
     }
+}
 
-    // Font Awesome icons
-    &.svg-inline--fa {
-        color: var(--tc-icon-color);
-        width: var(--tc-icon-size, 1em); // Default size
-        height: var(--tc-icon-size, 1em); // Default size
-    }
+// Font Awesome icons (font mode: the pack only loads the CSS + woff2 fonts,
+// see #96). `color` follows the same rule as Material Symbols; `font-size` is
+// wrapped in `:where()` (specificity 0) so that Font Awesome's own size
+// classes (`fa-2xl`, `fa-lg`...) keep winning over the `1em` default, while
+// `tc-small`/`tc-big`/`--tc-icon-size` still apply when no `fa-*` size class is
+// used (this includes the copy-to-clipboard icon).
+$tc-fa-icon-selector: '.reveal .slides section .tc-icons:is(.fa, .fa-solid, .fa-regular, .fa-brands, .fab, .fas, .far)';
+
+#{$tc-fa-icon-selector} {
+    color: var(--tc-icon-color);
+}
+:where(#{$tc-fa-icon-selector}) {
+    font-size: var(--tc-icon-size, 1em);
 }
 
 // `data-tc-icon-color`/`data-tc-icon-size` override the `--tc-*` custom
@@ -89,20 +97,18 @@
                 var(--tc-icon-size, 1em)
             );
         }
+    }
 
-        &.svg-inline--fa {
-            color: attr(
-                data-tc-icon-color type(#{$tc-attr-color-type}),
-                var(--tc-icon-color)
-            );
-            width: attr(
-                data-tc-icon-size type(#{$tc-attr-length-type}),
-                var(--tc-icon-size, 1em)
-            );
-            height: attr(
-                data-tc-icon-size type(#{$tc-attr-length-type}),
-                var(--tc-icon-size, 1em)
-            );
-        }
+    #{$tc-fa-icon-selector} {
+        color: attr(
+            data-tc-icon-color type(#{$tc-attr-color-type}),
+            var(--tc-icon-color)
+        );
+    }
+    :where(#{$tc-fa-icon-selector}) {
+        font-size: attr(
+            data-tc-icon-size type(#{$tc-attr-length-type}),
+            var(--tc-icon-size, 1em)
+        );
     }
 }

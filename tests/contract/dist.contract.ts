@@ -118,8 +118,13 @@ describe('dist/ contract', () => {
                 CSS_FILE,
                 'talk-control.png',
                 // dist/vendor/ (#95): vendored third-party assets, one entry
-                // per scripts/vendor-manifest.ts (Feather, Material Symbols).
+                // per scripts/vendor-manifest.ts (Feather, Material Symbols, Font Awesome).
                 'vendor/THIRD-PARTY-LICENSES.txt',
+                'vendor/icons/font-awesome/LICENSE.txt',
+                'vendor/icons/font-awesome/css/all.min.css',
+                'vendor/icons/font-awesome/webfonts/fa-brands-400.woff2',
+                'vendor/icons/font-awesome/webfonts/fa-regular-400.woff2',
+                'vendor/icons/font-awesome/webfonts/fa-solid-900.woff2',
                 'vendor/icons/feather/LICENSE',
                 'vendor/icons/feather/dist/feather.min.js',
                 'vendor/icons/material-symbols/LICENSE',
