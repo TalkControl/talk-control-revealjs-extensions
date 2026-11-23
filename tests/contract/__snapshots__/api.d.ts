@@ -100,7 +100,18 @@ declare interface MarkedTcQrCodeOptions {
     defaultAlt?: string | Record<string, string>;
 }
 
-export declare function materialSymbolsIconPack(): MarkedTcIconsOptions;
+export declare function materialSymbolsIconPack(options?: MaterialSymbolsPackOptions): MarkedTcIconsOptions;
+
+export declare interface MaterialSymbolsPackOptions {
+    /**
+     * Families to load. Defaults to all three. Unknown values are ignored
+     * with a warning; an empty (or fully invalid) list falls back to the
+     * default.
+     */
+    variants?: MaterialSymbolsVariant[];
+}
+
+export declare type MaterialSymbolsVariant = 'outlined' | 'rounded' | 'sharp';
 
 /**
  * Resolves a vendor-relative path (e.g. `'fonts/font-awesome/css/all.min.css'`)

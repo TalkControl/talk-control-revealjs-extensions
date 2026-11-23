@@ -18,6 +18,10 @@ export { fontAwesomeIconPack } from './icons-config/font-awesome-pack';
 export { featherIconPack } from './icons-config/feather-icons-pack';
 
 export { materialSymbolsIconPack } from './icons-config/material-symbols-pack';
+export type {
+    MaterialSymbolsVariant,
+    MaterialSymbolsPackOptions,
+} from './icons-config/material-symbols-pack';
 
 export {
     TcVendorLoadError,

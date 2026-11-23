@@ -87,6 +87,24 @@ families Outlined, Rounded and Sharp, under `vendor/icons/material-symbols/`) ar
 first slide renders once the fonts are ready. A consumer who doesn't configure
 it downloads nothing (~14.7 MB of fonts no longer sit in the theme CSS).
 
+#### Choosing the variants
+
+Each family weighs roughly 3 to 4.6 MB of woff2. By default all three are
+loaded; pass `variants` to load only the ones you use. `outlined` is the
+recommended choice to keep the download light:
+
+```javascript
+materialSymbolsIconPack({ variants: ['outlined'] });
+```
+
+-   Accepted values: `'outlined'`, `'rounded'`, `'sharp'` (type `MaterialSymbolsVariant`).
+-   An icon class of a variant that is **not loaded** is displayed as plain
+    text (the icon name), so request every variant your slides use.
+-   Unknown values are ignored with a `console.warn`; an empty or fully
+    invalid list falls back to the default (all three), also with a warning.
+-   The three families are still shipped in `dist/vendor`; the choice only
+    affects what the browser downloads at runtime.
+
 ![](./imgs/icons-material.png)
 
 ## Styling Icons
