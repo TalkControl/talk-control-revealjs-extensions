@@ -40,6 +40,12 @@ export class TcUiConfig {
     }
     init() {
         // Add listener to open the slide selector
+        // `C` opens on keydown, not keyup: on keyup, the modifier state
+        // depends on which key of Ctrl+C / Cmd+C is released first, so a
+        // `!e.ctrlKey && !e.metaKey` guard is unreliable (issue #139).
+        document.body.addEventListener('keydown', (e) =>
+            this._keyDownHandler(e)
+        );
         document.body.addEventListener('keyup', (e) => this._keyUpHandler(e));
 
         this.initModes();
@@ -150,20 +156,33 @@ export class TcUiConfig {
     }
 
     /**
-     * Handler that open the slide selector
-     * @param {*} e keyup event
+     * Handler that opens the slide selector on a plain `C` keydown: no
+     * modifier (copy shortcuts Ctrl/Cmd+C, Alt, Shift), not an auto-repeat,
+     * and not while the user is typing in an input-like element.
+     * @param {*} e keydown event
      */
-    _keyUpHandler(e: KeyboardEvent) {
+    _keyDownHandler(e: KeyboardEvent) {
         if (
             (e.key === 'c' || e.key === 'C') &&
             !e.ctrlKey &&
             !e.shiftKey &&
             !e.metaKey &&
-            !this.state.show
+            !e.altKey &&
+            !e.repeat &&
+            !this.state.show &&
+            !isEditableTarget(e)
         ) {
             e.preventDefault();
             this.openUI();
-        } else if (e.key === 'Escape' && this.state.show) {
+        }
+    }
+
+    /**
+     * Handler that closes the slide selector
+     * @param {*} e keyup event
+     */
+    _keyUpHandler(e: KeyboardEvent) {
+        if (e.key === 'Escape' && this.state.show) {
             e.preventDefault();
             this.closeUI();
         }
@@ -268,4 +287,21 @@ export class TcUiConfig {
             element
         );
     }
+}
+
+/**
+ * True when the event comes from an element the user types into
+ * (`input`, `textarea`, `select`, `contenteditable`). Uses the composed path
+ * so an input inside a shadow root is detected too (a retargeted
+ * `event.target` would only expose the shadow host).
+ */
+function isEditableTarget(e: KeyboardEvent): boolean {
+    const origin = (e.composedPath?.()[0] ?? e.target) as HTMLElement | null;
+    if (!origin || !origin.tagName) {
+        return false;
+    }
+    return (
+        /^(input|textarea|select)$/i.test(origin.tagName) ||
+        origin.isContentEditable === true
+    );
 }

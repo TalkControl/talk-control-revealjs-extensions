@@ -149,48 +149,144 @@ describe('TcUiConfig', () => {
 
     describe('Keyboard Event Handling', () => {
         it('should open UI when "c" key is pressed', () => {
-            const keyEvent = new KeyboardEvent('keyup', { key: 'c' });
+            const keyEvent = new KeyboardEvent('keydown', { key: 'c' });
             const resetOrCreateUISpy = vi
                 .spyOn(tcUiConfig, 'resetOrCreateUI')
                 .mockImplementation(() => {});
 
-            tcUiConfig['_keyUpHandler'](keyEvent);
+            tcUiConfig['_keyDownHandler'](keyEvent);
 
             expect(tcUiConfig['state'].show).toBe(true);
             expect(resetOrCreateUISpy).toHaveBeenCalled();
         });
 
         it('should open UI when "C" key is pressed', () => {
-            const keyEvent = new KeyboardEvent('keyup', { key: 'C' });
+            const keyEvent = new KeyboardEvent('keydown', { key: 'C' });
             const resetOrCreateUISpy = vi
                 .spyOn(tcUiConfig, 'resetOrCreateUI')
                 .mockImplementation(() => {});
 
-            tcUiConfig['_keyUpHandler'](keyEvent);
+            tcUiConfig['_keyDownHandler'](keyEvent);
 
             expect(tcUiConfig['state'].show).toBe(true);
             expect(resetOrCreateUISpy).toHaveBeenCalled();
         });
 
         it('should not open UI when "c" is pressed with modifier keys', () => {
-            const keyEventCtrl = new KeyboardEvent('keyup', {
-                key: 'c',
-                ctrlKey: true,
-            });
-            const keyEventShift = new KeyboardEvent('keyup', {
-                key: 'c',
-                shiftKey: true,
-            });
-            const keyEventMeta = new KeyboardEvent('keyup', {
-                key: 'c',
-                metaKey: true,
-            });
-
-            tcUiConfig['_keyUpHandler'](keyEventCtrl);
-            tcUiConfig['_keyUpHandler'](keyEventShift);
-            tcUiConfig['_keyUpHandler'](keyEventMeta);
+            for (const modifier of [
+                'ctrlKey',
+                'shiftKey',
+                'metaKey',
+                'altKey',
+            ]) {
+                tcUiConfig['_keyDownHandler'](
+                    new KeyboardEvent('keydown', {
+                        key: 'c',
+                        [modifier]: true,
+                    })
+                );
+            }
 
             expect(tcUiConfig['state'].show).toBe(false);
+        });
+
+        it('should not open UI on an auto-repeated "c" keydown', () => {
+            tcUiConfig['_keyDownHandler'](
+                new KeyboardEvent('keydown', { key: 'c', repeat: true })
+            );
+
+            expect(tcUiConfig['state'].show).toBe(false);
+        });
+
+        it('should not open UI on "c" keyup anymore (issue #139)', () => {
+            tcUiConfig['_keyUpHandler'](
+                new KeyboardEvent('keyup', { key: 'c' })
+            );
+
+            expect(tcUiConfig['state'].show).toBe(false);
+        });
+
+        it('should not open UI on Ctrl+C / Cmd+C, whichever key is released first (issue #139)', () => {
+            const resetOrCreateUISpy = vi
+                .spyOn(tcUiConfig, 'resetOrCreateUI')
+                .mockImplementation(() => {});
+
+            // Real-world sequence: modifier down, C down (modifier flag
+            // set), modifier released first, then C released (flag unset).
+            // All of it dispatched through the real body listeners.
+            for (const modifier of ['ctrlKey', 'metaKey']) {
+                document.body.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'c',
+                        [modifier]: true,
+                        bubbles: true,
+                    })
+                );
+                document.body.dispatchEvent(
+                    new KeyboardEvent('keyup', { key: 'c', bubbles: true })
+                );
+            }
+
+            expect(tcUiConfig['state'].show).toBe(false);
+            expect(resetOrCreateUISpy).not.toHaveBeenCalled();
+        });
+
+        describe('while typing in an editable element (issue #139)', () => {
+            const pressCOn = (element: HTMLElement) => {
+                document.body.appendChild(element);
+                element.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'c',
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+                element.remove();
+            };
+
+            it.each(['input', 'textarea', 'select'])(
+                'does not open UI from a <%s>',
+                (tag) => {
+                    pressCOn(document.createElement(tag));
+                    expect(tcUiConfig['state'].show).toBe(false);
+                }
+            );
+
+            it('does not open UI from a contenteditable element', () => {
+                const div = document.createElement('div');
+                // jsdom does not implement `isContentEditable`.
+                Object.defineProperty(div, 'isContentEditable', {
+                    value: true,
+                });
+                pressCOn(div);
+                expect(tcUiConfig['state'].show).toBe(false);
+            });
+
+            it('does not open UI from an input inside a shadow root', () => {
+                const host = document.createElement('div');
+                const input = document.createElement('input');
+                host.attachShadow({ mode: 'open' }).appendChild(input);
+                document.body.appendChild(host);
+
+                input.dispatchEvent(
+                    new KeyboardEvent('keydown', {
+                        key: 'c',
+                        bubbles: true,
+                        composed: true,
+                    })
+                );
+                host.remove();
+
+                expect(tcUiConfig['state'].show).toBe(false);
+            });
+
+            it('still opens UI from a non-editable element', () => {
+                vi.spyOn(tcUiConfig, 'resetOrCreateUI').mockImplementation(
+                    () => {}
+                );
+                pressCOn(document.createElement('div'));
+                expect(tcUiConfig['state'].show).toBe(true);
+            });
         });
 
         it('should close UI when Escape key is pressed and UI is shown', () => {
@@ -277,8 +373,8 @@ describe('TcUiConfig', () => {
 
     describe('Integration Tests', () => {
         it('should handle complete workflow: open UI with keyboard, then close with escape', () => {
-            const openKeyEvent = new KeyboardEvent('keyup', { key: 'c' });
-            tcUiConfig['_keyUpHandler'](openKeyEvent);
+            const openKeyEvent = new KeyboardEvent('keydown', { key: 'c' });
+            tcUiConfig['_keyDownHandler'](openKeyEvent);
 
             expect(tcUiConfig['state'].show).toBe(true);
             expect(document.querySelector('#ui-slide-selector')).toBeTruthy();
