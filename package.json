@@ -81,7 +81,7 @@
         "highlight.js": "^11.12.0",
         "lit": "^3.3.3",
         "material-symbols": "^0.27.2",
-        "reveal.js": "5.2.1"
+        "reveal.js": "6.0.2"
     },
     "devDependencies": {
         "@arethetypeswrong/cli": "0.18.5",
@@ -92,7 +92,6 @@
         "@types/feather-icons": "^4.29.4",
         "@types/marked": "^4.3.0",
         "@types/node": "^24.19.2",
-        "@types/reveal.js": "^5.0.3",
         "@types/shelljs": "^0.8.15",
         "chokidar-cli": "^3.0.0",
         "eslint": "^9.39.5",

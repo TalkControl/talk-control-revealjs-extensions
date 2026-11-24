@@ -1,8 +1,8 @@
 import { MarkedTcIconsOptions, markedTcIcons } from './marked-tc-icons';
 import { MarkedTcQrCodeOptions, markedTcQrCode } from './marked-tc-qrcode';
 import { RevealMarkdownPlugin, TcAdmonitionOptions } from '../models';
-import { PluginFunction } from 'reveal.js';
-import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
+import RevealMarkdown from 'reveal.js/plugin/markdown';
+import { type RevealPluginFactory } from 'reveal.js';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
 import { markedTcCols } from './marked-tc-cols';
@@ -43,7 +43,7 @@ export class RevealTalkControlMarkdownPlugin {
         this.options = options;
     }
 
-    getPlugin(): PluginFunction {
+    getPlugin(): RevealPluginFactory {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
         // A wrapper around RevealMarkdown to add custom marked extensions

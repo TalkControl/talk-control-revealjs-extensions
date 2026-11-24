@@ -128,11 +128,13 @@ describe('dist/highlight contract', () => {
         // theme's CSS - as #95 PR 3 does (the Material Symbols @font-face and
         // classes leave the theme, now vendored in dist/vendor/) and PR 4 / #96
         // (the Font Awesome @font-face leaves too, and the icons.scss rules
-        // target the font-mode `<i>` instead of `svg.svg-inline--fa`).
+        // target the font-mode `<i>` instead of `svg.svg-inline--fa`). Refreshed again
+        // for the reveal.js 6.0.2 upgrade (#91): reveal.css and the theme
+        // template changed upstream, TalkControl variables are now kebab-case.
         const css = fs.readFileSync(MAIN_CSS);
         const hash = createHash('sha256').update(css).digest('hex');
         expect(hash).toBe(
-            'ab180c825d9aab449cd0990e6ff428b48fd42d7c36e18338de3527200f0e1578'
+            'b10cba0690b5b29f01a25c779c1b0df044b8ed1e7c23bb99dab561241d7d39e1'
         );
     });
 });

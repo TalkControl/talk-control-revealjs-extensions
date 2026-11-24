@@ -1,0 +1,52 @@
+// TalkControl values for the reveal.js 6 theme settings.
+//
+// reveal.js 6 declares its settings with `!default` and emits them as
+// `:root { --r-* }` as soon as `template/settings` is loaded. These variables
+// MUST therefore be defined BEFORE importing it, otherwise reveal's own
+// defaults (dark theme) silently win. Names are kebab-case, as in reveal.js 6.
+
+@use 'sass:color';
+
+// Background of the presentation
+$background-color: white;
+$background: $background-color;
+
+// Primary/body text
+$main-font: 'Lato', sans-serif;
+$main-font-size: 2.5em;
+$main-color: #1d1d1d;
+
+// Vertical spacing between blocks of text
+$block-margin: 20px;
+
+// Headings
+$heading-margin: 0 0 $block-margin 0;
+$heading-font: 'League Gothic', Impact, sans-serif;
+$heading-color: $main-color;
+$heading-line-height: 1.2;
+$heading-letter-spacing: normal;
+$heading-text-transform: uppercase;
+$heading-text-shadow: none;
+$heading-font-weight: normal;
+$heading1-text-shadow: $heading-text-shadow;
+
+$heading1-size: 3.77em;
+$heading2-size: 2.11em;
+$heading3-size: 1.55em;
+$heading4-size: 1em;
+
+$code-font: monospace;
+
+// Links and actions
+$link-color: #a64d79;
+// Same result as the former `lighten($link-color, 20%)`
+$link-color-hover: color.adjust($link-color, $lightness: 20%);
+
+// Text selection
+$selection-background-color: #6a1e55;
+$selection-color: #fff;
+
+// Colors used for UI elements that are overlaid on top of
+// the presentation
+$overlay-element-bg-color: 240, 240, 240;
+$overlay-element-fg-color: 0, 0, 0;

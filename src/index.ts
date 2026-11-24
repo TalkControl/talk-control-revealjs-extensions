@@ -12,6 +12,12 @@ export * from './models';
 export * from './theme-initializer';
 
 export { default as Reveal } from 'reveal.js';
+export type {
+    RevealApi,
+    RevealConfig,
+    RevealPlugin,
+    RevealPluginFactory,
+} from 'reveal.js';
 
 export { fontAwesomeIconPack } from './icons-config/font-awesome-pack';
 

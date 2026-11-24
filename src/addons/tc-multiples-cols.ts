@@ -81,7 +81,9 @@ const revealJSBackgroundImageCopiedCode = (
     background: HTMLElement,
     section: HTMLElement
 ) => {
-    // Copy from here : https://github.com/hakimel/reveal.js/blob/5412639a54d5631dae806ed59c4ec657cb5aba27/js/controllers/slidecontent.js#L51
+    // Copy from here (identical in reveal.js 6.0.2, checked against the published package):
+    // https://github.com/hakimel/reveal.js/blob/6.0.2/js/controllers/slidecontent.js#L145
+    // `encodeRFC3986URI` below mirrors js/utils/util.ts of the same release.
     const backgroundImage = section.getAttribute('data-background-image');
 
     // Images

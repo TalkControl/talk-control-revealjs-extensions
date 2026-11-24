@@ -22,6 +22,8 @@
  * (`<code class="xml">`, no trailing newline), whereas a bare marked emits
  * `<code class="language-xml">`. `<pre>` blocks are therefore masked before
  * comparing, so that the contract only covers TalkControl-owned output.
+ * Heading ids and inter-tag whitespace are neutralized for the same reason
+ * (see `neutralizeEngineCore`).
  */
 import * as markedModule from 'marked';
 import { beforeAll, describe, expect, it, vi } from 'vitest';
@@ -49,6 +51,15 @@ const EXTENSION_CORPUS: Record<string, string[]> = {
     icons: ['icons', 'icons-font-awesome'],
     'styled-image': ['styled-images'],
 };
+
+/**
+ * Neutralizes engine-core differences between the project's marked 5 and the
+ * marked 17 embedded by reveal.js 6 (not TalkControl output): automatic heading
+ * ids (removed in marked 8) and whitespace between tags (the `space` token
+ * keeps its raw text in marked 17).
+ */
+const neutralizeEngineCore = (html: string): string =>
+    html.replace(/(<h[1-6]) id="[^"]*"/g, '$1').replace(/>\s+</g, '><');
 
 /** Masks `<pre>` blocks, owned by the engine core / reveal (see header). */
 const maskCode = (html: string): string =>
@@ -123,8 +134,12 @@ describe('TalkControl marked extensions on both engines', () => {
                     path.join(CORPUS, `${name}.md`),
                     'utf8'
                 );
-                const a = maskCode(normalizeHtml(await project.parse(md)));
-                const b = maskCode(normalizeHtml(await reveal.parse(md)));
+                const a = neutralizeEngineCore(
+                    maskCode(normalizeHtml(await project.parse(md)))
+                );
+                const b = neutralizeEngineCore(
+                    maskCode(normalizeHtml(await reveal.parse(md)))
+                );
                 expect(a.length).toBeGreaterThan(0);
                 expect(a).toBe(b);
             });
