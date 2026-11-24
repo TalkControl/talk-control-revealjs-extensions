@@ -8,5 +8,7 @@
 // compiled directly by admonition.spec.ts) - Sass resolves `@import` paths
 // relative to the importing file either way, and re-declaring the same
 // variable value is a no-op.
-$tc-attr-color-type: unquote('<color>');
-$tc-attr-length-type: unquote('<length>');
+@use 'sass:string';
+
+$tc-attr-color-type: string.unquote('<color>');
+$tc-attr-length-type: string.unquote('<length>');

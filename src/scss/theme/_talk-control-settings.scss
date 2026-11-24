@@ -6,6 +6,20 @@
 // defaults (dark theme) silently win. Names are kebab-case, as in reveal.js 6.
 
 @use 'sass:color';
+@use 'sass:math';
+
+// Since Sass 1.79, color functions keep fractional channels and serialize
+// them as `rgb(55.33%, ...)`. Rounding the channels restores the integer
+// hex output (`#8d4167`) that Sass < 1.79 produced and our CSS contract pins.
+@function tc-round-rgb($color) {
+    $color: color.to-space($color, rgb);
+    @return color.change(
+        $color,
+        $red: math.round(color.channel($color, 'red')),
+        $green: math.round(color.channel($color, 'green')),
+        $blue: math.round(color.channel($color, 'blue'))
+    );
+}
 
 // Background of the presentation
 $background-color: white;
@@ -40,7 +54,9 @@ $code-font: monospace;
 // Links and actions
 $link-color: #a64d79;
 // Same result as the former `lighten($link-color, 20%)`
-$link-color-hover: color.adjust($link-color, $lightness: 20%);
+$link-color-hover: tc-round-rgb(color.adjust($link-color, $lightness: 20%));
+// reveal.js default formula (`color.scale(..., $lightness: -15%)`), rounded
+$link-color-dark: tc-round-rgb(color.scale($link-color, $lightness: -15%));
 
 // Text selection
 $selection-background-color: #6a1e55;
