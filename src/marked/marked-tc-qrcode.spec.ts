@@ -96,11 +96,11 @@ describe(markedTcQrCode.name, () => {
             marked.use(markedTcQrCode());
             const md = `![](data 'tc-qrcode tc-qrcode-alt="A & B <tag>"')\n`;
             // img.alt is a DOM property assignment, serialized back via outerHTML:
-            // `&` is escaped (to stay a valid attribute value), `<`/`>` don't need
-            // to be inside an attribute value - this is the same safe behavior the
-            // legacy hardcoded alt already relied on (see the "escaped alt text"
-            // corpus fixture).
-            const html = `<p><img src="${dataBase64}" class="tc-qrcode" alt="A &amp; B <tag>"></p>\n`;
+            // `&`, `<` and `>` are all escaped: attribute serialization escapes
+            // `<`/`>` since the HTML spec change shipped in jsdom 30 (and recent
+            // browsers). The legacy hardcoded alt relied on the same safe
+            // behavior (see the "escaped alt text" corpus fixture).
+            const html = `<p><img src="${dataBase64}" class="tc-qrcode" alt="A &amp; B &lt;tag&gt;"></p>\n`;
             expect(marked.parse(md)).toBe(html);
         });
 

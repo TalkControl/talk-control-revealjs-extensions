@@ -162,7 +162,8 @@ describe('tc-attr-polyfill', () => {
     });
 
     it('treats a missing CSS.supports as unsupported, without throwing', () => {
-        // jsdom has no `CSS` global by default: this is the real "absent" case.
+        // jsdom 30 now exposes `CSS`: remove it to reproduce the "absent" case.
+        vi.stubGlobal('CSS', undefined);
         expect(typeof (globalThis as { CSS?: unknown }).CSS).toBe('undefined');
 
         const root = document.querySelector('.slides') as HTMLElement;
