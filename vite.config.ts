@@ -1,4 +1,5 @@
 import { PROJECT_ROOT } from './scripts/utils/dir.utils';
+import { SILENCED_SASS_DEPRECATIONS } from './scripts/utils/sass.utils';
 import { configDefaults } from 'vitest/config';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
@@ -9,6 +10,15 @@ export default defineConfig({
         // Playwright e2e specs live in e2e/ and are run via `npm run e2e`,
         // not Vitest.
         exclude: [...configDefaults.exclude, 'e2e/**'],
+    },
+    css: {
+        preprocessorOptions: {
+            scss: {
+                // TODO(#70): remove once @import is migrated to @use
+                // (list shared with tests/contract/sass-warnings.contract.ts)
+                silenceDeprecations: SILENCED_SASS_DEPRECATIONS,
+            },
+        },
     },
     build: {
         sourcemap: true,
