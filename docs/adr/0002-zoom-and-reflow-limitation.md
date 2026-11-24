@@ -15,12 +15,12 @@ is available. That model is what lets a deck look right on a phone, a laptop,
 and a projector without any authoring effort — but it is in direct tension
 with two WCAG 2.2 AA success criteria that assume ordinary document flow:
 
--   **1.4.4 Resize Text**: text can be resized up to 200% without loss of
-    content or functionality.
--   **1.4.10 Reflow**: content can be presented without loss of information
-    or functionality, and without requiring scrolling in two dimensions, at a
-    width equivalent to 320 CSS px (the standard 400%-zoom test size on a
-    1280px-wide reference display).
+- **1.4.4 Resize Text**: text can be resized up to 200% without loss of
+  content or functionality.
+- **1.4.10 Reflow**: content can be presented without loss of information
+  or functionality, and without requiring scrolling in two dimensions, at a
+  width equivalent to 320 CSS px (the standard 400%-zoom test size on a
+  1280px-wide reference display).
 
 Sub-issue of #1 (PR 11 of its validated plan). Is this genuinely a
 structural limitation of the canvas model, or can an alternative view (a
@@ -30,14 +30,14 @@ this area can link to it instead of re-litigating the question.
 
 ## Considered Options
 
--   Keep the canvas model as-is and document the limitation for authors and
-    consumers.
--   Build a parallel, reflow-friendly "list view" that renders the same
-    Markdown content as an ordinary single-column document, independent of
-    the reveal.js stage.
--   Repurpose the existing `print-pdf` static layout — already shipped for
-    the `talk-control-a11y` CLI's content-scan pass (#122) — as an on-screen
-    reflow fallback at high zoom.
+- Keep the canvas model as-is and document the limitation for authors and
+  consumers.
+- Build a parallel, reflow-friendly "list view" that renders the same
+  Markdown content as an ordinary single-column document, independent of
+  the reveal.js stage.
+- Repurpose the existing `print-pdf` static layout — already shipped for
+  the `talk-control-a11y` CLI's content-scan pass (#122) — as an on-screen
+  reflow fallback at high zoom.
 
 ## Decision Outcome
 
@@ -54,53 +54,53 @@ documenting this one).
 
 ### Keep the canvas model, document the limitation
 
--   Good, because it ships immediately with zero change to `src/` and zero
-    regression risk.
--   Good, because it unblocks #109, which can link a stable, final answer
-    instead of leaving the question open.
--   Bad, because decks built with this library genuinely do not satisfy
-    1.4.4/1.4.10 at the canvas level; authors and consumers who need full AA
-    conformance must be told explicitly (#109) and pointed at mitigations
-    (see _More Information_).
+- Good, because it ships immediately with zero change to `src/` and zero
+  regression risk.
+- Good, because it unblocks #109, which can link a stable, final answer
+  instead of leaving the question open.
+- Bad, because decks built with this library genuinely do not satisfy
+  1.4.4/1.4.10 at the canvas level; authors and consumers who need full AA
+  conformance must be told explicitly (#109) and pointed at mitigations
+  (see _More Information_).
 
 ### A parallel reflow/list view
 
--   Good, because it is the only option that would actually satisfy 1.4.10's
-    "no two-dimensional scrolling" requirement for prose content.
--   Bad, because it duplicates the entire Markdown-to-DOM pipeline (the
-    `talk-control-markdown` plugin and every `marked` extension — admonitions,
-    columns, icons, QR codes, backgrounds) in a second, parallel rendering
-    mode outside reveal.js's section/stack/fragment model, maintained
-    indefinitely alongside the first.
--   Bad, because it is explicitly out of scope for #108 ("a new issue if the
-    decision calls for it").
+- Good, because it is the only option that would actually satisfy 1.4.10's
+  "no two-dimensional scrolling" requirement for prose content.
+- Bad, because it duplicates the entire Markdown-to-DOM pipeline (the
+  `talk-control-markdown` plugin and every `marked` extension — admonitions,
+  columns, icons, QR codes, backgrounds) in a second, parallel rendering
+  mode outside reveal.js's section/stack/fragment model, maintained
+  indefinitely alongside the first.
+- Bad, because it is explicitly out of scope for #108 ("a new issue if the
+  decision calls for it").
 
 ### Reuse `print-pdf` as the on-screen reflow fallback
 
--   Neutral, because `print-pdf` is already shipped (#122) and already
-    proves the slide DOM can be flattened out of the transformed stage.
--   Bad (measured), because `Reveal.getComputedSlideSize()` sizes every
-    `.pdf-page` from `config.width`/`config.height` alone — never from the
-    viewport at the time of printing — so the generated document is pinned
-    to a fixed pixel width (≈1996px in the demo) regardless of the browser
-    window or zoom level. It is the opposite of reflow: a frozen,
-    print-resolution layout, not a responsive one (see measurements below).
--   Bad, because even ignoring sizing, `print-pdf` has none of reveal.js's
-    live navigation or keyboard/focus model — wiring it up as an on-screen
-    mode would mean building essentially the same amount of new interaction
-    code as the list-view option above.
+- Neutral, because `print-pdf` is already shipped (#122) and already
+  proves the slide DOM can be flattened out of the transformed stage.
+- Bad (measured), because `Reveal.getComputedSlideSize()` sizes every
+  `.pdf-page` from `config.width`/`config.height` alone — never from the
+  viewport at the time of printing — so the generated document is pinned
+  to a fixed pixel width (≈1996px in the demo) regardless of the browser
+  window or zoom level. It is the opposite of reflow: a frozen,
+  print-resolution layout, not a responsive one (see measurements below).
+- Bad, because even ignoring sizing, `print-pdf` has none of reveal.js's
+  live navigation or keyboard/focus model — wiring it up as an on-screen
+  mode would mean building essentially the same amount of new interaction
+  code as the list-view option above.
 
 ## Consequences
 
--   Good, because no code changes to `src/`: this PR is documentation-only.
--   Good, because `docs/accessibility.md` (#109) gets a stable, linkable
-    answer to "why doesn't zoom work on my slides" instead of silence.
--   Bad, because the structural gap remains: a deck built with this library
-    cannot claim WCAG 2.2 AA conformance on 1.4.4/1.4.10 as shipped.
--   Neutral, because this decision is specific to reveal.js's current
-    engine; if upstream reveal.js ever ships a native reflow/responsive mode,
-    this ADR should be revisited and, if superseded, replaced rather than
-    edited in place (see `docs/adr/README.md`).
+- Good, because no code changes to `src/`: this PR is documentation-only.
+- Good, because `docs/accessibility.md` (#109) gets a stable, linkable
+  answer to "why doesn't zoom work on my slides" instead of silence.
+- Bad, because the structural gap remains: a deck built with this library
+  cannot claim WCAG 2.2 AA conformance on 1.4.4/1.4.10 as shipped.
+- Neutral, because this decision is specific to reveal.js's current
+  engine; if upstream reveal.js ever ships a native reflow/responsive mode,
+  this ADR should be revisited and, if superseded, replaced rather than
+  edited in place (see `docs/adr/README.md`).
 
 ## More Information
 
@@ -187,7 +187,7 @@ this library's own output), not blocking #108 or #109.
 
 ### Links
 
--   Parent: #1. Consumed by: #109 (`docs/accessibility.md`, not yet
-    created at the time of writing).
--   `talk-control-a11y`'s own use of `print-pdf` as a content-scan pass:
-    `src/a11y/cli/run.ts`.
+- Parent: #1. Consumed by: #109 (`docs/accessibility.md`, not yet
+  created at the time of writing).
+- `talk-control-a11y`'s own use of `print-pdf` as a content-scan pass:
+  `src/a11y/cli/run.ts`.

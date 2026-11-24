@@ -16,8 +16,8 @@ description: >
 
 Guide the user to create a new addon in two files:
 
--   `src/addons/tc-{name}.ts` — implementation
--   `src/addons/tc-{name}.spec.ts` — Vitest tests
+- `src/addons/tc-{name}.ts` — implementation
+- `src/addons/tc-{name}.spec.ts` — Vitest tests
 
 Enforce consistency by following established project patterns.
 
@@ -29,18 +29,18 @@ Enforce consistency by following established project patterns.
 
 Automatically derive from the provided name:
 
--   **PascalCase** for the type (e.g., "clipboard-history" → `ClipboardHistory`)
--   **camelCase** for the function (e.g., `manageClipboardHistory`)
--   **kebab-case** for files (e.g., `tc-clipboard-history.ts`)
+- **PascalCase** for the type (e.g., "clipboard-history" → `ClipboardHistory`)
+- **camelCase** for the function (e.g., `manageClipboardHistory`)
+- **kebab-case** for files (e.g., `tc-clipboard-history.ts`)
 
 ### 2. Request Addon Details
 
 **Ask**:
 
--   "Brief description of what this addon does?"
--   "Will the function be manage[Name] or apply[Name]?" (default: manage)
--   "Additional options beyond `active?: boolean`?" (If yes, list field names)
--   "Any dependencies or mocks needed?" (e.g., import from '../utils/helper')
+- "Brief description of what this addon does?"
+- "Will the function be manage[Name] or apply[Name]?" (default: manage)
+- "Additional options beyond `active?: boolean`?" (If yes, list field names)
+- "Any dependencies or mocks needed?" (e.g., import from '../utils/helper')
 
 ### 3. Generate TypeScript File
 
@@ -126,12 +126,12 @@ describe('{PascalName}', () => {
 
 ## Conventions (Mandatory)
 
--   **Interface**: Always named `Tc{PascalName}Options`, ALWAYS includes `active?: boolean` as first field
--   **Function**: Starts with `manage` or `apply` followed by PascalCase name
--   **Helper functions**: Prefix with `_`, accessible only via `_internals` in test mode
--   **\_internals**: Conditional export returning helpers in test, `undefined` otherwise
--   **Spec file**: Must include `@vitest-environment jsdom` directive, use `describe/it/beforeEach` structure
--   **No over-abstraction**: Each addon is unique; don't force shared patterns prematurely
+- **Interface**: Always named `Tc{PascalName}Options`, ALWAYS includes `active?: boolean` as first field
+- **Function**: Starts with `manage` or `apply` followed by PascalCase name
+- **Helper functions**: Prefix with `_`, accessible only via `_internals` in test mode
+- **\_internals**: Conditional export returning helpers in test, `undefined` otherwise
+- **Spec file**: Must include `@vitest-environment jsdom` directive, use `describe/it/beforeEach` structure
+- **No over-abstraction**: Each addon is unique; don't force shared patterns prematurely
 
 ## Final Output
 

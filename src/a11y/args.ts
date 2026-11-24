@@ -6,8 +6,7 @@ const DEFAULT_THEME: A11yTheme = 'light';
 const DEFAULT_FORMAT: ReportFormat = 'console';
 
 export type A11yTarget =
-    | { type: 'url'; url: string }
-    | { type: 'dir'; dir: string };
+    { type: 'url'; url: string } | { type: 'dir'; dir: string };
 
 export type A11yTheme = 'light' | 'dark' | 'both';
 

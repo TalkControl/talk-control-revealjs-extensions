@@ -164,19 +164,19 @@ Talk-Control activates a small, self-contained polyfill addon
 (`src/addons/tc-attr-polyfill.ts`, not part of the public API) on the
 `Reveal` `ready` event:
 
--   It mirrors **any** `data-tc-*` attribute onto its matching inline
-    `--tc-*` custom property, deriving the property name from the attribute
-    name by the same 1:1 convention the CSS relies on (strip the `data-`
-    prefix) - not from a hand-maintained table. This applies on the current
-    slides and any element added or changed afterwards (via a
-    `MutationObserver` watching all attribute mutations, filtered by the
-    `data-tc-` prefix in the handler).
--   It does nothing at all - no scan, no observer - on a browser that
-    already supports typed `attr()` natively, detected once via
-    `CSS.supports`.
--   A `data-tc-*` attribute with no matching SCSS rule is mirrored to a
-    `--tc-*` custom property nobody reads: harmless, just invisible, exactly
-    like on a browser with native support.
+- It mirrors **any** `data-tc-*` attribute onto its matching inline
+  `--tc-*` custom property, deriving the property name from the attribute
+  name by the same 1:1 convention the CSS relies on (strip the `data-`
+  prefix) - not from a hand-maintained table. This applies on the current
+  slides and any element added or changed afterwards (via a
+  `MutationObserver` watching all attribute mutations, filtered by the
+  `data-tc-` prefix in the handler).
+- It does nothing at all - no scan, no observer - on a browser that
+  already supports typed `attr()` natively, detected once via
+  `CSS.supports`.
+- A `data-tc-*` attribute with no matching SCSS rule is mirrored to a
+  `--tc-*` custom property nobody reads: harmless, just invisible, exactly
+  like on a browser with native support.
 
 **Limits**: it re-implements, in JavaScript, behavior the CSS engine will
 eventually provide natively everywhere. A guard test

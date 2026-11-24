@@ -20,13 +20,13 @@ does, not only _what_ it does.
 
 Write an ADR for any structuring decision, for example:
 
--   adding, removing, or replacing a structuring dependency (a framework, a
-    build tool, a peer dependency);
--   changing a public output format (the bundle shape, the exposed API, the
-    exported CSS/Sass surface);
--   changing a public API contract that consumers rely on;
--   introducing or changing a cross-cutting convention (testing strategy,
-    plugin architecture, tooling shared across the repository).
+- adding, removing, or replacing a structuring dependency (a framework, a
+  build tool, a peer dependency);
+- changing a public output format (the bundle shape, the exposed API, the
+  exported CSS/Sass surface);
+- changing a public API contract that consumers rely on;
+- introducing or changing a cross-cutting convention (testing strategy,
+  plugin architecture, tooling shared across the repository).
 
 A bug fix, a refactor that does not change an externally visible contract, or
 a new addon that follows an existing pattern does not need an ADR.
@@ -43,14 +43,14 @@ flowchart LR
     A --> S["superseded by a newer ADR"]
 ```
 
--   **proposed**: drafted and under discussion, usually in the pull request
-    that introduces it.
--   **accepted**: the decision is in effect. An accepted ADR is **immutable**:
-    its content is never rewritten to reflect a change of mind. Only a typo or
-    a factual clarification that does not change the decision may be edited.
--   **deprecated**: the decision no longer applies and nothing replaces it.
--   **superseded by ADR-NNNN**: a later ADR replaces this one. Update the
-    status line to point to the new ADR; do not delete the superseded file.
+- **proposed**: drafted and under discussion, usually in the pull request
+  that introduces it.
+- **accepted**: the decision is in effect. An accepted ADR is **immutable**:
+  its content is never rewritten to reflect a change of mind. Only a typo or
+  a factual clarification that does not change the decision may be edited.
+- **deprecated**: the decision no longer applies and nothing replaces it.
+- **superseded by ADR-NNNN**: a later ADR replaces this one. Update the
+  status line to point to the new ADR; do not delete the superseded file.
 
 To change a decision, write a **new** ADR and mark the old one as superseded.
 The history of _why_ the codebase evolved stays readable.

@@ -201,21 +201,21 @@ Each file also resets the bold/italic styling the embedded `a11y-light`/`a11y-da
 
 Each theme below is available as both `<name>.light.css` and `<name>.dark.css` (see _Naming_ above):
 
--   `a11y-light`
--   `a11y-dark`
--   `atom-one-light`
--   `atom-one-dark`
--   `github`
--   `github-dark`
--   `monokai`
--   `nord`
--   `vs`
--   `vs2015`
--   `docco`
--   `xcode`
--   `tokyo-night-light`
--   `tokyo-night-dark`
--   `night-owl`
+- `a11y-light`
+- `a11y-dark`
+- `atom-one-light`
+- `atom-one-dark`
+- `github`
+- `github-dark`
+- `monokai`
+- `nord`
+- `vs`
+- `vs2015`
+- `docco`
+- `xcode`
+- `tokyo-night-light`
+- `tokyo-night-dark`
+- `night-owl`
 
 Preview any of them at [highlightjs.org/demo](https://highlightjs.org/demo) (pick the theme from the dropdown). This is a fixed selection, not every highlight.js theme, picked for variety and recognizability. The full catalog lives in [`node_modules/highlight.js/scss/`](https://github.com/highlightjs/highlight.js/tree/main/src/styles) in any project that depends on `highlight.js`.
 

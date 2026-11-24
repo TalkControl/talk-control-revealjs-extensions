@@ -1,10 +1,7 @@
 export type ErrorCorrectLevel = 'L' | 'M' | 'Q' | 'H';
 
 export type QRMode =
-    | 'MODE_NUMBER'
-    | 'MODE_ALPHA_NUM'
-    | 'MODE_8BIT_BYTE'
-    | 'MODE_KANJI';
+    'MODE_NUMBER' | 'MODE_ALPHA_NUM' | 'MODE_8BIT_BYTE' | 'MODE_KANJI';
 
 export type MaskPattern = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
 

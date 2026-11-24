@@ -91,6 +91,6 @@ npm publish
 
 ## If a Step Fails After the Commit
 
--   Do NOT delete the git tag automatically
--   `npm publish` can be re-run independently if push succeeded but publish failed
--   Report what failed and suggest the exact command to resume
+- Do NOT delete the git tag automatically
+- `npm publish` can be re-run independently if push succeeded but publish failed
+- Report what failed and suggest the exact command to resume

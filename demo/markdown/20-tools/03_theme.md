@@ -10,5 +10,5 @@ You can use custom theme by simply ovveride custom properties of the default the
 
 You can add `?data-theme=xxx` where `xxx` is the name of the theme to use.
 
--   [Sample theme](?data-theme=sample)
--   [Dark theme](?data-theme=dark)
+- [Sample theme](?data-theme=sample)
+- [Dark theme](?data-theme=dark)

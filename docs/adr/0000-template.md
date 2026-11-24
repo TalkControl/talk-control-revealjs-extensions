@@ -18,14 +18,14 @@ collaboration boards or issue management systems.}
 
 <!-- Optional. Remove this section if it does not help the reader. -->
 
--   {decision driver 1, e.g. a force, facing concern, …}
--   {decision driver 2, …}
+- {decision driver 1, e.g. a force, facing concern, …}
+- {decision driver 2, …}
 
 ## Considered Options
 
--   {title of option 1}
--   {title of option 2}
--   {title of option 3, …}
+- {title of option 1}
+- {title of option 2}
+- {title of option 3, …}
 
 ## Decision Outcome
 
@@ -35,9 +35,9 @@ comparison of the options}.
 
 ## Consequences
 
--   Good, because {positive consequence, e.g. improvement of a desired
-    quality}
--   Bad, because {negative consequence, e.g. compromising a quality}
+- Good, because {positive consequence, e.g. improvement of a desired
+  quality}
+- Bad, because {negative consequence, e.g. compromising a quality}
 
 ## Pros and Cons of the Options
 
@@ -48,17 +48,17 @@ Decision Outcome above. -->
 
 {example | description | pointer to more information}
 
--   Good, because {argument a}
--   Neutral, because {argument b}
--   Bad, because {argument c}
+- Good, because {argument a}
+- Neutral, because {argument b}
+- Bad, because {argument c}
 
 ### {title of option 2}
 
 {example | description | pointer to more information}
 
--   Good, because {argument a}
--   Neutral, because {argument b}
--   Bad, because {argument c}
+- Good, because {argument a}
+- Neutral, because {argument b}
+- Bad, because {argument c}
 
 ## More Information
 

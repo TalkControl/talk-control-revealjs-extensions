@@ -77,29 +77,32 @@ export class TcTalkControlElement extends LitElement {
                                 type="text"
                                 id="mode-theme"
                                 name="theme"
-                                class="form-input ${this.validationErrors.theme
-                                    ? 'error'
-                                    : ''}"
+                                class="form-input ${
+                                    this.validationErrors.theme ? 'error' : ''
+                                }"
                                 placeholder="Enter theme name"
                                 .value="${this.theme}"
                                 @input="${this.onThemeInput}"
                                 @blur="${this.validateTheme}"
-                                aria-describedby="theme-help ${this
-                                    .validationErrors.theme
-                                    ? 'theme-error'
-                                    : ''}"
+                                aria-describedby="theme-help ${
+                                    this.validationErrors.theme
+                                        ? 'theme-error'
+                                        : ''
+                                }"
                                 autocomplete="off" />
                             <div id="theme-help" class="help-text">
                                 Customize the visual theme of your presentation
                             </div>
-                            ${this.validationErrors.theme
-                                ? html`<div
-                                      id="theme-error"
-                                      class="error-message"
-                                      role="alert">
-                                      ${this.validationErrors.theme}
-                                  </div>`
-                                : ''}
+                            ${
+                                this.validationErrors.theme
+                                    ? html`<div
+                                          id="theme-error"
+                                          class="error-message"
+                                          role="alert">
+                                          ${this.validationErrors.theme}
+                                      </div>`
+                                    : ''
+                            }
                         </div>
 
                         <!-- Language -->
@@ -114,31 +117,34 @@ export class TcTalkControlElement extends LitElement {
                                 type="text"
                                 id="mode-language"
                                 name="i18n"
-                                class="form-input ${this.validationErrors.i18n
-                                    ? 'error'
-                                    : ''}"
+                                class="form-input ${
+                                    this.validationErrors.i18n ? 'error' : ''
+                                }"
                                 placeholder="Enter language code (e.g., FR, EN)"
                                 .value="${this.i18n}"
                                 @input="${this.onLanguageInput}"
                                 @blur="${this.validateLanguage}"
-                                aria-describedby="language-help ${this
-                                    .validationErrors.i18n
-                                    ? 'language-error'
-                                    : ''}"
+                                aria-describedby="language-help ${
+                                    this.validationErrors.i18n
+                                        ? 'language-error'
+                                        : ''
+                                }"
                                 autocomplete="language"
                                 pattern="[A-Za-z]{2,5}"
                                 maxlength="5" />
                             <div id="language-help" class="help-text">
                                 Set the presentation language (2-5 letter code)
                             </div>
-                            ${this.validationErrors.i18n
-                                ? html`<div
-                                      id="language-error"
-                                      class="error-message"
-                                      role="alert">
-                                      ${this.validationErrors.i18n}
-                                  </div>`
-                                : ''}
+                            ${
+                                this.validationErrors.i18n
+                                    ? html`<div
+                                          id="language-error"
+                                          class="error-message"
+                                          role="alert">
+                                          ${this.validationErrors.i18n}
+                                      </div>`
+                                    : ''
+                            }
                         </div>
 
                         <!-- Type -->
@@ -153,43 +159,48 @@ export class TcTalkControlElement extends LitElement {
                                 type="text"
                                 id="mode-type"
                                 name="type"
-                                class="form-input ${this.validationErrors.type
-                                    ? 'error'
-                                    : ''}"
+                                class="form-input ${
+                                    this.validationErrors.type ? 'error' : ''
+                                }"
                                 placeholder="Enter presentation type"
                                 .value="${this.type}"
                                 @input="${this.onTypeInput}"
                                 @blur="${this.validateType}"
-                                aria-describedby="type-help ${this
-                                    .validationErrors.type
-                                    ? 'type-error'
-                                    : ''}"
+                                aria-describedby="type-help ${
+                                    this.validationErrors.type
+                                        ? 'type-error'
+                                        : ''
+                                }"
                                 autocomplete="off" />
                             <div id="type-help" class="help-text">
                                 Define the type of presentation (e.g., prez,
                                 demo, tutorial)
                             </div>
-                            ${this.validationErrors.type
-                                ? html`<div
-                                      id="type-error"
-                                      class="error-message"
-                                      role="alert">
-                                      ${this.validationErrors.type}
-                                  </div>`
-                                : ''}
+                            ${
+                                this.validationErrors.type
+                                    ? html`<div
+                                          id="type-error"
+                                          class="error-message"
+                                          role="alert">
+                                          ${this.validationErrors.type}
+                                      </div>`
+                                    : ''
+                            }
                         </div>
                     </form>
                 </section>
 
-                ${this.isDirty
-                    ? html`<div
-                          class="dirty-indicator"
-                          role="status"
-                          aria-live="polite">
-                          <span class="dirty-icon">●</span>
-                          Unsaved changes
-                      </div>`
-                    : ''}
+                ${
+                    this.isDirty
+                        ? html`<div
+                              class="dirty-indicator"
+                              role="status"
+                              aria-live="polite">
+                              <span class="dirty-icon">●</span>
+                              Unsaved changes
+                          </div>`
+                        : ''
+                }
             </div>
         `;
     }
@@ -423,9 +434,9 @@ export class TcTalkControlElement extends LitElement {
 
     static styles = css`
         :host {
-            --tc-ui-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-                Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-                sans-serif;
+            --tc-ui-font-primary:
+                -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+                Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             --tc-ui-spacing-xs: 4px;
             --tc-ui-spacing-sm: 8px;
             --tc-ui-spacing-md: 16px;

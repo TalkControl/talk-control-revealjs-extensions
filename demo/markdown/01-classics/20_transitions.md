@@ -241,10 +241,10 @@ source: [unsplash](https://unsplash.com/fr/photos/couloir-en-beton-avec-applique
 
 # Credits anchoring regression (#90)
 
--   First point
--   Second point
--   Third point
-    <!-- .element: class="list-fragment" -->
+- First point
+- Second point
+- Third point
+  <!-- .element: class="list-fragment" -->
 
 Reference: https://quarkus.io/
 
@@ -259,10 +259,10 @@ Reference: https://quarkus.io/
 ```markdown
 # Credits anchoring regression (#90)
 
--   First point
--   Second point
--   Third point
-    <!-- .element: class="list-fragment" -->
+- First point
+- Second point
+- Third point
+  <!-- .element: class="list-fragment" -->
 
 Reference: https://quarkus.io/
 

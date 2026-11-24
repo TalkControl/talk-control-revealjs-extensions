@@ -174,8 +174,10 @@ $admonition-quote-color: #747474;
 // addon (see #93). A `style="--tc-admonition-bg-color:…"` written by hand
 // keeps working as the `attr()` fallback.
 @supports (
-    color:
-        attr(data-tc-admonition-bg-color type(#{$tc-attr-color-type}), inherit)
+    color: attr(
+            data-tc-admonition-bg-color type(#{$tc-attr-color-type}),
+            inherit
+        )
 ) {
     .reveal .slides section .admonition.custom {
         border-left-color: attr(

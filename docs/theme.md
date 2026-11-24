@@ -4,8 +4,8 @@ You can use this extensions to create several theme for your slides to match dif
 
 To this end, you have two possibilities:
 
--   Use HTML attribute `data-theme`;
--   Use URL parameter `data-theme`.
+- Use HTML attribute `data-theme`;
+- Use URL parameter `data-theme`.
 
 ## Example
 
@@ -13,15 +13,15 @@ In the demo, there is 2 additional themes add to show you the possibilities
 
 ![](./imgs/theme-tc.png)
 
--   [talk-control](https://talk-control-revealjs-extensions.netlify.app) (default theme)
+- [talk-control](https://talk-control-revealjs-extensions.netlify.app) (default theme)
 
 ![](./imgs/theme-sample.png)
 
--   [sample](https://talk-control-revealjs-extensions.netlify.app/?data-theme=sample#/) (demo theme)
+- [sample](https://talk-control-revealjs-extensions.netlify.app/?data-theme=sample#/) (demo theme)
 
 ![](./imgs/theme-dark.png)
 
--   [dark](https://talk-control-revealjs-extensions.netlify.app/?data-theme=dark#/) (demo theme)
+- [dark](https://talk-control-revealjs-extensions.netlify.app/?data-theme=dark#/) (demo theme)
 
 ## Configuration of theme
 
@@ -59,9 +59,9 @@ For the moment SASS Overriding is not available.
 
 The theme itself honors three user/OS preferences, through additive `@media` guards only (see [`src/scss/theme/a11y/motion-contrast.scss`](../src/scss/theme/a11y/motion-contrast.scss)). None of them changes the default rendering - they only take effect once the corresponding preference is active:
 
--   `prefers-reduced-motion: reduce` - every transition and animation declared by the theme (e.g. the copy-to-clipboard icon feedback) is neutralized to a zero duration, and smooth scrolling is turned off.
--   `forced-colors: active` (Windows High Contrast Mode and similar) - the couple of theme elements that use a `box-shadow` as their only visual boundary (not rendered at all in forced-colors mode) get an explicit, system-color (`CanvasText`) border instead, so they stay visible.
--   `prefers-contrast: more` - the same boundaries are strengthened (an explicit border, a thicker admonition border) without waiting for a full forced-colors mode.
+- `prefers-reduced-motion: reduce` - every transition and animation declared by the theme (e.g. the copy-to-clipboard icon feedback) is neutralized to a zero duration, and smooth scrolling is turned off.
+- `forced-colors: active` (Windows High Contrast Mode and similar) - the couple of theme elements that use a `box-shadow` as their only visual boundary (not rendered at all in forced-colors mode) get an explicit, system-color (`CanvasText`) border instead, so they stay visible.
+- `prefers-contrast: more` - the same boundaries are strengthened (an explicit border, a thicker admonition border) without waiting for a full forced-colors mode.
 
 These rules are intentionally kept free of any cascade-layer wrapper, so a later `@layer` rollout can slot them into whatever layer order it defines.
 

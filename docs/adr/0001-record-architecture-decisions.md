@@ -19,11 +19,11 @@ decisions so they stay discoverable and are not rewritten after the fact?
 
 ## Considered Options
 
--   No formal record — rely on commit messages, pull request descriptions,
-    and issue history.
--   A single `ARCHITECTURE.md` or `DECISIONS.md` file, updated in place.
--   Architecture Decision Records (ADRs), one immutable file per decision, in
-    `docs/adr/`.
+- No formal record — rely on commit messages, pull request descriptions,
+  and issue history.
+- A single `ARCHITECTURE.md` or `DECISIONS.md` file, updated in place.
+- Architecture Decision Records (ADRs), one immutable file per decision, in
+  `docs/adr/`.
 
 ## Decision Outcome
 
@@ -42,16 +42,16 @@ index by hand.
 
 ## Consequences
 
--   Good, because every structuring decision has one canonical, dated, and
-    reviewable record, kept next to the code it describes.
--   Good, because the convention is plain Markdown: no tool to install, no
-    build step, reviewable in any pull request.
--   Bad, because the index in `docs/adr/README.md` is maintained by hand and
-    can drift if a contributor forgets to update it when adding an ADR.
--   Bad, because writing an ADR retroactively for a decision made before this
-    process existed relies on reading the code and the git history rather
-    than on a decision actually witnessed at the time; such ADRs are marked
-    as recorded retroactively.
+- Good, because every structuring decision has one canonical, dated, and
+  reviewable record, kept next to the code it describes.
+- Good, because the convention is plain Markdown: no tool to install, no
+  build step, reviewable in any pull request.
+- Bad, because the index in `docs/adr/README.md` is maintained by hand and
+  can drift if a contributor forgets to update it when adding an ADR.
+- Bad, because writing an ADR retroactively for a decision made before this
+  process existed relies on reading the code and the git history rather
+  than on a decision actually witnessed at the time; such ADRs are marked
+  as recorded retroactively.
 
 ## More Information
 
