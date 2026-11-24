@@ -27,7 +27,7 @@ A paragraph with several attributes <!-- .element: class="fragment fade-up" data
 
 <!-- .element: class="ordered-list" data-id="ol" -->
 
-![](./assets/images/gde.png 'speaker')<!-- .element: style="--tc-speaker-img-post:right;"-->
+![](./assets/images/gde.png 'speaker')<!-- .element: style="--tc-speaker-img-pos:right;"-->
 
 > A quote with a credit
 

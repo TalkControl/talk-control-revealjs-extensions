@@ -85,6 +85,33 @@ yourself when authoring a `custom` admonition directly in HTML, or via
 reveal.js' `<!-- .element: -->` comment syntax (see
 [Admonitions - Use comment syntax](./admonition.md#use-comment-syntax)).
 
+## Which variables get a `data-tc-*` attribute?
+
+Not every `--tc-*` custom property does, and that is deliberate. A variable
+is eligible only if **all** of these hold:
+
+1. Its value fits a typed `attr()` token (`<color>`, `<length>`, a number, a
+   `<custom-ident>`...). Grid templates (`grid-template-columns`...), composed
+   values and bare keywords do not.
+2. It is read by the element that carries the attribute itself, because
+   `attr()` never reads an ancestor's attribute (see the placement rule
+   above). A variable that descendants read through inheritance, such as
+   `--tc-speaker-width-img`, the heading/link colors of a multiple-columns
+   slide (`--tc-multiple-col-heading-color`, `--tc-multiple-col-link-color`)
+   or the speaker grid, stays an inline `style="--tc-*:…"` set once on the
+   slide or the container.
+3. Someone actually needs to override it per element, in a way a class or the
+   inline `style` does not already cover.
+
+The groups discussed in #137 do not meet them today: the QR code and the
+backgrounds expose no `--tc-*` variable at all (they are configured through
+classes and options), the multiple-columns and speaker variables are mostly
+read by descendants or composed into grids. `--tc-speaker-img-pos` (read on
+the `<img>` itself) would qualify the day an author asks for it; it is a
+one-line addition, so it is not added speculatively. Each `data-tc-*` we
+document becomes a public promise, which is why the table above grows one
+justified variable at a time.
+
 ## Priority order
 
 From strongest to weakest, the first one present wins:
