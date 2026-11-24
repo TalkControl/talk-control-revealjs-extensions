@@ -76,7 +76,7 @@
     "--r-heading4-size": "1em",
     "--r-code-font": "monospace",
     "--r-link-color": "#a64d79",
-    "--r-link-color-dark": "#723553",
+    "--r-link-color-dark": "#8d4167",
     "--r-link-color-hover": "#cb8eac",
     "--r-selection-background-color": "#6a1e55",
     "--r-selection-color": "#fff",

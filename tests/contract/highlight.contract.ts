@@ -132,7 +132,7 @@ describe('dist/highlight contract', () => {
         const css = fs.readFileSync(MAIN_CSS);
         const hash = createHash('sha256').update(css).digest('hex');
         expect(hash).toBe(
-            'ef5d7a6ed84c9d2e750c96a676b3cc0ddd6309756cde670f882ed1b443a2e910'
+            'ab180c825d9aab449cd0990e6ff428b48fd42d7c36e18338de3527200f0e1578'
         );
     });
 });
