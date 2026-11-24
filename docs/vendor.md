@@ -14,8 +14,12 @@ It is absent from both the ESM and the UMD bundles. Material Symbols (#95,
 PR 3) is vendored too: its three stylesheets and woff2 fonts are copied side by
 side into `dist/vendor/icons/material-symbols/` (the CSS use relative
 `url("./*.woff2")`) and loaded by `loadVendorStylesheet` when
-`materialSymbolsIconPack()` is configured. Font Awesome (PR 4) is still fully
-embedded and hasn't moved yet.
+`materialSymbolsIconPack()` is configured. Font Awesome (PR 4, #96) is
+vendored in font mode only: `css/all.min.css` and the three woff2 fonts
+(solid, regular, brands) are copied into `dist/vendor/icons/font-awesome/`
+(`css/` + `webfonts/` layout kept, since the CSS references
+`../webfonts/*.woff2`), and loaded when `fontAwesomeIconPack()` is configured.
+Its `all.js` (SVG replacement) is no longer used or shipped.
 
 ## The `dist/vendor/` folder
 
