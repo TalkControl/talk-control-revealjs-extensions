@@ -1,6 +1,7 @@
 import * as path from 'node:path';
 import * as sass from 'sass';
 import { describe, expect, it } from 'vitest';
+import { SILENCED_SASS_DEPRECATIONS } from '../../../../scripts/utils/sass.utils';
 
 /**
  * Freezes the *shape* of the accessibility `@media` guards introduced for
@@ -15,7 +16,9 @@ import { describe, expect, it } from 'vitest';
  */
 function compileMotionContrastCss(): string {
     const scssPath = path.resolve(__dirname, 'motion-contrast.scss');
-    return sass.compile(scssPath).css;
+    return sass.compile(scssPath, {
+        silenceDeprecations: SILENCED_SASS_DEPRECATIONS,
+    }).css;
 }
 
 /**

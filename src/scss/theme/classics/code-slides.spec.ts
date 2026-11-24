@@ -1,6 +1,7 @@
 import * as path from 'node:path';
 import * as sass from 'sass';
 import { describe, expect, it } from 'vitest';
+import { SILENCED_SASS_DEPRECATIONS } from '../../../../scripts/utils/sass.utils';
 
 /**
  * Freezes the *shape* of the `max-height` rule introduced for issue #88: the
@@ -14,7 +15,9 @@ import { describe, expect, it } from 'vitest';
  */
 function compileCodeSlidesCss(): string {
     const scssPath = path.resolve(__dirname, 'code-slides.scss');
-    return sass.compile(scssPath).css;
+    return sass.compile(scssPath, {
+        silenceDeprecations: SILENCED_SASS_DEPRECATIONS,
+    }).css;
 }
 
 function extractMaxHeightDeclaration(css: string): string {
