@@ -1,6 +1,5 @@
 import { CSSResult } from 'lit';
 import { LitElement } from 'lit';
-import { marked } from 'marked';
 import { PluginFunction } from 'reveal.js';
 import { default as Reveal_2 } from 'reveal.js';
 import { RootPart } from 'lit-html';
@@ -132,9 +131,7 @@ declare interface RevealConfig {
 
 export declare interface RevealMarkdownPlugin {
     id: string;
-    marked: {
-        use: (ext: marked.MarkedExtension) => void;
-    };
+    readonly marked: TcMarkedEngine | null;
     init(reveal: Reveal_2.Api): void | Promise<unknown>;
     processSlides(): void;
     convertSlides(): void;
@@ -255,6 +252,16 @@ declare interface TcCustomBackgroundOptions {
 declare interface TcI18nConfig {
     baseMarkdownPath: string;
     defaultLang?: string;
+}
+
+/**
+ * Minimal contract of the marked engine embedded by the reveal.js markdown
+ * plugin. Declared locally so that the public types do not depend on a
+ * particular `marked` version.
+ */
+export declare interface TcMarkedEngine {
+    use(...extensions: unknown[]): unknown;
+    parse(src: string): string | Promise<string>;
 }
 
 export declare class TcRevealjsElement extends LitElement {

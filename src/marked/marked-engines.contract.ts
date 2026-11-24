@@ -23,12 +23,11 @@
  * `<code class="language-xml">`. `<pre>` blocks are therefore masked before
  * comparing, so that the contract only covers TalkControl-owned output.
  */
-import { Marked, marked as markedNs } from 'marked';
-import { beforeAll, describe, expect, it } from 'vitest';
+import * as markedModule from 'marked';
+import { beforeAll, describe, expect, it, vi } from 'vitest';
 import { RevealTalkControlMarkdownPlugin } from './tc-marked-plugin';
 import { featherIconPack } from '../icons-config/feather-icons-pack';
 import { fontAwesomeIconPack } from '../icons-config/font-awesome-pack';
-import { materialSymbolsIconPack } from '../icons-config/material-symbols-pack';
 import fs from 'node:fs';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
@@ -36,9 +35,9 @@ import { markedTcCols } from './marked-tc-cols';
 import { markedTcIcons } from './marked-tc-icons';
 import { markedTcQrCode } from './marked-tc-qrcode';
 import { markedTcStyledImage } from './marked-tc-styled-image';
+import { materialSymbolsIconPack } from '../icons-config/material-symbols-pack';
 import { normalizeHtml } from '../../tests/contract/normalize';
 import path from 'node:path';
-import { vi } from 'vitest';
 
 const CORPUS = path.resolve(import.meta.dirname, '__fixtures__', 'corpus');
 
@@ -84,6 +83,12 @@ describe('TalkControl marked extensions on both engines', () => {
         expect(plugin.marked).not.toBeNull();
         reveal = plugin.marked as Engine;
 
+        // `@types/marked` 4.3 does not declare the `Marked` class (marked >= 5).
+        const { Marked } = markedModule as unknown as {
+            Marked: new () => Engine & {
+                use(...extensions: unknown[]): unknown;
+            };
+        };
         const engine = new Marked();
         engine.use(
             markedTcStyledImage({
@@ -109,7 +114,6 @@ describe('TalkControl marked extensions on both engines', () => {
 
     it('uses a different marked instance for each engine', () => {
         expect(reveal).not.toBe(project);
-        expect(markedNs).toBeDefined();
     });
 
     for (const [extension, cases] of Object.entries(EXTENSION_CORPUS)) {
