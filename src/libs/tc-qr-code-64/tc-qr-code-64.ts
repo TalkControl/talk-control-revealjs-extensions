@@ -38,7 +38,7 @@ export function drawImg(text: string, options: QROptions = {}): string {
         qr = qrcode(typeNumber, errorCorrectLevel);
         qr.addData(text);
         qr.make();
-    } catch (e) {
+    } catch {
         if (typeNumber >= 40) {
             throw new Error('Text too long to encode');
         } else {

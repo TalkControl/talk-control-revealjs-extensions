@@ -26,7 +26,7 @@ describe(materialSymbolsIconPack.name, () => {
 
     it('should not include keyword', () => {
         const markedIconsOptions = materialSymbolsIconPack();
-        expect(markedIconsOptions.includesKeyword).not.toBeDefined;
+        expect(markedIconsOptions.includesKeyword).not.toBeDefined();
     });
     it('should include correct copy keyword', () => {
         const markedIconsOptions = materialSymbolsIconPack();
