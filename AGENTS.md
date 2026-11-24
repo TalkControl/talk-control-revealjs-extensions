@@ -147,7 +147,7 @@ SCSS theme variables and component styles. `src/index.scss` imports reveal.js ba
 
 ### Demo loop (`demo/`)
 
-`scripts/prepare-demo.ts` copies `dist/` into `demo/web_modules/`. `npm run start` chains three parallel processes: `_on-change:build` (rebuild on `src/` change) → `_on-change:copy` (copy `dist/` to `demo/` on change) → `_serve` (live-server on port 4242).
+`scripts/prepare-demo.ts` copies `dist/` into `demo/web_modules/`. `npm run start` chains three parallel processes: `_on-change:build` (rebuild on `src/` change) → `_on-change:copy` (copy `dist/` to `demo/` on change) → `_serve` (a Vite dev server rooted on `demo/`, configured in `vite.demo.config.ts`: port 4242 or the next free one, full reload when `demo/web_modules` or `demo/markdown` change, `server.proxy` available for demos that call a backend).
 
 ## Conventions
 
