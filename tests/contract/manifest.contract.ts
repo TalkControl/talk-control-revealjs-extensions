@@ -32,6 +32,15 @@ describe('package.json manifest', () => {
         expect(pkg.dependencies['reveal.js']).toMatch(EXACT);
     });
 
+    it('embeds reveal.js 6.0.2 exactly', () => {
+        expect(pkg.dependencies['reveal.js']).toBe('6.0.2');
+    });
+
+    it('relies on the native reveal.js 6 types, not @types/reveal.js', () => {
+        expect(pkg.dependencies).not.toHaveProperty('@types/reveal.js');
+        expect(pkg.devDependencies).not.toHaveProperty('@types/reveal.js');
+    });
+
     it('pins sass to an exact version', () => {
         expect(pkg.devDependencies['sass']).toMatch(EXACT);
     });
