@@ -73,7 +73,7 @@
         "_on-change:copy": "chokidar \"./dist\" -c \"npm run _prepare-demo\"",
         "_build-watch": "parallelshell \"npm run _on-change:build\" \"npm run _on-change:copy\"",
         "_prepare-demo": "tsx ./scripts/prepare-demo.ts",
-        "_serve": "live-server --port=4242 --open=\"./demo/index.html\" --mount=\"/assets:./demo/assets\" --mount=\"/web_modules:./demo/web_modules\" --watch=\"./demo/web_modules/talk-control-revealjs-extensions,./demo/markdown/\""
+        "_serve": "vite --config vite.demo.config.ts"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.7.2",
@@ -97,7 +97,6 @@
         "eslint": "^9.39.5",
         "globals": "^15.8.0",
         "jsdom": "^26.0.0",
-        "live-server": "1.1.0",
         "marked": "^5.0.0",
         "parallelshell": "3.0.1",
         "playwright": "^1.64.1",

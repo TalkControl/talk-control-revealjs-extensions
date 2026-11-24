@@ -24,7 +24,7 @@ export default defineConfig({
         },
     ],
     webServer: {
-        command: `npx live-server --port=${PORT} --no-browser --mount="/assets:./demo/assets" --mount="/web_modules:./demo/web_modules" ./demo`,
+        command: `npx vite --config vite.demo.config.ts --port ${PORT} --strictPort --no-open --host 127.0.0.1`,
         url: `${BASE_URL}/index.html`,
         reuseExistingServer: !process.env.CI,
         timeout: 30_000,
