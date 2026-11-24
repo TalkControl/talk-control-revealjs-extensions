@@ -1,4 +1,4 @@
-import Reveal, { PluginFunction } from 'reveal.js';
+import Reveal, { type RevealPluginFactory } from 'reveal.js';
 import {
     TcCustomBackgroundMap,
     TcCustomBackgroundOptions,
@@ -136,7 +136,7 @@ function _processBackgroundThemeOptions(
 
 const RevealTalkControlThemePlugin: (
     options: TalkControlPluginOptions
-) => PluginFunction = (options: TalkControlPluginOptions) => {
+) => RevealPluginFactory = (options: TalkControlPluginOptions) => {
     const savedOptions = options;
     return () => {
         return {

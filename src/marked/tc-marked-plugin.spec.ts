@@ -1,8 +1,12 @@
 /**
  * @vitest-environment jsdom
  */
+import {
+    type RevealApi,
+    type RevealPlugin,
+    type RevealPluginFactory,
+} from 'reveal.js';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import Reveal from 'reveal.js';
 import { RevealTalkControlMarkdownPlugin } from './tc-marked-plugin';
 import { markedTcStyledImage } from './marked-tc-styled-image';
 
@@ -20,7 +24,7 @@ const mockInit = vi.fn();
 const mockUse = vi.fn();
 
 // Mock the import of module of RevealMarkdown plugin
-vi.mock('reveal.js/plugin/markdown/markdown.esm', () => {
+vi.mock('reveal.js/plugin/markdown', () => {
     return {
         default: vi.fn().mockImplementation(() => ({
             init: mockInit,
@@ -36,7 +40,7 @@ vi.mock('reveal.js/plugin/markdown/markdown.esm', () => {
 
 // Get a representation of this mock class
 const RevealMarkdownMock = vi.mocked(
-    (await import('reveal.js/plugin/markdown/markdown.esm')).default
+    (await import('reveal.js/plugin/markdown')).default
 );
 
 // Mock reproduction of classStyles
@@ -63,7 +67,7 @@ for (let i = 1; i <= 100; i++) {
 }
 
 // Used for compilation of test
-interface IPluginRevealMarkdown extends Reveal.Plugin {
+interface IPluginRevealMarkdown extends RevealPlugin {
     processSlides: () => void;
     convertSlides: () => void;
     slidify: () => void;
@@ -75,7 +79,7 @@ interface IPluginRevealMarkdown extends Reveal.Plugin {
 describe(RevealTalkControlMarkdownPlugin.name, () => {
     let instance: RevealTalkControlMarkdownPlugin;
     let revealMock: unknown;
-    let plugin: Reveal.PluginFunction;
+    let plugin: RevealPluginFactory;
 
     beforeEach(async () => {
         vi.clearAllMocks();
@@ -111,7 +115,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
 
         const revealMarkdownPlugin = RevealMarkdownMock();
 
-        await pluginInstance.init!(revealMock as Reveal.Api);
+        await pluginInstance.init!(revealMock as RevealApi);
 
         expect(revealMarkdownPlugin.init).toHaveBeenCalledWith(revealMock);
     });
@@ -120,7 +124,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
         const pluginInstance = plugin();
         const customStyles = ['style1', 'style2'];
 
-        await pluginInstance.init!(revealMock as Reveal.Api);
+        await pluginInstance.init!(revealMock as RevealApi);
 
         // Assert
         // check params
@@ -137,7 +141,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
     it('should initialize the plugin with correct number of class list for img', async () => {
         const pluginInstance = plugin();
 
-        await pluginInstance.init!(revealMock as Reveal.Api);
+        await pluginInstance.init!(revealMock as RevealApi);
 
         // Check correct number of params
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -161,10 +165,10 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
         plugin = instance.getPlugin();
         const pluginInstance = plugin();
 
-        pluginInstance.init!(revealMock as Reveal.Api);
+        pluginInstance.init!(revealMock as RevealApi);
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const readyCallback = ((revealMock as Reveal.Api).on as any).mock
+        const readyCallback = ((revealMock as RevealApi).on as any).mock
             .calls[0][1];
         readyCallback();
 
@@ -205,7 +209,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
                 }) as unknown as ReturnType<typeof RevealMarkdownMock>
         );
         const pluginInstance = plugin() as IPluginRevealMarkdown;
-        await pluginInstance.init!(revealMock as Reveal.Api);
+        await pluginInstance.init!(revealMock as RevealApi);
         expect(pluginInstance.marked).toBe(first);
         current = second;
         expect(pluginInstance.marked).toBe(second);

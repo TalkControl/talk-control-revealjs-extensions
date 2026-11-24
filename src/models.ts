@@ -1,4 +1,10 @@
-import Reveal from 'reveal.js';
+import type { RevealApi, RevealPluginFactory } from 'reveal.js';
+
+/**
+ * @deprecated Use `RevealPluginFactory` (native reveal.js 6 type) instead.
+ * Kept as an alias for consumers of the former `PluginFunction` type.
+ */
+export type PluginFunction = RevealPluginFactory;
 
 export interface SlidePath {
     path: string;
@@ -17,7 +23,7 @@ export interface TcMarkedEngine {
 export interface RevealMarkdownPlugin {
     id: string;
     readonly marked: TcMarkedEngine | null;
-    init(reveal: Reveal.Api): void | Promise<unknown>;
+    init(reveal: RevealApi): void | Promise<void>;
     processSlides(): void;
     convertSlides(): void;
     slidify(): void;
