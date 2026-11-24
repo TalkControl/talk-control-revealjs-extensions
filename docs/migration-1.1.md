@@ -9,7 +9,7 @@ Version 1.1 embeds and pins **reveal.js 6.0.2**. reveal.js is bundled by the lib
 - [ ] Remove `@types/reveal.js` from your project: reveal.js 6 ships its own types.
 - [ ] Check the `marked` engine typing if you read `plugin.marked`.
 - [ ] If you override the theme with Sass, rename the variables to kebab-case.
-- [ ] Review the visual diff of your decks (heading ids, loose lists, overlay and lightbox).
+- [ ] Review the visual diff of your decks (heading ids, overlay and lightbox).
 
 ## Types
 
@@ -33,7 +33,6 @@ import type {
 - Rendering differences inherited from marked 17 (no TalkControl change):
     - automatic `id` attributes on headings are no longer generated (marked removed `headerIds`); if you linked to `#my-heading`, add an explicit id;
     - blank lines between blocks are kept in the generated HTML (harmless for rendering);
-    - loose lists are rendered with `<p>` inside `<li>`;
     - an indented code block now gets `class=""` instead of `class="undefined"`.
 - Custom `marked` extensions you register yourself must use the marked 17 API (renderers receive token objects).
 
