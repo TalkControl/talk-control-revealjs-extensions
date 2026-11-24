@@ -1,7 +1,10 @@
 import { CSSResult } from 'lit';
 import { LitElement } from 'lit';
-import { PluginFunction } from 'reveal.js';
-import { default as Reveal_2 } from 'reveal.js';
+import { default as Reveal } from 'reveal.js';
+import { RevealApi } from 'reveal.js';
+import { RevealConfig } from 'reveal.js';
+import { RevealPlugin } from 'reveal.js';
+import { RevealPluginFactory } from 'reveal.js';
 import { RootPart } from 'lit-html';
 import { TemplateResult } from 'lit-html';
 
@@ -113,6 +116,12 @@ export declare interface MaterialSymbolsPackOptions {
 export declare type MaterialSymbolsVariant = 'outlined' | 'rounded' | 'sharp';
 
 /**
+ * @deprecated Use `RevealPluginFactory` (native reveal.js 6 type) instead.
+ * Kept as an alias for consumers of the former `PluginFunction` type.
+ */
+export declare type PluginFunction = RevealPluginFactory;
+
+/**
  * Resolves a vendor-relative path (e.g. `'fonts/font-awesome/css/all.min.css'`)
  * against the vendor folder, always next to the library's own module.
  *
@@ -123,20 +132,28 @@ export declare type MaterialSymbolsVariant = 'outlined' | 'rounded' | 'sharp';
  */
 export declare function resolveVendorUrl(path: string): URL;
 
-export { Reveal_2 as Reveal }
+export { Reveal }
 
-declare interface RevealConfig {
+export { RevealApi }
+
+export { RevealConfig }
+
+declare interface RevealConfig_2 {
     navigationMode?: 'linear' | 'grid';
 }
 
 export declare interface RevealMarkdownPlugin {
     id: string;
     readonly marked: TcMarkedEngine | null;
-    init(reveal: Reveal_2.Api): void | Promise<unknown>;
+    init(reveal: RevealApi): void | Promise<void>;
     processSlides(): void;
     convertSlides(): void;
     slidify(): void;
 }
+
+export { RevealPlugin }
+
+export { RevealPluginFactory }
 
 export declare interface SlidePath {
     path: string;
@@ -265,7 +282,7 @@ export declare interface TcMarkedEngine {
 }
 
 export declare class TcRevealjsElement extends LitElement {
-    revealOptions: RevealConfig;
+    revealOptions: RevealConfig_2;
     private shortcuts;
     private editMode;
     static styles: CSSResult;
@@ -451,7 +468,7 @@ export declare interface ThemeInitializerOptions {
     tcThemeOptions?: TcThemeOptions;
     slidesRenderer?: (element: HTMLElement, slides: SlidePath[]) => RootPart;
     defaultSlidesType?: string;
-    plugins?: PluginFunction[];
+    plugins?: RevealPluginFactory[];
 }
 
 /**
