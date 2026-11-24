@@ -9,7 +9,7 @@ shelljs.rm('-rf', './fixtures/a11y/web_modules');
 shelljs.mkdir('-p', './fixtures/a11y/web_modules');
 shelljs.cp(
     [
-        './node_modules/reveal.js/dist/reveal.esm.js',
+        './node_modules/reveal.js/dist/reveal.mjs',
         './node_modules/reveal.js/dist/reveal.css',
         './node_modules/reveal.js/dist/reset.css',
     ],
