@@ -18,6 +18,7 @@ const pkg = JSON.parse(
 ) as {
     dependencies: Record<string, string>;
     devDependencies: Record<string, string>;
+    overrides?: Record<string, unknown>;
 };
 
 const EXACT = /^\d+\.\d+\.\d+$/;
@@ -43,6 +44,10 @@ describe('package.json manifest', () => {
 
     it('pins sass to an exact version', () => {
         expect(pkg.devDependencies['sass']).toMatch(EXACT);
+    });
+
+    it('needs no npm overrides (peer ranges resolve naturally)', () => {
+        expect(pkg.overrides).toBeUndefined();
     });
 
     it('installs a single copy of reveal.js', () => {

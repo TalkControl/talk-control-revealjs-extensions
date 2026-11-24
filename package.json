@@ -86,7 +86,7 @@
     "devDependencies": {
         "@arethetypeswrong/cli": "0.18.5",
         "@axe-core/playwright": "^4.14.0",
-        "@eslint/js": "^9.39.5",
+        "@eslint/js": "^10.0.1",
         "@microsoft/api-extractor": "^7.60.1",
         "@playwright/test": "^1.64.1",
         "@types/feather-icons": "^4.29.4",
@@ -94,8 +94,8 @@
         "@types/node": "^24.19.2",
         "@types/shelljs": "^0.8.15",
         "chokidar-cli": "^3.0.0",
-        "eslint": "^9.39.5",
-        "globals": "^15.8.0",
+        "eslint": "^10.15.0",
+        "globals": "^17.14.0",
         "jsdom": "^26.0.0",
         "marked": "^5.0.0",
         "parallelshell": "3.0.1",
@@ -111,8 +111,5 @@
         "vite": "^6.0.0",
         "vite-plugin-dts": "^5.1.2",
         "vitest": "^5.1.1"
-    },
-    "overrides": {
-        "eslint": "$eslint"
     }
 }
