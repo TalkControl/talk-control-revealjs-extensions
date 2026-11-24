@@ -10,8 +10,7 @@ export interface TcCustomBackgroundOptions {
 /**
  * Interface to deal with custom backgrounds
  */
-export interface TcCustomBackgroundOptionsInternal
-    extends TcCustomBackgroundOptions {
+export interface TcCustomBackgroundOptionsInternal extends TcCustomBackgroundOptions {
     theme?: string; // technical option used by
 }
 export function customBackgrounds(

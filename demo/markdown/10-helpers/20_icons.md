@@ -18,9 +18,9 @@ You can use icons using the following syntax:
 
 Supports libraries:
 
--   Font Awesome
--   Feather
--   Material Design Icons
+- Font Awesome
+- Feather
+- Material Design Icons
 
 ##==##
 

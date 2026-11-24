@@ -448,13 +448,13 @@ function configureApplication(options) {
 
 # Text with inline code
 
--   attribut `draggable=true` sur l'élément html.
-    <br><br>
--   `ondragstart` event sur l'élément draggable.
-    <br><br>
--   `ondrop` event dans la zone de dépot.
-    <br><br>
--   `ondraghover` event sur la zone de dépot.
+- attribut `draggable=true` sur l'élément html.
+  <br><br>
+- `ondragstart` event sur l'élément draggable.
+  <br><br>
+- `ondrop` event dans la zone de dépot.
+  <br><br>
+- `ondraghover` event sur la zone de dépot.
 
 ##--##
 

@@ -312,8 +312,9 @@ export class TcRevealjsElement extends LitElement {
                         type="radio"
                         name="navigationMode"
                         value="linear"
-                        .checked=${this.revealOptions.navigationMode ===
-                        'linear'}
+                        .checked=${
+                            this.revealOptions.navigationMode === 'linear'
+                        }
                         @change=${this.handleNavigationModeChange} />
                     Linear (1D navigation)
                 </label>
@@ -337,28 +338,30 @@ export class TcRevealjsElement extends LitElement {
                     ${Object.entries(this.shortcuts).map(
                         ([id, shortcut]) => html`
                             <div class="shortcut-item" role="row">
-                                ${this.editMode && shortcut.editable
-                                    ? html`
-                                          <input
-                                              class="shortcut-keys editable"
-                                              role="cell"
-                                              .value=${shortcut.keys}
-                                              @input=${(e: Event) =>
-                                                  this.handleShortcutChange(
-                                                      id,
-                                                      (
-                                                          e.target as HTMLInputElement
-                                                      ).value
-                                                  )}
-                                              aria-label="Edit shortcut keys for ${shortcut.description}" />
-                                      `
-                                    : html`
-                                          <span
-                                              class="shortcut-keys"
-                                              role="cell">
-                                              ${shortcut.keys}
-                                          </span>
-                                      `}
+                                ${
+                                    this.editMode && shortcut.editable
+                                        ? html`
+                                              <input
+                                                  class="shortcut-keys editable"
+                                                  role="cell"
+                                                  .value=${shortcut.keys}
+                                                  @input=${(e: Event) =>
+                                                      this.handleShortcutChange(
+                                                          id,
+                                                          (
+                                                              e.target as HTMLInputElement
+                                                          ).value
+                                                      )}
+                                                  aria-label="Edit shortcut keys for ${shortcut.description}" />
+                                          `
+                                        : html`
+                                              <span
+                                                  class="shortcut-keys"
+                                                  role="cell">
+                                                  ${shortcut.keys}
+                                              </span>
+                                          `
+                                }
                                 <span class="shortcut-description" role="cell">
                                     ${shortcut.description}
                                 </span>

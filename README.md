@@ -22,21 +22,21 @@ Talk Control adds numerous out-of-the-box features:
 
 ### Core Extensions
 
--   **Config UI** : An interface accessible with the `C` key to change themes, presentation types, and languages on the fly.
--   **Theming** : Applies and manages your presentation's themes.
--   **Internationalization (i18n)** : Multi-language support for your slides.
--   **Templates** : Propose diferent templates usable : transitions, speakers, ...
--   **Helpers** : Severals helpers likes positions, margins, backgrounds, ...
--   **Multiple Columns** : Create complex layouts with multiple columns.
--   **Copy to Clipboard** : Adds the ability to copy the content of code blocks.
+- **Config UI** : An interface accessible with the `C` key to change themes, presentation types, and languages on the fly.
+- **Theming** : Applies and manages your presentation's themes.
+- **Internationalization (i18n)** : Multi-language support for your slides.
+- **Templates** : Propose diferent templates usable : transitions, speakers, ...
+- **Helpers** : Severals helpers likes positions, margins, backgrounds, ...
+- **Multiple Columns** : Create complex layouts with multiple columns.
+- **Copy to Clipboard** : Adds the ability to copy the content of code blocks.
 
 ### Markdown Extensions
 
--   **Admonitions**: Stylized information blocks (note, warning, etc.).
--   **Icons**: Easily integrate icons (Feather Icons, Font Awesome, etc.).
--   **QR Codes**: Generate QR Codes directly in your slides.
--   **Backgrounds via Markdown**: Change a slide's background directly from your Markdown file.
--   **Columns via Markdown**: Define column layouts with a simple syntax.
+- **Admonitions**: Stylized information blocks (note, warning, etc.).
+- **Icons**: Easily integrate icons (Feather Icons, Font Awesome, etc.).
+- **QR Codes**: Generate QR Codes directly in your slides.
+- **Backgrounds via Markdown**: Change a slide's background directly from your Markdown file.
+- **Columns via Markdown**: Define column layouts with a simple syntax.
 
 ## How to
 

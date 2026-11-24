@@ -35,14 +35,14 @@ Once configured, you can add an icon anywhere in your markdown content using a s
 
 `![](icon-name 'tc-icons keyword')`
 
--   `icon-name`: The specific name of the icon in the library.
--   `tc-icons`: A mandatory keyword to indicate that you want to display an icon.
--   `keyword`: The specific keyword for the icon library you want to use.
+- `icon-name`: The specific name of the icon in the library.
+- `tc-icons`: A mandatory keyword to indicate that you want to display an icon.
+- `keyword`: The specific keyword for the icon library you want to use.
 
 ### Font Awesome
 
--   **Keyword**: `fa`
--   **Website**: fontawesome.com
+- **Keyword**: `fa`
+- **Website**: fontawesome.com
 
 To use a Font Awesome icon, use the `fa` keyword. You can include the style (e.g., `fa-solid`, `fa-brands`) in the icon name.
 
@@ -69,8 +69,8 @@ are ready. Icons are rendered as `<i>` elements through the font (no
 
 ### Feather Icons
 
--   **Keyword**: `feather`
--   **Website**: feathericons.com
+- **Keyword**: `feather`
+- **Website**: feathericons.com
 
 ```markdown
 Here is a circle: ![](circle 'tc-icons feather')
@@ -87,8 +87,8 @@ consumer who doesn't configure Feather never downloads or executes its code.
 
 ### Material Symbols
 
--   **Keyword**: `material-symbols`
--   **Website**: fonts.google.com/icons
+- **Keyword**: `material-symbols`
+- **Website**: fonts.google.com/icons
 
 ```markdown
 An account icon: ![](account_circle 'tc-icons material-symbols')
@@ -110,13 +110,13 @@ recommended choice to keep the download light:
 materialSymbolsIconPack({ variants: ['outlined'] });
 ```
 
--   Accepted values: `'outlined'`, `'rounded'`, `'sharp'` (type `MaterialSymbolsVariant`).
--   An icon class of a variant that is **not loaded** is displayed as plain
-    text (the icon name), so request every variant your slides use.
--   Unknown values are ignored with a `console.warn`; an empty or fully
-    invalid list falls back to the default (all three), also with a warning.
--   The three families are still shipped in `dist/vendor`; the choice only
-    affects what the browser downloads at runtime.
+- Accepted values: `'outlined'`, `'rounded'`, `'sharp'` (type `MaterialSymbolsVariant`).
+- An icon class of a variant that is **not loaded** is displayed as plain
+  text (the icon name), so request every variant your slides use.
+- Unknown values are ignored with a `console.warn`; an empty or fully
+  invalid list falls back to the default (all three), also with a warning.
+- The three families are still shipped in `dist/vendor`; the choice only
+  affects what the browser downloads at runtime.
 
 ![](./imgs/icons-material.png)
 
@@ -128,8 +128,8 @@ You can easily style icons by adding helper classes or using CSS custom properti
 
 Two helper classes are available to quickly change an icon's size:
 
--   `.tc-small`: Makes the icon smaller.
--   `.tc-big`: Makes the icon larger (2x the default size).
+- `.tc-small`: Makes the icon smaller.
+- `.tc-big`: Makes the icon larger (2x the default size).
 
 ```markdown
 A big heart: ![](heart 'tc-icons fa tc-big')
@@ -139,8 +139,8 @@ A big heart: ![](heart 'tc-icons fa tc-big')
 
 You can override the following CSS custom properties to fine-tune the appearance of your icons:
 
--   `--tc-icon-size`: The icon size (e.g., `3em`, `48px`).
--   `--tc-icon-color`: The icon color.
+- `--tc-icon-size`: The icon size (e.g., `3em`, `48px`).
+- `--tc-icon-color`: The icon color.
 
 ```css
 .reveal .slides section {
@@ -171,8 +171,8 @@ and the temporary polyfill).
 
 By default, an icon is treated as **decorative**: it renders with `aria-hidden="true"` so assistive technology skips it entirely, per [WCAG 1.1.1 and 4.1.2](https://www.w3.org/WAI/WCAG21/Understanding/non-text-content.html). This matches how most icons are actually used (next to a text label, or purely ornamental): the common case needs no markup at all. One opt-in pseudo-attribute lets you tell screen readers that an icon carries meaning on its own:
 
--   `tc-a11y-label="Accessible name"`: the icon carries meaning (e.g. it's the only content of a button). It is rendered with that text as `aria-label` instead of `aria-hidden`.
--   `tc-a11y-hidden`: marks the icon decorative explicitly. Since this is already the default, it has no visible effect on its own - use it only if you want the intent to be explicit in your Markdown source.
+- `tc-a11y-label="Accessible name"`: the icon carries meaning (e.g. it's the only content of a button). It is rendered with that text as `aria-label` instead of `aria-hidden`.
+- `tc-a11y-hidden`: marks the icon decorative explicitly. Since this is already the default, it has no visible effect on its own - use it only if you want the intent to be explicit in your Markdown source.
 
 ```markdown
 A decorative icon (default, no pseudo-attribute needed): ![](star 'tc-icons fa')
@@ -182,10 +182,10 @@ A meaningful icon: ![](bell 'tc-icons fa tc-a11y-label="New notifications"')
 
 Rules:
 
--   Both are optional: omit them and the icon stays decorative.
--   If both are present on the same icon, `tc-a11y-hidden` wins (an icon can't be both hidden from and announced to assistive technology).
--   The accessible name must be wrapped in double quotes (`"..."`), while the Markdown title itself must stay wrapped in single quotes (`'...'`), so the two don't conflict. A label can't itself contain a double quote.
--   As with ordinary Markdown images, giving an icon an accessible name is the author's own responsibility: pick wording that makes sense out of context for someone who can't see the icon.
+- Both are optional: omit them and the icon stays decorative.
+- If both are present on the same icon, `tc-a11y-hidden` wins (an icon can't be both hidden from and announced to assistive technology).
+- The accessible name must be wrapped in double quotes (`"..."`), while the Markdown title itself must stay wrapped in single quotes (`'...'`), so the two don't conflict. A label can't itself contain a double quote.
+- As with ordinary Markdown images, giving an icon an accessible name is the author's own responsibility: pick wording that makes sense out of context for someone who can't see the icon.
 
 ## "Copy to Clipboard" Icon
 
@@ -193,9 +193,9 @@ As mentioned in the Code documentation, Talk-Control adds a "copy to clipboard" 
 
 Each pre-configured pack has a specific icon for this:
 
--   **Font Awesome**: `fa-copy`
--   **Feather Icons**: `copy`
--   **Material Symbols**: `content_copy`
+- **Font Awesome**: `fa-copy`
+- **Feather Icons**: `copy`
+- **Material Symbols**: `content_copy`
 
 If you provide `fontAwesomeIconPack()` first, the `fa-copy` icon will be used.
 

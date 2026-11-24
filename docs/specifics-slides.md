@@ -100,10 +100,10 @@ for the version with 2 speakers, only 3 sub information and only 3
 
 You can use those class for transitions slides :
 
--   `left`: the text will be left aligned
--   `right`: the text will be right aligned
--   `top`: the text will be stick to the top
--   `bottom`: the text will be stick to the bottom
+- `left`: the text will be left aligned
+- `right`: the text will be right aligned
+- `top`: the text will be stick to the top
+- `bottom`: the text will be stick to the bottom
 
 ## Transition with text left aligned
 
@@ -115,15 +115,15 @@ You can use those class for transitions slides :
 
 ![](./imgs/transition-left.png)
 
--   `transition right` for right text aligned
+- `transition right` for right text aligned
 
 ![](./imgs/transition-right.png)
 
--   `transition top` for top text aligned
+- `transition top` for top text aligned
 
 ![](./imgs/transition-top.png)
 
--   `transition bottom` for bottom text aligned
+- `transition bottom` for bottom text aligned
 
 ![](./imgs/transition-bottom.png)
 

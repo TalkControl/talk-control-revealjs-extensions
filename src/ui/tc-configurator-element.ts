@@ -61,14 +61,14 @@ export class TcConfiguratorElement extends LitElement {
                         aria-selected="${this.selectedTab === 'talk-control'}"
                         aria-controls="talk-control-panel"
                         id="talk-control-tab"
-                        tabindex="${this.selectedTab === 'talk-control'
-                            ? '0'
-                            : '-1'}"
+                        tabindex="${
+                            this.selectedTab === 'talk-control' ? '0' : '-1'
+                        }"
                         @click="${() => this.selectTab('talk-control')}"
                         @keydown="${this.handleTabKeydown}"
-                        class="tab-button ${this.selectedTab === 'talk-control'
-                            ? 'active'
-                            : ''}">
+                        class="tab-button ${
+                            this.selectedTab === 'talk-control' ? 'active' : ''
+                        }">
                         Talk Control
                     </button>
                     <button
@@ -77,14 +77,14 @@ export class TcConfiguratorElement extends LitElement {
                         aria-selected="${this.selectedTab === 'revealjs'}"
                         aria-controls="revealjs-panel"
                         id="revealjs-tab"
-                        tabindex="${this.selectedTab === 'revealjs'
-                            ? '0'
-                            : '-1'}"
+                        tabindex="${
+                            this.selectedTab === 'revealjs' ? '0' : '-1'
+                        }"
                         @click="${() => this.selectTab('revealjs')}"
                         @keydown="${this.handleTabKeydown}"
-                        class="tab-button ${this.selectedTab === 'revealjs'
-                            ? 'active'
-                            : ''}">
+                        class="tab-button ${
+                            this.selectedTab === 'revealjs' ? 'active' : ''
+                        }">
                         RevealJS
                     </button>
                 </nav>
@@ -94,29 +94,33 @@ export class TcConfiguratorElement extends LitElement {
                         id="talk-control-panel"
                         aria-labelledby="talk-control-tab"
                         ?hidden="${this.selectedTab !== 'talk-control'}">
-                        ${this.selectedTab === 'talk-control'
-                            ? html`<tc-talk-control-element
-                                  .slides="${this.slides}"
-                                  .theme="${this.theme}"
-                                  .defaultTheme="${this.defaultTheme}"
-                                  .i18n="${this.i18n}"
-                                  .defaultI18n="${this.defaultI18n}"
-                                  .type="${this.type}"
-                                  .defaultType="${this.defaultType}"
-                                  @config-changed="${this.onConfigChanged}">
-                              </tc-talk-control-element>`
-                            : ''}
+                        ${
+                            this.selectedTab === 'talk-control'
+                                ? html`<tc-talk-control-element
+                                      .slides="${this.slides}"
+                                      .theme="${this.theme}"
+                                      .defaultTheme="${this.defaultTheme}"
+                                      .i18n="${this.i18n}"
+                                      .defaultI18n="${this.defaultI18n}"
+                                      .type="${this.type}"
+                                      .defaultType="${this.defaultType}"
+                                      @config-changed="${this.onConfigChanged}">
+                                  </tc-talk-control-element>`
+                                : ''
+                        }
                     </div>
                     <div
                         role="tabpanel"
                         id="revealjs-panel"
                         aria-labelledby="revealjs-tab"
                         ?hidden="${this.selectedTab !== 'revealjs'}">
-                        ${this.selectedTab === 'revealjs'
-                            ? html`<tc-revealjs-element
-                                  .revealOptions="${this.revealOptions}">
-                              </tc-revealjs-element>`
-                            : ''}
+                        ${
+                            this.selectedTab === 'revealjs'
+                                ? html`<tc-revealjs-element
+                                      .revealOptions="${this.revealOptions}">
+                                  </tc-revealjs-element>`
+                                : ''
+                        }
                     </div>
                 </div>
                 <button
@@ -253,9 +257,9 @@ export class TcConfiguratorElement extends LitElement {
 
     static styles = css`
         :host {
-            --tc-ui-font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-                Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-                sans-serif;
+            --tc-ui-font-primary:
+                -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+                Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             --tc-ui-button-bg-color: #007acc;
             --tc-ui-button-text-color: white;
             --tc-ui-button-hover-bg-color: #005a9e;

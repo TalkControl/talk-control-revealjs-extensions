@@ -12,7 +12,7 @@ Your content here. It can span multiple lines.
 !!!
 ```
 
--   `type`: The type of admonition you want to create.
+- `type`: The type of admonition you want to create.
 
 For example:
 
@@ -126,27 +126,27 @@ tcMarkedOptions: {
 
 When enabled:
 
--   The admonition paragraph gets `role="note"`.
--   The type is added as real, visually-hidden text (`.tc-visually-hidden`),
-    translated from the slides' current `data-lang` - e.g.
-    `<span class="tc-visually-hidden">Note: </span>` before the content, or
-    `<span class="tc-visually-hidden">Attention: </span>` when
-    `data-lang="FR"`. `EN` and `FR` are built in; see "Additional languages"
-    below to supply more.
--   `data-lang` is already dynamic from the URL: it's set by the `tc-i18n`
-    addon from the `?data-lang=` query parameter (see [`i18n.md`](./i18n.md)),
-    before the slides are parsed, so e.g. `?data-lang=fr` on the deck's URL is
-    enough to get the French labels, no extra wiring needed. This is a
-    different thing from the document's `<html lang>` attribute, which the
-    library never reads or writes (see #109) - that one remains the speaker's
-    own responsibility to set.
--   For a `custom` admonition, the author-provided `tc-admonition-type` text is
-    used verbatim as the accessible label (it can't be auto-translated); with
-    no `tc-admonition-type` given, the generic, translated "Custom" label is
-    used instead.
--   The decorative `::before` content (emoji + title) is hidden for every
-    admonition that carries this option, so the type is announced once, not
-    twice. The colored left border stays unchanged.
+- The admonition paragraph gets `role="note"`.
+- The type is added as real, visually-hidden text (`.tc-visually-hidden`),
+  translated from the slides' current `data-lang` - e.g.
+  `<span class="tc-visually-hidden">Note: </span>` before the content, or
+  `<span class="tc-visually-hidden">Attention: </span>` when
+  `data-lang="FR"`. `EN` and `FR` are built in; see "Additional languages"
+  below to supply more.
+- `data-lang` is already dynamic from the URL: it's set by the `tc-i18n`
+  addon from the `?data-lang=` query parameter (see [`i18n.md`](./i18n.md)),
+  before the slides are parsed, so e.g. `?data-lang=fr` on the deck's URL is
+  enough to get the French labels, no extra wiring needed. This is a
+  different thing from the document's `<html lang>` attribute, which the
+  library never reads or writes (see #109) - that one remains the speaker's
+  own responsibility to set.
+- For a `custom` admonition, the author-provided `tc-admonition-type` text is
+  used verbatim as the accessible label (it can't be auto-translated); with
+  no `tc-admonition-type` given, the generic, translated "Custom" label is
+  used instead.
+- The decorative `::before` content (emoji + title) is hidden for every
+  admonition that carries this option, so the type is announced once, not
+  twice. The colored left border stays unchanged.
 
 ```markdown
 !!! note
@@ -180,13 +180,13 @@ tcMarkedOptions: {
 },
 ```
 
--   A language entry here is merged with (and takes priority over) a built-in
-    `EN`/`FR` translation for the same type, so this can also override a
-    single built-in label without having to redefine the whole set.
--   A type with no matching entry - in `labels` or in the built-ins - falls
-    back to its `EN` label.
--   `custom` admonitions are unaffected: their accessible label always comes
-    from the author's own `tc-admonition-type`, translated or not.
+- A language entry here is merged with (and takes priority over) a built-in
+  `EN`/`FR` translation for the same type, so this can also override a
+  single built-in label without having to redefine the whole set.
+- A type with no matching entry - in `labels` or in the built-ins - falls
+  back to its `EN` label.
+- `custom` admonitions are unaffected: their accessible label always comes
+  from the author's own `tc-admonition-type`, translated or not.
 
 ## Use comment syntax
 

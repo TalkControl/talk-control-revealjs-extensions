@@ -28,9 +28,9 @@ Some Content
 
 ## Summary
 
--   Item 1
--   Item 2
--   Item 3
+- Item 1
+- Item 2
+- Item 3
 
 ##--##
 
@@ -41,9 +41,9 @@ Some Content
 ```markdown
 ## Summary
 
--   Item 1
--   Item 2
--   Item 3
+- Item 1
+- Item 2
+- Item 3
 ```
 
 <!-- .element: class="big-code" -->
@@ -79,11 +79,13 @@ Some Content
 1. List Item 1
 2. List Item 2
 3. List Item 3
+
  <!-- .element: class="list-fragment" -->
 
--   Item 1
--   Item 2
--   **Item 3**
+- Item 1
+- Item 2
+- **Item 3**
+
 <!-- .element: class="list-fragment" -->
 
 1.  Item 1
@@ -104,11 +106,13 @@ Some Content
 1. List Item 1
 2. List Item 2
 3. List Item 3
+
  <!-- .element: class="list-fragment" -->
 
--   Item 1
--   Item 2
--   **Item 3**
+- Item 1
+- Item 2
+- **Item 3**
+
 <!-- .element: class="list-fragment" -->
 ```
 
@@ -152,17 +156,17 @@ More wonderful content
 
 ### Sub title
 
--   First Line
+- First Line
 
--   Second Line
+- Second Line
 
--   Third Line
+- Third Line
 
-    -   Sub Content
+    - Sub Content
 
-    -   Sub Content
+    - Sub Content
 
-        -   Third Level
+        - Third Level
 
 ##--##
 
@@ -175,17 +179,17 @@ More wonderful content
 
 ### Sub title
 
--   First Line
+- First Line
 
--   Second Line
+- Second Line
 
--   Third Line
+- Third Line
 
-    -   Sub Content
+    - Sub Content
 
-    -   Sub Content
+    - Sub Content
 
-        -   Third Level
+        - Third Level
 ```
 
 <!-- .element: class="big-code" -->

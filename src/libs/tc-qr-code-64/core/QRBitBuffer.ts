@@ -30,7 +30,7 @@ export class QRBitBuffer implements IQRBitBuffer {
         }
 
         if (bit) {
-            this.buffer[bufIndex] |= 0x80 >>> this.length % 8;
+            this.buffer[bufIndex] |= 0x80 >>> (this.length % 8);
         }
 
         this.length++;

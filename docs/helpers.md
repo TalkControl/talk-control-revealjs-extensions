@@ -166,10 +166,11 @@ To make every item in a list appear one by one (as fragments), you don't need to
 ### Example
 
 ```markdown
--   First item
--   Second item
--   **Third item**
--   Fourth item
+- First item
+- Second item
+- **Third item**
+- Fourth item
+
 <!-- .element: class="list-fragment" -->
 ```
 

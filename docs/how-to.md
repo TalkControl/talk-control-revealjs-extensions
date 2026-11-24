@@ -54,14 +54,14 @@ You can still use RevealJS API by importing `Reveal` object in `import { Reveal 
 
 The main configuration lets you customize a lot the theme so it will propose lots of enhancements when calling `ThemeInitializer.init(options)`. All options with (\*) are mandatory
 
--   `slidesFactory`(\*): A function that returns an array of objects describing the Markdown files to load. The show type can be precise in parameters (see "play with show type")
--   `activeCopyClipboard`: true if we use the clipboard, default applied is true
--   `tcMarkedOptions`: An object that can contain icons configuration. Default is an empty object
--   `tcI18nOptions`: Specifies the place of markdown files (use for internationalization). Default language is 'EN'. By default, the slides should be placed in a "markdown" repository at the same level as the index.html
--   `tcCustomBackgroundOptions`: Specifies the configuration to use custom backgrounds as template.
--   `tcThemeOptions`: Defines the default theme to use (default is 'talk-control').
--   `slidesRenderer`: function that renders a Root element (in LitHTML). It takes an html element and the list of slides to render
--   `defaultSlidesType`: Defines the "show type" of slides (default is "on-stage")
+- `slidesFactory`(\*): A function that returns an array of objects describing the Markdown files to load. The show type can be precise in parameters (see "play with show type")
+- `activeCopyClipboard`: true if we use the clipboard, default applied is true
+- `tcMarkedOptions`: An object that can contain icons configuration. Default is an empty object
+- `tcI18nOptions`: Specifies the place of markdown files (use for internationalization). Default language is 'EN'. By default, the slides should be placed in a "markdown" repository at the same level as the index.html
+- `tcCustomBackgroundOptions`: Specifies the configuration to use custom backgrounds as template.
+- `tcThemeOptions`: Defines the default theme to use (default is 'talk-control').
+- `slidesRenderer`: function that renders a Root element (in LitHTML). It takes an html element and the list of slides to render
+- `defaultSlidesType`: Defines the "show type" of slides (default is "on-stage")
 
 According to the options passed, you can specify the desired configuration to apply
 
