@@ -140,6 +140,13 @@ describe('dist/ contract', () => {
         );
     });
 
+    it('declares its UTF-8 charset (non-ASCII glyphs in content:)', () => {
+        // Lightning CSS drops `@charset`; vite.config.ts puts it back. Without
+        // it, a consumer serving the file with no charset on a non-UTF-8 page
+        // would get mojibake for ©, quotes and the admonition emojis.
+        expect(css.startsWith('@charset "UTF-8";')).toBe(true);
+    });
+
     it('matches the normalized CSS snapshot', async () => {
         await expect(normalizeCss(css)).toMatchFileSnapshot(
             './__snapshots__/theme.css'

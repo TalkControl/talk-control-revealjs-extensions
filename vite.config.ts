@@ -57,6 +57,27 @@ export default defineConfig({
     plugins: [
         dts({ bundleTypes: true }),
         {
+            // The theme carries non-ASCII `content:` glyphs (©, quotes,
+            // admonition emojis). Lightning CSS (Vite 8's default minifier)
+            // drops the `@charset` rule, so a consumer serving the file
+            // without a charset on a non-UTF-8 page would get mojibake.
+            name: 'tc-css-charset',
+            enforce: 'post',
+            apply: 'build',
+            generateBundle(_options, bundle) {
+                for (const asset of Object.values(bundle)) {
+                    if (
+                        asset.type === 'asset' &&
+                        asset.fileName.endsWith('.css') &&
+                        typeof asset.source === 'string' &&
+                        !asset.source.startsWith('@charset')
+                    ) {
+                        asset.source = `@charset "UTF-8";${asset.source}`;
+                    }
+                }
+            },
+        },
+        {
             // Build-only: under Vitest `__tc_import_meta_url__` has no
             // declaration, `import.meta.url` must stay native.
             name: 'tc-import-meta-url',
