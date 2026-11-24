@@ -474,3 +474,31 @@ declare type VendorAssetKind = 'stylesheet' | 'script' | 'module';
 export declare function waitForFonts(specs: string[], timeoutMs?: number): Promise<void>;
 
 export { }
+
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'tc-revealjs-element': TcRevealjsElement;
+    }
+}
+
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'tc-talk-control-element': TcTalkControlElement;
+    }
+}
+
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'tc-tree-slides-element': TcTreeSlidesElement;
+    }
+}
+
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'tc-configurator-element': TcConfiguratorElement;
+    }
+}

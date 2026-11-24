@@ -1,8 +1,16 @@
 /**
  * @vitest-environment jsdom
  */
+import {
+    type Mock,
+    afterEach,
+    beforeEach,
+    describe,
+    expect,
+    it,
+    vi,
+} from 'vitest';
 import { _internals, featherIconPack } from './feather-icons-pack';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { loadVendorScript } from '../utils/tc-vendor-loader';
 
 vi.mock('../utils/tc-vendor-loader', () => ({
@@ -12,7 +20,7 @@ vi.mock('../utils/tc-vendor-loader', () => ({
 type WindowWithFeather = { feather?: { replace: () => void } };
 
 describe(featherIconPack.name, () => {
-    let replace: ReturnType<typeof vi.fn>;
+    let replace: Mock<() => void>;
 
     beforeEach(() => {
         _internals!.resetFeatherCache();

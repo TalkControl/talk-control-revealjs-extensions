@@ -67,7 +67,7 @@ async function firstExisting(
             if (response.status === 200) {
                 return slidePath;
             }
-        } catch (e) {
+        } catch {
             // Nothing to do
         }
     }
