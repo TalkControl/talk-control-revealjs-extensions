@@ -478,6 +478,13 @@ export { }
 
 declare global {
     interface HTMLElementTagNameMap {
+        'tc-configurator-element': TcConfiguratorElement;
+    }
+}
+
+
+declare global {
+    interface HTMLElementTagNameMap {
         'tc-revealjs-element': TcRevealjsElement;
     }
 }
@@ -493,12 +500,5 @@ declare global {
 declare global {
     interface HTMLElementTagNameMap {
         'tc-tree-slides-element': TcTreeSlidesElement;
-    }
-}
-
-
-declare global {
-    interface HTMLElementTagNameMap {
-        'tc-configurator-element': TcConfiguratorElement;
     }
 }
