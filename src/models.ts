@@ -1,13 +1,22 @@
 import Reveal from 'reveal.js';
-import { marked } from 'marked';
 
 export interface SlidePath {
     path: string;
 }
 
+/**
+ * Minimal contract of the marked engine embedded by the reveal.js markdown
+ * plugin. Declared locally so that the public types do not depend on a
+ * particular `marked` version.
+ */
+export interface TcMarkedEngine {
+    use(...extensions: unknown[]): unknown;
+    parse(src: string): string | Promise<string>;
+}
+
 export interface RevealMarkdownPlugin {
     id: string;
-    marked: { use: (ext: marked.MarkedExtension) => void };
+    readonly marked: TcMarkedEngine | null;
     init(reveal: Reveal.Api): void | Promise<unknown>;
     processSlides(): void;
     convertSlides(): void;

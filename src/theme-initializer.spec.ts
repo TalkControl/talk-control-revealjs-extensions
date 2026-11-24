@@ -24,12 +24,6 @@ vi.mock('lit-html', () => ({
     render: vi.fn(),
 }));
 
-vi.mock('./tc-marked-plugin', () => ({
-    RevealTalkControlMarkdownPlugin: vi.fn().mockImplementation(() => ({
-        getPlugin: vi.fn().mockReturnValue({}),
-    })),
-}));
-
 vi.mock('./theme-plugin', () => {
     return {
         default: vi.fn(() => {

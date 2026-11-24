@@ -4,12 +4,17 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import Reveal from 'reveal.js';
 import { RevealTalkControlMarkdownPlugin } from './tc-marked-plugin';
-import { markedStyledImage } from '@anthonypena/marked-styled-image';
+import { markedTcStyledImage } from './marked-tc-styled-image';
 
-// Mock du module marked-styled-image
-vi.mock('@anthonypena/marked-styled-image', () => ({
-    markedStyledImage: vi.fn(),
-}));
+vi.mock('./marked-tc-styled-image', async (importOriginal) => {
+    const actual =
+        await importOriginal<typeof import('./marked-tc-styled-image')>();
+    return {
+        ...actual,
+        markedTcStyledImage: vi.fn(actual.markedTcStyledImage),
+    };
+});
+const styledImageSpy = vi.mocked(markedTcStyledImage);
 
 const mockInit = vi.fn();
 const mockUse = vi.fn();
@@ -33,15 +38,6 @@ vi.mock('reveal.js/plugin/markdown/markdown.esm', () => {
 const RevealMarkdownMock = vi.mocked(
     (await import('reveal.js/plugin/markdown/markdown.esm')).default
 );
-
-// Mock extensions used in tc plugin
-vi.mock('./marked-extensions', () => ({
-    markedStyledImage: vi.fn().mockReturnValue({}),
-    markedTcBg: vi.fn().mockReturnValue({}),
-    markedTcCols: vi.fn().mockReturnValue({}),
-    markedTcIcons: vi.fn().mockReturnValue({}),
-    markedTcQrCode: vi.fn().mockReturnValue({}),
-}));
 
 // Mock reproduction of classStyles
 const stylesCssImg = [
@@ -128,7 +124,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
 
         // Assert
         // check params
-        expect(markedStyledImage).toHaveBeenCalledWith(
+        expect(styledImageSpy).toHaveBeenCalledWith(
             expect.objectContaining({
                 knownStyles: expect.arrayContaining([
                     ...customStyles,
@@ -145,7 +141,7 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
 
         // Check correct number of params
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const callArg = (markedStyledImage as any).mock.calls[0][0];
+        const callArg = (styledImageSpy as any).mock.calls[0][0];
         expect(callArg.knownStyles.length).toBe(stylesCssImg.length + 2); // 286 styles de base + 2 customs
     });
 
@@ -190,5 +186,28 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
         expect((pluginInstance as IPluginRevealMarkdown).marked).toEqual({
             use: mockUse,
         });
+    });
+
+    it('exposes the CURRENT marked engine of the markdown plugin, even if replaced after init', async () => {
+        const first = { use: vi.fn(), parse: vi.fn() };
+        const second = { use: vi.fn(), parse: vi.fn() };
+        let current = first;
+        RevealMarkdownMock.mockImplementationOnce(
+            () =>
+                ({
+                    init: mockInit,
+                    processSlides: vi.fn(),
+                    convertSlides: vi.fn(),
+                    slidify: vi.fn(),
+                    get marked() {
+                        return current;
+                    },
+                }) as unknown as ReturnType<typeof RevealMarkdownMock>
+        );
+        const pluginInstance = plugin() as IPluginRevealMarkdown;
+        await pluginInstance.init!(revealMock as Reveal.Api);
+        expect(pluginInstance.marked).toBe(first);
+        current = second;
+        expect(pluginInstance.marked).toBe(second);
     });
 });

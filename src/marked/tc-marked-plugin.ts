@@ -3,10 +3,10 @@ import { MarkedTcQrCodeOptions, markedTcQrCode } from './marked-tc-qrcode';
 import { RevealMarkdownPlugin, TcAdmonitionOptions } from '../models';
 import { PluginFunction } from 'reveal.js';
 import RevealMarkdown from 'reveal.js/plugin/markdown/markdown.esm';
-import { markedStyledImage } from '@anthonypena/marked-styled-image';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
 import { markedTcCols } from './marked-tc-cols';
+import { markedTcStyledImage } from './marked-tc-styled-image';
 
 const stylesCssImg = [
     'company',
@@ -57,21 +57,25 @@ export class RevealTalkControlMarkdownPlugin {
                     if (revealMarkdownPlugin && revealMarkdownPlugin.init) {
                         const promiseInit = revealMarkdownPlugin.init(reveal);
                         // We set all extensions after call of init due to the fact that the init function reset the renderer
+                        const engine = revealMarkdownPlugin.marked;
+                        if (!engine) {
+                            throw new Error(
+                                'talk-control-markdown: the reveal.js markdown plugin exposes no marked engine after init'
+                            );
+                        }
                         const knownStyles = self.options.knowStyles ?? [];
                         knownStyles.push(...stylesCssImg);
-                        revealMarkdownPlugin.marked.use(
-                            markedStyledImage({
+                        engine.use(
+                            markedTcStyledImage({
                                 knownStyles,
                             })
                         );
-                        revealMarkdownPlugin.marked.use(markedTcBg());
-                        revealMarkdownPlugin.marked.use(markedTcCols());
-                        revealMarkdownPlugin.marked.use(
+                        engine.use(markedTcBg());
+                        engine.use(markedTcCols());
+                        engine.use(
                             markedTcAdmonition(self.options.admonitionOptions)
                         );
-                        revealMarkdownPlugin.marked.use(
-                            markedTcQrCode(self.options.qrcode)
-                        );
+                        engine.use(markedTcQrCode(self.options.qrcode));
                         const initFunctionArray: Array<() => void> = [];
                         if (
                             self.options.fontIcons &&
@@ -79,9 +83,7 @@ export class RevealTalkControlMarkdownPlugin {
                         ) {
                             for (const fontIconsToUse of self.options
                                 .fontIcons) {
-                                revealMarkdownPlugin.marked.use(
-                                    markedTcIcons(fontIconsToUse)
-                                );
+                                engine.use(markedTcIcons(fontIconsToUse));
                                 if (fontIconsToUse.initFunction) {
                                     initFunctionArray.push(
                                         fontIconsToUse.initFunction
@@ -103,7 +105,10 @@ export class RevealTalkControlMarkdownPlugin {
                 processSlides: revealMarkdownPlugin.processSlides,
                 convertSlides: revealMarkdownPlugin.convertSlides,
                 slidify: revealMarkdownPlugin.slidify,
-                marked: revealMarkdownPlugin.marked,
+                // Live getter: always the CURRENT engine of the markdown plugin
+                get marked() {
+                    return revealMarkdownPlugin.marked;
+                },
             };
         };
     }
