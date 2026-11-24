@@ -1,6 +1,8 @@
 import { MarkedTcIconsOptions } from '../marked-tc-icons';
 import { RevealTalkControlMarkdownPlugin } from '../tc-marked-plugin';
+import fs from 'node:fs';
 import { normalizeHtml } from '../../../tests/contract/normalize';
+import path from 'node:path';
 import { vi } from 'vitest';
 
 /**
@@ -12,6 +14,39 @@ export const CORPUS_CASES: string[] = Object.keys(
 )
     .map((file) => file.replace(/^\.\/corpus\/(.*)\.md$/, '$1'))
     .sort();
+
+/**
+ * Minimal XMLHttpRequest serving the corpus files from disk. reveal.js loads
+ * `data-markdown` files through XHR; jsdom 30 (as driven by Vitest) cannot run
+ * on a `file:` URL (opaque origin: `localStorage` throws), so the jsdom
+ * document is on `http://localhost/` and this stub answers instead.
+ */
+class CorpusXhr {
+    readyState = 0;
+    status = 0;
+    responseText = '';
+    onreadystatechange: (() => void) | null = null;
+    private file = '';
+
+    overrideMimeType(): void {}
+
+    open(_method: string, url: string): void {
+        this.file = path.join(import.meta.dirname, 'corpus', url);
+    }
+
+    send(): void {
+        queueMicrotask(() => {
+            try {
+                this.responseText = fs.readFileSync(this.file, 'utf8');
+                this.status = 200;
+            } catch {
+                this.status = 404;
+            }
+            this.readyState = 4;
+            this.onreadystatechange?.();
+        });
+    }
+}
 
 export interface MarkedEngineLike {
     parse?: unknown;
@@ -34,8 +69,8 @@ export interface RenderedCorpus {
  * extensions.
  *
  * Like a real deck built by `ThemeInitializer`, each case is an external
- * Markdown file loaded by reveal.js' XHR (`data-markdown="<case>.md"`, the
- * jsdom URL points to the corpus folder, see `vitest.contract.config.ts`),
+ * Markdown file loaded by reveal.js' XHR (`data-markdown="<case>.md"`, served
+ * by the `CorpusXhr` stub below),
  * with the TalkControl separators. All cases are rendered by a single
  * `init`, as in a real page (the marked instance of reveal.js is a module
  * singleton).
@@ -44,6 +79,7 @@ export async function renderCorpus(
     cases: string[],
     fontIcons: MarkedTcIconsOptions[]
 ): Promise<RenderedCorpus> {
+    vi.stubGlobal('XMLHttpRequest', CorpusXhr);
     document.body.innerHTML = '';
     const deck = document.createElement('div');
     deck.className = 'reveal';

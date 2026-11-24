@@ -1,14 +1,4 @@
 import { defineConfig } from 'vitest/config';
-import path from 'node:path';
-import { pathToFileURL } from 'node:url';
-
-const CORPUS_DIR = path.resolve(
-    import.meta.dirname,
-    'src',
-    'marked',
-    '__fixtures__',
-    'corpus'
-);
 
 /**
  * Contract tests: characterization snapshots of the behaviour we ship.
@@ -29,11 +19,11 @@ export default defineConfig({
         hookTimeout: 120_000,
         environmentOptions: {
             jsdom: {
-                // The jsdom document lives next to the corpus, so that
-                // `<section data-markdown="xxx.md">` is loaded through
-                // reveal.js' own XHR, exactly like a real deck
-                // (ThemeInitializer always uses external Markdown files).
-                url: pathToFileURL(CORPUS_DIR + path.sep).href,
+                // Not a `file:` URL: its opaque origin makes `localStorage`
+                // throw, which Vitest's jsdom environment trips over.
+                // Markdown files are served by the corpus XHR stub instead
+                // (see `render-corpus.ts`).
+                url: 'http://localhost/',
             },
         },
     },
