@@ -10,7 +10,7 @@
     //////////////////////////
     --tc-font-size: 1.2em; // Font size used in slides
     // heading
-    --tc-heading-color: #{$mainColor}; // color of titles in slides
+    --tc-heading-color: #{$main-color}; // color of titles in slides
     --tc-heading-title-font-size: 1.8em; // font size for main title of slide
     --tc-heading-sub-title-font-size: 1.3em; // font size for sub title in slides
     --tc-heading-margin-bottom: 130px; // margin bottom bellow title
@@ -18,12 +18,12 @@
     --tc-heading-sub-title-margin-top: -90px; // margin top of subtitle (used to be negative to reduce space between title and subtitle)
     --tc-heading-other-headings-font-size: 1.25em; // font size for h1, h2, h3, h4 used in slide outside of title
     // tables
-    --tc-table-header-bg: #{$mainColor}; // background color of thead if there is a table
+    --tc-table-header-bg: #{$main-color}; // background color of thead if there is a table
     --tc-table-header-color: white; // color of columns in thead if there is a table
     --tc-table-bg: #efefef; // background color of the rest of table
     // credits
     --tc-credits-bg: rgba(239, 239, 239, 0.8);
-    --tc-credits-color: #{$mainColor};
+    --tc-credits-color: #{$main-color};
 
     //////////////////////////
     // Properties for transitions slides
@@ -97,7 +97,7 @@
     //////////////////////////
     // Properties for icons
     //////////////////////////
-    --tc-icon-color: #{$mainColor};
+    --tc-icon-color: #{$main-color};
     --tc-icon-size: 1em;
 
     //////////////////////////

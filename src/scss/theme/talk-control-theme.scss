@@ -2,8 +2,11 @@
  * Talk Control Override theme for reveal.js.
  */
 
-// Default mixins and settings -----------------
-@import '/node_modules/reveal.js/css/theme/template/mixins';
+// TalkControl settings first: reveal.js 6 settings use `!default` and emit
+// `:root { --r-* }` when loaded (see _talk-control-settings.scss)
+@import './talk-control-settings';
+
+// reveal.js default settings -----------------
 @import '/node_modules/reveal.js/css/theme/template/settings';
 // ---------------------------------------------
 
