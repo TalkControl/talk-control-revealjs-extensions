@@ -49,7 +49,7 @@ By default the theme offers you several custom properties to override the main e
 
 ### RevealJS custom properties
 
-If you want to complete your theming, RevealJS allows you also to customize some aspects of Reveal. You can find the list of RevealJS custom properties [here](https://github.com/hakimel/reveal.js/blob/master/css/theme/template/exposer.scss)
+If you want to complete your theming, RevealJS allows you also to customize some aspects of Reveal. You can find the list of RevealJS custom properties [here](https://github.com/hakimel/reveal.js/blob/6.0.2/css/theme/template/settings.scss) (reveal.js 6 exposes every Sass setting of this file as a `--r-*` custom property)
 
 ### SASS Override
 
