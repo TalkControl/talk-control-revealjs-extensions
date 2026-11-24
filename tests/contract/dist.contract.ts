@@ -10,6 +10,7 @@ import {
     extractRootCustomProperties,
     normalizeCss,
     normalizeCssValue,
+    normalizeDts,
 } from './normalize';
 import { THEMES } from '../../scripts/utils/highlight-themes.utils';
 import { execFileSync } from 'node:child_process';
@@ -173,9 +174,9 @@ describe('dist/ contract', () => {
     });
 
     it('matches the public API (.d.ts) snapshot', async () => {
-        const dts = fs
-            .readFileSync(path.join(DIST, DTS_FILE), 'utf8')
-            .replace(/\r\n?/g, '\n');
+        const dts = normalizeDts(
+            fs.readFileSync(path.join(DIST, DTS_FILE), 'utf8')
+        );
         await expect(dts).toMatchFileSnapshot('./__snapshots__/api.d.ts');
     });
 

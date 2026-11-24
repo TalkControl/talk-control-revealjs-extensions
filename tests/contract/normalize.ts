@@ -201,3 +201,22 @@ export function normalizeCssValue(value: string): string {
     }
     return lower;
 }
+
+/**
+ * Normalizes the rolled-up `.d.ts`: line endings, and the `declare global`
+ * blocks, which api-extractor emits in a build-dependent order (they carry no
+ * semantic order), are sorted so the snapshot is deterministic.
+ */
+export function normalizeDts(dts: string): string {
+    const text = dts.replace(/\r\n?/g, '\n');
+    const blocks: string[] = [];
+    const rest = text.replace(
+        /\ndeclare global \{\n[\s\S]*?\n\}\n/g,
+        (block) => {
+            blocks.push(block.trim());
+            return '\n';
+        }
+    );
+    if (blocks.length === 0) return text;
+    return `${rest.trimEnd()}\n\n\n${blocks.sort().join('\n\n\n')}\n`;
+}
