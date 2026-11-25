@@ -61,9 +61,6 @@ export class TcConfiguratorElement extends LitElement {
                         aria-selected="${this.selectedTab === 'talk-control'}"
                         aria-controls="talk-control-panel"
                         id="talk-control-tab"
-                        tabindex="${
-                            this.selectedTab === 'talk-control' ? '0' : '-1'
-                        }"
                         @click="${() => this.selectTab('talk-control')}"
                         @keydown="${this.handleTabKeydown}"
                         class="tab-button ${
@@ -77,9 +74,6 @@ export class TcConfiguratorElement extends LitElement {
                         aria-selected="${this.selectedTab === 'revealjs'}"
                         aria-controls="revealjs-panel"
                         id="revealjs-tab"
-                        tabindex="${
-                            this.selectedTab === 'revealjs' ? '0' : '-1'
-                        }"
                         @click="${() => this.selectTab('revealjs')}"
                         @keydown="${this.handleTabKeydown}"
                         class="tab-button ${
@@ -140,7 +134,6 @@ export class TcConfiguratorElement extends LitElement {
     }
 
     selectTab(tab: 'talk-control' | 'revealjs') {
-        if (this.selectedTab === tab) return;
         this.selectedTab = tab;
 
         this.updateComplete.then(() => {
@@ -153,7 +146,13 @@ export class TcConfiguratorElement extends LitElement {
 
     private handleTabKeydown(event: KeyboardEvent) {
         const tabs = ['talk-control', 'revealjs'] as const;
-        const currentIndex = tabs.indexOf(this.selectedTab);
+        // Both tabs are tab stops: arrow keys move from the focused tab,
+        // which is not necessarily the selected one.
+        const focusedTab = (event.currentTarget as HTMLElement).id.replace(
+            /-tab$/,
+            ''
+        ) as (typeof tabs)[number];
+        const currentIndex = tabs.indexOf(focusedTab);
 
         switch (event.key) {
             case 'ArrowLeft':
@@ -463,16 +462,17 @@ export class TcConfiguratorElement extends LitElement {
             #applyChange {
                 justify-self: center;
                 padding: var(--tc-ui-spacing-md) var(--tc-ui-spacing-lg);
-                background-color: #4285f4;
+                /* #1967d2 on white: 5.4:1 (WCAG AA needs 4.5:1 for this text) */
+                background-color: #1967d2;
                 color: white;
                 font-weight: 600;
-                box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+                box-shadow: 0 2px 8px rgba(25, 103, 210, 0.3);
                 min-width: 180px;
             }
 
             #applyChange:hover:not(:disabled) {
-                background-color: #3367d6;
-                box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
+                background-color: #185abc;
+                box-shadow: 0 4px 12px rgba(25, 103, 210, 0.4);
             }
 
             .instructions {

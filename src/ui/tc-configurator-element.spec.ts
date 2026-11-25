@@ -157,4 +157,41 @@ describe('TcConfiguratorElement (issue #106 - a11y)', () => {
             expect(element.shadowRoot!.activeElement).toBe(talkControlTab);
         });
     });
+
+    describe('tab buttons are reachable with the Tab key', () => {
+        it('keeps both tab buttons in the tab order, whichever is selected', async () => {
+            const tabs = Array.from(
+                element.shadowRoot!.querySelectorAll('[role="tab"]')
+            ) as HTMLButtonElement[];
+
+            expect(tabs).toHaveLength(2);
+            expect(tabs.every((tab) => tab.tabIndex === 0)).toBe(true);
+
+            tabs[1].click();
+            await element.updateComplete;
+
+            expect(tabs.every((tab) => tab.tabIndex === 0)).toBe(true);
+        });
+
+        it('moves with the arrow keys from the focused tab, not from the selected one', async () => {
+            const [talkControlTab, revealjsTab] = Array.from(
+                element.shadowRoot!.querySelectorAll('[role="tab"]')
+            ) as HTMLButtonElement[];
+
+            // "Talk Control" is selected, but the user tabbed onto "RevealJS"
+            // without activating it: ArrowLeft goes to the previous tab.
+            revealjsTab.focus();
+            revealjsTab.dispatchEvent(
+                new KeyboardEvent('keydown', {
+                    key: 'ArrowLeft',
+                    bubbles: true,
+                    composed: true,
+                })
+            );
+            await element.updateComplete;
+
+            expect(talkControlTab.getAttribute('aria-selected')).toBe('true');
+            expect(element.shadowRoot!.activeElement).toBe(talkControlTab);
+        });
+    });
 });
