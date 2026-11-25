@@ -43,9 +43,10 @@ async function release() {
 
         // Step 2: Ask for bump type
         const bumpType = await askQuestion(
-            '2️⃣  Bump type (patch/minor/major)? [patch] '
+            '2️⃣  Bump type (patch/minor/major) or exact version (e.g. 2.0.0-rc.1)? [patch] '
         );
-        const bump = (bumpType || 'patch') as 'patch' | 'minor' | 'major';
+        // Anything `npm version` accepts: a bump keyword or an exact semver.
+        const bump = bumpType || 'patch';
         console.log();
 
         // Step 3: Build (BEFORE version bump)
@@ -88,7 +89,12 @@ async function release() {
 
         // Step 8: Publish
         console.log('8️⃣  Publishing to npm...');
-        execSync('npm publish', { stdio: 'inherit' });
+        // A prerelease must never take the `latest` dist-tag (it is what a
+        // plain `npm install` resolves to): publish it under `next`.
+        const publishCommand = newVersion.includes('-')
+            ? 'npm publish --tag next'
+            : 'npm publish';
+        execSync(publishCommand, { stdio: 'inherit' });
         console.log(`✅ Published v${newVersion}\n`);
 
         console.log('🎉 Release complete!');

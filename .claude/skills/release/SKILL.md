@@ -17,7 +17,7 @@ The release workflow is automated via `npm run release` (calls `scripts/release.
 **Order of operations — build and tests run BEFORE bumping the version:**
 
 1. Check clean working tree
-2. Ask bump type (patch / minor / major)
+2. Ask bump type (patch / minor / major) or an exact version (e.g. `2.0.0-rc.1`)
 3. Build — stops here if it fails (package.json unchanged)
 4. Tests — stops here if they fail (package.json unchanged)
 5. Bump version in package.json
@@ -31,7 +31,7 @@ The release workflow is automated via `npm run release` (calls `scripts/release.
 npm run release
 ```
 
-The script is interactive — it will ask for the bump type and show progress for each step.
+The script is interactive — it will ask for the bump type or an exact version and show progress for each step.
 
 ## Manual Step-by-Step (if the script fails mid-way)
 
@@ -84,8 +84,11 @@ git push --tags
 ### 7. Publish
 
 ```bash
-npm publish
+npm publish            # stable version
+npm publish --tag next # prerelease (version contains `-`): never take `latest`
 ```
+
+`scripts/release.ts` picks the right command from the version.
 
 `publishConfig.access: "public"` is already set in package.json — no `--access public` needed.
 

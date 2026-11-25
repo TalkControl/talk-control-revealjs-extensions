@@ -18,18 +18,18 @@ Live demo: <https://talk-control-revealjs-extensions.netlify.app/>
 
 ## Tech stack & key versions
 
-| Technology | Version           | Role                                                               |
-| ---------- | ----------------- | ------------------------------------------------------------------ |
-| Node.js    | 24 (see `.nvmrc`) | Runtime                                                            |
-| TypeScript | ^5.2              | Language — `ES2020` target, strict mode                            |
-| Vite       | ^5.3              | Library bundler (ESM + UMD + `.d.ts` rollup via `vite-plugin-dts`) |
-| Vitest     | ^1.6              | Unit testing                                                       |
-| reveal.js  | ^5.1              | Presentation engine (peer dep + re-exported)                       |
-| marked     | ^5.0              | Markdown parser (peer dep)                                         |
-| LitHTML    | ^3.1              | Web components for the UI shell                                    |
-| Sass       | ^1.77             | SCSS compilation                                                   |
-| ESLint     | ^9.6              | Linting                                                            |
-| Prettier   | ^3.3              | Formatting                                                         |
+| Technology | Version            | Role                                                               |
+| ---------- | ------------------ | ------------------------------------------------------------------ |
+| Node.js    | 24 (see `.nvmrc`)  | Runtime                                                            |
+| TypeScript | ~6.0               | Language — `ES2020` target, strict mode                            |
+| Vite       | ^8.3               | Library bundler (ESM + UMD + `.d.ts` rollup via `vite-plugin-dts`) |
+| Vitest     | ^5.1               | Unit testing                                                       |
+| reveal.js  | 6.0.2 (pinned)     | Presentation engine (embedded, exact version, re-exported)         |
+| marked     | 17 (via reveal.js) | Markdown parser, the engine shipped by reveal.js's markdown plugin |
+| LitHTML    | ^3.1               | Web components for the UI shell                                    |
+| Sass       | 1.108.2 (pinned)   | SCSS compilation                                                   |
+| ESLint     | ^10.15             | Linting                                                            |
+| Prettier   | ^3.3               | Formatting                                                         |
 
 Output format: dual ESM (`dist/talk-control-revealjs-extensions.js`) + UMD (`.umd.cjs`) + type declarations (`.d.ts`).
 
