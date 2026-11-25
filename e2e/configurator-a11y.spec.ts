@@ -26,6 +26,10 @@ import { waitForDeckReady } from './helpers';
  * dialog wraps focus itself instead of depending on it.
  */
 
+// Runs in the browser: whether the element is its shadow root's active element.
+const isFocused = (el: Element) =>
+    (el.getRootNode() as ShadowRoot).activeElement === el;
+
 const TRIGGER_SELECTOR = '#tc-configurator-trigger';
 const DIALOG_SELECTOR = 'tc-configurator-element [role="dialog"]';
 const CLOSE_BUTTON_SELECTOR =
@@ -221,5 +225,30 @@ test.describe('Configurator dialog accessibility (issue #106)', () => {
                 (window as unknown as { __tcCloseCount: number }).__tcCloseCount
         );
         expect(closeCount).toBe(1);
+    });
+
+    test('Tab reaches the "RevealJS" tab and Enter activates it', async ({
+        page,
+    }) => {
+        const dialog = page.locator(DIALOG_SELECTOR);
+        const revealjsTab = page.locator(
+            'tc-configurator-element #revealjs-tab'
+        );
+
+        await page.keyboard.press('c');
+        await expect(dialog).toBeVisible();
+
+        // Close button -> "Talk Control" tab -> "RevealJS" tab.
+        for (
+            let i = 0;
+            i < 3 && !(await revealjsTab.evaluate(isFocused));
+            i++
+        ) {
+            await page.keyboard.press('Tab');
+        }
+        await expect(revealjsTab).toBeFocused();
+
+        await page.keyboard.press('Enter');
+        await expect(revealjsTab).toHaveAttribute('aria-selected', 'true');
     });
 });

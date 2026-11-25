@@ -61,9 +61,6 @@ export class TcConfiguratorElement extends LitElement {
                         aria-selected="${this.selectedTab === 'talk-control'}"
                         aria-controls="talk-control-panel"
                         id="talk-control-tab"
-                        tabindex="${
-                            this.selectedTab === 'talk-control' ? '0' : '-1'
-                        }"
                         @click="${() => this.selectTab('talk-control')}"
                         @keydown="${this.handleTabKeydown}"
                         class="tab-button ${
@@ -77,9 +74,6 @@ export class TcConfiguratorElement extends LitElement {
                         aria-selected="${this.selectedTab === 'revealjs'}"
                         aria-controls="revealjs-panel"
                         id="revealjs-tab"
-                        tabindex="${
-                            this.selectedTab === 'revealjs' ? '0' : '-1'
-                        }"
                         @click="${() => this.selectTab('revealjs')}"
                         @keydown="${this.handleTabKeydown}"
                         class="tab-button ${
@@ -140,7 +134,6 @@ export class TcConfiguratorElement extends LitElement {
     }
 
     selectTab(tab: 'talk-control' | 'revealjs') {
-        if (this.selectedTab === tab) return;
         this.selectedTab = tab;
 
         this.updateComplete.then(() => {
@@ -153,7 +146,13 @@ export class TcConfiguratorElement extends LitElement {
 
     private handleTabKeydown(event: KeyboardEvent) {
         const tabs = ['talk-control', 'revealjs'] as const;
-        const currentIndex = tabs.indexOf(this.selectedTab);
+        // Both tabs are tab stops: arrow keys move from the focused tab,
+        // which is not necessarily the selected one.
+        const focusedTab = (event.currentTarget as HTMLElement).id.replace(
+            /-tab$/,
+            ''
+        ) as (typeof tabs)[number];
+        const currentIndex = tabs.indexOf(focusedTab);
 
         switch (event.key) {
             case 'ArrowLeft':
