@@ -22,7 +22,7 @@ interface TcMermaidToken extends marked.Tokens.Generic {
     type: 'mermaidTc';
     raw: string;
     source: string;
-    options: string[];
+    info: string;
 }
 
 function isTcMermaidToken(
@@ -38,6 +38,48 @@ function escapeHtml(text: string): string {
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
+}
+
+// Authoring options: `name="value"`, `name='value'` or a bare word.
+const OPTION_REGEX = /([^\s="']+)=(?:"([^"]*)"|'([^']*)')|(\S+)/g;
+const ATTRIBUTE_NAME_REGEX = /^[a-z_:][-a-z0-9_:.]*$/i;
+// Event handlers never come from an authoring option, and the attributes the
+// addon relies on stay under its control.
+const FORBIDDEN_ATTRIBUTE_REGEX = /^(?:on|data-tc-mermaid)/i;
+
+interface ParsedOptions {
+    classes: string[];
+    attributes: Map<string, string>;
+}
+
+/**
+ * Splits the info string into classes (bare words and `class="…"`) and
+ * attributes (`name="value"`). The first occurrence of an attribute wins.
+ */
+function parseOptions(info: string): ParsedOptions {
+    const classes: string[] = [];
+    const attributes = new Map<string, string>();
+    for (const match of info.matchAll(OPTION_REGEX)) {
+        const [, name, doubleQuoted, singleQuoted, word] = match;
+        if (word !== undefined) {
+            classes.push(word);
+            continue;
+        }
+        const value = doubleQuoted ?? singleQuoted ?? '';
+        if (name.toLowerCase() === 'class') {
+            classes.push(...value.split(/\s+/));
+        } else if (
+            ATTRIBUTE_NAME_REGEX.test(name) &&
+            !FORBIDDEN_ATTRIBUTE_REGEX.test(name) &&
+            !attributes.has(name)
+        ) {
+            attributes.set(name, value);
+        }
+    }
+    return {
+        classes: classes.filter((word) => CLASS_WORD_REGEX.test(word)),
+        attributes,
+    };
 }
 
 /** Removes up to `indent` leading spaces, as CommonMark does for fenced code. */
@@ -64,6 +106,11 @@ function stripIndent(line: string, indent: number): string {
  * plugin of reveal.js owns the `code` renderer (line numbers), and its
  * signature differs between marked versions. A tokenizer runs before the
  * native `fences` one, on any engine.
+ *
+ * The info string carries the authoring options: bare words and `class="…"`
+ * are classes, `name="value"` are attributes, all on the diagram `div` except
+ * the fragment words, which go on the `<figure>`. Use reveal's
+ * `<!-- .element: … -->` after the block to customize the `<figure>` itself.
  *
  * The utility classes sit on a `div` alone in its parent: `.h-400 + *` rules
  * of the theme would otherwise also size the next sibling.
@@ -118,15 +165,15 @@ export function markedTcMermaid(): marked.MarkedExtension {
                         type: TYPE_MERMAID_TC,
                         raw: src.slice(0, position),
                         source: lines.join('\n'),
-                        options: info.split(/\s+/).filter(Boolean),
+                        info,
                     };
                 },
                 renderer(token): string | false {
                     if (!isTcMermaidToken(token)) {
                         return false;
                     }
-                    const words = token.options.filter((word) =>
-                        CLASS_WORD_REGEX.test(word)
+                    const { classes: words, attributes } = parseOptions(
+                        token.info
                     );
                     const figureClasses = [
                         'tc-mermaid',
@@ -140,13 +187,18 @@ export function markedTcMermaid(): marked.MarkedExtension {
                             (word) => !FRAGMENT_WORD_REGEX.test(word)
                         ),
                     ];
+                    const diagramAttributes = [...attributes]
+                        .map(
+                            ([name, value]) => ` ${name}="${escapeHtml(value)}"`
+                        )
+                        .join('');
                     const id = counter++;
                     // The first newline after <pre> is dropped by the HTML
                     // parser: it keeps a source starting with a blank line
                     // intact.
                     return (
                         `<figure class="${figureClasses.join(' ')}" data-tc-mermaid="${id}">` +
-                        `<div class="${diagramClasses.join(' ')}"></div>` +
+                        `<div class="${diagramClasses.join(' ')}"${diagramAttributes}></div>` +
                         `<pre class="tc-mermaid-source">\n${escapeHtml(token.source)}</pre>` +
                         `</figure>\n`
                     );
