@@ -28,6 +28,14 @@ const SLIDES: SlideTreeEntry[] = [
     },
 ];
 
+// Direct-child lookup without `:scope`, which jsdom 30 fails to resolve from
+// an element living inside a shadow root.
+function directCheckbox(parent: Element): HTMLInputElement {
+    return Array.from(parent.children).find((child) =>
+        child.matches('input[type="checkbox"]')
+    ) as HTMLInputElement;
+}
+
 async function renderTree(
     slides: SlideTreeEntry[]
 ): Promise<TcTreeSlidesElement> {
@@ -105,9 +113,7 @@ describe('tc-tree-slides-element', () => {
         const chapter1List = Array.from(nestedLists).find((ul) =>
             ul.getAttribute('aria-label')?.includes('chapter-1')
         )!;
-        const prefixCheckbox = chapter1List.parentElement!.querySelector(
-            ':scope > input[type="checkbox"]'
-        ) as HTMLInputElement;
+        const prefixCheckbox = directCheckbox(chapter1List.parentElement!);
 
         expect(prefixCheckbox.indeterminate).toBe(true);
         expect(prefixCheckbox.checked).toBe(false);
@@ -118,9 +124,7 @@ describe('tc-tree-slides-element', () => {
         const chapter2List = Array.from(nestedLists).find((ul) =>
             ul.getAttribute('aria-label')?.includes('chapter-2')
         )!;
-        const prefixCheckbox = chapter2List.parentElement!.querySelector(
-            ':scope > input[type="checkbox"]'
-        ) as HTMLInputElement;
+        const prefixCheckbox = directCheckbox(chapter2List.parentElement!);
 
         expect(prefixCheckbox.indeterminate).toBe(false);
         expect(prefixCheckbox.checked).toBe(false);
@@ -138,9 +142,7 @@ describe('tc-tree-slides-element', () => {
         const chapter1List = Array.from(nestedLists).find((ul) =>
             ul.getAttribute('aria-label')?.includes('chapter-1')
         )!;
-        const prefixCheckbox = chapter1List.parentElement!.querySelector(
-            ':scope > input[type="checkbox"]'
-        ) as HTMLInputElement;
+        const prefixCheckbox = directCheckbox(chapter1List.parentElement!);
 
         expect(prefixCheckbox.indeterminate).toBe(false);
         expect(prefixCheckbox.checked).toBe(true);

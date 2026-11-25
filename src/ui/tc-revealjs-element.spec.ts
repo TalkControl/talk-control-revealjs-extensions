@@ -26,7 +26,10 @@ describe('tc-revealjs-element', () => {
         ) as HTMLElement;
         expect(table).toBeTruthy();
 
-        const rowgroups = table.querySelectorAll(':scope > [role="rowgroup"]');
+        // No `:scope`: jsdom 30 fails to resolve it inside a shadow root.
+        const rowgroups = Array.from(table.children).filter(
+            (child) => child.getAttribute('role') === 'rowgroup'
+        );
         expect(rowgroups.length).toBeGreaterThanOrEqual(2); // header + body
 
         const headerRow = table.querySelector(

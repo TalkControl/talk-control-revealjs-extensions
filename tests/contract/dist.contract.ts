@@ -78,7 +78,8 @@ function run(command: string, args: string[], cwd = ROOT): string {
             stderr?: string;
         };
         throw new Error(
-            `\`${path.basename(command)} ${args.join(' ')}\` failed:\n${stdout ?? ''}\n${stderr ?? ''}`
+            `\`${path.basename(command)} ${args.join(' ')}\` failed:\n${stdout ?? ''}\n${stderr ?? ''}`,
+            { cause: error }
         );
     }
 }

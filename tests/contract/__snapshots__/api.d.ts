@@ -216,7 +216,7 @@ export declare class TcConfiguratorElement extends LitElement {
     static shadowRootOptions: {
         delegatesFocus: boolean;
         clonable?: boolean;
-        customElementRegistry?: CustomElementRegistry;
+        customElementRegistry?: CustomElementRegistry | null;
         mode: ShadowRootMode;
         serializable?: boolean;
         slotAssignment?: SlotAssignmentMode;
@@ -299,7 +299,7 @@ export declare class TcTalkControlElement extends LitElement {
     static shadowRootOptions: {
         delegatesFocus: boolean;
         clonable?: boolean;
-        customElementRegistry?: CustomElementRegistry;
+        customElementRegistry?: CustomElementRegistry | null;
         mode: ShadowRootMode;
         serializable?: boolean;
         slotAssignment?: SlotAssignmentMode;
