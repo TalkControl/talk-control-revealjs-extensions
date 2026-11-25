@@ -1,6 +1,7 @@
 import * as path from 'node:path';
 import * as sass from 'sass';
 import { describe, expect, it } from 'vitest';
+import { SILENCED_SASS_DEPRECATIONS } from '../../../../scripts/utils/sass.utils';
 import { contrastRatio } from '../../../../scripts/utils/contrast.utils';
 
 const ADMONITION_TYPES = [
@@ -28,7 +29,9 @@ const MINIMUM_BORDER_CONTRAST = 3; // WCAG 1.4.11 (non-text contrast)
 
 function compileAdmonitionCss(): string {
     const scssPath = path.resolve(__dirname, 'admonition.scss');
-    return sass.compile(scssPath).css;
+    return sass.compile(scssPath, {
+        silenceDeprecations: SILENCED_SASS_DEPRECATIONS,
+    }).css;
 }
 
 function extractColor(css: string, selector: string, property: string): string {

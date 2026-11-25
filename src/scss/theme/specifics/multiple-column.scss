@@ -6,6 +6,11 @@
 
     div.tc-column {
         color: var(--tc-multiple-col-color);
+        flex: 1;
+        height: 100%;
+        position: relative;
+        opacity: 1;
+        pointer-events: auto;
 
         h1,
         h2,
@@ -18,12 +23,6 @@
         a {
             color: var(--tc-multiple-col-link-color);
         }
-
-        flex: 1;
-        height: 100%;
-        position: relative;
-        opacity: 1;
-        pointer-events: auto;
 
         &.contrast-opposite {
             --tc-multiple-col-color: white;
