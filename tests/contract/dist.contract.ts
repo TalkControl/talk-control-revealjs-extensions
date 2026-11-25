@@ -129,6 +129,7 @@ describe('dist/ contract', () => {
                 'vendor/icons/font-awesome/webfonts/fa-solid-900.woff2',
                 'vendor/icons/feather/LICENSE',
                 'vendor/icons/feather/dist/feather.min.js',
+                'vendor/icons/feather/dist/feather.min.js.map',
                 'vendor/icons/material-symbols/LICENSE',
                 'vendor/icons/material-symbols/material-symbols-outlined.woff2',
                 'vendor/icons/material-symbols/material-symbols-rounded.woff2',
@@ -138,6 +139,27 @@ describe('dist/ contract', () => {
                 'vendor/icons/material-symbols/sharp.css',
             ].sort()
         );
+    });
+
+    it('ships every source map its vendored files point to', () => {
+        // A `//# sourceMappingURL=` comment to a file we do not ship makes
+        // Vite (dev server) and any source-map-loader of a consumer fail with
+        // ENOENT on every load.
+        const missing: string[] = [];
+        for (const file of listFiles(path.join(DIST, 'vendor'))) {
+            if (!/\.(js|css)$/.test(file)) continue;
+            const absolute = path.join(DIST, 'vendor', file);
+            const match = fs
+                .readFileSync(absolute, 'utf8')
+                .match(/[#@] sourceMappingURL=(\S+)\s*(?:\*\/)?\s*$/);
+            if (!match || match[1].startsWith('data:')) continue;
+            if (
+                !fs.existsSync(path.resolve(path.dirname(absolute), match[1]))
+            ) {
+                missing.push(`${file} -> ${match[1]}`);
+            }
+        }
+        expect(missing).toEqual([]);
     });
 
     it('declares its UTF-8 charset (non-ASCII glyphs in content:)', () => {
