@@ -131,10 +131,13 @@ describe('dist/highlight contract', () => {
         // target the font-mode `<i>` instead of `svg.svg-inline--fa`). Refreshed again
         // for the reveal.js 6.0.2 upgrade (#91): reveal.css and the theme
         // template changed upstream, TalkControl variables are now kebab-case.
+        // Refreshed for Vite 8 (#91): Lightning CSS replaces esbuild as the CSS
+        // minifier and the build target rises to Chrome 111 / Firefox 114 /
+        // Safari 16.4 (range media queries, `inset`, dropped prefixes).
         const css = fs.readFileSync(MAIN_CSS);
         const hash = createHash('sha256').update(css).digest('hex');
         expect(hash).toBe(
-            'b10cba0690b5b29f01a25c779c1b0df044b8ed1e7c23bb99dab561241d7d39e1'
+            '45ed22f3aea2f2c52d1b1918be92a6874ec45ee3999d78d12f50204c2a3684d9'
         );
     });
 });

@@ -30,7 +30,7 @@ export default defineConfig({
             fileName: () => 'talk-control-a11y.js',
         },
         outDir: path.resolve(PROJECT_ROOT, 'dist', 'cli'),
-        rollupOptions: {
+        rolldownOptions: {
             // prettier is externalized too (not just playwright/@axe-core):
             // bundling it breaks its dynamic parser loading at runtime.
             external: [

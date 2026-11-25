@@ -5,6 +5,18 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import path from 'node:path';
 
+// Rolldown no longer polyfills `import.meta.url` in UMD output (it becomes
+// `undefined`). `tc-vendor-loader` resolves `dist/vendor/` from it, so a
+// build-only `define` routes it through a variable declared per format by
+// these `intro`s.
+const IMPORT_META_URL_VAR = '__tc_import_meta_url__';
+const ES_INTRO = `var ${IMPORT_META_URL_VAR} = import.meta.url;`;
+// Same polyfill Rollup used to emit for UMD (script src, then document base,
+// then Node's `__filename`).
+const UMD_INTRO =
+    "var _tcCurrentScript = typeof document !== 'undefined' ? document.currentScript : null;" +
+    `var ${IMPORT_META_URL_VAR} = (typeof document === 'undefined' && typeof location === 'undefined' ? require('u' + 'rl').pathToFileURL(__filename).href : typeof document === 'undefined' ? location.href : (_tcCurrentScript && _tcCurrentScript.tagName.toUpperCase() === 'SCRIPT' && _tcCurrentScript.src || new URL('talk-control-revealjs-extensions.umd.cjs', document.baseURI).href));`;
+
 export default defineConfig({
     test: {
         // Playwright e2e specs live in e2e/ and are run via `npm run e2e`,
@@ -26,17 +38,53 @@ export default defineConfig({
             entry: path.resolve(PROJECT_ROOT, 'src', 'index.ts'),
             name: 'talk-control-revealjs-extensions',
             fileName: 'talk-control-revealjs-extensions',
+            // CSS file name is a contract with downstream themes
+            // (sfeir-school-theme): do not change.
+            cssFileName: 'talk-control-revealjs-theme',
         },
         outDir: path.resolve(PROJECT_ROOT, 'dist'),
-        rollupOptions: {
-            output: {
-                assetFileNames: (assetInfo) => {
-                    if (assetInfo.name?.endsWith('.css'))
-                        return 'talk-control-revealjs-theme.css';
-                    return assetInfo.name ?? 'vendor.css';
+        rolldownOptions: {
+            output: [
+                { format: 'es', intro: ES_INTRO },
+                {
+                    format: 'umd',
+                    name: 'talk-control-revealjs-extensions',
+                    intro: UMD_INTRO,
                 },
-            },
+            ],
         },
     },
-    plugins: [dts({ bundleTypes: true })],
+    plugins: [
+        dts({ bundleTypes: true }),
+        {
+            // The theme carries non-ASCII `content:` glyphs (©, quotes,
+            // admonition emojis). Lightning CSS (Vite 8's default minifier)
+            // drops the `@charset` rule, so a consumer serving the file
+            // without a charset on a non-UTF-8 page would get mojibake.
+            name: 'tc-css-charset',
+            enforce: 'post',
+            apply: 'build',
+            generateBundle(_options, bundle) {
+                for (const asset of Object.values(bundle)) {
+                    if (
+                        asset.type === 'asset' &&
+                        asset.fileName.endsWith('.css') &&
+                        typeof asset.source === 'string' &&
+                        !asset.source.startsWith('@charset')
+                    ) {
+                        asset.source = `@charset "UTF-8";${asset.source}`;
+                    }
+                }
+            },
+        },
+        {
+            // Build-only: under Vitest `__tc_import_meta_url__` has no
+            // declaration, `import.meta.url` must stay native.
+            name: 'tc-import-meta-url',
+            apply: 'build',
+            config: () => ({
+                define: { 'import.meta.url': IMPORT_META_URL_VAR },
+            }),
+        },
+    ],
 });
