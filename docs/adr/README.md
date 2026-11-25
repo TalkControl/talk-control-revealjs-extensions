@@ -11,10 +11,11 @@ does, not only _what_ it does.
 
 ## Index
 
-| ADR                                             | Title                                          | Status   |
-| ----------------------------------------------- | ---------------------------------------------- | -------- |
-| [0001](./0001-record-architecture-decisions.md) | Record architecture decisions                  | accepted |
-| [0002](./0002-zoom-and-reflow-limitation.md)    | Zoom and reflow limitation (WCAG 1.4.4/1.4.10) | proposed |
+| ADR                                                        | Title                                                            | Status   |
+| ---------------------------------------------------------- | ---------------------------------------------------------------- | -------- |
+| [0001](./0001-record-architecture-decisions.md)            | Record architecture decisions                                    | accepted |
+| [0002](./0002-zoom-and-reflow-limitation.md)               | Zoom and reflow limitation (WCAG 1.4.4/1.4.10)                   | proposed |
+| [0003](./0003-major-version-follows-embedded-reveal-js.md) | A major of the embedded reveal.js implies a major of TalkControl | accepted |
 
 ## When to write an ADR
 
