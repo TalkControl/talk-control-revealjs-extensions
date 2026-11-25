@@ -1,0 +1,12 @@
+# Version updates for Mermaid only (#92): it is pinned to an exact version and
+# vendored into dist/vendor/, so a new release has to be reviewed on purpose.
+# Every other dependency is upgraded by hand, as before.
+version: 2
+updates:
+    - package-ecosystem: npm
+      directory: /
+      schedule:
+          interval: weekly
+      allow:
+          - dependency-name: mermaid
+      open-pull-requests-limit: 1

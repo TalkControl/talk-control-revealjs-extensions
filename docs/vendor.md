@@ -21,6 +21,22 @@ vendored in font mode only: `css/all.min.css` and the three woff2 fonts
 `../webfonts/*.woff2`), and loaded when `fontAwesomeIconPack()` is configured.
 Its `all.js` (SVG replacement) is no longer used or shipped.
 
+Mermaid (#92) is vendored too, as its own ESM build: the entry
+`dist/vendor/mermaid/dist/mermaid.esm.min.mjs` imports about a hundred chunks
+by relative URL from `dist/vendor/mermaid/dist/chunks/mermaid.esm.min/`, so the
+layout of the package is kept. It is **not** inlined in the ESM or UMD bundles
+and is only fetched when a deck actually contains a diagram. Source maps and
+`.d.ts` are not shipped. Three libraries it bundles (elkjs, EPL-2.0 OR GPL-3.0-or-later; DOMPurify,
+MPL-2.0 OR Apache-2.0; KaTeX, MIT) have their
+license copied under `dist/vendor/mermaid/licenses/` and listed in
+`THIRD-PARTY-LICENSES.txt`.
+
+Mermaid is pinned to an exact version (`devDependencies`), checked against
+`node_modules` by `tests/contract/mermaid-vendor.contract.ts`, which also
+guards the size (about 5.4 MB), the import closure and the published package.
+Dependabot proposes new Mermaid versions weekly (`.github/dependabot.yml`),
+for Mermaid only.
+
 ## The `dist/vendor/` folder
 
 `dist/vendor/` is populated at build time by `scripts/copy-vendor.ts`, from
