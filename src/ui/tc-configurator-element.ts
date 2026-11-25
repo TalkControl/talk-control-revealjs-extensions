@@ -463,16 +463,17 @@ export class TcConfiguratorElement extends LitElement {
             #applyChange {
                 justify-self: center;
                 padding: var(--tc-ui-spacing-md) var(--tc-ui-spacing-lg);
-                background-color: #4285f4;
+                /* #1967d2 on white: 5.4:1 (WCAG AA needs 4.5:1 for this text) */
+                background-color: #1967d2;
                 color: white;
                 font-weight: 600;
-                box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+                box-shadow: 0 2px 8px rgba(25, 103, 210, 0.3);
                 min-width: 180px;
             }
 
             #applyChange:hover:not(:disabled) {
-                background-color: #3367d6;
-                box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
+                background-color: #185abc;
+                box-shadow: 0 4px 12px rgba(25, 103, 210, 0.4);
             }
 
             .instructions {
