@@ -35,6 +35,7 @@ Talk Control adds numerous out-of-the-box features:
 - **Admonitions**: Stylized information blocks (note, warning, etc.).
 - **Icons**: Easily integrate icons (Feather Icons, Font Awesome, etc.).
 - **QR Codes**: Generate QR Codes directly in your slides.
+- **Mermaid diagrams**: Write a ` ```mermaid ` block, get a diagram (see [docs/mermaid.md](docs/mermaid.md)).
 - **Backgrounds via Markdown**: Change a slide's background directly from your Markdown file.
 - **Columns via Markdown**: Define column layouts with a simple syntax.
 

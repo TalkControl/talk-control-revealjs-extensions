@@ -128,6 +128,10 @@ convention, priority order, and browser support.
 
 See [QRCodes](./qrcode.md)
 
+# Mermaid diagrams
+
+See [Mermaid diagrams](./mermaid.md)
+
 # Helpers
 
 See [Helpers](./helpers.md)

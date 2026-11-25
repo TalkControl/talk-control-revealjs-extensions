@@ -6,6 +6,7 @@ import { type RevealPluginFactory } from 'reveal.js';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
 import { markedTcCols } from './marked-tc-cols';
+import { markedTcMermaid } from './marked-tc-mermaid';
 import { markedTcStyledImage } from './marked-tc-styled-image';
 
 const stylesCssImg = [
@@ -70,6 +71,9 @@ export class RevealTalkControlMarkdownPlugin {
                                 knownStyles,
                             })
                         );
+                        // Before the other block extensions: a ```mermaid fence
+                        // must never be taken for plain code.
+                        engine.use(markedTcMermaid());
                         engine.use(markedTcBg());
                         engine.use(markedTcCols());
                         engine.use(

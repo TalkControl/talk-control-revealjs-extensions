@@ -35,6 +35,7 @@ import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
 import { markedTcCols } from './marked-tc-cols';
 import { markedTcIcons } from './marked-tc-icons';
+import { markedTcMermaid } from './marked-tc-mermaid';
 import { markedTcQrCode } from './marked-tc-qrcode';
 import { markedTcStyledImage } from './marked-tc-styled-image';
 import { materialSymbolsIconPack } from '../icons-config/material-symbols-pack';
@@ -48,6 +49,7 @@ const EXTENSION_CORPUS: Record<string, string[]> = {
     cols: ['columns'],
     admonition: ['admonitions'],
     qrcode: ['qrcode'],
+    mermaid: ['mermaid'],
     icons: ['icons', 'icons-font-awesome'],
     'styled-image': ['styled-images'],
 };
@@ -113,6 +115,7 @@ describe('TalkControl marked extensions on both engines', () => {
                 ],
             })
         );
+        engine.use(markedTcMermaid());
         engine.use(markedTcBg());
         engine.use(markedTcCols());
         engine.use(markedTcAdmonition());

@@ -125,6 +125,7 @@ Custom `marked` extensions that parse non-standard Markdown into reveal-compatib
 | `marked-tc-cols`       | Column layout syntax                           |
 | `marked-tc-icons`      | Icon shorthand (e.g. `::icon-name::`)          |
 | `marked-tc-qrcode`     | QR code generation                             |
+| `marked-tc-mermaid`    | ` ```mermaid ` fence → diagram placeholder     |
 
 ### UI components (`src/ui/`)
 
