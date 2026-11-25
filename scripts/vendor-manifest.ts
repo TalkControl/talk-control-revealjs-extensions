@@ -13,7 +13,10 @@ export const VENDOR_MANIFEST: VendorEntry[] = [
         name: 'feather-icons',
         from: 'node_modules/feather-icons',
         to: 'icons/feather',
-        include: ['dist/feather.min.js'],
+        // The `.map` is copied too: `feather.min.js` ends with a
+        // `sourceMappingURL` comment, and a missing map makes the Vite dev
+        // server (and consumers' source-map-loaders) fail on every load.
+        include: ['dist/feather.min.js', 'dist/feather.min.js.map'],
         licenses: ['LICENSE'],
     },
     {
