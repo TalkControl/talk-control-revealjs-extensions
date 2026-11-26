@@ -105,7 +105,12 @@ describe('dist/ contract', () => {
             `highlight/${theme}.dark.css`,
             `highlight/${theme}.light.css`,
         ]).sort();
-        expect(listFiles(DIST)).toEqual(
+        // dist/vendor/mermaid/dist/chunks/ (~100 hashed chunk names) is the
+        // dedicated contract in tests/contract/mermaid-vendor.contract.ts.
+        const listed = listFiles(DIST).filter(
+            (file) => !file.startsWith('vendor/mermaid/dist/chunks/')
+        );
+        expect(listed).toEqual(
             [
                 'cli/talk-control-a11y.js',
                 'cli/talk-control-a11y.js.map',
@@ -120,7 +125,7 @@ describe('dist/ contract', () => {
                 CSS_FILE,
                 'talk-control.png',
                 // dist/vendor/ (#95): vendored third-party assets, one entry
-                // per scripts/vendor-manifest.ts (Feather, Material Symbols, Font Awesome).
+                // per scripts/vendor-manifest.ts (Feather, Material Symbols, Font Awesome, Mermaid).
                 'vendor/THIRD-PARTY-LICENSES.txt',
                 'vendor/icons/font-awesome/LICENSE.txt',
                 'vendor/icons/font-awesome/css/all.min.css',
@@ -137,6 +142,8 @@ describe('dist/ contract', () => {
                 'vendor/icons/material-symbols/outlined.css',
                 'vendor/icons/material-symbols/rounded.css',
                 'vendor/icons/material-symbols/sharp.css',
+                'vendor/mermaid/LICENSE',
+                'vendor/mermaid/dist/mermaid.esm.min.mjs',
             ].sort()
         );
     });

@@ -5,8 +5,7 @@ import { VendorEntry } from './copy-vendor';
  * `dist/vendor/` (see `scripts/copy-vendor.ts` and `docs/vendor.md`).
  *
  * Icon packs migrate pack by pack (#95): Feather (PR 2), Material Symbols
- * (PR 3), then Font Awesome (PR 4). #92 (Mermaid) adds its
- * own entry when it lands.
+ * (PR 3), then Font Awesome (PR 4). Mermaid (#92) follows.
  */
 export const VENDOR_MANIFEST: VendorEntry[] = [
     {
@@ -44,5 +43,23 @@ export const VENDOR_MANIFEST: VendorEntry[] = [
             'webfonts/fa-brands-400.woff2',
         ],
         licenses: ['LICENSE.txt'],
+    },
+    {
+        // Mermaid's own ESM build (#92): the entry file imports ~100 chunks by
+        // relative URL (`./chunks/mermaid.esm.min/*.mjs`), so the layout of
+        // the package's `dist/` is kept. The `.map` files and `.d.ts` are not
+        // shipped (the minified build does not reference its maps, and the
+        // types are not part of our public API).
+        name: 'mermaid',
+        from: 'node_modules/mermaid',
+        to: 'mermaid',
+        include: [
+            'dist/mermaid.esm.min.mjs',
+            'dist/chunks/mermaid.esm.min/*.mjs',
+        ],
+        licenses: ['LICENSE'],
+        // Its build inlines its dependencies (d3, cytoscape, elkjs, DOMPurify,
+        // KaTeX…) into the chunks: their licenses are listed too.
+        dependencyLicenses: true,
     },
 ];

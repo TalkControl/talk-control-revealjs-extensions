@@ -18,6 +18,14 @@ export interface VendorEntry {
     include: string[];
     /** License file(s), relative to `from`, copied next to the assets and concatenated into `THIRD-PARTY-LICENSES.txt`. */
     licenses: string[];
+    /**
+     * Also list, in `THIRD-PARTY-LICENSES.txt`, the license texts of every
+     * production dependency of the package (direct and transitive, minus
+     * `@types/*`). For a package whose build inlines its dependencies, like
+     * Mermaid: their code is redistributed with it. Fails if a dependency
+     * cannot be found or ships no license text.
+     */
+    dependencyLicenses?: boolean;
 }
 
 export interface CopyVendorOptions {
@@ -71,6 +79,11 @@ export function copyVendor(
         }
 
         noticeBlocks.push(buildNoticeBlock(entry, fromDir));
+        if (entry.dependencyLicenses) {
+            for (const dependencyDir of collectDependencyDirs(fromDir)) {
+                noticeBlocks.push(buildDependencyNoticeBlock(dependencyDir));
+            }
+        }
     }
 
     if (noticeBlocks.length > 0) {
@@ -83,11 +96,86 @@ export function copyVendor(
 
 function buildNoticeBlock(entry: VendorEntry, fromDir: string): string {
     const { name, version, license } = readPackageMetadata(fromDir, entry.name);
-    const header = `## ${name}${version ? `@${version}` : ''}${license ? ` (${license})` : ''}`;
+    const header = noticeHeader(name, version, license);
     const licenseTexts = entry.licenses.map((licenseFile) =>
         fs.readFileSync(path.join(fromDir, licenseFile), 'utf-8')
     );
     return [header, ...licenseTexts].join('\n\n');
+}
+
+const LICENSE_FILE_REGEX = /^(?:licen[cs]e|copying|notice)(?:\.|$)/i;
+
+function noticeHeader(
+    name: string,
+    version?: string,
+    license?: string
+): string {
+    return `## ${name}${version ? `@${version}` : ''}${license ? ` (${license})` : ''}`;
+}
+
+function buildDependencyNoticeBlock(dir: string): string {
+    const { name, version, license } = readPackageMetadata(dir, dir);
+    const files = fs
+        .readdirSync(dir, { withFileTypes: true })
+        .filter((file) => file.isFile() && LICENSE_FILE_REGEX.test(file.name))
+        .map((file) => file.name)
+        .sort();
+    if (files.length === 0) {
+        throw new Error(
+            `copy-vendor: the dependency ${name}@${version} ("${dir}") ships no license text. Add it by hand to the manifest, or drop the dependency.`
+        );
+    }
+    return [
+        noticeHeader(name, version, license),
+        ...files.map((file) => fs.readFileSync(path.join(dir, file), 'utf-8')),
+    ].join('\n\n');
+}
+
+/** Resolves a package the way Node does: the closest `node_modules` upwards. */
+function findPackageDir(name: string, fromDir: string): string | undefined {
+    for (let dir = fromDir; ; dir = path.dirname(dir)) {
+        const candidate = path.join(dir, 'node_modules', name);
+        if (fs.existsSync(path.join(candidate, 'package.json'))) {
+            return candidate;
+        }
+        if (path.dirname(dir) === dir) {
+            return undefined;
+        }
+    }
+}
+
+/**
+ * Directories of the production dependency closure of the package in
+ * `rootDir`, root excluded, each package once, in a stable order.
+ */
+function collectDependencyDirs(packageDir: string): string[] {
+    const rootDir = fs.realpathSync(packageDir);
+    const visited = new Set<string>([rootDir]);
+    const queue = [rootDir];
+    while (queue.length > 0) {
+        const dir = queue.shift() as string;
+        const { dependencies = {} } = JSON.parse(
+            fs.readFileSync(path.join(dir, 'package.json'), 'utf-8')
+        ) as { dependencies?: Record<string, string> };
+        for (const name of Object.keys(dependencies)) {
+            if (name.startsWith('@types/')) {
+                continue;
+            }
+            const dependencyDir = findPackageDir(name, dir);
+            if (!dependencyDir) {
+                throw new Error(
+                    `copy-vendor: the dependency "${name}" of "${dir}" is not installed.`
+                );
+            }
+            const real = fs.realpathSync(dependencyDir);
+            if (!visited.has(real)) {
+                visited.add(real);
+                queue.push(real);
+            }
+        }
+    }
+    visited.delete(rootDir);
+    return [...visited].sort();
 }
 
 function readPackageMetadata(
