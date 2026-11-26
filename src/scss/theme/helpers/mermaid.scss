@@ -1,0 +1,31 @@
+// Diagrams of ```mermaid blocks (addon `tc-mermaid`, #92).
+// The markup is <figure data-tc-mermaid> > .tc-mermaid-diagram + .tc-mermaid-source;
+// `data-tc-mermaid-state` is `rendering`, `rendered` or `error`.
+.reveal .slides section figure[data-tc-mermaid] {
+    margin: 0;
+
+    .tc-mermaid-diagram svg {
+        // Mermaid sizes the SVG in px: let the slide (or a `h-*` class) decide.
+        max-width: 100%;
+        max-height: 100%;
+        height: auto;
+    }
+
+    // The source is only a fallback: shown when the diagram could not be drawn
+    // (load failure, syntax error), so the author sees what went wrong.
+    .tc-mermaid-source {
+        display: none;
+        text-align: left;
+        font-size: 0.5em;
+    }
+
+    &[data-tc-mermaid-state='error'] .tc-mermaid-source {
+        display: block;
+    }
+
+    .tc-mermaid-error {
+        color: var(--tc-color-error, #b3261e);
+        font-size: 0.6em;
+        text-align: left;
+    }
+}

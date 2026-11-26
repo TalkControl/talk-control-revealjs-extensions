@@ -29,6 +29,8 @@ export type {
     MaterialSymbolsPackOptions,
 } from './icons-config/material-symbols-pack';
 
+export type { TcMermaidOptions } from './addons/tc-mermaid';
+
 export {
     TcVendorLoadError,
     loadVendorModule,

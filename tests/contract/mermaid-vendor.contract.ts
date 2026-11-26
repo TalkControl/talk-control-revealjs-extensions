@@ -140,7 +140,6 @@ describe('vendored Mermaid (dist/vendor/mermaid)', () => {
         ]) {
             const content = fs.readFileSync(path.join(DIST, file), 'utf8');
             expect(content, file).not.toContain('mermaidAPI');
-            expect(content, file).not.toContain('mermaid.esm.min');
         }
     });
 

@@ -1,8 +1,9 @@
 import { MarkedTcIconsOptions, markedTcIcons } from './marked-tc-icons';
 import { MarkedTcQrCodeOptions, markedTcQrCode } from './marked-tc-qrcode';
+import { type RevealApi, type RevealPluginFactory } from 'reveal.js';
 import { RevealMarkdownPlugin, TcAdmonitionOptions } from '../models';
+import { TcMermaidOptions, manageMermaid } from '../addons/tc-mermaid';
 import RevealMarkdown from 'reveal.js/plugin/markdown';
-import { type RevealPluginFactory } from 'reveal.js';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
 import { markedTcCols } from './marked-tc-cols';
@@ -36,6 +37,7 @@ export interface TalkControlMarkedOptions {
     knowStyles?: string[];
     qrcode?: MarkedTcQrCodeOptions;
     admonitionOptions?: TcAdmonitionOptions;
+    mermaid?: TcMermaidOptions; // Options of the ```mermaid diagrams
 }
 export class RevealTalkControlMarkdownPlugin {
     private options: TalkControlMarkedOptions;
@@ -102,6 +104,14 @@ export class RevealTalkControlMarkdownPlugin {
                                 }
                             });
                         }
+                        if (isPrintView(reveal)) {
+                            // reveal.js paginates the PDF right after the
+                            // plugins are initialized: the diagrams must be
+                            // in the slides by then, not drawn afterwards.
+                            return Promise.resolve(promiseInit).then(() =>
+                                manageMermaid(self.options.mermaid, reveal)
+                            );
+                        }
                         return promiseInit;
                     }
                 },
@@ -116,4 +126,12 @@ export class RevealTalkControlMarkdownPlugin {
             };
         };
     }
+}
+
+/** reveal.js print mode: `?print-pdf`, or the `view: 'print'` config. */
+function isPrintView(reveal: RevealApi): boolean {
+    return (
+        reveal.getConfig?.()?.view === 'print' ||
+        /print-pdf/i.test(window.location.search)
+    );
 }
