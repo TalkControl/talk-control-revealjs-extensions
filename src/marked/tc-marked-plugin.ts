@@ -1,9 +1,10 @@
 import { MarkedTcIconsOptions, markedTcIcons } from './marked-tc-icons';
 import { MarkedTcQrCodeOptions, markedTcQrCode } from './marked-tc-qrcode';
-import { type RevealApi, type RevealPluginFactory } from 'reveal.js';
 import { RevealMarkdownPlugin, TcAdmonitionOptions } from '../models';
 import { TcMermaidOptions, manageMermaid } from '../addons/tc-mermaid';
 import RevealMarkdown from 'reveal.js/plugin/markdown';
+import { type RevealPluginFactory } from 'reveal.js';
+import { isPrintView } from '../utils/print-view';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
 import { markedTcCols } from './marked-tc-cols';
@@ -126,12 +127,4 @@ export class RevealTalkControlMarkdownPlugin {
             };
         };
     }
-}
-
-/** reveal.js print mode: `?print-pdf`, or the `view: 'print'` config. */
-function isPrintView(reveal: RevealApi): boolean {
-    return (
-        reveal.getConfig?.()?.view === 'print' ||
-        /print-pdf/i.test(window.location.search)
-    );
 }

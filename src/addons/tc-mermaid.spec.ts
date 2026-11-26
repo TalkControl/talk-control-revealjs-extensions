@@ -269,6 +269,39 @@ describe('manageMermaid', () => {
         expect(fake.initialize.mock.calls[1][0].fontFamily).toBe('Mono');
     });
 
+    describe('yielding to the browser', () => {
+        async function renderOrder(reveal = {}): Promise<string[]> {
+            buildDeck('', [figure(0, 'A'), figure(1, 'B')]);
+            const events: string[] = [];
+            installFakeMermaid(
+                createFakeMermaid(async (id) => {
+                    events.push('render');
+                    return { svg: `<svg data-id="${id}"></svg>` };
+                })
+            );
+            setTimeout(() => events.push('browser task'), 0);
+            await manageMermaid({}, reveal);
+            await new Promise((resolve) => setTimeout(resolve, 0));
+            return events;
+        }
+
+        it('lets the browser run a task between two diagrams', async () => {
+            expect(await renderOrder()).toEqual([
+                'render',
+                'browser task',
+                'render',
+            ]);
+        });
+
+        it('does not pause on paper, where nothing is displayed', async () => {
+            const events = await renderOrder({
+                getConfig: () => ({ view: 'print' }),
+            });
+
+            expect(events).toEqual(['render', 'render', 'browser task']);
+        });
+    });
+
     it('renders each diagram only once, however many times it is called', async () => {
         buildDeck('', [figure(0, 'A'), figure(1, 'B')]);
         const fake = createFakeMermaid();

@@ -1,4 +1,5 @@
 import Reveal, { type RevealApi } from 'reveal.js';
+import { isPrintView } from '../utils/print-view';
 import { loadVendorModule } from '../utils/tc-vendor-loader';
 
 export interface TcMermaidOptions {
@@ -86,7 +87,12 @@ export async function manageMermaid(
     const container = createOffscreenContainer(reveal);
     document.body.appendChild(container);
     try {
-        for (const figure of figures) {
+        // On paper nothing is displayed: go straight through.
+        const pause = !isPrintView(reveal);
+        for (const [position, figure] of figures.entries()) {
+            if (pause && position > 0) {
+                await yieldToBrowser();
+            }
             await renderFigure(mermaid, figure, container);
         }
     } finally {
@@ -139,6 +145,20 @@ function readDeckFont(): string {
     return reveal
         ? getComputedStyle(reveal).getPropertyValue('--r-main-font').trim()
         : '';
+}
+
+/**
+ * Gives the browser a chance to paint and to handle input between two
+ * diagrams: drawing one is synchronous work on the main thread, and `await`
+ * alone only yields microtasks.
+ */
+function yieldToBrowser(): Promise<void> {
+    const scheduler = (
+        globalThis as { scheduler?: { yield?: () => Promise<void> } }
+    ).scheduler;
+    return scheduler?.yield
+        ? scheduler.yield()
+        : new Promise((resolve) => setTimeout(resolve, 0));
 }
 
 /** Mermaid measures labels: wait for the web fonts, or they are mis-sized. */
