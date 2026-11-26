@@ -144,9 +144,6 @@ describe('dist/ contract', () => {
                 'vendor/icons/material-symbols/sharp.css',
                 'vendor/mermaid/LICENSE',
                 'vendor/mermaid/dist/mermaid.esm.min.mjs',
-                'vendor/mermaid/licenses/dompurify/LICENSE',
-                'vendor/mermaid/licenses/elkjs/LICENSE.md',
-                'vendor/mermaid/licenses/katex/LICENSE',
             ].sort()
         );
     });

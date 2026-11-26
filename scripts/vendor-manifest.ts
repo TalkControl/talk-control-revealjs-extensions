@@ -58,30 +58,8 @@ export const VENDOR_MANIFEST: VendorEntry[] = [
             'dist/chunks/mermaid.esm.min/*.mjs',
         ],
         licenses: ['LICENSE'],
-    },
-    // Bundled inside Mermaid's chunks: their licenses must travel with them
-    // (EPL-2.0 for elkjs, MPL-2.0 OR Apache-2.0 for DOMPurify, MIT for KaTeX).
-    // No file of their own is copied. The licenses of the other bundled
-    // libraries are kept by Mermaid's own build as `/*! … */` banners.
-    {
-        name: 'elkjs',
-        from: 'node_modules/elkjs',
-        to: 'mermaid/licenses/elkjs',
-        include: [],
-        licenses: ['LICENSE.md'],
-    },
-    {
-        name: 'dompurify',
-        from: 'node_modules/dompurify',
-        to: 'mermaid/licenses/dompurify',
-        include: [],
-        licenses: ['LICENSE'],
-    },
-    {
-        name: 'katex',
-        from: 'node_modules/katex',
-        to: 'mermaid/licenses/katex',
-        include: [],
-        licenses: ['LICENSE'],
+        // Its build inlines its dependencies (d3, cytoscape, elkjs, DOMPurify,
+        // KaTeX…) into the chunks: their licenses are listed too.
+        dependencyLicenses: true,
     },
 ];

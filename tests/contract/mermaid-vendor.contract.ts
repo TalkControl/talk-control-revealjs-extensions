@@ -50,20 +50,10 @@ function relativeImports(source: string): string[] {
 }
 
 describe('vendored Mermaid (dist/vendor/mermaid)', () => {
-    it('ships the entry file, the chunks and the licenses', () => {
+    it('ships the entry file, the chunks and its license', () => {
         expect(fs.existsSync(ENTRY)).toBe(true);
         expect(fs.readdirSync(CHUNKS_DIR).length).toBeGreaterThan(0);
-        for (const license of [
-            'LICENSE',
-            'licenses/elkjs/LICENSE.md',
-            'licenses/dompurify/LICENSE',
-            'licenses/katex/LICENSE',
-        ]) {
-            expect(
-                fs.existsSync(path.join(MERMAID_DIR, license)),
-                license
-            ).toBe(true);
-        }
+        expect(fs.existsSync(path.join(MERMAID_DIR, 'LICENSE'))).toBe(true);
     });
 
     it('resolves every relative import to a file it ships', () => {
@@ -119,6 +109,28 @@ describe('vendored Mermaid (dist/vendor/mermaid)', () => {
                 'utf8'
             )
         ).toContain(`## mermaid@${pinned}`);
+    });
+
+    it('lists the license of every library its build inlines', () => {
+        const notices = fs.readFileSync(
+            path.join(DIST, 'vendor', 'THIRD-PARTY-LICENSES.txt'),
+            'utf8'
+        );
+        const { dependencies } = JSON.parse(
+            fs.readFileSync(
+                path.join(ROOT, 'node_modules', 'mermaid', 'package.json'),
+                'utf8'
+            )
+        ) as { dependencies: Record<string, string> };
+        const missing = Object.keys(dependencies)
+            .filter((name) => !name.startsWith('@types/'))
+            .filter((name) => !notices.includes(`## ${name}@`));
+        expect(missing).toEqual([]);
+        // Direct and transitive: d3's sub-modules, cytoscape, KaTeX…
+        expect(notices.match(/^## /gm)!.length).toBeGreaterThan(60);
+        expect(notices).toContain('## elkjs@');
+        expect(notices).toContain('## dompurify@');
+        expect(notices).toContain('## katex@');
     });
 
     it('is never inlined in the main bundles', () => {
