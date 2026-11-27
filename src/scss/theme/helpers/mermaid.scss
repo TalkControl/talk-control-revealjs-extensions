@@ -1,14 +1,36 @@
+// The default box of a diagram: the slide height minus the room kept for the
+// title and the margins. `:where()` gives it no specificity, so a size helper
+// (`h-400`, `hm-*`…) or any author rule wins without a fight.
+:where(.reveal .slides section figure[data-tc-mermaid] > .tc-mermaid-diagram) {
+    height: calc(
+        var(--slide-height, 1080px) - var(--tc-mermaid-reserved-height, 340px)
+    );
+}
+
+// `zoom-50` … `zoom-300` (by 25): `--tc-mermaid-zoom` is 0.5 … 3.
+.reveal .slides section .tc-mermaid-diagram {
+    @for $i from 2 through 12 {
+        &.zoom-#{$i * 25} {
+            --tc-mermaid-zoom: #{$i * 0.25};
+        }
+    }
+}
+
 // Diagrams of ```mermaid blocks (addon `tc-mermaid`, #92).
 // The markup is <figure data-tc-mermaid> > .tc-mermaid-diagram + .tc-mermaid-source;
 // `data-tc-mermaid-state` is `rendering`, `rendered` or `error`.
 .reveal .slides section figure[data-tc-mermaid] {
     margin: 0;
 
+    // The SVG fills the box of its diagram, whatever its natural size (its
+    // `viewBox` keeps the proportions). `zoom-*` then scales it around its
+    // center: > 1 may overflow the box, which is the author's call.
     .tc-mermaid-diagram svg {
-        // Mermaid sizes the SVG in px: let the slide (or a `h-*` class) decide.
-        max-width: 100%;
-        max-height: 100%;
-        height: auto;
+        display: block;
+        width: 100%;
+        height: 100%;
+        transform: scale(var(--tc-mermaid-zoom, 1));
+        transform-origin: center;
     }
 
     // The source is only a fallback: shown when the diagram could not be drawn

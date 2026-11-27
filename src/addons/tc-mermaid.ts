@@ -201,6 +201,9 @@ async function renderFigure(
             container
         );
         diagram.innerHTML = svg;
+        // Mermaid caps the SVG at its natural width (`max-width: <n>px`):
+        // the theme fits it to the slide instead (see helpers/mermaid.scss).
+        diagram.querySelector('svg')?.style.removeProperty('max-width');
         bindFunctions?.(diagram);
         figure.setAttribute(STATE_ATTRIBUTE, 'rendered');
     } catch (error) {

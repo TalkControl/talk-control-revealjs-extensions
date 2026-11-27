@@ -64,6 +64,30 @@ element of the slide.
 A word must be a valid CSS class name (`[a-z][a-z0-9-]*`); anything else is
 ignored.
 
+### Size and zoom
+
+By default a diagram **fills a box** as high as the slide minus the room for
+the title (1080 − 340 px on a 1920×1080 deck): the SVG is scaled up or down to
+fit, keeping its proportions, so a small flowchart is readable from the back
+of the room.
+
+- **`h-*`** (`h-400`, `h-600`…) sets the height of that box instead; the SVG
+  fits inside it.
+- **`zoom-50` … `zoom-300`** (by steps of 25: `zoom-125`, `zoom-150`…) scale the
+  drawing around its center on top of that. Above 100 it may overflow the box:
+  it is your call.
+- For another value, set the custom property yourself:
+  `<!-- .element: style="--tc-mermaid-zoom: 1.4" -->` (see section 3).
+- The room kept for the title is `--tc-mermaid-reserved-height` (default
+  `340px`): change it in your theme if your titles are taller or smaller.
+
+````markdown
+```mermaid zoom-150 center
+flowchart LR
+  A --> B
+```
+````
+
 ## 2. Keywords for the figure: fragment words
 
 Some words animate the block. They are **keywords** that go on the
@@ -129,13 +153,13 @@ flowchart LR
 
 ## Which one to use?
 
-| I want to…                                           | Use                                    |
-| ---------------------------------------------------- | -------------------------------------- |
-| size or center the diagram (`h-400`, `center`)       | a word after `mermaid`                 |
-| give the diagram my own CSS class                    | a word after `mermaid`                 |
-| animate the diagram (`fragment fade-up`…)            | a word after `mermaid` (or `.element`) |
-| set an `id`, a `data-*`, a `style`, an `aria-label`… | `<!-- .element: … -->` (on the figure) |
-| a custom class on the figure                         | `<!-- .element: class="…" -->`         |
+| I want to…                                                       | Use                                    |
+| ---------------------------------------------------------------- | -------------------------------------- |
+| size, zoom or center the diagram (`h-400`, `zoom-150`, `center`) | a word after `mermaid`                 |
+| give the diagram my own CSS class                                | a word after `mermaid`                 |
+| animate the diagram (`fragment fade-up`…)                        | a word after `mermaid` (or `.element`) |
+| set an `id`, a `data-*`, a `style`, an `aria-label`…             | `<!-- .element: … -->` (on the figure) |
+| a custom class on the figure                                     | `<!-- .element: class="…" -->`         |
 
 The info string takes no `name="value"` attributes: only words. Everything
 that needs a value goes through `.element`.

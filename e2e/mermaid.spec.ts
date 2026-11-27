@@ -45,7 +45,7 @@ test.describe('in the demo', () => {
 
         await page.goto('/index.html?data-type=helpers');
         await waitForDeckReady(page);
-        await allRendered(page, 3);
+        await allRendered(page, 4);
 
         for (const figure of await page.locator(FIGURE).all()) {
             await expect(figure.locator('svg')).toHaveCount(1);
@@ -59,11 +59,11 @@ test.describe('in the demo', () => {
     }) => {
         await page.goto('/index.html?data-type=helpers');
         await waitForDeckReady(page);
-        await allRendered(page, 3);
+        await allRendered(page, 4);
 
         // The slide is hidden: the SVG has no box yet, but Mermaid measured
         // the diagram at the deck size, so its viewBox is the real one.
-        const last = page.locator(FIGURE).last().locator('svg');
+        const last = page.locator(FIGURE).nth(1).locator('svg');
         const viewBox = await last.getAttribute('viewBox');
         const [, , width, height] = (viewBox ?? '').split(/\s+/).map(Number);
         expect(width).toBeGreaterThan(50);
@@ -94,7 +94,7 @@ test.describe('in the demo', () => {
     }) => {
         await page.goto('/index.html?data-type=helpers');
         await waitForDeckReady(page);
-        await allRendered(page, 3);
+        await allRendered(page, 4);
 
         const fragment = page.locator(`${FIGURE}.fade-up`);
         await fragment.evaluate((el) => {
@@ -125,7 +125,7 @@ test.describe('in the demo', () => {
                 `/index.html?data-type=helpers&data-theme=${theme}`
             );
             await waitForDeckReady(page);
-            await allRendered(page, 3);
+            await allRendered(page, 4);
             return page
                 .locator(FIGURE)
                 .first()
@@ -160,7 +160,7 @@ test.describe('in the demo', () => {
         const requests = trackMermaidRequests(page);
         await page.goto('/index.html?data-type=helpers');
         await waitForDeckReady(page);
-        await allRendered(page, 3);
+        await allRendered(page, 4);
 
         const entry = requests.filter((u) =>
             u.endsWith('/vendor/mermaid/dist/mermaid.esm.min.mjs')
@@ -189,6 +189,83 @@ test.describe('in the demo', () => {
                 '.reveal .slides .pdf-page figure[data-tc-mermaid][data-tc-mermaid-state="rendered"] svg'
             )
         ).toHaveCount(total);
+    });
+});
+
+test.describe('size and zoom', () => {
+    const SLIDE_HEIGHT = 1080;
+
+    /** Show the slide of the diagram that has this class (or none: the first). */
+    async function show(page: Page, diagramClass?: string) {
+        const figure = diagramClass
+            ? page.locator(FIGURE).filter({
+                  has: page.locator(`.tc-mermaid-diagram.${diagramClass}`),
+              })
+            : page.locator(FIGURE).first();
+        const svg = figure.first().locator('svg');
+        await svg.evaluate((el) => {
+            const reveal = (
+                window as unknown as {
+                    Reveal: {
+                        getIndices: (s: Element) => { h: number; v: number };
+                        slide: (h: number, v: number) => void;
+                    };
+                }
+            ).Reveal;
+            const slide = el.closest('.slides section') as Element;
+            const { h, v } = reveal.getIndices(slide);
+            reveal.slide(h, v);
+        });
+        await expect(svg).toBeVisible();
+        return { svg, diagram: figure.first().locator('.tc-mermaid-diagram') };
+    }
+
+    /** Screen pixels per user unit of the drawing (1 = natural size). */
+    const drawingScale = (svg: import('@playwright/test').Locator) =>
+        svg.evaluate((el) => (el as SVGSVGElement).getScreenCTM()!.a);
+
+    test.beforeEach(async ({ page }) => {
+        await page.goto('/index.html?data-type=helpers');
+        await waitForDeckReady(page);
+        await allRendered(page, 4);
+    });
+
+    test('a diagram is drawn bigger than its natural size by default', async ({
+        page,
+    }) => {
+        const { svg } = await show(page);
+        const slideScale = page.viewportSize()!.height / SLIDE_HEIGHT;
+
+        // A small flowchart is at least 1.5 times its natural size on the
+        // slide (it used to stay at 1: unreadable on a screen).
+        expect((await drawingScale(svg)) / slideScale).toBeGreaterThan(1.5);
+    });
+
+    test('an h-* class still decides the height of the diagram', async ({
+        page,
+    }) => {
+        // Same slide scale for both boxes: compare them, not absolute pixels.
+        const fitted = (await (await show(page)).diagram.boundingBox())!;
+        const sized = (await (
+            await show(page, 'h-400')
+        ).diagram.boundingBox())!;
+
+        // Default box: 1080 - 340 = 740 slide px; `h-400`: 400.
+        expect(sized.height / fitted.height).toBeCloseTo(400 / 740, 2);
+    });
+
+    test('a zoom-* class scales the drawing', async ({ page }) => {
+        const { diagram, svg } = await show(page, 'zoom-150');
+
+        expect(
+            await diagram.evaluate((el) =>
+                getComputedStyle(el).getPropertyValue('--tc-mermaid-zoom')
+            )
+        ).toBe('1.5');
+        const flat = (await diagram.boundingBox())!;
+        const zoomed = (await svg.boundingBox())!;
+        // The SVG box is the diagram box, scaled by the zoom.
+        expect(zoomed.width / flat.width).toBeCloseTo(1.5, 1);
     });
 });
 
