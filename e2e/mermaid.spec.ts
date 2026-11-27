@@ -254,6 +254,19 @@ test.describe('size and zoom', () => {
         expect(sized.height / fitted.height).toBeCloseTo(400 / 740, 2);
     });
 
+    test('a zoomed diagram grows downward and never over the text above it', async ({
+        page,
+    }) => {
+        const { diagram, svg } = await show(page, 'zoom-150');
+
+        const box = (await diagram.boundingBox())!;
+        const drawing = (await svg.boundingBox())!;
+        // Scaled from the top edge: the top of the drawing stays where the
+        // box starts, the extra height goes below.
+        expect(drawing.y).toBeGreaterThanOrEqual(box.y - 1);
+        expect(drawing.y + drawing.height).toBeGreaterThan(box.y + box.height);
+    });
+
     test('a zoom-* class scales the drawing', async ({ page }) => {
         const { diagram, svg } = await show(page, 'zoom-150');
 

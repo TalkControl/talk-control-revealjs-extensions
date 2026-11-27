@@ -2899,7 +2899,7 @@ margin:0}
 width:100%;
 height:100%;
 transform:scale(var(--tc-mermaid-zoom,1));
-transform-origin:50%;
+transform-origin:top;
 display:block}
 .reveal .slides section figure[data-tc-mermaid] .tc-mermaid-source{
 text-align:left;

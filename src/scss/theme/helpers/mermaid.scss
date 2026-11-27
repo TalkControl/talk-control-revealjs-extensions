@@ -23,14 +23,16 @@
     margin: 0;
 
     // The SVG fills the box of its diagram, whatever its natural size (its
-    // `viewBox` keeps the proportions). `zoom-*` then scales it around its
-    // center: > 1 may overflow the box, which is the author's call.
+    // `viewBox` keeps the proportions). `zoom-*` then scales it from the top
+    // center: > 1 overflows the box downward and sideways, the author's call.
     .tc-mermaid-diagram svg {
         display: block;
         width: 100%;
         height: 100%;
         transform: scale(var(--tc-mermaid-zoom, 1));
-        transform-origin: center;
+        // From the top edge: a zoomed diagram grows downward and sideways,
+        // never over the text above it.
+        transform-origin: center top;
     }
 
     // The source is only a fallback: shown when the diagram could not be drawn

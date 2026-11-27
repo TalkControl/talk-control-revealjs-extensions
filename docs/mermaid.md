@@ -74,8 +74,9 @@ of the room.
 - **`h-*`** (`h-400`, `h-600`…) sets the height of that box instead; the SVG
   fits inside it.
 - **`zoom-50` … `zoom-300`** (by steps of 25: `zoom-125`, `zoom-150`…) scale the
-  drawing around its center on top of that. Above 100 it may overflow the box:
-  it is your call.
+  drawing from the top center of its box. Below 100 it shrinks; above 100 it
+  grows **downward and sideways** (never over the text above) and may leave
+  the box or the slide: leave room for it, it is your call.
 - For another value, set the custom property yourself:
   `<!-- .element: style="--tc-mermaid-zoom: 1.4" -->` (see section 3).
 - The room kept for the title is `--tc-mermaid-reserved-height` (default
