@@ -9,6 +9,7 @@ import { MarkedTcIconsOptions } from './marked/marked-tc-icons';
 import { TalkControlMarkedOptions } from './marked/tc-marked-plugin';
 import { manageAttrPolyfill } from './addons/tc-attr-polyfill';
 import { manageCopyClipboard } from './addons/tc-copy-clipboard';
+import { manageMermaid } from './addons/tc-mermaid';
 import { manageMultiplesColumns } from './addons/tc-multiples-cols';
 import { manageShowTypeContent } from './addons/tc-data-type';
 import { transformListFragment } from './addons/tc-list-fragment';
@@ -67,6 +68,9 @@ export class TalkControlTheme {
                 theme: this.themeToUse,
             });
             manageShowTypeContent(this.options.defaultSlidesType);
+            // Never rejects; renders the diagrams of the deck, if any. On
+            // paper (?print-pdf) the markdown plugin already did it.
+            void manageMermaid(this.options.tcMarkedOptions.mermaid);
 
             // Deal with font icons to select the first one as "copy clipboard"
             const tcMarkedFontIcons: MarkedTcIconsOptions | undefined =

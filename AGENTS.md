@@ -103,16 +103,17 @@ Public API is re-exported from `src/index.ts`.
 
 Each addon is a standalone module with its own `.spec.ts`:
 
-| Addon                  | What it does                                                 |
-| ---------------------- | ------------------------------------------------------------ |
-| `tc-copy-clipboard`    | Adds a copy button to code blocks                            |
-| `tc-custom-background` | Maps CSS class names on `<section>` to CSS background values |
-| `tc-data-type`         | Manages `data-type` (show type: `on-stage`, `training`, …)   |
-| `tc-theme`             | Manages `data-theme` attribute                               |
-| `tc-i18n`              | Manages `data-lang` and Markdown file path resolution        |
-| `tc-multiples-cols`    | Post-processes column layout HTML                            |
-| `tc-ui-config`         | Config panel opened with the `C` key                         |
-| `tc-list-fragment`     | Transforms list items into reveal fragments                  |
+| Addon                  | What it does                                                  |
+| ---------------------- | ------------------------------------------------------------- |
+| `tc-copy-clipboard`    | Adds a copy button to code blocks                             |
+| `tc-custom-background` | Maps CSS class names on `<section>` to CSS background values  |
+| `tc-data-type`         | Manages `data-type` (show type: `on-stage`, `training`, …)    |
+| `tc-theme`             | Manages `data-theme` attribute                                |
+| `tc-i18n`              | Manages `data-lang` and Markdown file path resolution         |
+| `tc-multiples-cols`    | Post-processes column layout HTML                             |
+| `tc-ui-config`         | Config panel opened with the `C` key                          |
+| `tc-list-fragment`     | Transforms list items into reveal fragments                   |
+| `tc-mermaid`           | Renders the ```mermaid diagrams (Mermaid vendored, on demand) |
 
 ### Marked extensions (`src/marked/`)
 

@@ -171,6 +171,7 @@ declare interface TalkControlMarkedOptions {
     knowStyles?: string[];
     qrcode?: MarkedTcQrCodeOptions;
     admonitionOptions?: TcAdmonitionOptions;
+    mermaid?: TcMermaidOptions;
 }
 
 /**
@@ -279,6 +280,20 @@ declare interface TcI18nConfig {
 export declare interface TcMarkedEngine {
     use(...extensions: unknown[]): unknown;
     parse(src: string): string | Promise<string>;
+}
+
+export declare interface TcMermaidOptions {
+    /**
+     * Passed as is to `mermaid.initialize()`, over the TalkControl defaults
+     * (`startOnLoad: false`, `securityLevel: 'strict'`, the theme and the
+     * font of the deck). See https://mermaid.js.org/config/schema-docs/config.html
+     */
+    config?: Record<string, unknown>;
+    /**
+     * Maps a `data-theme` of the deck to a Mermaid theme. Default:
+     * `{ dark: 'dark' }`, any other `data-theme` gives `'default'`.
+     */
+    themes?: Record<string, string>;
 }
 
 export declare class TcRevealjsElement extends LitElement {

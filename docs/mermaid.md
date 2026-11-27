@@ -9,10 +9,10 @@ flowchart LR
 ```
 ````
 
-> **Status:** the Markdown syntax below is in place. The rendering itself (the
-> `tc-mermaid` addon and the vendored Mermaid library) comes with the next
-> pull requests of [#92](https://github.com/TalkControl/talk-control-revealjs-extensions/issues/92);
-> until then the block shows its source.
+The diagram is drawn in the browser by [Mermaid](https://mermaid.js.org),
+which TalkControl ships (see [Vendored assets](./vendor.md)). It is fetched
+**only when the deck contains at least one diagram**: without a block, no
+request is made.
 
 ## What the block becomes
 
@@ -139,3 +139,65 @@ The fence follows CommonMark: backticks or tildes, up to 3 spaces of
 indentation, a closing fence at least as long as the opening one, or none (the
 block then runs to the end of the slide). ` ```mermaidjs ` and ` ``` mermaid `
 (with a space) stay regular code blocks.
+
+## Rendering
+
+The `tc-mermaid` addon draws the diagrams once the deck is ready:
+
+- in an off-screen container, one diagram at a time, the **current slide
+  first**, so a diagram on a hidden slide or in a fragment gets the right size;
+- after the web fonts are loaded, with the font of the deck (`--r-main-font`);
+- with `?print-pdf`, before reveal.js paginates the PDF: every diagram is in
+  the PDF.
+
+The `data-tc-mermaid-state` attribute of the `<figure>` is `rendering`,
+`rendered` or `error`. The source `<pre>` is hidden once drawn.
+
+### Light and dark
+
+The Mermaid theme follows the `data-theme` of the deck: `dark` gives Mermaid's
+`dark` theme, anything else its `default`. Map your own themes, or force one:
+
+```ts
+ThemeInitializer.init({
+    tcMarkedOptions: {
+        mermaid: {
+            themes: { corporate: 'neutral' }, // data-theme -> Mermaid theme
+        },
+    },
+});
+```
+
+### Mermaid configuration
+
+`config` is given to
+[`mermaid.initialize()`](https://mermaid.js.org/config/schema-docs/config.html)
+over the TalkControl defaults (`startOnLoad: false`, `securityLevel: 'strict'`,
+`suppressErrorRendering: true`, the theme and the font of the deck):
+
+```ts
+ThemeInitializer.init({
+    tcMarkedOptions: {
+        mermaid: {
+            config: { flowchart: { curve: 'linear' }, theme: 'forest' },
+        },
+    },
+});
+```
+
+A `config.theme` wins over the `data-theme` mapping.
+
+> **Security.** `securityLevel: 'strict'` (the default) encodes HTML in labels
+> and disables clicks. Use `'loose'` only for decks you author yourself: it
+> allows click handlers and HTML labels.
+
+### When something is wrong
+
+A diagram never stops the presentation:
+
+- **syntax error** in one diagram: its figure goes to `error`, shows the
+  message and its source, and the error is logged in the console
+  (`tc-mermaid: diagram 2 failed to render`). The other diagrams are drawn;
+- **Mermaid cannot be loaded** (the `vendor/` folder is not served next to the
+  library script): every diagram shows the message, one error is logged. See
+  [Vendored assets](./vendor.md).

@@ -134,10 +134,11 @@ describe('dist/highlight contract', () => {
         // Refreshed for Vite 8 (#91): Lightning CSS replaces esbuild as the CSS
         // minifier and the build target rises to Chrome 111 / Firefox 114 /
         // Safari 16.4 (range media queries, `inset`, dropped prefixes).
+        // Refreshed for the Mermaid diagrams (#92): `helpers/mermaid.scss`.
         const css = fs.readFileSync(MAIN_CSS);
         const hash = createHash('sha256').update(css).digest('hex');
         expect(hash).toBe(
-            '45ed22f3aea2f2c52d1b1918be92a6874ec45ee3999d78d12f50204c2a3684d9'
+            'f6ebeeebc0dd2f306b36274f932f5fcd4b8bcc2c8c3c699222ef808278955eee'
         );
     });
 });

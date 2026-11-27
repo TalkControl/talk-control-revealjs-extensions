@@ -20,6 +20,11 @@ vi.mock('./marked-tc-styled-image', async (importOriginal) => {
 });
 const styledImageSpy = vi.mocked(markedTcStyledImage);
 
+vi.mock('../addons/tc-mermaid', () => ({ manageMermaid: vi.fn() }));
+const manageMermaidMock = vi.mocked(
+    (await import('../addons/tc-mermaid')).manageMermaid
+);
+
 const mockInit = vi.fn();
 const mockUse = vi.fn();
 
@@ -213,5 +218,66 @@ describe(RevealTalkControlMarkdownPlugin.name, () => {
         expect(pluginInstance.marked).toBe(first);
         current = second;
         expect(pluginInstance.marked).toBe(second);
+    });
+
+    describe('mermaid diagrams in print mode', () => {
+        it('does not render the diagrams from the markdown plugin on screen', async () => {
+            const pluginInstance = plugin();
+
+            await pluginInstance.init!({
+                ...(revealMock as object),
+                getConfig: () => ({ view: undefined }),
+            } as unknown as RevealApi);
+
+            expect(manageMermaidMock).not.toHaveBeenCalled();
+        });
+
+        it.each([
+            ['view=print', { view: 'print' }],
+            ['?print-pdf', undefined],
+        ])(
+            'waits for every diagram before init resolves (%s)',
+            async (_name, config) => {
+                if (!config) {
+                    window.history.pushState({}, '', '/?print-pdf');
+                }
+                const order: string[] = [];
+                mockInit.mockReturnValue(
+                    Promise.resolve().then(() => {
+                        order.push('slides');
+                    })
+                );
+                manageMermaidMock.mockImplementation(async () => {
+                    await new Promise((resolve) => setTimeout(resolve, 5));
+                    order.push('diagrams');
+                });
+                const pluginInstance = plugin();
+
+                await pluginInstance.init!({
+                    ...(revealMock as object),
+                    getConfig: () => config ?? {},
+                } as unknown as RevealApi);
+                order.push('init resolved');
+
+                expect(order).toEqual(['slides', 'diagrams', 'init resolved']);
+                expect(manageMermaidMock).toHaveBeenCalledTimes(1);
+                window.history.pushState({}, '', '/');
+            }
+        );
+
+        it('passes the mermaid options and the reveal API to the addon', async () => {
+            const mermaid = { config: { theme: 'forest' } };
+            const withMermaid = new RevealTalkControlMarkdownPlugin({
+                mermaid,
+            }).getPlugin()();
+            const reveal = {
+                ...(revealMock as object),
+                getConfig: () => ({ view: 'print' }),
+            } as unknown as RevealApi;
+
+            await withMermaid.init!(reveal);
+
+            expect(manageMermaidMock).toHaveBeenCalledWith(mermaid, reveal);
+        });
     });
 });

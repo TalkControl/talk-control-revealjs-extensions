@@ -1,8 +1,10 @@
 import { MarkedTcIconsOptions, markedTcIcons } from './marked-tc-icons';
 import { MarkedTcQrCodeOptions, markedTcQrCode } from './marked-tc-qrcode';
 import { RevealMarkdownPlugin, TcAdmonitionOptions } from '../models';
+import { TcMermaidOptions, manageMermaid } from '../addons/tc-mermaid';
 import RevealMarkdown from 'reveal.js/plugin/markdown';
 import { type RevealPluginFactory } from 'reveal.js';
+import { isPrintView } from '../utils/print-view';
 import { markedTcAdmonition } from './marked-tc-admonition';
 import { markedTcBg } from './marked-tc-bg';
 import { markedTcCols } from './marked-tc-cols';
@@ -36,6 +38,7 @@ export interface TalkControlMarkedOptions {
     knowStyles?: string[];
     qrcode?: MarkedTcQrCodeOptions;
     admonitionOptions?: TcAdmonitionOptions;
+    mermaid?: TcMermaidOptions; // Options of the ```mermaid diagrams
 }
 export class RevealTalkControlMarkdownPlugin {
     private options: TalkControlMarkedOptions;
@@ -101,6 +104,14 @@ export class RevealTalkControlMarkdownPlugin {
                                     initFunction();
                                 }
                             });
+                        }
+                        if (isPrintView(reveal)) {
+                            // reveal.js paginates the PDF right after the
+                            // plugins are initialized: the diagrams must be
+                            // in the slides by then, not drawn afterwards.
+                            return Promise.resolve(promiseInit).then(() =>
+                                manageMermaid(self.options.mermaid, reveal)
+                            );
                         }
                         return promiseInit;
                     }
