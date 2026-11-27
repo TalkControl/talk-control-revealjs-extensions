@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Mermaid fixture (ESM)</title>
+        <!--
+          Used only by e2e/mermaid.spec.ts, served by the spec itself under a
+          nested path: the library lives in ./web_modules/ (a copy of dist/
+          mapped by the spec), so Mermaid must be found next to the library
+          script, wherever the deck is hosted.
+        -->
+        <link
+            rel="stylesheet"
+            href="./web_modules/talk-control-revealjs-theme.css" />
+    </head>
+    <body>
+        <div class="reveal"><div class="slides"></div></div>
+        <script type="module">
+            import {
+                Reveal,
+                ThemeInitializer,
+            } from './web_modules/talk-control-revealjs-extensions.js';
+            window.Reveal = Reveal; // read by e2e/helpers.ts
+            await ThemeInitializer.init({
+                slidesFactory: () => [{ path: 'deck.md' }],
+                tcI18nOptions: { baseMarkdownPath: 'markdown/' },
+            });
+        </script>
+    </body>
+</html>
