@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Mermaid fixture (UMD)</title>
+        <!-- Used only by e2e/mermaid.spec.ts: the classic-script (UMD) build. -->
+        <link
+            rel="stylesheet"
+            href="./web_modules/talk-control-revealjs-theme.css" />
+    </head>
+    <body>
+        <div class="reveal"><div class="slides"></div></div>
+        <!-- A classic script: loaded once the deck container exists. -->
+        <script src="./web_modules/talk-control-revealjs-extensions.umd.cjs"></script>
+        <script>
+            const lib = window['talk-control-revealjs-extensions'];
+            window.Reveal = lib.Reveal; // read by e2e/helpers.ts
+            lib.ThemeInitializer.init({
+                slidesFactory: () => [{ path: 'deck.md' }],
+                tcI18nOptions: { baseMarkdownPath: 'markdown/' },
+            });
+        </script>
+    </body>
+</html>

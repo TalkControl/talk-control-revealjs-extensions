@@ -184,6 +184,24 @@ describe('manageMermaid', () => {
         expect(containerSeen!.isConnected).toBe(false);
     });
 
+    it('drops the inline max-width Mermaid puts on the SVG, so the diagram can fill its box', async () => {
+        buildDeck('', [figure(0, 'A --> B')]);
+        installFakeMermaid(
+            createFakeMermaid(async () => ({
+                svg: '<svg width="100%" style="max-width: 454px; background-color: white;"></svg>',
+            }))
+        );
+
+        await manageMermaid();
+
+        const svg = document.querySelector<SVGElement>(
+            '.tc-mermaid-diagram svg'
+        )!;
+        expect(svg.style.maxWidth).toBe('');
+        // The rest of the inline style is Mermaid's and stays.
+        expect(svg.style.backgroundColor).toBe('white');
+    });
+
     it('renders the diagrams of the current slide first', async () => {
         buildDeck('', [figure(0, 'first')], [figure(1, 'current')]);
         const current = document.querySelectorAll('section')[1];
