@@ -14,6 +14,9 @@ which TalkControl ships (see [Vendored assets](./vendor.md)). It is fetched
 **only when the deck contains at least one diagram**: without a block, no
 request is made.
 
+The demo has a short walk-through: _Helpers › Mermaid diagrams_
+(`demo/markdown/10-helpers/60_mermaid.md`).
+
 ## What the block becomes
 
 Each block turns into a `<figure>` with two children:
@@ -69,22 +72,26 @@ Some words animate the block. They are **keywords** that go on the
 `fragment`, `fade-*` (`fade-up`, `fade-in`…), `highlight-*`, `grow`, `shrink`,
 `strike`, `semi-fade-out`, `current-visible`.
 
+As everywhere in reveal.js, `fragment` is what makes the block a fragment; the
+other words only choose _how_ it appears (`fragment fade-up`). `fade-up` alone
+animates nothing.
+
 ````markdown
-```mermaid h-400 fade-up
+```mermaid h-400 fragment fade-up
 flowchart LR
   A --> B
 ```
 ````
 
 ```html
-<figure class="tc-mermaid fade-up" data-tc-mermaid="0">
+<figure class="tc-mermaid fragment fade-up" data-tc-mermaid="0">
     <div class="tc-mermaid-diagram h-400"></div>
     <pre class="tc-mermaid-source">…</pre>
 </figure>
 ```
 
 You can mix both kinds in any order: here `h-400` goes on the diagram and
-`fade-up` on the figure.
+`fragment fade-up` on the figure.
 
 ## 3. Anything else: reveal.js `<!-- .element: … -->`
 
@@ -126,7 +133,7 @@ flowchart LR
 | ---------------------------------------------------- | -------------------------------------- |
 | size or center the diagram (`h-400`, `center`)       | a word after `mermaid`                 |
 | give the diagram my own CSS class                    | a word after `mermaid`                 |
-| animate the diagram (`fragment`, `fade-up`…)         | a word after `mermaid` (or `.element`) |
+| animate the diagram (`fragment fade-up`…)            | a word after `mermaid` (or `.element`) |
 | set an `id`, a `data-*`, a `style`, an `aria-label`… | `<!-- .element: … -->` (on the figure) |
 | a custom class on the figure                         | `<!-- .element: class="…" -->`         |
 

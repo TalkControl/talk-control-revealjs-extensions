@@ -45,6 +45,7 @@ function helpersSlides() {
         `${dir}/30_admonitions.md`,
         `${dir}/40_quotes.md`,
         `${dir}/50_qrcodes.md`,
+        `${dir}/60_mermaid.md`,
     ];
 }
 
